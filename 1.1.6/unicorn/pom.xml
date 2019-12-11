@@ -37,7 +37,7 @@
 		<unicorn.version>1.1.6-SNAPSHOT</unicorn.version>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring.version>5.2.2.RELEASE</spring.version>
 		<freemarker.version>2.3.23</freemarker.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
