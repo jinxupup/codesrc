@@ -55,7 +55,7 @@
 		<guava.version>19.0</guava.version>
 		<joda-time.version>2.9.4</joda-time.version>
 		<dubbo.version>2.5.3</dubbo.version>
-		<zookeeper.version>3.3.6</zookeeper.version>
+		<zookeeper.version>3.4.14</zookeeper.version>
 		<zkclient.version>0.1</zkclient.version>
 		<curator.version>2.11.0</curator.version>
 		<commons-pool.version>1.6</commons-pool.version>
