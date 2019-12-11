@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.TmAppUploadDecisionMapper">
+    <resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppUpload" >
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="ORG" property="org" jdbcType="VARCHAR" />
+        <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+        <result column="LINE_NO" property="lineNo" jdbcType="INTEGER" />
+        <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+        <result column="START_BPMN" property="startBpmn" jdbcType="VARCHAR" />
+        <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+        <result column="BATCH_DATE" property="batchDate" jdbcType="TIMESTAMP" />
+        <result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="tm_app_upload_TABLE_FIELD">ID,ORG,FILE_NAME,LINE_NO,CONTENT,START_BPMN,FAIL_REASON,BATCH_DATE,JPA_VERSION</sql>
+
+    <sql id="TABLE_SEQUENCE">SEQ_tm_app_upload_ID.nextval</sql>
+    <select id="select" resultMap="BaseResultMap" parameterType="map" >
+        select <include refid="tm_app_upload_TABLE_FIELD" />
+        from tm_app_upload
+        where 1=1
+        <if test="fileName != null and fileName != ''  " >
+            and FILE_NAME LIKE CONCAT (CONCAT('%',#{fileName,jdbcType=VARCHAR }),'%')
+        </if>
+        <if test="beginDate != null and beginDate != '' " >
+            and BATCH_DATE &gt;= #{beginDate,jdbcType=TIMESTAMP }
+        </if>
+        <if test="endDate != null and endDate != '' " >
+            and BATCH_DATE &lt;= #{endDate,jdbcType=TIMESTAMP }
+        </if>
+        <if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+            <if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+                order by ${_SORT_NAME} ${_SORT_ORDER}
+            </if>
+        </if>
+
+    </select>
+</mapper>

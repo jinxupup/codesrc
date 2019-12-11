@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="resS010000Branch"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>分行文件文件</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/S010000Branch" />
+	</bean>
+
+	<!-- 创建申请文件 -->
+	<bean id="s000000Apply"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>创建申请文件</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/output/S000000Apply-new" />
+	</bean>
+
+	<!-- 建账制卡核心回盘文件 -->
+	<bean id="s000010Response"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>建账制卡核心回盘文件</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/S000010Response" />
+	</bean>
+
+	<!-- MPS回盘文件 -->	
+	<bean id="cardResult" 
+	    class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean" scope="prototype">
+		<description>MPS回盘文件</description>
+		<property name="filePath" value="#{env.batchWorkDir}/$yyyymmdd/input/cardResult" />
+	</bean>
+
+	<!-- 同步账户状态 -->
+	<bean id="S1201AccountItemInfoDas"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>同步账户状态</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/S1234AccountItemInfoDas" />
+	</bean>
+
+	<!-- 同步卡片状态 -->
+	<bean id="S1201CardItemInfoDas"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>同步卡片状态</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/S1233CardItemInfoDas" />
+	</bean>
+
+	<!-- 客户文件 -->
+	<bean id="s920002ApsCustomer"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>客户文件</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/S1201CustomerItemInfoDas" />
+	</bean>
+
+	<!-- 每日审批通过报表 -->
+	<bean id="s200001ApplySucceedReport"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>每日审批通过报表</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/output/S200001ApplySucceedReport-new" />
+	</bean>
+
+	<!-- 每日审批拒绝报表 -->
+	<bean id="s250001ApplyRejectReport"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>每日审批拒绝报表</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/output/S250001ApplyRejectReport-new" />
+	</bean>
+
+	<!-- 补件提醒报表 -->
+	<bean id="s260001ApplyPatchBlotReport"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>补件提醒报表</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/output/S260001ApplyPatchBlotReport-new" />
+	</bean>
+	
+	<!-- 核心商户额度信息同步文件 -->
+	<bean id="merchantLoanBalInfo"
+		class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean"
+		scope="prototype">
+		<description>核心商户额度信息同步文件</description>
+		<property name="filePath"
+			value="#{env.batchWorkDir}/$yyyymmdd/input/resS1901MerchantLoanBal" />
+	</bean>
+	<!-- 分贷通卡表文件 -->
+	<bean id="resS1502ExportRpt" class="com.jjb.acl.gmp.sdk.BatchFileResourceFactoryBean" scope="prototype">
+		<description>分贷通卡表文件</description>
+		<property name="filePath" value="#{env.batchWorkDir}/$yyyymmdd/output/S1502ApsCardBindResponse" />
+	</bean>
+</beans>

@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmCustomerMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmCustomer" >
+		<id column="ACCT_NO" property="acctNo" jdbcType="VARCHAR"/>
+		<id column="CUST_ID" property="custId" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="GENDER" property="gender" jdbcType="VARCHAR" />
+		<result column="BIRTHDAY" property="birthday" jdbcType="TIMESTAMP" />
+		<result column="OCCUPATION" property="occupation" jdbcType="VARCHAR" />
+		<result column="BANKMEMBER_NO" property="bankmemberNo" jdbcType="VARCHAR" />
+		<result column="NATIONALITY" property="nationality" jdbcType="VARCHAR" />
+		<result column="PR_OF_COUNTRY" property="prOfCountry" jdbcType="VARCHAR" />
+		<result column="RESIDENCY_COUNTRY_CD" property="residencyCountryCd" jdbcType="VARCHAR" />
+		<result column="MARITAL_STATUS" property="maritalStatus" jdbcType="VARCHAR" />
+		<result column="QUALIFICATION" property="qualification" jdbcType="VARCHAR" />
+		<result column="SOCIAL_STATUS" property="socialStatus" jdbcType="VARCHAR" />
+		<result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" />
+		<result column="HOUSE_OWNERSHIP" property="houseOwnership" jdbcType="VARCHAR" />
+		<result column="HOUSE_TYPE" property="houseType" jdbcType="VARCHAR" />
+		<result column="HOME_STAND_FROM" property="homeStandFrom" jdbcType="TIMESTAMP" />
+		<result column="LIQUID_ASSET" property="liquidAsset" jdbcType="VARCHAR" />
+		<result column="MOBILE_NO" property="mobileNo" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="EMP_STATUS" property="empStatus" jdbcType="VARCHAR" />
+		<result column="NBR_OF_DEPENDENTS" property="nbrOfDependents" jdbcType="INTEGER" />
+		<result column="LANGUAGE_IND" property="languageInd" jdbcType="VARCHAR" />
+		<result column="SETUP_DATE" property="setupDate" jdbcType="TIMESTAMP" />
+		<result column="SOCIAL_INS_AMT" property="socialInsAmt" jdbcType="DECIMAL" />
+		<result column="DRIVE_LICENSE_ID" property="driveLicenseId" jdbcType="VARCHAR" />
+		<result column="DRIVE_LIC_REG_DATE" property="driveLicRegDate" jdbcType="TIMESTAMP" />
+		<result column="OBLIGATE_ANSWER" property="obligateAnswer" jdbcType="VARCHAR" />
+		<result column="OBLIGATE_QUESTION" property="obligateQuestion" jdbcType="VARCHAR" />
+		<result column="EMP_STABILITY" property="empStability" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="BANK_CUSTOMER_ID" property="bankCustomerId" jdbcType="VARCHAR" />
+		<result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL" />
+		<result column="EMB_NAME" property="embName" jdbcType="VARCHAR" />
+		<result column="ID_ISSUER_ADDRESS" property="idIssuerAddress" jdbcType="VARCHAR" />
+		<result column="BATCH_DATE" property="batchDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="ECIF_CUSTOMER_CODE" property="ecifCustomerCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_CUSTOMER_TABLE_FIELD">ORG,ACCT_NO,CUST_ID,ID_NO,ID_TYPE,TITLE,NAME,GENDER,BIRTHDAY,OCCUPATION,BANKMEMBER_NO,NATIONALITY,PR_OF_COUNTRY,RESIDENCY_COUNTRY_CD,MARITAL_STATUS,QUALIFICATION,SOCIAL_STATUS,HOME_PHONE,HOUSE_OWNERSHIP,HOUSE_TYPE,HOME_STAND_FROM,LIQUID_ASSET,MOBILE_NO,EMAIL,EMP_STATUS,NBR_OF_DEPENDENTS,LANGUAGE_IND,SETUP_DATE,SOCIAL_INS_AMT,DRIVE_LICENSE_ID,DRIVE_LIC_REG_DATE,OBLIGATE_ANSWER,OBLIGATE_QUESTION,EMP_STABILITY,CORP_NAME,BANK_CUSTOMER_ID,CREDIT_LIMIT,EMB_NAME,ID_ISSUER_ADDRESS,BATCH_DATE,JPA_VERSION,ECIF_CUSTOMER_CODE</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_CUSTOMER
+		where 
+		ACCT_NO = #{acctNo, jdbcType=VARCHAR}
+ 	and 		CUST_ID = #{custId, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmCustomer" >
+		insert into TM_CUSTOMER ( <include refid="TM_CUSTOMER_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{acctNo,jdbcType=VARCHAR } , #{custId,jdbcType=VARCHAR } ,
+			 #{idNo,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{title,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } ,
+			 #{gender,jdbcType=VARCHAR } , #{birthday,jdbcType=TIMESTAMP } , #{occupation,jdbcType=VARCHAR } , #{bankmemberNo,jdbcType=VARCHAR } ,
+			 #{nationality,jdbcType=VARCHAR } , #{prOfCountry,jdbcType=VARCHAR } , #{residencyCountryCd,jdbcType=VARCHAR } , #{maritalStatus,jdbcType=VARCHAR } ,
+			 #{qualification,jdbcType=VARCHAR } , #{socialStatus,jdbcType=VARCHAR } , #{homePhone,jdbcType=VARCHAR } , #{houseOwnership,jdbcType=VARCHAR } ,
+			 #{houseType,jdbcType=VARCHAR } , #{homeStandFrom,jdbcType=TIMESTAMP } , #{liquidAsset,jdbcType=VARCHAR } , #{mobileNo,jdbcType=VARCHAR } ,
+			 #{email,jdbcType=VARCHAR } , #{empStatus,jdbcType=VARCHAR } , #{nbrOfDependents,jdbcType=INTEGER } , #{languageInd,jdbcType=VARCHAR } ,
+			 #{setupDate,jdbcType=TIMESTAMP } , #{socialInsAmt,jdbcType=DECIMAL } , #{driveLicenseId,jdbcType=VARCHAR } , #{driveLicRegDate,jdbcType=TIMESTAMP } ,
+			 #{obligateAnswer,jdbcType=VARCHAR } , #{obligateQuestion,jdbcType=VARCHAR } , #{empStability,jdbcType=VARCHAR } , #{corpName,jdbcType=VARCHAR } ,
+			 #{bankCustomerId,jdbcType=VARCHAR } , #{creditLimit,jdbcType=DECIMAL } , #{embName,jdbcType=VARCHAR } , #{idIssuerAddress,jdbcType=VARCHAR } ,
+			 #{batchDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } , #{ecifCustomerCode,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmCustomer">
+		update TM_CUSTOMER 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="title != null and title != ''  " >
+			TITLE =#{title,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="gender != null and gender != ''  " >
+			GENDER =#{gender,jdbcType=VARCHAR },
+		</if>
+		<if test="birthday != null and birthday != ''  " >
+			BIRTHDAY =#{birthday,jdbcType=TIMESTAMP },
+		</if>
+		<if test="occupation != null and occupation != ''  " >
+			OCCUPATION =#{occupation,jdbcType=VARCHAR },
+		</if>
+		<if test="bankmemberNo != null and bankmemberNo != ''  " >
+			BANKMEMBER_NO =#{bankmemberNo,jdbcType=VARCHAR },
+		</if>
+		<if test="nationality != null and nationality != ''  " >
+			NATIONALITY =#{nationality,jdbcType=VARCHAR },
+		</if>
+		<if test="prOfCountry != null and prOfCountry != ''  " >
+			PR_OF_COUNTRY =#{prOfCountry,jdbcType=VARCHAR },
+		</if>
+		<if test="residencyCountryCd != null and residencyCountryCd != ''  " >
+			RESIDENCY_COUNTRY_CD =#{residencyCountryCd,jdbcType=VARCHAR },
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			MARITAL_STATUS =#{maritalStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="qualification != null and qualification != ''  " >
+			QUALIFICATION =#{qualification,jdbcType=VARCHAR },
+		</if>
+		<if test="socialStatus != null and socialStatus != ''  " >
+			SOCIAL_STATUS =#{socialStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			HOME_PHONE =#{homePhone,jdbcType=VARCHAR },
+		</if>
+		<if test="houseOwnership != null and houseOwnership != ''  " >
+			HOUSE_OWNERSHIP =#{houseOwnership,jdbcType=VARCHAR },
+		</if>
+		<if test="houseType != null and houseType != ''  " >
+			HOUSE_TYPE =#{houseType,jdbcType=VARCHAR },
+		</if>
+		<if test="homeStandFrom != null and homeStandFrom != ''  " >
+			HOME_STAND_FROM =#{homeStandFrom,jdbcType=TIMESTAMP },
+		</if>
+		<if test="liquidAsset != null and liquidAsset != ''  " >
+			LIQUID_ASSET =#{liquidAsset,jdbcType=VARCHAR },
+		</if>
+		<if test="mobileNo != null and mobileNo != ''  " >
+			MOBILE_NO =#{mobileNo,jdbcType=VARCHAR },
+		</if>
+		<if test="email != null and email != ''  " >
+			EMAIL =#{email,jdbcType=VARCHAR },
+		</if>
+		<if test="empStatus != null and empStatus != ''  " >
+			EMP_STATUS =#{empStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="nbrOfDependents != null and nbrOfDependents != ''  " >
+			NBR_OF_DEPENDENTS =#{nbrOfDependents,jdbcType=INTEGER },
+		</if>
+		<if test="languageInd != null and languageInd != ''  " >
+			LANGUAGE_IND =#{languageInd,jdbcType=VARCHAR },
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="socialInsAmt != null and socialInsAmt != ''  " >
+			SOCIAL_INS_AMT =#{socialInsAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="driveLicenseId != null and driveLicenseId != ''  " >
+			DRIVE_LICENSE_ID =#{driveLicenseId,jdbcType=VARCHAR },
+		</if>
+		<if test="driveLicRegDate != null and driveLicRegDate != ''  " >
+			DRIVE_LIC_REG_DATE =#{driveLicRegDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obligateAnswer != null and obligateAnswer != ''  " >
+			OBLIGATE_ANSWER =#{obligateAnswer,jdbcType=VARCHAR },
+		</if>
+		<if test="obligateQuestion != null and obligateQuestion != ''  " >
+			OBLIGATE_QUESTION =#{obligateQuestion,jdbcType=VARCHAR },
+		</if>
+		<if test="empStability != null and empStability != ''  " >
+			EMP_STABILITY =#{empStability,jdbcType=VARCHAR },
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },
+		</if>
+		<if test="bankCustomerId != null and bankCustomerId != ''  " >
+			BANK_CUSTOMER_ID =#{bankCustomerId,jdbcType=VARCHAR },
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			CREDIT_LIMIT =#{creditLimit,jdbcType=DECIMAL },
+		</if>
+		<if test="embName != null and embName != ''  " >
+			EMB_NAME =#{embName,jdbcType=VARCHAR },
+		</if>
+		<if test="idIssuerAddress != null and idIssuerAddress != ''  " >
+			ID_ISSUER_ADDRESS =#{idIssuerAddress,jdbcType=VARCHAR },
+		</if>
+		<if test="batchDate != null and batchDate != ''  " >
+			BATCH_DATE =#{batchDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="ecifCustomerCode != null and ecifCustomerCode != ''  " >
+			ECIF_CUSTOMER_CODE =#{ecifCustomerCode,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ACCT_NO = #{acctNo, jdbcType=VARCHAR}
+ 	and 		CUST_ID = #{custId, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmCustomer">
+		update TM_CUSTOMER 
+		<trim prefix="set" suffixOverrides=","> 
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			TITLE =#{title,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			GENDER =#{gender,jdbcType=VARCHAR },		
+			BIRTHDAY =#{birthday,jdbcType=TIMESTAMP },		
+			OCCUPATION =#{occupation,jdbcType=VARCHAR },		
+			BANKMEMBER_NO =#{bankmemberNo,jdbcType=VARCHAR },		
+			NATIONALITY =#{nationality,jdbcType=VARCHAR },		
+			PR_OF_COUNTRY =#{prOfCountry,jdbcType=VARCHAR },		
+			RESIDENCY_COUNTRY_CD =#{residencyCountryCd,jdbcType=VARCHAR },		
+			MARITAL_STATUS =#{maritalStatus,jdbcType=VARCHAR },		
+			QUALIFICATION =#{qualification,jdbcType=VARCHAR },		
+			SOCIAL_STATUS =#{socialStatus,jdbcType=VARCHAR },		
+			HOME_PHONE =#{homePhone,jdbcType=VARCHAR },		
+			HOUSE_OWNERSHIP =#{houseOwnership,jdbcType=VARCHAR },		
+			HOUSE_TYPE =#{houseType,jdbcType=VARCHAR },		
+			HOME_STAND_FROM =#{homeStandFrom,jdbcType=TIMESTAMP },		
+			LIQUID_ASSET =#{liquidAsset,jdbcType=VARCHAR },		
+			MOBILE_NO =#{mobileNo,jdbcType=VARCHAR },		
+			EMAIL =#{email,jdbcType=VARCHAR },		
+			EMP_STATUS =#{empStatus,jdbcType=VARCHAR },		
+			NBR_OF_DEPENDENTS =#{nbrOfDependents,jdbcType=INTEGER },		
+			LANGUAGE_IND =#{languageInd,jdbcType=VARCHAR },		
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },		
+			SOCIAL_INS_AMT =#{socialInsAmt,jdbcType=DECIMAL },		
+			DRIVE_LICENSE_ID =#{driveLicenseId,jdbcType=VARCHAR },		
+			DRIVE_LIC_REG_DATE =#{driveLicRegDate,jdbcType=TIMESTAMP },		
+			OBLIGATE_ANSWER =#{obligateAnswer,jdbcType=VARCHAR },		
+			OBLIGATE_QUESTION =#{obligateQuestion,jdbcType=VARCHAR },		
+			EMP_STABILITY =#{empStability,jdbcType=VARCHAR },		
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },		
+			BANK_CUSTOMER_ID =#{bankCustomerId,jdbcType=VARCHAR },		
+			CREDIT_LIMIT =#{creditLimit,jdbcType=DECIMAL },		
+			EMB_NAME =#{embName,jdbcType=VARCHAR },		
+			ID_ISSUER_ADDRESS =#{idIssuerAddress,jdbcType=VARCHAR },		
+			BATCH_DATE =#{batchDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			ECIF_CUSTOMER_CODE =#{ecifCustomerCode,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ACCT_NO = #{acctNo, jdbcType=VARCHAR}
+ 	and 		CUST_ID = #{custId, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_CUSTOMER_TABLE_FIELD" />		
+		from TM_CUSTOMER
+		where 
+		ACCT_NO = #{acctNo, jdbcType=VARCHAR}
+ 	and 		CUST_ID = #{custId, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_CUSTOMER_TABLE_FIELD" />		
+ 		from TM_CUSTOMER
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="acctNo != null and acctNo != ''  " >
+			and ACCT_NO = #{acctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="custId != null and custId != ''  " >
+			and CUST_ID = #{custId,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="title != null and title != ''  " >
+			and TITLE = #{title,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="gender != null and gender != ''  " >
+			and GENDER = #{gender,jdbcType=VARCHAR }
+		</if>
+		<if test="birthday != null and birthday != ''  " >
+			and BIRTHDAY = #{birthday,jdbcType=TIMESTAMP }
+		</if>
+		<if test="occupation != null and occupation != ''  " >
+			and OCCUPATION = #{occupation,jdbcType=VARCHAR }
+		</if>
+		<if test="bankmemberNo != null and bankmemberNo != ''  " >
+			and BANKMEMBER_NO = #{bankmemberNo,jdbcType=VARCHAR }
+		</if>
+		<if test="nationality != null and nationality != ''  " >
+			and NATIONALITY = #{nationality,jdbcType=VARCHAR }
+		</if>
+		<if test="prOfCountry != null and prOfCountry != ''  " >
+			and PR_OF_COUNTRY = #{prOfCountry,jdbcType=VARCHAR }
+		</if>
+		<if test="residencyCountryCd != null and residencyCountryCd != ''  " >
+			and RESIDENCY_COUNTRY_CD = #{residencyCountryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			and MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="qualification != null and qualification != ''  " >
+			and QUALIFICATION = #{qualification,jdbcType=VARCHAR }
+		</if>
+		<if test="socialStatus != null and socialStatus != ''  " >
+			and SOCIAL_STATUS = #{socialStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			and HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+		</if>
+		<if test="houseOwnership != null and houseOwnership != ''  " >
+			and HOUSE_OWNERSHIP = #{houseOwnership,jdbcType=VARCHAR }
+		</if>
+		<if test="houseType != null and houseType != ''  " >
+			and HOUSE_TYPE = #{houseType,jdbcType=VARCHAR }
+		</if>
+		<if test="homeStandFrom != null and homeStandFrom != ''  " >
+			and HOME_STAND_FROM = #{homeStandFrom,jdbcType=TIMESTAMP }
+		</if>
+		<if test="liquidAsset != null and liquidAsset != ''  " >
+			and LIQUID_ASSET = #{liquidAsset,jdbcType=VARCHAR }
+		</if>
+		<if test="mobileNo != null and mobileNo != ''  " >
+			and MOBILE_NO = #{mobileNo,jdbcType=VARCHAR }
+		</if>
+		<if test="email != null and email != ''  " >
+			and EMAIL = #{email,jdbcType=VARCHAR }
+		</if>
+		<if test="empStatus != null and empStatus != ''  " >
+			and EMP_STATUS = #{empStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="nbrOfDependents != null and nbrOfDependents != ''  " >
+			and NBR_OF_DEPENDENTS = #{nbrOfDependents,jdbcType=INTEGER }
+		</if>
+		<if test="languageInd != null and languageInd != ''  " >
+			and LANGUAGE_IND = #{languageInd,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="socialInsAmt != null and socialInsAmt != ''  " >
+			and SOCIAL_INS_AMT = #{socialInsAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="driveLicenseId != null and driveLicenseId != ''  " >
+			and DRIVE_LICENSE_ID = #{driveLicenseId,jdbcType=VARCHAR }
+		</if>
+		<if test="driveLicRegDate != null and driveLicRegDate != ''  " >
+			and DRIVE_LIC_REG_DATE = #{driveLicRegDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obligateAnswer != null and obligateAnswer != ''  " >
+			and OBLIGATE_ANSWER = #{obligateAnswer,jdbcType=VARCHAR }
+		</if>
+		<if test="obligateQuestion != null and obligateQuestion != ''  " >
+			and OBLIGATE_QUESTION = #{obligateQuestion,jdbcType=VARCHAR }
+		</if>
+		<if test="empStability != null and empStability != ''  " >
+			and EMP_STABILITY = #{empStability,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="bankCustomerId != null and bankCustomerId != ''  " >
+			and BANK_CUSTOMER_ID = #{bankCustomerId,jdbcType=VARCHAR }
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			and CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL }
+		</if>
+		<if test="embName != null and embName != ''  " >
+			and EMB_NAME = #{embName,jdbcType=VARCHAR }
+		</if>
+		<if test="idIssuerAddress != null and idIssuerAddress != ''  " >
+			and ID_ISSUER_ADDRESS = #{idIssuerAddress,jdbcType=VARCHAR }
+		</if>
+		<if test="batchDate != null and batchDate != ''  " >
+			and BATCH_DATE = #{batchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="ecifCustomerCode != null and ecifCustomerCode != ''  " >
+			and ECIF_CUSTOMER_CODE = #{ecifCustomerCode,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_CUSTOMER
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="acctNo != null and acctNo != ''  " >
+			and ACCT_NO = #{acctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="custId != null and custId != ''  " >
+			and CUST_ID = #{custId,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="title != null and title != ''  " >
+			and TITLE = #{title,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="gender != null and gender != ''  " >
+			and GENDER = #{gender,jdbcType=VARCHAR }
+		</if>
+		<if test="birthday != null and birthday != ''  " >
+			and BIRTHDAY = #{birthday,jdbcType=TIMESTAMP }
+		</if>
+		<if test="occupation != null and occupation != ''  " >
+			and OCCUPATION = #{occupation,jdbcType=VARCHAR }
+		</if>
+		<if test="bankmemberNo != null and bankmemberNo != ''  " >
+			and BANKMEMBER_NO = #{bankmemberNo,jdbcType=VARCHAR }
+		</if>
+		<if test="nationality != null and nationality != ''  " >
+			and NATIONALITY = #{nationality,jdbcType=VARCHAR }
+		</if>
+		<if test="prOfCountry != null and prOfCountry != ''  " >
+			and PR_OF_COUNTRY = #{prOfCountry,jdbcType=VARCHAR }
+		</if>
+		<if test="residencyCountryCd != null and residencyCountryCd != ''  " >
+			and RESIDENCY_COUNTRY_CD = #{residencyCountryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			and MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="qualification != null and qualification != ''  " >
+			and QUALIFICATION = #{qualification,jdbcType=VARCHAR }
+		</if>
+		<if test="socialStatus != null and socialStatus != ''  " >
+			and SOCIAL_STATUS = #{socialStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			and HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+		</if>
+		<if test="houseOwnership != null and houseOwnership != ''  " >
+			and HOUSE_OWNERSHIP = #{houseOwnership,jdbcType=VARCHAR }
+		</if>
+		<if test="houseType != null and houseType != ''  " >
+			and HOUSE_TYPE = #{houseType,jdbcType=VARCHAR }
+		</if>
+		<if test="homeStandFrom != null and homeStandFrom != ''  " >
+			and HOME_STAND_FROM = #{homeStandFrom,jdbcType=TIMESTAMP }
+		</if>
+		<if test="liquidAsset != null and liquidAsset != ''  " >
+			and LIQUID_ASSET = #{liquidAsset,jdbcType=VARCHAR }
+		</if>
+		<if test="mobileNo != null and mobileNo != ''  " >
+			and MOBILE_NO = #{mobileNo,jdbcType=VARCHAR }
+		</if>
+		<if test="email != null and email != ''  " >
+			and EMAIL = #{email,jdbcType=VARCHAR }
+		</if>
+		<if test="empStatus != null and empStatus != ''  " >
+			and EMP_STATUS = #{empStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="nbrOfDependents != null and nbrOfDependents != ''  " >
+			and NBR_OF_DEPENDENTS = #{nbrOfDependents,jdbcType=INTEGER }
+		</if>
+		<if test="languageInd != null and languageInd != ''  " >
+			and LANGUAGE_IND = #{languageInd,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="socialInsAmt != null and socialInsAmt != ''  " >
+			and SOCIAL_INS_AMT = #{socialInsAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="driveLicenseId != null and driveLicenseId != ''  " >
+			and DRIVE_LICENSE_ID = #{driveLicenseId,jdbcType=VARCHAR }
+		</if>
+		<if test="driveLicRegDate != null and driveLicRegDate != ''  " >
+			and DRIVE_LIC_REG_DATE = #{driveLicRegDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obligateAnswer != null and obligateAnswer != ''  " >
+			and OBLIGATE_ANSWER = #{obligateAnswer,jdbcType=VARCHAR }
+		</if>
+		<if test="obligateQuestion != null and obligateQuestion != ''  " >
+			and OBLIGATE_QUESTION = #{obligateQuestion,jdbcType=VARCHAR }
+		</if>
+		<if test="empStability != null and empStability != ''  " >
+			and EMP_STABILITY = #{empStability,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="bankCustomerId != null and bankCustomerId != ''  " >
+			and BANK_CUSTOMER_ID = #{bankCustomerId,jdbcType=VARCHAR }
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			and CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL }
+		</if>
+		<if test="embName != null and embName != ''  " >
+			and EMB_NAME = #{embName,jdbcType=VARCHAR }
+		</if>
+		<if test="idIssuerAddress != null and idIssuerAddress != ''  " >
+			and ID_ISSUER_ADDRESS = #{idIssuerAddress,jdbcType=VARCHAR }
+		</if>
+		<if test="batchDate != null and batchDate != ''  " >
+			and BATCH_DATE = #{batchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="ecifCustomerCode != null and ecifCustomerCode != ''  " >
+			and ECIF_CUSTOMER_CODE = #{ecifCustomerCode,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,1 @@
+<link href="${base}/assets/css/amsLocalCommon.css" rel="stylesheet">

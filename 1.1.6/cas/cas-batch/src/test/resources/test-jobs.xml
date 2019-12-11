@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+	<!-- <import resource="steps/s3000-mobilePad.xml" /> -->
+	<!-- <import resource="steps/s0000-createapply.xml" />
+	<import resource="steps/s2600-applyPatchBlotRpt.xml" /> -->
+	<import resource="steps/s4000-reportData.xml" />
+
+	<!-- 批量步骤模版，目前用于定义一组listener -->
+	
+	<batch:step id="stepTemplate" abstract="true">
+		<!-- <batch:listeners>
+			<batch:listener ref="gmpBatchStatusListener" />
+			<batch:listener>
+				<bean class="com.jjb.unicorn.batch.DebugSupportListener" />
+			</batch:listener>
+		</batch:listeners> -->
+	</batch:step>
+	
+	<batch:job id="casJob">
+		<!-- 创建申请文件 -->
+		<!-- <batch:step id="s0000-createapply">
+			<batch:tasklet>
+				<batch:chunk reader="r0000CreateApply" processor="p0000CreateApply"	writer="applyCompositeWriter" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step> -->
+		<!-- 创建w未终审卸数文件 -->
+		<batch:step id="s4000-reportData" parent="stepTemplate" next="s4000-export">
+			<batch:tasklet>
+				<batch:chunk reader="r4000ReportData" processor="p4000ReportData"	writer="reportDataCompositeWriter" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+	
+		<batch:step id="s4000-export">
+			<batch:tasklet ref="e4000Exporter"/>
+		</batch:step>
+	</batch:job>
+	<!-- 创建申请文件 -->
+<!-- 	<batch:step id="s2600-createapply">
+			<batch:tasklet>
+				<batch:chunk reader="r2601RfeRpt" processor="p2601RfeRpt"	writer="w2601applyPatchBlotRpt" commit-interval="100" />
+		</batch:tasklet>
+		</batch:step>
+	</batch:job> -->
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<bean id="r1501synchroacctblockcode" class="com.jjb.unicorn.batch.YakFileItemReader" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.CPSExportAccountItem"/>
+		<property name="resource" ref="S1201AccountItemInfoDas"/>
+	</bean>
+	
+	<bean id="p1501synchroacctblockcode" class="com.jjb.ecms.batch.s1500.P1500SynchroAcctBlockCode" scope="step"/>
+	
+	<bean id="w1501synchroacctblockcode" class="com.jjb.ecms.batch.ApsEntityManagerClearWriter"/>
+</beans>

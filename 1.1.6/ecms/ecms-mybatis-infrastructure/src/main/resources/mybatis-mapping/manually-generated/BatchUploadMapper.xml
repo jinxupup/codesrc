@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.BatchUploadMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmBatchUpload" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="UPLOAD_CATEGORY" property="uploadCategory" jdbcType="VARCHAR" />
+		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+		<result column="LINE_NO" property="lineNo" jdbcType="INTEGER" />
+		<result column="CONTENT" property="content" jdbcType="VARCHAR" />
+		<result column="START_BPMN" property="startBpmn" jdbcType="VARCHAR" />
+		<result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+		<result column="BATCH_DATE" property="batchDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_BATCH_UPLOAD_TABLE_FIELD">ID,ORG,UPLOAD_CATEGORY,FILE_NAME,LINE_NO,CONTENT,START_BPMN,FAIL_REASON,BATCH_DATE,JPA_VERSION</sql>
+	<!--批量导入信息查询-->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_BATCH_UPLOAD_TABLE_FIELD" />
+		from TM_BATCH_UPLOAD
+		where 1=1
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="uploadCategory != null and uploadCategory != ''  " >
+			and UPLOAD_CATEGORY = #{uploadCategory,jdbcType=VARCHAR }
+		</if>
+		<if test="fileName != null and fileName != ''  " >
+			and FILE_NAME  LIKE CONCAT(CONCAT('%',#{fileName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="lineNo != null and lineNo != ''  " >
+			and LINE_NO = #{lineNo,jdbcType=INTEGER }
+		</if>
+		<if test="content != null and content != ''  " >
+			and CONTENT = #{content,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and START_BPMN = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="failReason != null and failReason != ''  " >
+			and FAIL_REASON = #{failReason,jdbcType=VARCHAR }
+		</if>
+		<if test="beginDate != null and beginDate != '' ">
+			AND BATCH_DATE <![CDATA[ >= ]]> #{beginDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			AND BATCH_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER}
+			</if>
+		</if>
+
+	</select>
+
+</mapper>

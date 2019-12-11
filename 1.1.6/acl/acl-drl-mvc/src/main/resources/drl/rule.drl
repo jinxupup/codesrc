@@ -1,0 +1,28 @@
+package com.jjb._1;
+import java.util.Map;
+import org.mvel2.MVEL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.math.BigDecimal;
+import FunctionKit;
+import RuleRuntimeInfo;
+
+dialect "mvel"
+
+function  String  _FUNCTION_empty(String txnType, BigDecimal stmAmt,  String txnChanel){ 
+return "";
+};
+
+//ST---start ruleset 1
+rule "RC_1_1_1"
+  lock-on-active true
+  enabled true
+  activation-group "1"
+  salience 0
+  when
+    $t:Map( ( ! ( _FUNCTION_empty(txnType , FunctionKit.toDecimal("")  ,  txnChanel) == "" ) ) )
+  then
+   System.out.println("in");
+    update($t);
+end

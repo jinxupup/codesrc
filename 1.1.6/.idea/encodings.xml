@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/acl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-access" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-facility" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-gmp-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-gmp-impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-gmp-sdk" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-infrastructure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-mvc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/acl/acl-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams/ams-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams/ams-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams/ams-service-impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams/ams-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas/cas-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas/cas-batch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas/cas-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas/cas-service-impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cas/cas-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp/cmp-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp/cmp-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp/cmp-facility" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp/cmp-fastdfs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cmp/cmp-mybatis-infrastructure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms/ecms-adapter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms/ecms-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms/ecms-facility" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms/ecms-mybatis-infrastructure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecms/ecms-service-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecmsc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ecmsc/ecmsc-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-batch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-batch-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-facility" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-infrastructure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-maven-plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-mq" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-socket" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/unicorn/unicorn-web-common" charset="UTF-8" />
+  </component>
+</project>

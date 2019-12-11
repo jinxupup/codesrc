@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	
+	<bean id="p4000Launcher" class="org.springframework.batch.test.JobLauncherTestUtils">
+		<property name="job" ref="casJob"></property>
+	</bean>
+	
+	<!-- <bean id="p0000Launcher" class="org.springframework.batch.test.JobLauncherTestUtils">
+		<property name="job" ref="casJob"></property>
+	</bean>
+	
+	<bean id="p2600Launcher" class="org.springframework.batch.test.JobLauncherTestUtils">
+		<property name="job" ref="casJob"></property>
+	</bean> -->
+	
+<!-- 	<bean id="p0005Launcher" class="org.springframework.batch.test.JobLauncherTestUtils">
+		<property name="job" ref="resT000005Responsewait"></property>
+	</bean>
+	
+	<bean id="p0010Launcher" class="org.springframework.batch.test.JobLauncherTestUtils">
+		<property name="job" ref="resS000010Response"></property>
+	</bean> -->
+</beans>

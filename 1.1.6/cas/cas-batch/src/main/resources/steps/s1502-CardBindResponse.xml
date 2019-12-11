@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="r1502" class="com.jjb.ecms.batch.s1502.R1502" scope="step"/>
+
+	<bean id="p1502" class="com.jjb.ecms.batch.s1502.P1502" scope="step"/>
+	
+	<bean id="w1502" class="com.jjb.unicorn.batch.YakFileItemWriter" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.batch.s1502.ExportItem"/>
+		<property name="resource" ref="resS1502ExportRpt"/>
+	</bean>
+
+	<bean id="s1502Exp" class="com.jjb.unicorn.batch.BatchResourceExporter" scope="step">
+	    <property name="taskExecutor" ref="asyncTaskExecutor" />
+		<property name="commandExecutionUtil" ref="yakCommandExecution" />
+		<property name="executeCommand" value="#{env.exporterCommand}" />
+		<property name="fileResource">
+			<list>
+				<ref bean="resS1502ExportRpt" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>

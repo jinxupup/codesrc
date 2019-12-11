@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                 http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context.xsd
+                 http://www.springframework.org/schema/tx 
+                 http://www.springframework.org/schema/tx/spring-tx.xsd
+                 http://www.springframework.org/schema/aop 
+                 http://www.springframework.org/schema/tx/spring-aop.xsd">
+                 
+	<!-- 数据库连接池配置 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据源驱动类 -->
+        <property name="driverClassName" value="#{env['jdbcDriver']}"/>
+        <!--  url、user、password -->
+        <property name="url" value="#{env.jdbcUrl}"/>
+        <!--  user -->
+        <property name="username" value="#{env.jdbcUsername}"/>
+        <!--  password -->
+        <property name="password" value="#{env.jdbcPassword}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="#{env['poolInitialSize'] ?: 10 }"/>
+        <property name="minIdle" value="#{env['jdbcMinIdle'] ?: 2 }"/>
+        <property name="maxActive" value="#{env['jdbcMaxActive'] ?: 20}"/>
+        
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <!-- 配置一个连接在池中最最大生存的时间，单位是毫秒 -->
+        <property name="maxEvictableIdleTimeMillis" value="600000"/>
+        
+        <property name="validationQuery" value="#{env['jdbcTestSql']?: 'select * from dual'}"/>
+        <property name="testWhileIdle" value="#{env['jdbcTestWhileIdle']?: false}"/>
+        <property name="testOnBorrow" value="#{env['jdbcTestOnBorrow']?: true}"/>
+        <property name="testOnReturn" value="#{env['jdbcTestOnReturn']?: false}"/>
+    </bean>
+ 
+     <!-- SqlSessionFactory -->
+     <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+	     <property name="dataSource" ref="dataSource"/>
+	     <!-- mybatis配置文件路径-->
+	     <property name="configLocation"  value="classpath:mybatis-config.xml"/>   
+	     <!-- 实体类映射文件路径-->
+	     <property name="mapperLocations" value="classpath*:mybatis-mapping/**/*.xml"/>
+     </bean>
+     
+     <!-- 配置sqlsession 产生这个实例就是通过 sqlsessionTemplate来实现的 -->    
+     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	     <constructor-arg index="0">
+	     	<ref  bean="sqlSessionFactory"/>
+	     </constructor-arg>
+     </bean>
+     
+      <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	        <property name="dataSource" ref="dataSource" />
+	  </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+     
+     <bean id="baseDao" class="com.jjb.unicorn.base.dao.impl.BaseDaoImpl">
+         <property name="mapperLocations" value="classpath*:mybatis-mapping/**/*.xml"/>
+     </bean>
+
+     <!--spring 3.x升级到spring 4.x后这里会报错-->
+     <!--<tx:annotation-driven transaction-manager="transactionManager" mode="aspectj"/>-->
+</beans>

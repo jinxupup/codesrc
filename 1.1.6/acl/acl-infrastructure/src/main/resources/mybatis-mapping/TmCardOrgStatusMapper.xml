@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmCardOrgStatusMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmCardOrgStatus" >
+		<id column="ORG" property="org" jdbcType="VARCHAR"/>
+		<id column="InputSource" property="inputsource" jdbcType="VARCHAR"/>
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="LAST_RESP" property="lastResp" jdbcType="VARCHAR" />
+		<result column="REQUEST_TIME" property="requestTime" jdbcType="TIMESTAMP" />
+		<result column="RESPONSE_TIME" property="responseTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_LOGOUT_TIME" property="lastLogoutTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_BEGIN_TIME" property="lastBeginTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_END_TIME" property="lastEndTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_TEST_TIME" property="lastTestTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_CARD_ORG_STATUS_TABLE_FIELD">ORG,InputSource,STATUS,LAST_RESP,REQUEST_TIME,RESPONSE_TIME,LAST_LOGIN_TIME,LAST_LOGOUT_TIME,LAST_BEGIN_TIME,LAST_END_TIME,LAST_TEST_TIME,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_CARD_ORG_STATUS
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		InputSource = #{inputsource, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmCardOrgStatus" >
+		insert into TM_CARD_ORG_STATUS ( <include refid="TM_CARD_ORG_STATUS_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{inputsource,jdbcType=VARCHAR } , #{status,jdbcType=VARCHAR } ,
+			 #{lastResp,jdbcType=VARCHAR } , #{requestTime,jdbcType=TIMESTAMP } , #{responseTime,jdbcType=TIMESTAMP } , #{lastLoginTime,jdbcType=TIMESTAMP } ,
+			 #{lastLogoutTime,jdbcType=TIMESTAMP } , #{lastBeginTime,jdbcType=TIMESTAMP } , #{lastEndTime,jdbcType=TIMESTAMP } , #{lastTestTime,jdbcType=TIMESTAMP } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmCardOrgStatus">
+		update TM_CARD_ORG_STATUS 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="lastResp != null and lastResp != ''  " >
+			LAST_RESP =#{lastResp,jdbcType=VARCHAR },
+		</if>
+		<if test="requestTime != null and requestTime != ''  " >
+			REQUEST_TIME =#{requestTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="responseTime != null and responseTime != ''  " >
+			RESPONSE_TIME =#{responseTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastLoginTime != null and lastLoginTime != ''  " >
+			LAST_LOGIN_TIME =#{lastLoginTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastLogoutTime != null and lastLogoutTime != ''  " >
+			LAST_LOGOUT_TIME =#{lastLogoutTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastBeginTime != null and lastBeginTime != ''  " >
+			LAST_BEGIN_TIME =#{lastBeginTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastEndTime != null and lastEndTime != ''  " >
+			LAST_END_TIME =#{lastEndTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastTestTime != null and lastTestTime != ''  " >
+			LAST_TEST_TIME =#{lastTestTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		InputSource = #{inputsource, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmCardOrgStatus">
+		update TM_CARD_ORG_STATUS 
+		<trim prefix="set" suffixOverrides=","> 
+			STATUS =#{status,jdbcType=VARCHAR },		
+			LAST_RESP =#{lastResp,jdbcType=VARCHAR },		
+			REQUEST_TIME =#{requestTime,jdbcType=TIMESTAMP },		
+			RESPONSE_TIME =#{responseTime,jdbcType=TIMESTAMP },		
+			LAST_LOGIN_TIME =#{lastLoginTime,jdbcType=TIMESTAMP },		
+			LAST_LOGOUT_TIME =#{lastLogoutTime,jdbcType=TIMESTAMP },		
+			LAST_BEGIN_TIME =#{lastBeginTime,jdbcType=TIMESTAMP },		
+			LAST_END_TIME =#{lastEndTime,jdbcType=TIMESTAMP },		
+			LAST_TEST_TIME =#{lastTestTime,jdbcType=TIMESTAMP },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		InputSource = #{inputsource, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_CARD_ORG_STATUS_TABLE_FIELD" />		
+		from TM_CARD_ORG_STATUS
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		InputSource = #{inputsource, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_CARD_ORG_STATUS_TABLE_FIELD" />		
+ 		from TM_CARD_ORG_STATUS
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="inputsource != null and inputsource != ''  " >
+			and InputSource = #{inputsource,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="lastResp != null and lastResp != ''  " >
+			and LAST_RESP = #{lastResp,jdbcType=VARCHAR }
+		</if>
+		<if test="requestTime != null and requestTime != ''  " >
+			and REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="responseTime != null and responseTime != ''  " >
+			and RESPONSE_TIME = #{responseTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastLoginTime != null and lastLoginTime != ''  " >
+			and LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastLogoutTime != null and lastLogoutTime != ''  " >
+			and LAST_LOGOUT_TIME = #{lastLogoutTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastBeginTime != null and lastBeginTime != ''  " >
+			and LAST_BEGIN_TIME = #{lastBeginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastEndTime != null and lastEndTime != ''  " >
+			and LAST_END_TIME = #{lastEndTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastTestTime != null and lastTestTime != ''  " >
+			and LAST_TEST_TIME = #{lastTestTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_CARD_ORG_STATUS
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="inputsource != null and inputsource != ''  " >
+			and InputSource = #{inputsource,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="lastResp != null and lastResp != ''  " >
+			and LAST_RESP = #{lastResp,jdbcType=VARCHAR }
+		</if>
+		<if test="requestTime != null and requestTime != ''  " >
+			and REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="responseTime != null and responseTime != ''  " >
+			and RESPONSE_TIME = #{responseTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastLoginTime != null and lastLoginTime != ''  " >
+			and LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastLogoutTime != null and lastLogoutTime != ''  " >
+			and LAST_LOGOUT_TIME = #{lastLogoutTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastBeginTime != null and lastBeginTime != ''  " >
+			and LAST_BEGIN_TIME = #{lastBeginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastEndTime != null and lastEndTime != ''  " >
+			and LAST_END_TIME = #{lastEndTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastTestTime != null and lastTestTime != ''  " >
+			and LAST_TEST_TIME = #{lastTestTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

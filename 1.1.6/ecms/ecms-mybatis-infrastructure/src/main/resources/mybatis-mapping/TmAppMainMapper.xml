@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppMainMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppMain" >
+		<id column="APP_NO" property="appNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="CURR_OP_RESULT" property="currOpResult" jdbcType="VARCHAR" />
+		<result column="APP_LMT" property="appLmt" jdbcType="DECIMAL" />
+		<result column="SUG_LMT" property="sugLmt" jdbcType="DECIMAL" />
+		<result column="CHK_LMT" property="chkLmt" jdbcType="DECIMAL" />
+		<result column="FINAL_LMT" property="finalLmt" jdbcType="DECIMAL" />
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="APP_PROPERTY" property="appProperty" jdbcType="VARCHAR" />
+		<result column="POINT_RESULT" property="pointResult" jdbcType="INTEGER" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APPNO_EXTERNAL" property="appnoExternal" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="TASK_NUM" property="taskNum" jdbcType="VARCHAR" />
+		<result column="IMAGE_NUM" property="imageNum" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+		<result column="TASK_LAST_OP_USER" property="taskLastOpUser" jdbcType="VARCHAR" />
+		<result column="TASK_OWNER" property="taskOwner" jdbcType="VARCHAR" />
+		<result column="TASK_ID" property="taskId" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE2" property="refuseCode2" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE3" property="refuseCode3" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="FILE_FLAG" property="fileFlag" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_MAIN_TABLE_FIELD">ORG,APP_NO,NAME,ID_TYPE,ID_NO,APP_TYPE,RTF_STATE,CURR_OP_RESULT,APP_LMT,SUG_LMT,CHK_LMT,FINAL_LMT,ACC_LMT,PRODUCT_CD,APP_PROPERTY,POINT_RESULT,REFUSE_CODE,APP_SOURCE,OWNING_BRANCH,APPNO_EXTERNAL,REMARK,TASK_NUM,IMAGE_NUM,CELLPHONE,CORP_NAME,EMP_PHONE,TASK_LAST_OP_USER,TASK_OWNER,TASK_ID,REFUSE_CODE2,REFUSE_CODE3,CREATE_USER,CREATE_DATE,UPDATE_DATE,UPDATE_USER,JPA_VERSION,FILE_FLAG</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_MAIN
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppMain" >
+		insert into TM_APP_MAIN ( <include refid="TM_APP_MAIN_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } ,
+			 #{idType,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{appType,jdbcType=VARCHAR } , #{rtfState,jdbcType=VARCHAR } ,
+			 #{currOpResult,jdbcType=VARCHAR } , #{appLmt,jdbcType=DECIMAL } , #{sugLmt,jdbcType=DECIMAL } , #{chkLmt,jdbcType=DECIMAL } ,
+			 #{finalLmt,jdbcType=DECIMAL } , #{accLmt,jdbcType=DECIMAL } , #{productCd,jdbcType=VARCHAR } , #{appProperty,jdbcType=VARCHAR } ,
+			 #{pointResult,jdbcType=INTEGER } , #{refuseCode,jdbcType=VARCHAR } , #{appSource,jdbcType=VARCHAR } , #{owningBranch,jdbcType=VARCHAR } ,
+			 #{appnoExternal,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } , #{taskNum,jdbcType=VARCHAR } , #{imageNum,jdbcType=VARCHAR } ,
+			 #{cellphone,jdbcType=VARCHAR } , #{corpName,jdbcType=VARCHAR } , #{empPhone,jdbcType=VARCHAR } , #{taskLastOpUser,jdbcType=VARCHAR } ,
+			 #{taskOwner,jdbcType=VARCHAR } , #{taskId,jdbcType=VARCHAR } , #{refuseCode2,jdbcType=VARCHAR } , #{refuseCode3,jdbcType=VARCHAR } ,
+			 #{createUser,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } , #{fileFlag,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppMain">
+		update TM_APP_MAIN 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="appType != null and appType != ''  " >
+			APP_TYPE =#{appType,jdbcType=VARCHAR },
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },
+		</if>
+		<if test="currOpResult != null and currOpResult != ''  " >
+			CURR_OP_RESULT =#{currOpResult,jdbcType=VARCHAR },
+		</if>
+		<if test="appLmt != null and appLmt != ''  " >
+			APP_LMT =#{appLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="sugLmt != null and sugLmt != ''  " >
+			SUG_LMT =#{sugLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="chkLmt != null and chkLmt != ''  " >
+			CHK_LMT =#{chkLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="finalLmt != null and finalLmt != ''  " >
+			FINAL_LMT =#{finalLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			ACC_LMT =#{accLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="appProperty != null and appProperty != ''  " >
+			APP_PROPERTY =#{appProperty,jdbcType=VARCHAR },
+		</if>
+		<if test="pointResult != null and pointResult != ''  " >
+			POINT_RESULT =#{pointResult,jdbcType=INTEGER },
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="appnoExternal != null and appnoExternal != ''  " >
+			APPNO_EXTERNAL =#{appnoExternal,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			TASK_NUM =#{taskNum,jdbcType=VARCHAR },
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			EMP_PHONE =#{empPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != ''  " >
+			TASK_LAST_OP_USER =#{taskLastOpUser,jdbcType=VARCHAR },
+		</if>
+		<if test="taskOwner != null and taskOwner != ''  " >
+			TASK_OWNER =#{taskOwner,jdbcType=VARCHAR },
+		</if>
+		<if test="taskId != null and taskId != ''  " >
+			TASK_ID =#{taskId,jdbcType=VARCHAR },
+		</if>
+		<if test="refuseCode2 != null and refuseCode2 != ''  " >
+			REFUSE_CODE2 =#{refuseCode2,jdbcType=VARCHAR },
+		</if>
+		<if test="refuseCode3 != null and refuseCode3 != ''  " >
+			REFUSE_CODE3 =#{refuseCode3,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="fileFlag != null and fileFlag != ''  " >
+			FILE_FLAG =#{fileFlag,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppMain">
+		update TM_APP_MAIN 
+		<trim prefix="set" suffixOverrides=","> 
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			APP_TYPE =#{appType,jdbcType=VARCHAR },		
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },		
+			CURR_OP_RESULT =#{currOpResult,jdbcType=VARCHAR },		
+			APP_LMT =#{appLmt,jdbcType=DECIMAL },		
+			SUG_LMT =#{sugLmt,jdbcType=DECIMAL },		
+			CHK_LMT =#{chkLmt,jdbcType=DECIMAL },		
+			FINAL_LMT =#{finalLmt,jdbcType=DECIMAL },		
+			ACC_LMT =#{accLmt,jdbcType=DECIMAL },		
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			APP_PROPERTY =#{appProperty,jdbcType=VARCHAR },		
+			POINT_RESULT =#{pointResult,jdbcType=INTEGER },		
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },		
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },		
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },		
+			APPNO_EXTERNAL =#{appnoExternal,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			TASK_NUM =#{taskNum,jdbcType=VARCHAR },		
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },		
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },		
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },		
+			EMP_PHONE =#{empPhone,jdbcType=VARCHAR },		
+			TASK_LAST_OP_USER =#{taskLastOpUser,jdbcType=VARCHAR },		
+			TASK_OWNER =#{taskOwner,jdbcType=VARCHAR },		
+			TASK_ID =#{taskId,jdbcType=VARCHAR },		
+			REFUSE_CODE2 =#{refuseCode2,jdbcType=VARCHAR },		
+			REFUSE_CODE3 =#{refuseCode3,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			FILE_FLAG =#{fileFlag,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_MAIN_TABLE_FIELD" />		
+		from TM_APP_MAIN
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_MAIN_TABLE_FIELD" />		
+ 		from TM_APP_MAIN
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="currOpResult != null and currOpResult != ''  " >
+			and CURR_OP_RESULT = #{currOpResult,jdbcType=VARCHAR }
+		</if>
+		<if test="appLmt != null and appLmt != ''  " >
+			and APP_LMT = #{appLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="sugLmt != null and sugLmt != ''  " >
+			and SUG_LMT = #{sugLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="chkLmt != null and chkLmt != ''  " >
+			and CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="finalLmt != null and finalLmt != ''  " >
+			and FINAL_LMT = #{finalLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			and ACC_LMT = #{accLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appProperty != null and appProperty != ''  " >
+			and APP_PROPERTY = #{appProperty,jdbcType=VARCHAR }
+		</if>
+		<if test="pointResult != null and pointResult != ''  " >
+			and POINT_RESULT = #{pointResult,jdbcType=INTEGER }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="appnoExternal != null and appnoExternal != ''  " >
+			and APPNO_EXTERNAL = #{appnoExternal,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			and TASK_NUM = #{taskNum,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			and EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != ''  " >
+			and TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="taskOwner != null and taskOwner != ''  " >
+			and TASK_OWNER = #{taskOwner,jdbcType=VARCHAR }
+		</if>
+		<if test="taskId != null and taskId != ''  " >
+			and TASK_ID = #{taskId,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode2 != null and refuseCode2 != ''  " >
+			and REFUSE_CODE2 = #{refuseCode2,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode3 != null and refuseCode3 != ''  " >
+			and REFUSE_CODE3 = #{refuseCode3,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="fileFlag != null and fileFlag != ''  " >
+			and FILE_FLAG = #{fileFlag,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_MAIN
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="currOpResult != null and currOpResult != ''  " >
+			and CURR_OP_RESULT = #{currOpResult,jdbcType=VARCHAR }
+		</if>
+		<if test="appLmt != null and appLmt != ''  " >
+			and APP_LMT = #{appLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="sugLmt != null and sugLmt != ''  " >
+			and SUG_LMT = #{sugLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="chkLmt != null and chkLmt != ''  " >
+			and CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="finalLmt != null and finalLmt != ''  " >
+			and FINAL_LMT = #{finalLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			and ACC_LMT = #{accLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appProperty != null and appProperty != ''  " >
+			and APP_PROPERTY = #{appProperty,jdbcType=VARCHAR }
+		</if>
+		<if test="pointResult != null and pointResult != ''  " >
+			and POINT_RESULT = #{pointResult,jdbcType=INTEGER }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="appnoExternal != null and appnoExternal != ''  " >
+			and APPNO_EXTERNAL = #{appnoExternal,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			and TASK_NUM = #{taskNum,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			and EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != ''  " >
+			and TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="taskOwner != null and taskOwner != ''  " >
+			and TASK_OWNER = #{taskOwner,jdbcType=VARCHAR }
+		</if>
+		<if test="taskId != null and taskId != ''  " >
+			and TASK_ID = #{taskId,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode2 != null and refuseCode2 != ''  " >
+			and REFUSE_CODE2 = #{refuseCode2,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode3 != null and refuseCode3 != ''  " >
+			and REFUSE_CODE3 = #{refuseCode3,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="fileFlag != null and fileFlag != ''  " >
+			and FILE_FLAG = #{fileFlag,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

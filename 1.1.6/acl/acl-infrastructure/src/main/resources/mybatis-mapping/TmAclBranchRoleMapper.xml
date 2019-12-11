@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclBranchRoleMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclBranchRole" >
+		<id column="ORG" property="org" jdbcType="VARCHAR"/>
+		<id column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR"/>
+		<id column="ROLE_ID" property="roleId" jdbcType="INTEGER"/>
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_BRANCH_ROLE_TABLE_FIELD">ORG,BRANCH_CODE,ROLE_ID,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_BRANCH_ROLE
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+ 	and 		ROLE_ID = #{roleId, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclBranchRole" >
+		insert into TM_ACL_BRANCH_ROLE ( <include refid="TM_ACL_BRANCH_ROLE_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{branchCode,jdbcType=VARCHAR } , #{roleId,jdbcType=INTEGER } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclBranchRole">
+		update TM_ACL_BRANCH_ROLE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+ 	and 		ROLE_ID = #{roleId, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclBranchRole">
+		update TM_ACL_BRANCH_ROLE 
+		<trim prefix="set" suffixOverrides=","> 
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+ 	and 		ROLE_ID = #{roleId, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_BRANCH_ROLE_TABLE_FIELD" />		
+		from TM_ACL_BRANCH_ROLE
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+ 	and 		ROLE_ID = #{roleId, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_BRANCH_ROLE_TABLE_FIELD" />		
+ 		from TM_ACL_BRANCH_ROLE
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_BRANCH_ROLE
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

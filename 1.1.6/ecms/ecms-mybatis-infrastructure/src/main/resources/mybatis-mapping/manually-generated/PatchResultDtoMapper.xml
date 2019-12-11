@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.PatchResultDtoMapper">
+    <resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.PatchResultDto" >
+        <id column="IMAGE_NUM" property="appCode" jdbcType="VARCHAR"/>
+        <result column="ORG" property="org" jdbcType="VARCHAR" />
+        <result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="DATE" />
+        <result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="PB_START_DATE" property="pbStartDate" jdbcType="DATE" />
+        <result column="PB_TIMEOUT_DATE" property="pbTimeoutDate" jdbcType="DATE" />
+        <result column="PB_ST_BATCH_DATE" property="pbStBatchDate" jdbcType="DATE" />
+        <result column="PB_OUT_BATCH_DATE" property="pbOutBatchDate" jdbcType="DATE" />
+        <result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+        <result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+        <result column="PB_START_TIME" property="applyDate" jdbcType="VARCHAR" />
+        <result column="OWNER" property="operatorId" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 查询补件信息 -->
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT A.ORG, A.PRODUCT_CD, A.RTF_STATE, A.OWNER, A.APP_NO, A.ID_TYPE, A.ID_NO, A.NAME, A.IMAGE_NUM,
+	    	B.PB_START_DATE, B.PB_TIMEOUT_DATE, B.PB_ST_BATCH_DATE, B.PB_OUT_BATCH_DATE, B.PB_START_TIME
+	    FROM TM_APP_MAIN A,TM_APP_RFE B
+		WHERE A.APP_NO = B.APP_NO
+        <if test="org != null and org != ''  " >
+            and A.ORG = #{org,jdbcType=VARCHAR }
+        </if>
+        <if test="operatorId != null and operatorId != ''  " >
+            and A.OWNER = #{operatorId,jdbcType=VARCHAR }
+        </if>
+        <if test="idType != null and idType != ''  " >
+            and A.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo != null and idNo != ''  " >
+            and A.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+        <if test="appCode != null and appCode != ''  " >
+            and A.IMAGE_NUM = #{appCode,jdbcType=VARCHAR }
+        </if>
+        ORDER BY A.APP_NO desc
+    </select>    
+</mapper>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmIndieBthInstMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmIndieBthInst" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="BATCH_ID" property="batchId" jdbcType="INTEGER" />
+		<result column="INSTANCE_ID" property="instanceId" jdbcType="INTEGER" />
+		<result column="BATCH_STATUS" property="batchStatus" jdbcType="VARCHAR" />
+		<result column="EXECUTION_ID" property="executionId" jdbcType="BIGINT" />
+		<result column="ENABLE_FLAG" property="enableFlag" jdbcType="VARCHAR" />
+		<result column="BATCH_COMPLETED_DATE" property="batchCompletedDate" jdbcType="TIMESTAMP" />
+		<result column="INDIE_TYPE" property="indieType" jdbcType="VARCHAR" />
+		<result column="INDIE_TIME" property="indieTime" jdbcType="BIGINT" />
+		<result column="BATCH_PARAM" property="batchParam" jdbcType="VARCHAR" />
+		<result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_INDIE_BTH_INST_TABLE_FIELD">ID,ORG,BATCH_ID,INSTANCE_ID,BATCH_STATUS,EXECUTION_ID,ENABLE_FLAG,BATCH_COMPLETED_DATE,INDIE_TYPE,INDIE_TIME,BATCH_PARAM,START_TIME,END_TIME,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_INDIE_BTH_INST_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_INDIE_BTH_INST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmIndieBthInst" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_INDIE_BTH_INST ( <include refid="TM_INDIE_BTH_INST_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{batchId,jdbcType=INTEGER } ,
+			 #{instanceId,jdbcType=INTEGER } , #{batchStatus,jdbcType=VARCHAR } , #{executionId,jdbcType=BIGINT } , #{enableFlag,jdbcType=VARCHAR } ,
+			 #{batchCompletedDate,jdbcType=TIMESTAMP } , #{indieType,jdbcType=VARCHAR } , #{indieTime,jdbcType=BIGINT } , #{batchParam,jdbcType=VARCHAR } ,
+			 #{startTime,jdbcType=TIMESTAMP } , #{endTime,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmIndieBthInst">
+		update TM_INDIE_BTH_INST 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="batchId != null and batchId != ''  " >
+			BATCH_ID =#{batchId,jdbcType=INTEGER },
+		</if>
+		<if test="instanceId != null and instanceId != ''  " >
+			INSTANCE_ID =#{instanceId,jdbcType=INTEGER },
+		</if>
+		<if test="batchStatus != null and batchStatus != ''  " >
+			BATCH_STATUS =#{batchStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="executionId != null and executionId != ''  " >
+			EXECUTION_ID =#{executionId,jdbcType=BIGINT },
+		</if>
+		<if test="enableFlag != null and enableFlag != ''  " >
+			ENABLE_FLAG =#{enableFlag,jdbcType=VARCHAR },
+		</if>
+		<if test="batchCompletedDate != null and batchCompletedDate != ''  " >
+			BATCH_COMPLETED_DATE =#{batchCompletedDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="indieType != null and indieType != ''  " >
+			INDIE_TYPE =#{indieType,jdbcType=VARCHAR },
+		</if>
+		<if test="indieTime != null and indieTime != ''  " >
+			INDIE_TIME =#{indieTime,jdbcType=BIGINT },
+		</if>
+		<if test="batchParam != null and batchParam != ''  " >
+			BATCH_PARAM =#{batchParam,jdbcType=VARCHAR },
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmIndieBthInst">
+		update TM_INDIE_BTH_INST 
+		<trim prefix="set" suffixOverrides=","> 
+			BATCH_ID =#{batchId,jdbcType=INTEGER },		
+			INSTANCE_ID =#{instanceId,jdbcType=INTEGER },		
+			BATCH_STATUS =#{batchStatus,jdbcType=VARCHAR },		
+			EXECUTION_ID =#{executionId,jdbcType=BIGINT },		
+			ENABLE_FLAG =#{enableFlag,jdbcType=VARCHAR },		
+			BATCH_COMPLETED_DATE =#{batchCompletedDate,jdbcType=TIMESTAMP },		
+			INDIE_TYPE =#{indieType,jdbcType=VARCHAR },		
+			INDIE_TIME =#{indieTime,jdbcType=BIGINT },		
+			BATCH_PARAM =#{batchParam,jdbcType=VARCHAR },		
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },		
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_INDIE_BTH_INST_TABLE_FIELD" />		
+		from TM_INDIE_BTH_INST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_INDIE_BTH_INST_TABLE_FIELD" />		
+ 		from TM_INDIE_BTH_INST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="batchId != null and batchId != ''  " >
+			and BATCH_ID = #{batchId,jdbcType=INTEGER }
+		</if>
+		<if test="instanceId != null and instanceId != ''  " >
+			and INSTANCE_ID = #{instanceId,jdbcType=INTEGER }
+		</if>
+		<if test="batchStatus != null and batchStatus != ''  " >
+			and BATCH_STATUS = #{batchStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="executionId != null and executionId != ''  " >
+			and EXECUTION_ID = #{executionId,jdbcType=BIGINT }
+		</if>
+		<if test="enableFlag != null and enableFlag != ''  " >
+			and ENABLE_FLAG = #{enableFlag,jdbcType=VARCHAR }
+		</if>
+		<if test="batchCompletedDate != null and batchCompletedDate != ''  " >
+			and BATCH_COMPLETED_DATE = #{batchCompletedDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="indieType != null and indieType != ''  " >
+			and INDIE_TYPE = #{indieType,jdbcType=VARCHAR }
+		</if>
+		<if test="indieTime != null and indieTime != ''  " >
+			and INDIE_TIME = #{indieTime,jdbcType=BIGINT }
+		</if>
+		<if test="batchParam != null and batchParam != ''  " >
+			and BATCH_PARAM = #{batchParam,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_INDIE_BTH_INST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="batchId != null and batchId != ''  " >
+			and BATCH_ID = #{batchId,jdbcType=INTEGER }
+		</if>
+		<if test="instanceId != null and instanceId != ''  " >
+			and INSTANCE_ID = #{instanceId,jdbcType=INTEGER }
+		</if>
+		<if test="batchStatus != null and batchStatus != ''  " >
+			and BATCH_STATUS = #{batchStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="executionId != null and executionId != ''  " >
+			and EXECUTION_ID = #{executionId,jdbcType=BIGINT }
+		</if>
+		<if test="enableFlag != null and enableFlag != ''  " >
+			and ENABLE_FLAG = #{enableFlag,jdbcType=VARCHAR }
+		</if>
+		<if test="batchCompletedDate != null and batchCompletedDate != ''  " >
+			and BATCH_COMPLETED_DATE = #{batchCompletedDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="indieType != null and indieType != ''  " >
+			and INDIE_TYPE = #{indieType,jdbcType=VARCHAR }
+		</if>
+		<if test="indieTime != null and indieTime != ''  " >
+			and INDIE_TIME = #{indieTime,jdbcType=BIGINT }
+		</if>
+		<if test="batchParam != null and batchParam != ''  " >
+			and BATCH_PARAM = #{batchParam,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

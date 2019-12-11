@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.gmp.biz.TmOrgInstanceTwoMapper">
+    <resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.dto.TmOrgInstanceTwo" >
+        <result column="INSTANCE_ID" property="tmInstanceInstanceId" jdbcType="INTEGER" />
+        <result column="SYSTEM_TYPE" property="tmInstanceSystemType" jdbcType="VARCHAR" />
+        <result column="INSTANCE_NAME" property="tmInstanceInstanceName" jdbcType="VARCHAR" />
+        <result column="INSTANCE_MEMO" property="tmInstanceInstanceMemo" jdbcType="VARCHAR" />
+        <result column="ACCESS_ADDRESS" property="tmInstOrgAccessAddress" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectInstOrgEqInstanceTwo" resultMap="BaseResultMap" parameterType="com.jjb.acl.infrastructure.TmInstOrg" >
+        select B.INSTANCE_ID,B.INSTANCE_NAME,B.SYSTEM_TYPE,B.INSTANCE_MEMO,A.ACCESS_ADDRESS, A.INSTANCE_ID
+        from TM_INST_ORG A,TM_INSTANCE B
+        where A.INSTANCE_ID=B.INSTANCE_ID  AND A.ORG = #{org,jdbcType=VARCHAR }
+        ORDER BY A.INSTANCE_ID ASC
+    </select>
+</mapper>

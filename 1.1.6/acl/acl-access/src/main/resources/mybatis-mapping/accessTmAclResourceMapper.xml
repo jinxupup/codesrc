@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.access.TmAclResourceMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclResource" >
+		<id column="ORG" property="org" jdbcType="VARCHAR"/>
+		<id column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR"/>
+		<result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+		<result column="SYS_TYPE" property="sysType" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="PARENT_RESOURCE_CODE" property="parentResourceCode" jdbcType="VARCHAR" />
+		<result column="PARENT_PATH" property="parentPath" jdbcType="VARCHAR" />
+		<result column="HREF" property="href" jdbcType="VARCHAR" />
+		<result column="ICON" property="icon" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="IS_USED" property="isUsed" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- 获取用户有权限操作的资源  -->
+	<select id="selectUserResources" resultMap="BaseResultMap" parameterType="map" >
+		
+		SELECT 
+			A.ORG  , A.RESOURCE_CODE  , A.RESOURCE_NAME  ,
+			A.SYS_TYPE  , A.TYPE  , A.PARENT_RESOURCE_CODE  , A.PARENT_PATH  ,
+			A.HREF  , A.ICON  , A.SORT  , A.IS_USED  ,
+			A.REMARK  , A.CREATE_DATE  , A.CREATE_BY  , A.UPDATE_DATE  ,
+			A.UPDATE_BY  , A.JPA_VERSION
+		FROM
+            TM_ACL_RESOURCE A, TM_ACL_ROLE_RESOURCE B,TM_ACL_USER_ROLE C 
+		WHERE 1=1  AND A.RESOURCE_CODE=B.RESOURCE_CODE AND B.ROLE_ID=C.ROLE_ID 
+		AND A.ORG=B.ORG AND A.ORG = C.ORG AND (A.IS_USED='Y' OR A.IS_USED='S') AND A.SYS_TYPE=B.SYS_TYPE 
+		
+		AND A.ORG = #{org,jdbcType=VARCHAR } 
+        
+        <if test="sysType != null " >
+			AND A.SYS_TYPE IN 
+	        <foreach item="item" index="index" collection="sysType"  open="(" separator="," close=")"> 
+	             #{item}
+	        </foreach>
+        </if>
+        
+		<if test="types != null " >
+			AND A.TYPE IN 
+	        <foreach item="item" index="index" collection="types"  open="(" separator="," close=")"> 
+	             #{item}
+	        </foreach>
+        </if>
+        
+		AND C.USER_ID = #{userId, jdbcType=INTEGER}
+		ORDER BY  A.SORT ASC
+		
+	</select>
+	<!-- 根据角色id获取 该角色下有操作权限的资源-->
+	<select id="selectResourceCodes" resultMap="BaseResultMap" parameterType="map" >
+		
+		SELECT 
+			A.ORG  , A.RESOURCE_CODE  , A.RESOURCE_NAME  ,
+			A.SYS_TYPE  , A.TYPE  , A.PARENT_RESOURCE_CODE  , A.PARENT_PATH  ,
+			A.HREF  , A.ICON  , A.SORT  , A.IS_USED  ,
+			A.REMARK  , A.CREATE_DATE  , A.CREATE_BY  , A.UPDATE_DATE  ,
+			A.UPDATE_BY  , A.JPA_VERSION
+		FROM
+            TM_ACL_RESOURCE A, TM_ACL_ROLE_RESOURCE B 
+		WHERE 1=1  AND  A.RESOURCE_CODE=B.RESOURCE_CODE AND A.SYS_TYPE=B.SYS_TYPE
+		AND A.ORG=B.ORG  AND B.ROLE_ID = #{roleId,jdbcType=VARCHAR } 
+		
+		AND A.ORG = #{org,jdbcType=VARCHAR } 
+		ORDER BY A.SORT ASC
+		
+	</select>
+</mapper>

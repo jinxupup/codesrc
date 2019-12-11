@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmMirCard">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmMirCard" >
+		<id column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ACCT_NO" property="acctNo" jdbcType="VARCHAR" />
+		<result column="LATEST_CARD_NO" property="latestCardNo" jdbcType="VARCHAR" />
+		<result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ACCT_TYPE" property="acctType" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<result column="PYH_CD" property="pyhCd" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+		<result column="APP_REJECT_REASON" property="appRejectReason" jdbcType="VARCHAR" />
+		<result column="SETUP_DATE" property="setupDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="CARD_EXPIRE_DATE" property="cardExpireDate" jdbcType="TIMESTAMP" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="OB_DATE1" property="obDate1" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="selectCpsSystemAppByParam" resultMap="BaseResultMap" parameterType="map" >
+		select c.* from TM_MIR_CARD c
+		where
+		c.BSC_SUPP_IND = 'B'
+		and c.APP_REJECT_REASON ='R00'
+		<if test="org != null and org != ''  " >
+			and c.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			AND c.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			AND c.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND c.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+	</select>
+
+	<select id="selectMirCardByParam" resultMap="BaseResultMap" parameterType="map" >
+		select c.* from TM_MIR_CARD c , TM_APP_CUST_INFO c2
+		where c.APP_NO=c2.APP_NO  and c.ORG=c2.ORG
+		<if test="org != null and org != ''  " >
+			and c.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			AND c.APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			AND c.BSC_SUPP_IND = #{bscSuppInd,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			AND c.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			AND c2.NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			AND c2.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND c2.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idNos != null and idNos.length>0  " >
+			AND c2.ID_NO IN
+			<foreach item="item" index="index" collection="idNos" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	
+</mapper>

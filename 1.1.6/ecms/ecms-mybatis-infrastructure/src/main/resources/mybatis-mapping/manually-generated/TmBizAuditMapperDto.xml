@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmBizAuditMapperDto">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmBizAudit" >
+		<id column="ID" property="id" jdbcType="BIGINT"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ORD_TYPE" property="ordType" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="OPERATOR_DO" property="operatorDo" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="TM_BIZ_AUDIT_TABLE_FIELD">ID,ORG,APP_NO,NAME,ID_NO,ORD_TYPE,RTF_STATE,OPERATOR_ID,CREATE_DATE,OPERATOR_DO,JPA_VERSION</sql>
+
+
+	<select id="selectpage" resultMap="BaseResultMap" parameterType="map" >
+		select M.APP_NO , M.NAME , M.ID_NO , M.ORD_TYPE , M.RTF_STATE , M.OPERATOR_ID , M.CREATE_DATE , M.OPERATOR_DO
+ 		from TM_BIZ_AUDIT M
+		where 1=1
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			CREATE_DATE ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		CREATE_DATE DESC
+	</select>
+
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_BIZ_AUDIT_TABLE_FIELD" />
+		from TM_BIZ_AUDIT
+		where 1=1
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="ordType != null and ordType != ''  " >
+			and ORD_TYPE = #{ordType,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operatorDo != null and operatorDo != ''  " >
+			and OPERATOR_DO = #{operatorDo,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		ORDER BY CREATE_DATE DESC
+	</select>
+
+</mapper>

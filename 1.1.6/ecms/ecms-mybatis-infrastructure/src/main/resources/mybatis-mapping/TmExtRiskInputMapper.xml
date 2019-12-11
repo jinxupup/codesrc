@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmExtRiskInputMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmExtRiskInput" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="SCENE" property="scene" jdbcType="VARCHAR" />
+		<result column="EXT_APP_NO" property="extAppNo" jdbcType="VARCHAR" />
+		<result column="EXT_SUG_DECISION" property="extSugDecision" jdbcType="VARCHAR" />
+		<result column="EXT_EQ_BEH_ABN" property="extEqBehAbn" jdbcType="VARCHAR" />
+		<result column="EXT_HIGH_RISK_BL" property="extHighRiskBl" jdbcType="VARCHAR" />
+		<result column="EXT_CONTACT_ABN" property="extContactAbn" jdbcType="VARCHAR" />
+		<result column="EXT_BL" property="extBl" jdbcType="VARCHAR" />
+		<result column="EXT_HIGH_RISK" property="extHighRisk" jdbcType="VARCHAR" />
+		<result column="TEL_OPERATORS_ABN" property="telOperatorsAbn" jdbcType="VARCHAR" />
+		<result column="INVALID_APPLY" property="invalidApply" jdbcType="VARCHAR" />
+		<result column="CREDIT_HIGH_RISK" property="creditHighRisk" jdbcType="VARCHAR" />
+		<result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+		<result column="EXT_GRADE" property="extGrade" jdbcType="INTEGER" />
+		<result column="EXT_RISK_LEVEL" property="extRiskLevel" jdbcType="VARCHAR" />
+		<result column="EXT_SUG_LMT" property="extSugLmt" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="INPRET_VAL" property="inpretVal" jdbcType="INTEGER" />
+		<result column="INPRET_VAL_RISK_LVL" property="inpretValRiskLvl" jdbcType="VARCHAR" />
+		<result column="PRICE_ADVICE" property="priceAdvice" jdbcType="DECIMAL" />
+		<result column="RULE_RISK_LVL" property="ruleRiskLvl" jdbcType="VARCHAR" />
+		<result column="COMPLEX_RISK_LVL" property="complexRiskLvl" jdbcType="VARCHAR" />
+		<result column="CUST_LVL" property="custLvl" jdbcType="VARCHAR" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="DES" property="des" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="EXT_MULTI_LOAN_1M" property="extMultiLoan1m" jdbcType="INTEGER" />
+		<result column="EXT_BILL_CNT_6M" property="extBillCnt6m" jdbcType="INTEGER" />
+		<result column="EXT_CARRIER_HIT_B_16M" property="extCarrierHitB16m" jdbcType="INTEGER" />
+		<result column="EXT_AUDITS_RISK" property="extAuditsRisk" jdbcType="CHAR" />
+		<result column="EXT_IFLMK" property="extIflmk" jdbcType="CHAR" />
+		<result column="EXT_LMK_LMT_TOTAL" property="extLmkLmtTotal" jdbcType="DECIMAL" />
+		<result column="EXT_REFUSE_CODE" property="extRefuseCode" jdbcType="VARCHAR" />
+		<result column="EXT_IS_REFUSE" property="extIsRefuse" jdbcType="CHAR" />
+		<result column="EXT_RISK_TYPE" property="extRiskType" jdbcType="VARCHAR" />
+		<result column="BUSCORE" property="buscore" jdbcType="VARCHAR" />
+		<result column="FINAL_TOT_SCORE" property="finalTotScore" jdbcType="VARCHAR" />
+		<result column="FINAL_AUDITRESULT" property="finalAuditresult" jdbcType="VARCHAR" />
+		<result column="REJECT_REASON" property="rejectReason" jdbcType="VARCHAR" />
+		<result column="RISKLEVEL1" property="risklevel1" jdbcType="VARCHAR" />
+		<result column="RISKLEVEL2" property="risklevel2" jdbcType="VARCHAR" />
+		<result column="FINAL_CREDITLIMT" property="finalCreditlimt" jdbcType="VARCHAR" />
+		<result column="FINAL_OTHER_LIMIT" property="finalOtherLimit" jdbcType="VARCHAR" />
+		<result column="ADJUSTINDEX" property="adjustindex" jdbcType="VARCHAR" />
+		<result column="AUDITISRISK_JJ" property="auditisriskJj" jdbcType="VARCHAR" />
+		<result column="VERSION_CODE" property="versionCode" jdbcType="VARCHAR" />
+		<result column="BR_WORKPLACE" property="brWorkplace" jdbcType="VARCHAR" />
+		<result column="BR_EDULEVEL" property="brEdulevel" jdbcType="VARCHAR" />
+		<result column="BR_SCORE" property="brScore" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="EXT_CHECK_ID_FLAG" property="extCheckIdFlag" jdbcType="VARCHAR" />
+		<result column="EXT_CHECK_ID_RS" property="extCheckIdRs" jdbcType="VARCHAR" />
+		<result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+		<result column="DEVICE_GPS" property="deviceGps" jdbcType="VARCHAR" />
+		<result column="DEVICE_GPS_CN" property="deviceGpsCn" jdbcType="VARCHAR" />
+		<result column="WE_CHAT_NICK_NAME" property="weChatNickName" jdbcType="VARCHAR" />
+		<result column="TEL_OPERATORS_TYPE" property="telOperatorsType" jdbcType="VARCHAR" />
+		<result column="TEL_BELONG" property="telBelong" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_EXT_RISK_INPUT_TABLE_FIELD">ID,ORG,APP_NO,SCENE,EXT_APP_NO,EXT_SUG_DECISION,EXT_EQ_BEH_ABN,EXT_HIGH_RISK_BL,EXT_CONTACT_ABN,EXT_BL,EXT_HIGH_RISK,TEL_OPERATORS_ABN,INVALID_APPLY,CREDIT_HIGH_RISK,CHANNEL,EXT_GRADE,EXT_RISK_LEVEL,EXT_SUG_LMT,CREATE_TIME,UPDATE_TIME,INPRET_VAL,INPRET_VAL_RISK_LVL,PRICE_ADVICE,RULE_RISK_LVL,COMPLEX_RISK_LVL,CUST_LVL,CODE,DES,STATUS,EXT_MULTI_LOAN_1M,EXT_BILL_CNT_6M,EXT_CARRIER_HIT_B_16M,EXT_AUDITS_RISK,EXT_IFLMK,EXT_LMK_LMT_TOTAL,EXT_REFUSE_CODE,EXT_IS_REFUSE,EXT_RISK_TYPE,BUSCORE,FINAL_TOT_SCORE,FINAL_AUDITRESULT,REJECT_REASON,RISKLEVEL1,RISKLEVEL2,FINAL_CREDITLIMT,FINAL_OTHER_LIMIT,ADJUSTINDEX,AUDITISRISK_JJ,VERSION_CODE,BR_WORKPLACE,BR_EDULEVEL,BR_SCORE,JPA_VERSION,EXT_CHECK_ID_FLAG,EXT_CHECK_ID_RS,DEVICE_TYPE,DEVICE_GPS,DEVICE_GPS_CN,WE_CHAT_NICK_NAME,TEL_OPERATORS_TYPE,TEL_BELONG</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_EXT_RISK_INPUT_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_EXT_RISK_INPUT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmExtRiskInput" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_EXT_RISK_INPUT ( <include refid="TM_EXT_RISK_INPUT_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{scene,jdbcType=VARCHAR } , #{extAppNo,jdbcType=VARCHAR } , #{extSugDecision,jdbcType=VARCHAR } , #{extEqBehAbn,jdbcType=VARCHAR } ,
+			 #{extHighRiskBl,jdbcType=VARCHAR } , #{extContactAbn,jdbcType=VARCHAR } , #{extBl,jdbcType=VARCHAR } , #{extHighRisk,jdbcType=VARCHAR } ,
+			 #{telOperatorsAbn,jdbcType=VARCHAR } , #{invalidApply,jdbcType=VARCHAR } , #{creditHighRisk,jdbcType=VARCHAR } , #{channel,jdbcType=VARCHAR } ,
+			 #{extGrade,jdbcType=INTEGER } , #{extRiskLevel,jdbcType=VARCHAR } , #{extSugLmt,jdbcType=DECIMAL } , #{createTime,jdbcType=TIMESTAMP } ,
+			 #{updateTime,jdbcType=TIMESTAMP } , #{inpretVal,jdbcType=INTEGER } , #{inpretValRiskLvl,jdbcType=VARCHAR } , #{priceAdvice,jdbcType=DECIMAL } ,
+			 #{ruleRiskLvl,jdbcType=VARCHAR } , #{complexRiskLvl,jdbcType=VARCHAR } , #{custLvl,jdbcType=VARCHAR } , #{code,jdbcType=VARCHAR } ,
+			 #{des,jdbcType=VARCHAR } , #{status,jdbcType=VARCHAR } , #{extMultiLoan1m,jdbcType=INTEGER } , #{extBillCnt6m,jdbcType=INTEGER } ,
+			 #{extCarrierHitB16m,jdbcType=INTEGER } , #{extAuditsRisk,jdbcType=CHAR } , #{extIflmk,jdbcType=CHAR } , #{extLmkLmtTotal,jdbcType=DECIMAL } ,
+			 #{extRefuseCode,jdbcType=VARCHAR } , #{extIsRefuse,jdbcType=CHAR } , #{extRiskType,jdbcType=VARCHAR } , #{buscore,jdbcType=VARCHAR } ,
+			 #{finalTotScore,jdbcType=VARCHAR } , #{finalAuditresult,jdbcType=VARCHAR } , #{rejectReason,jdbcType=VARCHAR } , #{risklevel1,jdbcType=VARCHAR } ,
+			 #{risklevel2,jdbcType=VARCHAR } , #{finalCreditlimt,jdbcType=VARCHAR } , #{finalOtherLimit,jdbcType=VARCHAR } , #{adjustindex,jdbcType=VARCHAR } ,
+			 #{auditisriskJj,jdbcType=VARCHAR } , #{versionCode,jdbcType=VARCHAR } , #{brWorkplace,jdbcType=VARCHAR } , #{brEdulevel,jdbcType=VARCHAR } ,
+			 #{brScore,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } , #{extCheckIdFlag,jdbcType=VARCHAR } , #{extCheckIdRs,jdbcType=VARCHAR } ,
+			 #{deviceType,jdbcType=VARCHAR } , #{deviceGps,jdbcType=VARCHAR } , #{deviceGpsCn,jdbcType=VARCHAR } , #{weChatNickName,jdbcType=VARCHAR } ,
+			 #{telOperatorsType,jdbcType=VARCHAR } , #{telBelong,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmExtRiskInput">
+		update TM_EXT_RISK_INPUT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="scene != null and scene != ''  " >
+			SCENE =#{scene,jdbcType=VARCHAR },
+		</if>
+		<if test="extAppNo != null and extAppNo != ''  " >
+			EXT_APP_NO =#{extAppNo,jdbcType=VARCHAR },
+		</if>
+		<if test="extSugDecision != null and extSugDecision != ''  " >
+			EXT_SUG_DECISION =#{extSugDecision,jdbcType=VARCHAR },
+		</if>
+		<if test="extEqBehAbn != null and extEqBehAbn != ''  " >
+			EXT_EQ_BEH_ABN =#{extEqBehAbn,jdbcType=VARCHAR },
+		</if>
+		<if test="extHighRiskBl != null and extHighRiskBl != ''  " >
+			EXT_HIGH_RISK_BL =#{extHighRiskBl,jdbcType=VARCHAR },
+		</if>
+		<if test="extContactAbn != null and extContactAbn != ''  " >
+			EXT_CONTACT_ABN =#{extContactAbn,jdbcType=VARCHAR },
+		</if>
+		<if test="extBl != null and extBl != ''  " >
+			EXT_BL =#{extBl,jdbcType=VARCHAR },
+		</if>
+		<if test="extHighRisk != null and extHighRisk != ''  " >
+			EXT_HIGH_RISK =#{extHighRisk,jdbcType=VARCHAR },
+		</if>
+		<if test="telOperatorsAbn != null and telOperatorsAbn != ''  " >
+			TEL_OPERATORS_ABN =#{telOperatorsAbn,jdbcType=VARCHAR },
+		</if>
+		<if test="invalidApply != null and invalidApply != ''  " >
+			INVALID_APPLY =#{invalidApply,jdbcType=VARCHAR },
+		</if>
+		<if test="creditHighRisk != null and creditHighRisk != ''  " >
+			CREDIT_HIGH_RISK =#{creditHighRisk,jdbcType=VARCHAR },
+		</if>
+		<if test="channel != null and channel != ''  " >
+			CHANNEL =#{channel,jdbcType=VARCHAR },
+		</if>
+		<if test="extGrade != null and extGrade != ''  " >
+			EXT_GRADE =#{extGrade,jdbcType=INTEGER },
+		</if>
+		<if test="extRiskLevel != null and extRiskLevel != ''  " >
+			EXT_RISK_LEVEL =#{extRiskLevel,jdbcType=VARCHAR },
+		</if>
+		<if test="extSugLmt != null and extSugLmt != ''  " >
+			EXT_SUG_LMT =#{extSugLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="inpretVal != null and inpretVal != ''  " >
+			INPRET_VAL =#{inpretVal,jdbcType=INTEGER },
+		</if>
+		<if test="inpretValRiskLvl != null and inpretValRiskLvl != ''  " >
+			INPRET_VAL_RISK_LVL =#{inpretValRiskLvl,jdbcType=VARCHAR },
+		</if>
+		<if test="priceAdvice != null and priceAdvice != ''  " >
+			PRICE_ADVICE =#{priceAdvice,jdbcType=DECIMAL },
+		</if>
+		<if test="ruleRiskLvl != null and ruleRiskLvl != ''  " >
+			RULE_RISK_LVL =#{ruleRiskLvl,jdbcType=VARCHAR },
+		</if>
+		<if test="complexRiskLvl != null and complexRiskLvl != ''  " >
+			COMPLEX_RISK_LVL =#{complexRiskLvl,jdbcType=VARCHAR },
+		</if>
+		<if test="custLvl != null and custLvl != ''  " >
+			CUST_LVL =#{custLvl,jdbcType=VARCHAR },
+		</if>
+		<if test="code != null and code != ''  " >
+			CODE =#{code,jdbcType=VARCHAR },
+		</if>
+		<if test="des != null and des != ''  " >
+			DES =#{des,jdbcType=VARCHAR },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="extMultiLoan1m != null and extMultiLoan1m != ''  " >
+			EXT_MULTI_LOAN_1M =#{extMultiLoan1m,jdbcType=INTEGER },
+		</if>
+		<if test="extBillCnt6m != null and extBillCnt6m != ''  " >
+			EXT_BILL_CNT_6M =#{extBillCnt6m,jdbcType=INTEGER },
+		</if>
+		<if test="extCarrierHitB16m != null and extCarrierHitB16m != ''  " >
+			EXT_CARRIER_HIT_B_16M =#{extCarrierHitB16m,jdbcType=INTEGER },
+		</if>
+		<if test="extAuditsRisk != null and extAuditsRisk != ''  " >
+			EXT_AUDITS_RISK =#{extAuditsRisk,jdbcType=CHAR },
+		</if>
+		<if test="extIflmk != null and extIflmk != ''  " >
+			EXT_IFLMK =#{extIflmk,jdbcType=CHAR },
+		</if>
+		<if test="extLmkLmtTotal != null and extLmkLmtTotal != ''  " >
+			EXT_LMK_LMT_TOTAL =#{extLmkLmtTotal,jdbcType=DECIMAL },
+		</if>
+		<if test="extRefuseCode != null and extRefuseCode != ''  " >
+			EXT_REFUSE_CODE =#{extRefuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="extIsRefuse != null and extIsRefuse != ''  " >
+			EXT_IS_REFUSE =#{extIsRefuse,jdbcType=CHAR },
+		</if>
+		<if test="extRiskType != null and extRiskType != ''  " >
+			EXT_RISK_TYPE =#{extRiskType,jdbcType=VARCHAR },
+		</if>
+		<if test="buscore != null and buscore != ''  " >
+			BUSCORE =#{buscore,jdbcType=VARCHAR },
+		</if>
+		<if test="finalTotScore != null and finalTotScore != ''  " >
+			FINAL_TOT_SCORE =#{finalTotScore,jdbcType=VARCHAR },
+		</if>
+		<if test="finalAuditresult != null and finalAuditresult != ''  " >
+			FINAL_AUDITRESULT =#{finalAuditresult,jdbcType=VARCHAR },
+		</if>
+		<if test="rejectReason != null and rejectReason != ''  " >
+			REJECT_REASON =#{rejectReason,jdbcType=VARCHAR },
+		</if>
+		<if test="risklevel1 != null and risklevel1 != ''  " >
+			RISKLEVEL1 =#{risklevel1,jdbcType=VARCHAR },
+		</if>
+		<if test="risklevel2 != null and risklevel2 != ''  " >
+			RISKLEVEL2 =#{risklevel2,jdbcType=VARCHAR },
+		</if>
+		<if test="finalCreditlimt != null and finalCreditlimt != ''  " >
+			FINAL_CREDITLIMT =#{finalCreditlimt,jdbcType=VARCHAR },
+		</if>
+		<if test="finalOtherLimit != null and finalOtherLimit != ''  " >
+			FINAL_OTHER_LIMIT =#{finalOtherLimit,jdbcType=VARCHAR },
+		</if>
+		<if test="adjustindex != null and adjustindex != ''  " >
+			ADJUSTINDEX =#{adjustindex,jdbcType=VARCHAR },
+		</if>
+		<if test="auditisriskJj != null and auditisriskJj != ''  " >
+			AUDITISRISK_JJ =#{auditisriskJj,jdbcType=VARCHAR },
+		</if>
+		<if test="versionCode != null and versionCode != ''  " >
+			VERSION_CODE =#{versionCode,jdbcType=VARCHAR },
+		</if>
+		<if test="brWorkplace != null and brWorkplace != ''  " >
+			BR_WORKPLACE =#{brWorkplace,jdbcType=VARCHAR },
+		</if>
+		<if test="brEdulevel != null and brEdulevel != ''  " >
+			BR_EDULEVEL =#{brEdulevel,jdbcType=VARCHAR },
+		</if>
+		<if test="brScore != null and brScore != ''  " >
+			BR_SCORE =#{brScore,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="extCheckIdFlag != null and extCheckIdFlag != ''  " >
+			EXT_CHECK_ID_FLAG =#{extCheckIdFlag,jdbcType=VARCHAR },
+		</if>
+		<if test="extCheckIdRs != null and extCheckIdRs != ''  " >
+			EXT_CHECK_ID_RS =#{extCheckIdRs,jdbcType=VARCHAR },
+		</if>
+		<if test="deviceType != null and deviceType != ''  " >
+			DEVICE_TYPE =#{deviceType,jdbcType=VARCHAR },
+		</if>
+		<if test="deviceGps != null and deviceGps != ''  " >
+			DEVICE_GPS =#{deviceGps,jdbcType=VARCHAR },
+		</if>
+		<if test="deviceGpsCn != null and deviceGpsCn != ''  " >
+			DEVICE_GPS_CN =#{deviceGpsCn,jdbcType=VARCHAR },
+		</if>
+		<if test="weChatNickName != null and weChatNickName != ''  " >
+			WE_CHAT_NICK_NAME =#{weChatNickName,jdbcType=VARCHAR },
+		</if>
+		<if test="telOperatorsType != null and telOperatorsType != ''  " >
+			TEL_OPERATORS_TYPE =#{telOperatorsType,jdbcType=VARCHAR },
+		</if>
+		<if test="telBelong != null and telBelong != ''  " >
+			TEL_BELONG =#{telBelong,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmExtRiskInput">
+		update TM_EXT_RISK_INPUT 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			SCENE =#{scene,jdbcType=VARCHAR },		
+			EXT_APP_NO =#{extAppNo,jdbcType=VARCHAR },		
+			EXT_SUG_DECISION =#{extSugDecision,jdbcType=VARCHAR },		
+			EXT_EQ_BEH_ABN =#{extEqBehAbn,jdbcType=VARCHAR },		
+			EXT_HIGH_RISK_BL =#{extHighRiskBl,jdbcType=VARCHAR },		
+			EXT_CONTACT_ABN =#{extContactAbn,jdbcType=VARCHAR },		
+			EXT_BL =#{extBl,jdbcType=VARCHAR },		
+			EXT_HIGH_RISK =#{extHighRisk,jdbcType=VARCHAR },		
+			TEL_OPERATORS_ABN =#{telOperatorsAbn,jdbcType=VARCHAR },		
+			INVALID_APPLY =#{invalidApply,jdbcType=VARCHAR },		
+			CREDIT_HIGH_RISK =#{creditHighRisk,jdbcType=VARCHAR },		
+			CHANNEL =#{channel,jdbcType=VARCHAR },		
+			EXT_GRADE =#{extGrade,jdbcType=INTEGER },		
+			EXT_RISK_LEVEL =#{extRiskLevel,jdbcType=VARCHAR },		
+			EXT_SUG_LMT =#{extSugLmt,jdbcType=DECIMAL },		
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			INPRET_VAL =#{inpretVal,jdbcType=INTEGER },		
+			INPRET_VAL_RISK_LVL =#{inpretValRiskLvl,jdbcType=VARCHAR },		
+			PRICE_ADVICE =#{priceAdvice,jdbcType=DECIMAL },		
+			RULE_RISK_LVL =#{ruleRiskLvl,jdbcType=VARCHAR },		
+			COMPLEX_RISK_LVL =#{complexRiskLvl,jdbcType=VARCHAR },		
+			CUST_LVL =#{custLvl,jdbcType=VARCHAR },		
+			CODE =#{code,jdbcType=VARCHAR },		
+			DES =#{des,jdbcType=VARCHAR },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+			EXT_MULTI_LOAN_1M =#{extMultiLoan1m,jdbcType=INTEGER },		
+			EXT_BILL_CNT_6M =#{extBillCnt6m,jdbcType=INTEGER },		
+			EXT_CARRIER_HIT_B_16M =#{extCarrierHitB16m,jdbcType=INTEGER },		
+			EXT_AUDITS_RISK =#{extAuditsRisk,jdbcType=CHAR },		
+			EXT_IFLMK =#{extIflmk,jdbcType=CHAR },		
+			EXT_LMK_LMT_TOTAL =#{extLmkLmtTotal,jdbcType=DECIMAL },		
+			EXT_REFUSE_CODE =#{extRefuseCode,jdbcType=VARCHAR },		
+			EXT_IS_REFUSE =#{extIsRefuse,jdbcType=CHAR },		
+			EXT_RISK_TYPE =#{extRiskType,jdbcType=VARCHAR },		
+			BUSCORE =#{buscore,jdbcType=VARCHAR },		
+			FINAL_TOT_SCORE =#{finalTotScore,jdbcType=VARCHAR },		
+			FINAL_AUDITRESULT =#{finalAuditresult,jdbcType=VARCHAR },		
+			REJECT_REASON =#{rejectReason,jdbcType=VARCHAR },		
+			RISKLEVEL1 =#{risklevel1,jdbcType=VARCHAR },		
+			RISKLEVEL2 =#{risklevel2,jdbcType=VARCHAR },		
+			FINAL_CREDITLIMT =#{finalCreditlimt,jdbcType=VARCHAR },		
+			FINAL_OTHER_LIMIT =#{finalOtherLimit,jdbcType=VARCHAR },		
+			ADJUSTINDEX =#{adjustindex,jdbcType=VARCHAR },		
+			AUDITISRISK_JJ =#{auditisriskJj,jdbcType=VARCHAR },		
+			VERSION_CODE =#{versionCode,jdbcType=VARCHAR },		
+			BR_WORKPLACE =#{brWorkplace,jdbcType=VARCHAR },		
+			BR_EDULEVEL =#{brEdulevel,jdbcType=VARCHAR },		
+			BR_SCORE =#{brScore,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			EXT_CHECK_ID_FLAG =#{extCheckIdFlag,jdbcType=VARCHAR },		
+			EXT_CHECK_ID_RS =#{extCheckIdRs,jdbcType=VARCHAR },		
+			DEVICE_TYPE =#{deviceType,jdbcType=VARCHAR },		
+			DEVICE_GPS =#{deviceGps,jdbcType=VARCHAR },		
+			DEVICE_GPS_CN =#{deviceGpsCn,jdbcType=VARCHAR },		
+			WE_CHAT_NICK_NAME =#{weChatNickName,jdbcType=VARCHAR },		
+			TEL_OPERATORS_TYPE =#{telOperatorsType,jdbcType=VARCHAR },		
+			TEL_BELONG =#{telBelong,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_EXT_RISK_INPUT_TABLE_FIELD" />		
+		from TM_EXT_RISK_INPUT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_EXT_RISK_INPUT_TABLE_FIELD" />		
+ 		from TM_EXT_RISK_INPUT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="scene != null and scene != ''  " >
+			and SCENE = #{scene,jdbcType=VARCHAR }
+		</if>
+		<if test="extAppNo != null and extAppNo != ''  " >
+			and EXT_APP_NO = #{extAppNo,jdbcType=VARCHAR }
+		</if>
+		<if test="extSugDecision != null and extSugDecision != ''  " >
+			and EXT_SUG_DECISION = #{extSugDecision,jdbcType=VARCHAR }
+		</if>
+		<if test="extEqBehAbn != null and extEqBehAbn != ''  " >
+			and EXT_EQ_BEH_ABN = #{extEqBehAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="extHighRiskBl != null and extHighRiskBl != ''  " >
+			and EXT_HIGH_RISK_BL = #{extHighRiskBl,jdbcType=VARCHAR }
+		</if>
+		<if test="extContactAbn != null and extContactAbn != ''  " >
+			and EXT_CONTACT_ABN = #{extContactAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="extBl != null and extBl != ''  " >
+			and EXT_BL = #{extBl,jdbcType=VARCHAR }
+		</if>
+		<if test="extHighRisk != null and extHighRisk != ''  " >
+			and EXT_HIGH_RISK = #{extHighRisk,jdbcType=VARCHAR }
+		</if>
+		<if test="telOperatorsAbn != null and telOperatorsAbn != ''  " >
+			and TEL_OPERATORS_ABN = #{telOperatorsAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="invalidApply != null and invalidApply != ''  " >
+			and INVALID_APPLY = #{invalidApply,jdbcType=VARCHAR }
+		</if>
+		<if test="creditHighRisk != null and creditHighRisk != ''  " >
+			and CREDIT_HIGH_RISK = #{creditHighRisk,jdbcType=VARCHAR }
+		</if>
+		<if test="channel != null and channel != ''  " >
+			and CHANNEL = #{channel,jdbcType=VARCHAR }
+		</if>
+		<if test="extGrade != null and extGrade != ''  " >
+			and EXT_GRADE = #{extGrade,jdbcType=INTEGER }
+		</if>
+		<if test="extRiskLevel != null and extRiskLevel != ''  " >
+			and EXT_RISK_LEVEL = #{extRiskLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="extSugLmt != null and extSugLmt != ''  " >
+			and EXT_SUG_LMT = #{extSugLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="inpretVal != null and inpretVal != ''  " >
+			and INPRET_VAL = #{inpretVal,jdbcType=INTEGER }
+		</if>
+		<if test="inpretValRiskLvl != null and inpretValRiskLvl != ''  " >
+			and INPRET_VAL_RISK_LVL = #{inpretValRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="priceAdvice != null and priceAdvice != ''  " >
+			and PRICE_ADVICE = #{priceAdvice,jdbcType=DECIMAL }
+		</if>
+		<if test="ruleRiskLvl != null and ruleRiskLvl != ''  " >
+			and RULE_RISK_LVL = #{ruleRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="complexRiskLvl != null and complexRiskLvl != ''  " >
+			and COMPLEX_RISK_LVL = #{complexRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="custLvl != null and custLvl != ''  " >
+			and CUST_LVL = #{custLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="code != null and code != ''  " >
+			and CODE = #{code,jdbcType=VARCHAR }
+		</if>
+		<if test="des != null and des != ''  " >
+			and DES = #{des,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="extMultiLoan1m != null and extMultiLoan1m != ''  " >
+			and EXT_MULTI_LOAN_1M = #{extMultiLoan1m,jdbcType=INTEGER }
+		</if>
+		<if test="extBillCnt6m != null and extBillCnt6m != ''  " >
+			and EXT_BILL_CNT_6M = #{extBillCnt6m,jdbcType=INTEGER }
+		</if>
+		<if test="extCarrierHitB16m != null and extCarrierHitB16m != ''  " >
+			and EXT_CARRIER_HIT_B_16M = #{extCarrierHitB16m,jdbcType=INTEGER }
+		</if>
+		<if test="extAuditsRisk != null and extAuditsRisk != ''  " >
+			and EXT_AUDITS_RISK = #{extAuditsRisk,jdbcType=CHAR }
+		</if>
+		<if test="extIflmk != null and extIflmk != ''  " >
+			and EXT_IFLMK = #{extIflmk,jdbcType=CHAR }
+		</if>
+		<if test="extLmkLmtTotal != null and extLmkLmtTotal != ''  " >
+			and EXT_LMK_LMT_TOTAL = #{extLmkLmtTotal,jdbcType=DECIMAL }
+		</if>
+		<if test="extRefuseCode != null and extRefuseCode != ''  " >
+			and EXT_REFUSE_CODE = #{extRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="extIsRefuse != null and extIsRefuse != ''  " >
+			and EXT_IS_REFUSE = #{extIsRefuse,jdbcType=CHAR }
+		</if>
+		<if test="extRiskType != null and extRiskType != ''  " >
+			and EXT_RISK_TYPE = #{extRiskType,jdbcType=VARCHAR }
+		</if>
+		<if test="buscore != null and buscore != ''  " >
+			and BUSCORE = #{buscore,jdbcType=VARCHAR }
+		</if>
+		<if test="finalTotScore != null and finalTotScore != ''  " >
+			and FINAL_TOT_SCORE = #{finalTotScore,jdbcType=VARCHAR }
+		</if>
+		<if test="finalAuditresult != null and finalAuditresult != ''  " >
+			and FINAL_AUDITRESULT = #{finalAuditresult,jdbcType=VARCHAR }
+		</if>
+		<if test="rejectReason != null and rejectReason != ''  " >
+			and REJECT_REASON = #{rejectReason,jdbcType=VARCHAR }
+		</if>
+		<if test="risklevel1 != null and risklevel1 != ''  " >
+			and RISKLEVEL1 = #{risklevel1,jdbcType=VARCHAR }
+		</if>
+		<if test="risklevel2 != null and risklevel2 != ''  " >
+			and RISKLEVEL2 = #{risklevel2,jdbcType=VARCHAR }
+		</if>
+		<if test="finalCreditlimt != null and finalCreditlimt != ''  " >
+			and FINAL_CREDITLIMT = #{finalCreditlimt,jdbcType=VARCHAR }
+		</if>
+		<if test="finalOtherLimit != null and finalOtherLimit != ''  " >
+			and FINAL_OTHER_LIMIT = #{finalOtherLimit,jdbcType=VARCHAR }
+		</if>
+		<if test="adjustindex != null and adjustindex != ''  " >
+			and ADJUSTINDEX = #{adjustindex,jdbcType=VARCHAR }
+		</if>
+		<if test="auditisriskJj != null and auditisriskJj != ''  " >
+			and AUDITISRISK_JJ = #{auditisriskJj,jdbcType=VARCHAR }
+		</if>
+		<if test="versionCode != null and versionCode != ''  " >
+			and VERSION_CODE = #{versionCode,jdbcType=VARCHAR }
+		</if>
+		<if test="brWorkplace != null and brWorkplace != ''  " >
+			and BR_WORKPLACE = #{brWorkplace,jdbcType=VARCHAR }
+		</if>
+		<if test="brEdulevel != null and brEdulevel != ''  " >
+			and BR_EDULEVEL = #{brEdulevel,jdbcType=VARCHAR }
+		</if>
+		<if test="brScore != null and brScore != ''  " >
+			and BR_SCORE = #{brScore,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="extCheckIdFlag != null and extCheckIdFlag != ''  " >
+			and EXT_CHECK_ID_FLAG = #{extCheckIdFlag,jdbcType=VARCHAR }
+		</if>
+		<if test="extCheckIdRs != null and extCheckIdRs != ''  " >
+			and EXT_CHECK_ID_RS = #{extCheckIdRs,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceType != null and deviceType != ''  " >
+			and DEVICE_TYPE = #{deviceType,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceGps != null and deviceGps != ''  " >
+			and DEVICE_GPS = #{deviceGps,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceGpsCn != null and deviceGpsCn != ''  " >
+			and DEVICE_GPS_CN = #{deviceGpsCn,jdbcType=VARCHAR }
+		</if>
+		<if test="weChatNickName != null and weChatNickName != ''  " >
+			and WE_CHAT_NICK_NAME = #{weChatNickName,jdbcType=VARCHAR }
+		</if>
+		<if test="telOperatorsType != null and telOperatorsType != ''  " >
+			and TEL_OPERATORS_TYPE = #{telOperatorsType,jdbcType=VARCHAR }
+		</if>
+		<if test="telBelong != null and telBelong != ''  " >
+			and TEL_BELONG = #{telBelong,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_EXT_RISK_INPUT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="scene != null and scene != ''  " >
+			and SCENE = #{scene,jdbcType=VARCHAR }
+		</if>
+		<if test="extAppNo != null and extAppNo != ''  " >
+			and EXT_APP_NO = #{extAppNo,jdbcType=VARCHAR }
+		</if>
+		<if test="extSugDecision != null and extSugDecision != ''  " >
+			and EXT_SUG_DECISION = #{extSugDecision,jdbcType=VARCHAR }
+		</if>
+		<if test="extEqBehAbn != null and extEqBehAbn != ''  " >
+			and EXT_EQ_BEH_ABN = #{extEqBehAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="extHighRiskBl != null and extHighRiskBl != ''  " >
+			and EXT_HIGH_RISK_BL = #{extHighRiskBl,jdbcType=VARCHAR }
+		</if>
+		<if test="extContactAbn != null and extContactAbn != ''  " >
+			and EXT_CONTACT_ABN = #{extContactAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="extBl != null and extBl != ''  " >
+			and EXT_BL = #{extBl,jdbcType=VARCHAR }
+		</if>
+		<if test="extHighRisk != null and extHighRisk != ''  " >
+			and EXT_HIGH_RISK = #{extHighRisk,jdbcType=VARCHAR }
+		</if>
+		<if test="telOperatorsAbn != null and telOperatorsAbn != ''  " >
+			and TEL_OPERATORS_ABN = #{telOperatorsAbn,jdbcType=VARCHAR }
+		</if>
+		<if test="invalidApply != null and invalidApply != ''  " >
+			and INVALID_APPLY = #{invalidApply,jdbcType=VARCHAR }
+		</if>
+		<if test="creditHighRisk != null and creditHighRisk != ''  " >
+			and CREDIT_HIGH_RISK = #{creditHighRisk,jdbcType=VARCHAR }
+		</if>
+		<if test="channel != null and channel != ''  " >
+			and CHANNEL = #{channel,jdbcType=VARCHAR }
+		</if>
+		<if test="extGrade != null and extGrade != ''  " >
+			and EXT_GRADE = #{extGrade,jdbcType=INTEGER }
+		</if>
+		<if test="extRiskLevel != null and extRiskLevel != ''  " >
+			and EXT_RISK_LEVEL = #{extRiskLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="extSugLmt != null and extSugLmt != ''  " >
+			and EXT_SUG_LMT = #{extSugLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="inpretVal != null and inpretVal != ''  " >
+			and INPRET_VAL = #{inpretVal,jdbcType=INTEGER }
+		</if>
+		<if test="inpretValRiskLvl != null and inpretValRiskLvl != ''  " >
+			and INPRET_VAL_RISK_LVL = #{inpretValRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="priceAdvice != null and priceAdvice != ''  " >
+			and PRICE_ADVICE = #{priceAdvice,jdbcType=DECIMAL }
+		</if>
+		<if test="ruleRiskLvl != null and ruleRiskLvl != ''  " >
+			and RULE_RISK_LVL = #{ruleRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="complexRiskLvl != null and complexRiskLvl != ''  " >
+			and COMPLEX_RISK_LVL = #{complexRiskLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="custLvl != null and custLvl != ''  " >
+			and CUST_LVL = #{custLvl,jdbcType=VARCHAR }
+		</if>
+		<if test="code != null and code != ''  " >
+			and CODE = #{code,jdbcType=VARCHAR }
+		</if>
+		<if test="des != null and des != ''  " >
+			and DES = #{des,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="extMultiLoan1m != null and extMultiLoan1m != ''  " >
+			and EXT_MULTI_LOAN_1M = #{extMultiLoan1m,jdbcType=INTEGER }
+		</if>
+		<if test="extBillCnt6m != null and extBillCnt6m != ''  " >
+			and EXT_BILL_CNT_6M = #{extBillCnt6m,jdbcType=INTEGER }
+		</if>
+		<if test="extCarrierHitB16m != null and extCarrierHitB16m != ''  " >
+			and EXT_CARRIER_HIT_B_16M = #{extCarrierHitB16m,jdbcType=INTEGER }
+		</if>
+		<if test="extAuditsRisk != null and extAuditsRisk != ''  " >
+			and EXT_AUDITS_RISK = #{extAuditsRisk,jdbcType=CHAR }
+		</if>
+		<if test="extIflmk != null and extIflmk != ''  " >
+			and EXT_IFLMK = #{extIflmk,jdbcType=CHAR }
+		</if>
+		<if test="extLmkLmtTotal != null and extLmkLmtTotal != ''  " >
+			and EXT_LMK_LMT_TOTAL = #{extLmkLmtTotal,jdbcType=DECIMAL }
+		</if>
+		<if test="extRefuseCode != null and extRefuseCode != ''  " >
+			and EXT_REFUSE_CODE = #{extRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="extIsRefuse != null and extIsRefuse != ''  " >
+			and EXT_IS_REFUSE = #{extIsRefuse,jdbcType=CHAR }
+		</if>
+		<if test="extRiskType != null and extRiskType != ''  " >
+			and EXT_RISK_TYPE = #{extRiskType,jdbcType=VARCHAR }
+		</if>
+		<if test="buscore != null and buscore != ''  " >
+			and BUSCORE = #{buscore,jdbcType=VARCHAR }
+		</if>
+		<if test="finalTotScore != null and finalTotScore != ''  " >
+			and FINAL_TOT_SCORE = #{finalTotScore,jdbcType=VARCHAR }
+		</if>
+		<if test="finalAuditresult != null and finalAuditresult != ''  " >
+			and FINAL_AUDITRESULT = #{finalAuditresult,jdbcType=VARCHAR }
+		</if>
+		<if test="rejectReason != null and rejectReason != ''  " >
+			and REJECT_REASON = #{rejectReason,jdbcType=VARCHAR }
+		</if>
+		<if test="risklevel1 != null and risklevel1 != ''  " >
+			and RISKLEVEL1 = #{risklevel1,jdbcType=VARCHAR }
+		</if>
+		<if test="risklevel2 != null and risklevel2 != ''  " >
+			and RISKLEVEL2 = #{risklevel2,jdbcType=VARCHAR }
+		</if>
+		<if test="finalCreditlimt != null and finalCreditlimt != ''  " >
+			and FINAL_CREDITLIMT = #{finalCreditlimt,jdbcType=VARCHAR }
+		</if>
+		<if test="finalOtherLimit != null and finalOtherLimit != ''  " >
+			and FINAL_OTHER_LIMIT = #{finalOtherLimit,jdbcType=VARCHAR }
+		</if>
+		<if test="adjustindex != null and adjustindex != ''  " >
+			and ADJUSTINDEX = #{adjustindex,jdbcType=VARCHAR }
+		</if>
+		<if test="auditisriskJj != null and auditisriskJj != ''  " >
+			and AUDITISRISK_JJ = #{auditisriskJj,jdbcType=VARCHAR }
+		</if>
+		<if test="versionCode != null and versionCode != ''  " >
+			and VERSION_CODE = #{versionCode,jdbcType=VARCHAR }
+		</if>
+		<if test="brWorkplace != null and brWorkplace != ''  " >
+			and BR_WORKPLACE = #{brWorkplace,jdbcType=VARCHAR }
+		</if>
+		<if test="brEdulevel != null and brEdulevel != ''  " >
+			and BR_EDULEVEL = #{brEdulevel,jdbcType=VARCHAR }
+		</if>
+		<if test="brScore != null and brScore != ''  " >
+			and BR_SCORE = #{brScore,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="extCheckIdFlag != null and extCheckIdFlag != ''  " >
+			and EXT_CHECK_ID_FLAG = #{extCheckIdFlag,jdbcType=VARCHAR }
+		</if>
+		<if test="extCheckIdRs != null and extCheckIdRs != ''  " >
+			and EXT_CHECK_ID_RS = #{extCheckIdRs,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceType != null and deviceType != ''  " >
+			and DEVICE_TYPE = #{deviceType,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceGps != null and deviceGps != ''  " >
+			and DEVICE_GPS = #{deviceGps,jdbcType=VARCHAR }
+		</if>
+		<if test="deviceGpsCn != null and deviceGpsCn != ''  " >
+			and DEVICE_GPS_CN = #{deviceGpsCn,jdbcType=VARCHAR }
+		</if>
+		<if test="weChatNickName != null and weChatNickName != ''  " >
+			and WE_CHAT_NICK_NAME = #{weChatNickName,jdbcType=VARCHAR }
+		</if>
+		<if test="telOperatorsType != null and telOperatorsType != ''  " >
+			and TEL_OPERATORS_TYPE = #{telOperatorsType,jdbcType=VARCHAR }
+		</if>
+		<if test="telBelong != null and telBelong != ''  " >
+			and TEL_BELONG = #{telBelong,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

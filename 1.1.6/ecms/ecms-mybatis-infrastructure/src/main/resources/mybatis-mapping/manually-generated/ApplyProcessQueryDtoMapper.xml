@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyProcessQuery">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyProcessQueryDto" >
+		<!--TM_APP_MAIN 表数据-->
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="SUG_LMT" property="sugLmt" jdbcType="DECIMAL" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="IMAGE_NUM" property="imageNum" jdbcType="VARCHAR" />
+		<result column="APP_PROPERTY" property="appProperty" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="TASK_LAST_OP_USER" property="taskLastOpUser" jdbcType="VARCHAR" />
+		<result column="OWNER" property="owner" jdbcType="VARCHAR" />
+		<result column="TASK_ID" property="taskId" jdbcType="VARCHAR" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="FILE_FLAG" property="fileFlag" jdbcType="VARCHAR" />
+		<!--TM_APP_CUST_INFO 表数据-->
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+		<result column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<!--TM_APP_PRIM_CARD_INFO 表数据-->
+		<result column="SPREADER_NO" property="spreader" jdbcType="VARCHAR" />
+		<result column="INPUT_NO" property="inputUser" jdbcType="VARCHAR" />
+		<result column="INPUT_DATE" property="inputDate" jdbcType="TIMESTAMP" />
+		<result column="SPREADER_IS_EFF" property="spreaderIsEff" jdbcType="VARCHAR" />
+		<!--TM_MIR_CARD 表数据-->
+		<result column="ACTIVATE_IND" property="activateInd" jdbcType="VARCHAR" />
+		<result column="IF_SWIPED" property="ifSwiped" jdbcType="VARCHAR" />
+		<result column="IF_NEW_USER" property="ifNewUser" jdbcType="VARCHAR" />
+		<!--ACT_RU_TASK 表数据-->
+		<result column="ASSIGNEE" property="assignee" jdbcType="VARCHAR" />
+		<result column="TASK_DEF_KEY" property="taskDefKey" jdbcType="VARCHAR" />
+		<!--TM_APP_AUDIT 表数据-->
+		<result column="IS_INSTALMENT" property="isInstalment" jdbcType="VARCHAR" />
+		<result column="IS_REALTIME_ISSUING" property="isRealtimeIssuing" jdbcType="VARCHAR" />
+		<result column="IS_OLD_CUST" property="isOldCust" jdbcType="VARCHAR" />
+		<result column="IS_RETURNED" property="isReturned" jdbcType="VARCHAR" />
+		<result column="IS_RETRIAL_APP" property="isRetrialApp" jdbcType="VARCHAR" />
+		<result column="IS_HAVE_RETRIAL" property="isHaveRetrial" jdbcType="VARCHAR" />
+		<!--TM_APP_AUDIT 表数据-->
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+		<!--TM_PRODUCT 表数据-->
+		<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+		<result column="SPREADER_NO" property="spreaderNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_SUP_CODE" property="spreaderSupCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_AREA_CODE" property="spreaderAreaCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 独立主卡及主付同申 -->
+	<select id="selectMain" resultMap="BaseResultMap" parameterType="map">
+		SELECT*FROM (
+		SELECT A.ACC_LMT,A.SUG_LMT,A.APP_NO,
+		A.APP_TYPE,A.RTF_STATE,A.PRODUCT_CD,A.APP_SOURCE,A.OWNING_BRANCH,A.IMAGE_NUM,
+		A.APP_PROPERTY,A.REFUSE_CODE,A.TASK_LAST_OP_USER,A.CREATE_DATE,A.UPDATE_DATE,A.FILE_FLAG,A.TASK_OWNER as OWNER,
+		B.NAME,B.ID_TYPE,B.ID_NO,B.CELLPHONE,B.RECORD_STATUS,B.BSC_SUPP_IND,B.CORP_NAME,B.EMP_PHONE,
+		C.INPUT_NO,C.INPUT_DATE,C.SPREADER_NO,C.SPREADER_NAME,C.SPREADER_IS_EFF,c.SPREADER_SUP_CODE,c.SPREADER_AREA_CODE,
+		(select card.card_no From tm_mir_card card where card.app_no=b.app_no AND ROWNUM=1 ) as CARD_NO,
+		(SELECT card.block_code FROM tm_mir_card card WHERE card.app_no=b.app_no and card.BSC_SUPP_IND=b.BSC_SUPP_IND AND ROWNUM=1)
+		as BLOCK_CODE,
+		(select card.if_swiped From tm_mir_card card where card.app_no=a.app_no AND ROWNUM=1) as IF_SWIPED,
+		(select card.activate_ind From tm_mir_card card where card.app_no=a.app_no AND ROWNUM=1) as ACTIVATE_IND
+		FROM TM_APP_CUST_INFO B,Tm_App_Prim_Card_Info C ,TM_APP_MAIN A left join TM_MIR_CARD E
+		on A.app_no=E.app_no
+		WHERE A.APP_NO=B.APP_NO and A.APP_NO=C.APP_NO
+		<if test="ifSwiped != null and ifSwiped  != '' ">
+			AND e.IF_SWIPED = #{ifSwiped,jdbcType=VARCHAR }
+		</if>
+		<if test="ifNewUser != null and ifNewUser  != '' ">
+			AND e.IF_NEW_USER = #{ifNewUser,jdbcType=VARCHAR }
+		</if>
+		) t   WHERE 1=1
+		<if test="name != null and name != '' " >
+			AND t.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idType != null and idType != '' " >
+			AND t.ID_TYPE= #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != '' " >
+			AND t.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="cardNo != null and cardNo != '' " >
+			AND t.CARD_NO LIKE CONCAT(CONCAT('%',#{cardNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appNo != null and appNo != '' " >
+			AND t.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="productCd != null and productCd != '' " >
+			AND t.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource!= null and appSource != '' " >
+			AND t.APP_SOURCE= #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != '' " >
+			AND t.IMAGE_NUM = #{imageNum,jdbcType=VARCHAR}
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0  ">
+			AND t.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="cellPhone != null and cellPhone != '' " >
+			AND t.CELLPHONE LIKE CONCAT(CONCAT('%',#{cellPhone,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="corpName != null and corpName != '' " >
+			AND t.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="empPhone != null and empPhone  != '' " >
+			AND t.EMP_PHONE LIKE CONCAT(CONCAT('%',#{empPhone,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="fileFlag != null and fileFlag != '' " >
+			AND t.FILE_FLAG= #{fileFlag,jdbcType=VARCHAR }
+		</if>
+		<if test="owner != null and owner != '' " >
+			AND t.OWNER LIKE CONCAT(CONCAT('%',#{owner,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="rtfState != null and rtfState != '' " >
+			AND t.RTF_STATE IN
+			<foreach item="item" index="index" collection="rtfState"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notInState != null and notInState != '' " >
+			AND t.RTF_STATE not IN
+			<foreach item="item" index="index" collection="notInState"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="beginDate != null and beginDate != '' " >
+			AND t.CREATE_DATE &gt;= #{beginDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' " >
+			AND t.CREATE_DATE &lt;= #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="spreader != null and spreader != '' " >
+			AND (t.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreader,jdbcType=VARCHAR }),'%')
+			OR t.SPREADER_NO =#{spreader,jdbcType=VARCHAR})
+		</if>
+		<if test="spreaderSupCode != null and spreaderSupCode != '' " >
+			AND t.SPREADER_SUP_CODE= #{spreaderSupCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderAreaCode != null and spreaderAreaCode != '' " >
+			AND t.SPREADER_AREA_CODE= #{spreaderAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="inputUser != null and inputUser != '' " >
+			AND (t.INPUT_NAME LIKE CONCAT(CONCAT('%',#{inputUser,jdbcType=VARCHAR }),'%')
+			OR t.INPUT_NO LIKE CONCAT(CONCAT('%',#{inputUser,jdbcType=VARCHAR }),'%'))
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and  _SORT_NAME =='CELL_PHONE'" >
+			<if test="_SORT_NAME='CELL_PHONE'">
+				ORDER BY t.CELLPHONE ${_SORT_ORDER}
+			</if>
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and  _SORT_NAME !='CELL_PHONE'" >
+			ORDER BY ${_SORT_NAME} ${_SORT_ORDER}
+		</if>
+		<if test="_SORT_ORDER == null or _SORT_ORDER  == '' or  _SORT_NAME ==null or  _SORT_NAME ==''" >
+			ORDER BY t.APP_NO desc
+		</if>
+	</select>
+	
+	<!-- 独立主卡及主付同申 -->
+	<select id="selectApplyByState" resultMap="BaseResultMap" parameterType="map">
+		select m.app_no ,m.RTF_STATE,m.APP_SOURCE,c.SPREADER_IS_EFF 
+		from TM_APP_MAIN m,TM_APP_PRIM_CARD_INFO c where m.app_no=c.app_no  
+		<if test="name != null and name != '' " >
+			AND m.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idType != null and idType != '' " >
+			AND m.ID_TYPE= #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != '' " >
+			AND m.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appNo != null and appNo != '' " >
+			AND m.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="productCd != null and productCd != '' " >
+			AND m.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource!= null and appSource != '' " >
+			AND m.APP_SOURCE= #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != '' " >
+			AND m.RTF_STATE IN
+			<foreach item="item" index="index" collection="rtfState"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notInState != null and notInState != '' " >
+			AND m.RTF_STATE not IN
+			<foreach item="item" index="index" collection="notInState"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="spreader != null and spreader  != '' " >
+			AND c.SPREADER_NO= #{spreader,jdbcType=VARCHAR }
+		</if>
+		<if test="spreIsEff != null and spreIsEff  != '' " >
+			AND c.SPREADER_IS_EFF = #{spreIsEff,jdbcType=VARCHAR }
+		</if>
+		<if test="_SORT_ORDER == null or _SORT_ORDER  == '' or  _SORT_NAME ==null or  _SORT_NAME ==''" >
+			ORDER BY m.APP_NO desc
+		</if>
+	</select>
+
+</mapper>

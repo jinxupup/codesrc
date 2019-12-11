@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+	<import resource="steps/s1111-updateStatus.xml" />
+	<import resource="steps/s0000-createapply.xml" />
+	<import resource="steps/s0010-applyresponse.xml" />
+	<import resource="steps/s0020-cardResult.xml" />
+	<!-- <import resource="steps/s1501-synchroblockcode.xml" /> -->
+	
+	<!-- 账户文件 -->
+	<import resource="steps/s1500-synchroacctblockcode.xml" />
+	<!-- 卡片文件 -->
+	<import resource="steps/s1501-synchrocardblockcode.xml" />
+	<!-- 分贷通绑卡文件 -->
+	<import resource="steps/s1502-CardBindResponse.xml" />
+	<!-- <import resource="steps/s2000-applysucceedreport.xml" />
+	<import resource="steps/s2500-applyRejectdreport.xml" />
+	<import resource="steps/s2600-applyPatchBlotRpt.xml" /> -->
+	<import resource="steps/s1601-filecustomer-imp.xml"/>
+	<import resource="steps/file-wait.xml"/>
+	<import resource="steps/file-wait-customer.xml"/>
+	<!-- <import resource="steps/s5000-init-branch.xml"/>
+	<import resource="steps/bmp-file-wait.xml"/> -->
+	<import resource="steps/s1700-updateMerchantLoanBal.xml"/>
+	<import resource="steps/s1800-synchroProgsParam.xml"/>
+	<import resource="steps/s1650-updateInstalWithFrozenDays.xml"/>
+	<import resource="steps/s3000-refreshParam.xml"/>
+
+	<!-- 批量步骤模版，目前用于定义一组listener -->
+	<batch:step id="stepTemplate" abstract="true">
+		<batch:listeners>
+			<batch:listener ref="gmpBatchStatusListener" />
+			<batch:listener>
+				<bean class="com.jjb.unicorn.batch.DebugSupportListener" />
+			</batch:listener>
+		</batch:listeners>
+	</batch:step>
+	
+	<!-- 用于支持并发批量的线程池 -->
+	<task:executor id="asyncTaskExecutor" pool-size="#{env['batchTaskPoolSize'] ?: 16}"/>
+
+	<batch:job id="casJob">
+		<batch:listeners>
+			<batch:listener ref="gmpBatchStatusListener" />
+			<batch:listener ref="gmpCommandExecutionListener" />
+		</batch:listeners>
+		<batch:validator>
+			<bean class="com.jjb.acl.gmp.sdk.BatchDateJobParametersValidator" />
+		</batch:validator>
+		
+		<!-- 等待分行信息文件 -->
+		<batch:step parent="stepTemplate" id="bmp-file-wait" next="s5000-init-branch">
+			<batch:tasklet ref="bmpFileWait" />
+		</batch:step>
+		
+		<!-- 分行机构初始化 -->
+		<batch:step parent="stepTemplate" id="s5000-init-branch" next="s3001-refreshParam">
+			<batch:tasklet>
+				<batch:chunk reader="r5000" processor="p5000" writer="w5000" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+	
+		<!-- 刷新参数缓存-->
+		<batch:step parent="stepTemplate" id="s3001-refreshParam" next="s1111-updateStatus">
+			<batch:tasklet ref="s3001RefreshParam" />
+		</batch:step>
+		
+		<!-- 处理申请件状态 -->
+		<batch:step parent="stepTemplate" id="s1111-updateStatus" next="s0000-createapply">
+			<batch:tasklet ref="s1111UpdateStatus" />
+		</batch:step>
+		
+		<!-- 创建申请文件 -->
+	 	<batch:step id="s0000-createapply" parent="stepTemplate" next="s0000Exporter">
+			<batch:tasklet>
+				<batch:chunk reader="r0000CreateApply" processor="p0000CreateApply"	writer="w0000CreateApply" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		<batch:step id="s0000Exporter" parent="stepTemplate" next="file-wait">
+			<batch:tasklet ref="e0000Exporter"/>
+		</batch:step>
+
+		<!--等待建账制卡核心回盘文件-->
+		<batch:step parent="stepTemplate" id="file-wait" next="s0010-applyresponse">
+			<batch:tasklet ref="fileWait" />
+		</batch:step>
+
+		<!-- 建账制卡核心回盘文件处理 -->
+		 <batch:step id="s0010-applyresponse" parent="stepTemplate" next="file-wait-customer-account-card">
+			<batch:tasklet>
+				<batch:chunk reader="r0010ApplyResponse" processor="p0010ApplyResponse"	writer="w0010ApplyResponse" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		
+		<!-- MPS回盘文件处理 -->
+		<!--  暂不处理回盘
+		 <batch:step id="s0020-cardResult" parent="stepTemplate" next="file-wait-customer-account-card">
+			<batch:tasklet>
+				<batch:chunk reader="r0020CardResult" processor="p0020CardResult"	writer="w0020CardResult" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		 -->
+
+		<!-- 同步核心卡账状态 -->
+ 		<!-- <batch:step id="s1501-synchroblockcode" parent="stepTemplate" next="file-wait-customer">
+			<batch:tasklet>
+				<batch:chunk reader="r1501synchroblockcode" processor="p1501synchroblockcode" writer="w1501synchroblockcode" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step> -->
+		
+		<!--等待客户、账户和卡片信息的文件-->
+		<batch:step id="file-wait-customer-account-card" parent="stepTemplate"  next="s1500-synchroacctblockcode">
+			<batch:tasklet ref="fileWaitCustomerAccountCard" />
+		</batch:step>
+		
+		<!-- 同步账户状态 -->
+		<batch:step id="s1500-synchroacctblockcode" parent="stepTemplate" next="s1501-synchrocardblockcode">
+			<batch:tasklet>
+				<batch:chunk reader="r1501synchroacctblockcode" processor="p1501synchroacctblockcode" writer="w1501synchroacctblockcode" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		
+		<!-- 同步卡片状态 -->
+		<batch:step id="s1501-synchrocardblockcode" parent="stepTemplate" next="s1601-filecustomer-imp">
+			<batch:tasklet>
+				<batch:chunk reader="r1501synchrocardblockcode" processor="p1501synchrocardblockcode" writer="w1501synchrocardblockcode" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		<!--读取客户信息-->
+		<batch:step id="s1601-filecustomer-imp" parent="stepTemplate" next="synchro-progs-merchant">
+			<batch:tasklet>
+				<batch:chunk reader="r1601" processor="p1601" writer="w1601" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step> 
+
+		<!-- 分期参数同步 -->
+		<batch:step parent="stepTemplate" id="synchro-progs" next="synchro-progs-merchant">
+			<batch:tasklet ref="synchroProg" />
+		</batch:step>
+		<batch:step parent="stepTemplate" id="synchro-progs-merchant" next="synchro-progs-terms">
+			<batch:tasklet ref="synchroProgMer" />
+		</batch:step>
+		<batch:step parent="stepTemplate" id="synchro-progs-terms" next="file-wait-merchantLoanBal">
+			<batch:tasklet ref="synchroProgTerms" />
+		</batch:step>
+		<!--等待核心分期商户余额同步文件-->
+		<batch:step parent="stepTemplate" id="file-wait-merchantLoanBal" next="s1650-updateInstalWithFrozenDays-process">
+			<batch:tasklet ref="merchantLoanBalInfoFileWait" />
+		</batch:step>
+
+		<!-- 根据产品的未放款分期额度冻结天数更新状态 -->
+		 <batch:step id="s1650-updateInstalWithFrozenDays-process" parent="stepTemplate" next="s1700-merchantLoanBal-process">
+			<batch:tasklet>
+				<batch:chunk reader="r1650UpdateInstalWithFrozenDays" processor="p1650UpdateInstalWithFrozenDays"	writer="w1650UpdateInstalWithFrozenDays" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		
+		<!-- 核心分期商户余额同步文件处理 -->
+		 <batch:step id="s1700-merchantLoanBal-process" parent="stepTemplate" next="s3002-refreshGlobeParam">
+			<batch:tasklet>
+				<batch:chunk reader="r1700synchroMerchantLoanBal" processor="p1700synchroMerchantLoanBal"	writer="w1700synchroMerchantLoanBal" commit-interval="100" />
+			</batch:tasklet>
+		</batch:step>
+		
+		<!-- 发送刷新参数缓存消息广播-->
+		<batch:step parent="stepTemplate" id="s3002-refreshGlobeParam" >
+			<batch:tasklet ref="s3002RefreshGlobeParam" />
+		</batch:step>
+	</batch:job>
+
+</beans>
+

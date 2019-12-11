@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmProductProcessMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmProductProcess" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="PROCDEF_KEY" property="procdefKey" jdbcType="VARCHAR" />
+		<result column="IS_DEFAULT" property="isDefault" jdbcType="VARCHAR" />
+		<result column="RISKPRODUCT1" property="riskproduct1" jdbcType="VARCHAR" />
+		<result column="RISKPRODUCT2" property="riskproduct2" jdbcType="VARCHAR" />
+		<result column="RISKPRODUCT3" property="riskproduct3" jdbcType="VARCHAR" />
+		<result column="RISKPRODUCT4" property="riskproduct4" jdbcType="VARCHAR" />
+		<result column="RISKPRODUCT5" property="riskproduct5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_PRODUCT_PROCESS_TABLE_FIELD">ID,PRODUCT_CD,PRODUCT_DESC,APP_SOURCE,PROCDEF_KEY,IS_DEFAULT,RISKPRODUCT1,RISKPRODUCT2,RISKPRODUCT3,RISKPRODUCT4,RISKPRODUCT5</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_PRODUCT_PROCESS_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_PRODUCT_PROCESS
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmProductProcess" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_PRODUCT_PROCESS ( <include refid="TM_PRODUCT_PROCESS_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{productCd,jdbcType=VARCHAR } , #{productDesc,jdbcType=VARCHAR } ,
+			 #{appSource,jdbcType=VARCHAR } , #{procdefKey,jdbcType=VARCHAR } , #{isDefault,jdbcType=VARCHAR } , #{riskproduct1,jdbcType=VARCHAR } ,
+			 #{riskproduct2,jdbcType=VARCHAR } , #{riskproduct3,jdbcType=VARCHAR } , #{riskproduct4,jdbcType=VARCHAR } , #{riskproduct5,jdbcType=VARCHAR }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProductProcess">
+		update TM_PRODUCT_PROCESS 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			PRODUCT_DESC =#{productDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },
+		</if>
+		<if test="procdefKey != null and procdefKey != ''  " >
+			PROCDEF_KEY =#{procdefKey,jdbcType=VARCHAR },
+		</if>
+		<if test="isDefault != null and isDefault != ''  " >
+			IS_DEFAULT =#{isDefault,jdbcType=VARCHAR },
+		</if>
+		<if test="riskproduct1 != null and riskproduct1 != ''  " >
+			RISKPRODUCT1 =#{riskproduct1,jdbcType=VARCHAR },
+		</if>
+		<if test="riskproduct2 != null and riskproduct2 != ''  " >
+			RISKPRODUCT2 =#{riskproduct2,jdbcType=VARCHAR },
+		</if>
+		<if test="riskproduct3 != null and riskproduct3 != ''  " >
+			RISKPRODUCT3 =#{riskproduct3,jdbcType=VARCHAR },
+		</if>
+		<if test="riskproduct4 != null and riskproduct4 != ''  " >
+			RISKPRODUCT4 =#{riskproduct4,jdbcType=VARCHAR },
+		</if>
+		<if test="riskproduct5 != null and riskproduct5 != ''  " >
+			RISKPRODUCT5 =#{riskproduct5,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProductProcess">
+		update TM_PRODUCT_PROCESS 
+		<trim prefix="set" suffixOverrides=","> 
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			PRODUCT_DESC =#{productDesc,jdbcType=VARCHAR },		
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },		
+			PROCDEF_KEY =#{procdefKey,jdbcType=VARCHAR },		
+			IS_DEFAULT =#{isDefault,jdbcType=VARCHAR },		
+			RISKPRODUCT1 =#{riskproduct1,jdbcType=VARCHAR },		
+			RISKPRODUCT2 =#{riskproduct2,jdbcType=VARCHAR },		
+			RISKPRODUCT3 =#{riskproduct3,jdbcType=VARCHAR },		
+			RISKPRODUCT4 =#{riskproduct4,jdbcType=VARCHAR },		
+			RISKPRODUCT5 =#{riskproduct5,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_PRODUCT_PROCESS_TABLE_FIELD" />		
+		from TM_PRODUCT_PROCESS
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_PRODUCT_PROCESS_TABLE_FIELD" />		
+ 		from TM_PRODUCT_PROCESS
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			and PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="procdefKey != null and procdefKey != ''  " >
+			and PROCDEF_KEY = #{procdefKey,jdbcType=VARCHAR }
+		</if>
+		<if test="isDefault != null and isDefault != ''  " >
+			and IS_DEFAULT = #{isDefault,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct1 != null and riskproduct1 != ''  " >
+			and RISKPRODUCT1 = #{riskproduct1,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct2 != null and riskproduct2 != ''  " >
+			and RISKPRODUCT2 = #{riskproduct2,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct3 != null and riskproduct3 != ''  " >
+			and RISKPRODUCT3 = #{riskproduct3,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct4 != null and riskproduct4 != ''  " >
+			and RISKPRODUCT4 = #{riskproduct4,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct5 != null and riskproduct5 != ''  " >
+			and RISKPRODUCT5 = #{riskproduct5,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_PRODUCT_PROCESS
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			and PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="procdefKey != null and procdefKey != ''  " >
+			and PROCDEF_KEY = #{procdefKey,jdbcType=VARCHAR }
+		</if>
+		<if test="isDefault != null and isDefault != ''  " >
+			and IS_DEFAULT = #{isDefault,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct1 != null and riskproduct1 != ''  " >
+			and RISKPRODUCT1 = #{riskproduct1,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct2 != null and riskproduct2 != ''  " >
+			and RISKPRODUCT2 = #{riskproduct2,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct3 != null and riskproduct3 != ''  " >
+			and RISKPRODUCT3 = #{riskproduct3,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct4 != null and riskproduct4 != ''  " >
+			and RISKPRODUCT4 = #{riskproduct4,jdbcType=VARCHAR }
+		</if>
+		<if test="riskproduct5 != null and riskproduct5 != ''  " >
+			and RISKPRODUCT5 = #{riskproduct5,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

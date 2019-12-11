@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppHistoryMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppHistory" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="PRO_NUM" property="proNum" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_HISTORY_TABLE_FIELD">ID,ORG,APP_NO,NAME,ID_NO,PRO_NUM,PRO_NAME,RTF_STATE,REFUSE_CODE,REMARK,OPERATOR_ID,CREATE_DATE,JPA_VERSION,ID_TYPE</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_HISTORY_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_HISTORY
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppHistory" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_HISTORY ( <include refid="TM_APP_HISTORY_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{name,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{proNum,jdbcType=VARCHAR } , #{proName,jdbcType=VARCHAR } ,
+			 #{rtfState,jdbcType=VARCHAR } , #{refuseCode,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } , #{idType,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppHistory">
+		update TM_APP_HISTORY 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			PRO_NUM =#{proNum,jdbcType=VARCHAR },
+		</if>
+		<if test="proName != null and proName != ''  " >
+			PRO_NAME =#{proName,jdbcType=VARCHAR },
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppHistory">
+		update TM_APP_HISTORY 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			PRO_NUM =#{proNum,jdbcType=VARCHAR },		
+			PRO_NAME =#{proName,jdbcType=VARCHAR },		
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },		
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_HISTORY_TABLE_FIELD" />		
+		from TM_APP_HISTORY
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_HISTORY_TABLE_FIELD" />		
+ 		from TM_APP_HISTORY
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			and PRO_NUM = #{proNum,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != ''  " >
+			and PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_HISTORY
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			and PRO_NUM = #{proNum,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != ''  " >
+			and PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

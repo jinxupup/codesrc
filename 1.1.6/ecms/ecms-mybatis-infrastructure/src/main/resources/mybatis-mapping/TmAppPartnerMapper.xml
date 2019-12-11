@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppPartnerMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppPartner" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELL_PHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="EXIT_CARD" property="exitCard" jdbcType="VARCHAR" />
+		<result column="PARTNER_TYPE" property="partnerType" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_DEPARTMENT" property="empDepartment" jdbcType="VARCHAR" />
+		<result column="DECISION_RESULT" property="decisionResult" jdbcType="VARCHAR" />
+		<result column="REFUSE_REASON" property="refuseReason" jdbcType="VARCHAR" />
+		<result column="DECISION_JSON" property="decisionJson" jdbcType="CLOB" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_PARTNER_TABLE_FIELD">ID,NAME,ID_NO,CELL_PHONE,EXIT_CARD,PARTNER_TYPE,CORP_NAME,EMP_DEPARTMENT,DECISION_RESULT,REFUSE_REASON,DECISION_JSON,CREATE_DATE,UPDATE_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_PARTNER_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_PARTNER
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppPartner" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_PARTNER ( <include refid="TM_APP_PARTNER_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{name,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } ,
+			 #{cellPhone,jdbcType=VARCHAR } , #{exitCard,jdbcType=VARCHAR } , #{partnerType,jdbcType=VARCHAR } , #{corpName,jdbcType=VARCHAR } ,
+			 #{empDepartment,jdbcType=VARCHAR } , #{decisionResult,jdbcType=VARCHAR } , #{refuseReason,jdbcType=VARCHAR } , #{decisionJson,jdbcType=CLOB } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{updateDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPartner">
+		update TM_APP_PARTNER 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="exitCard != null and exitCard != ''  " >
+			EXIT_CARD =#{exitCard,jdbcType=VARCHAR },
+		</if>
+		<if test="partnerType != null and partnerType != ''  " >
+			PARTNER_TYPE =#{partnerType,jdbcType=VARCHAR },
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },
+		</if>
+		<if test="empDepartment != null and empDepartment != ''  " >
+			EMP_DEPARTMENT =#{empDepartment,jdbcType=VARCHAR },
+		</if>
+		<if test="decisionResult != null and decisionResult != ''  " >
+			DECISION_RESULT =#{decisionResult,jdbcType=VARCHAR },
+		</if>
+		<if test="refuseReason != null and refuseReason != ''  " >
+			REFUSE_REASON =#{refuseReason,jdbcType=VARCHAR },
+		</if>
+		<if test="decisionJson != null and decisionJson != ''  " >
+			DECISION_JSON =#{decisionJson,jdbcType=CLOB },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPartner">
+		update TM_APP_PARTNER 
+		<trim prefix="set" suffixOverrides=","> 
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },		
+			EXIT_CARD =#{exitCard,jdbcType=VARCHAR },		
+			PARTNER_TYPE =#{partnerType,jdbcType=VARCHAR },		
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },		
+			EMP_DEPARTMENT =#{empDepartment,jdbcType=VARCHAR },		
+			DECISION_RESULT =#{decisionResult,jdbcType=VARCHAR },		
+			REFUSE_REASON =#{refuseReason,jdbcType=VARCHAR },		
+			DECISION_JSON =#{decisionJson,jdbcType=CLOB },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_PARTNER_TABLE_FIELD" />		
+		from TM_APP_PARTNER
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_PARTNER_TABLE_FIELD" />		
+ 		from TM_APP_PARTNER
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="exitCard != null and exitCard != ''  " >
+			and EXIT_CARD = #{exitCard,jdbcType=VARCHAR }
+		</if>
+		<if test="partnerType != null and partnerType != ''  " >
+			and PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empDepartment != null and empDepartment != ''  " >
+			and EMP_DEPARTMENT = #{empDepartment,jdbcType=VARCHAR }
+		</if>
+		<if test="decisionResult != null and decisionResult != ''  " >
+			and DECISION_RESULT = #{decisionResult,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseReason != null and refuseReason != ''  " >
+			and REFUSE_REASON = #{refuseReason,jdbcType=VARCHAR }
+		</if>
+		<if test="decisionJson != null and decisionJson != ''  " >
+			and DECISION_JSON = #{decisionJson,jdbcType=CLOB }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_PARTNER
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="exitCard != null and exitCard != ''  " >
+			and EXIT_CARD = #{exitCard,jdbcType=VARCHAR }
+		</if>
+		<if test="partnerType != null and partnerType != ''  " >
+			and PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empDepartment != null and empDepartment != ''  " >
+			and EMP_DEPARTMENT = #{empDepartment,jdbcType=VARCHAR }
+		</if>
+		<if test="decisionResult != null and decisionResult != ''  " >
+			and DECISION_RESULT = #{decisionResult,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseReason != null and refuseReason != ''  " >
+			and REFUSE_REASON = #{refuseReason,jdbcType=VARCHAR }
+		</if>
+		<if test="decisionJson != null and decisionJson != ''  " >
+			and DECISION_JSON = #{decisionJson,jdbcType=CLOB }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

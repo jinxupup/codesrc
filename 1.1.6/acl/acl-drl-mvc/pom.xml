@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.acl</groupId>
+		<artifactId>acl-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>acl-drl-mvc</artifactId>
+	<packaging>jar</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<drools.version>5.5.0.Final</drools.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-web-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-dao</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-infrastructure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-facility</artifactId>
+		</dependency>
+		<!-- -->
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-access</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<!-- Fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+
+		<!-- 文件上传 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-spring</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<!-- <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-validator</artifactId>
+	        <version>4.2.0.Final</version>
+	      </dependency> -->
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+		  	<plugins>
+		  		<plugin>
+					<groupId>com.jjb.unicorn</groupId>
+					<artifactId>unicorn-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>mybatis_oracle</goal>
+							</goals>
+							<phase>generate-sources</phase>
+						</execution>
+					</executions>
+					<configuration>
+						<sources>
+							<source>dmp-oracle.erm</source>
+						</sources>
+						<basePackage>com.jjb.dmp.infrastructure</basePackage>
+						<outputDirectory>${basedir}/src/main/java</outputDirectory>
+						<useAutoTrimType>false</useAutoTrimType>
+						<versionField>JPA_VERSION</versionField>
+					</configuration>
+				</plugin>
+	  		</plugins>
+  		</pluginManagement>
+  </build>
+</project>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclUserMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclUser" >
+		<id column="USER_ID" property="userId" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+		<result column="SALT" property="salt" jdbcType="VARCHAR" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR" />
+		<result column="STATE_UPDATE" property="stateUpdate" jdbcType="TIMESTAMP" />
+		<result column="WORK_STATUS" property="workStatus" jdbcType="VARCHAR" />
+		<result column="WORK_STATUS_UPDATE" property="workStatusUpdate" jdbcType="TIMESTAMP" />
+		<result column="WORK_STATUS_UPDATE_END" property="workStatusUpdateEnd" jdbcType="TIMESTAMP" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="LOGIN_STATE" property="loginState" jdbcType="VARCHAR" />
+		<result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+		<result column="LOGOUT_TIME" property="logoutTime" jdbcType="TIMESTAMP" />
+		<result column="LOGOUT_TYPE" property="logoutType" jdbcType="VARCHAR" />
+		<result column="LOGIN_IP" property="loginIp" jdbcType="VARCHAR" />
+		<result column="SESSION_ID" property="sessionId" jdbcType="VARCHAR" />
+		<result column="RETRY" property="retry" jdbcType="INTEGER" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CTRY_CD" property="ctryCd" jdbcType="VARCHAR" />
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+		<result column="CITY" property="city" jdbcType="VARCHAR" />
+		<result column="ZONE" property="zone" jdbcType="VARCHAR" />
+		<result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="DEPAPMENT" property="depapment" jdbcType="VARCHAR" />
+		<result column="POST" property="post" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="CELLPHOME" property="cellphome" jdbcType="VARCHAR" />
+		<result column="PASSWORD_UPDATE" property="passwordUpdate" jdbcType="TIMESTAMP" />
+		<result column="PASSWORD_EXPIRE_DATE" property="passwordExpireDate" jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT1" property="textObject1" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT2" property="textObject2" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT3" property="textObject3" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT4" property="textObject4" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT5" property="textObject5" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT6" property="textObject6" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_USER_TABLE_FIELD">ORG,USER_ID,PASSWORD,SALT,USER_NO,STATUS,USER_NAME,BRANCH_CODE,STATE_UPDATE,WORK_STATUS,WORK_STATUS_UPDATE,WORK_STATUS_UPDATE_END,USER_TYPE,LOGIN_STATE,LOGIN_TIME,LOGOUT_TIME,LOGOUT_TYPE,LOGIN_IP,SESSION_ID,RETRY,ID_NO,CTRY_CD,PROVINCE,CITY,ZONE,EMP_ADD,PHONE,DEPAPMENT,POST,EMAIL,CELLPHOME,PASSWORD_UPDATE,PASSWORD_EXPIRE_DATE,REMARK,TEXT_OBJECT1,TEXT_OBJECT2,TEXT_OBJECT3,TEXT_OBJECT4,TEXT_OBJECT5,TEXT_OBJECT6,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_ACL_USER_USER_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_USER
+		where 
+		USER_ID = #{userId, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclUser" >
+		<selectKey keyProperty="userId" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_ACL_USER ( <include refid="TM_ACL_USER_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{userId,jdbcType=INTEGER } , #{password,jdbcType=VARCHAR } ,
+			 #{salt,jdbcType=VARCHAR } , #{userNo,jdbcType=VARCHAR } , #{status,jdbcType=VARCHAR } , #{userName,jdbcType=VARCHAR } ,
+			 #{branchCode,jdbcType=VARCHAR } , #{stateUpdate,jdbcType=TIMESTAMP } , #{workStatus,jdbcType=VARCHAR } , #{workStatusUpdate,jdbcType=TIMESTAMP } ,
+			 #{workStatusUpdateEnd,jdbcType=TIMESTAMP } , #{userType,jdbcType=VARCHAR } , #{loginState,jdbcType=VARCHAR } , #{loginTime,jdbcType=TIMESTAMP } ,
+			 #{logoutTime,jdbcType=TIMESTAMP } , #{logoutType,jdbcType=VARCHAR } , #{loginIp,jdbcType=VARCHAR } , #{sessionId,jdbcType=VARCHAR } ,
+			 #{retry,jdbcType=INTEGER } , #{idNo,jdbcType=VARCHAR } , #{ctryCd,jdbcType=VARCHAR } , #{province,jdbcType=VARCHAR } ,
+			 #{city,jdbcType=VARCHAR } , #{zone,jdbcType=VARCHAR } , #{empAdd,jdbcType=VARCHAR } , #{phone,jdbcType=VARCHAR } ,
+			 #{depapment,jdbcType=VARCHAR } , #{post,jdbcType=VARCHAR } , #{email,jdbcType=VARCHAR } , #{cellphome,jdbcType=VARCHAR } ,
+			 #{passwordUpdate,jdbcType=TIMESTAMP } , #{passwordExpireDate,jdbcType=TIMESTAMP } , #{remark,jdbcType=VARCHAR } , #{textObject1,jdbcType=VARCHAR } ,
+			 #{textObject2,jdbcType=VARCHAR } , #{textObject3,jdbcType=VARCHAR } , #{textObject4,jdbcType=VARCHAR } , #{textObject5,jdbcType=VARCHAR } ,
+			 #{textObject6,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } ,
+			 #{updateBy,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclUser">
+		update TM_ACL_USER 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="password != null and password != ''  " >
+			PASSWORD =#{password,jdbcType=VARCHAR },
+		</if>
+		<if test="salt != null and salt != ''  " >
+			SALT =#{salt,jdbcType=VARCHAR },
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			USER_NO =#{userNo,jdbcType=VARCHAR },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="userName != null and userName != ''  " >
+			USER_NAME =#{userName,jdbcType=VARCHAR },
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			BRANCH_CODE =#{branchCode,jdbcType=VARCHAR },
+		</if>
+		<if test="stateUpdate != null and stateUpdate != ''  " >
+			STATE_UPDATE =#{stateUpdate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="workStatus != null and workStatus != ''  " >
+			WORK_STATUS =#{workStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="workStatusUpdate != null and workStatusUpdate != ''  " >
+			WORK_STATUS_UPDATE =#{workStatusUpdate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="workStatusUpdateEnd != null and workStatusUpdateEnd != ''  " >
+			WORK_STATUS_UPDATE_END =#{workStatusUpdateEnd,jdbcType=TIMESTAMP },
+		</if>
+		<if test="userType != null and userType != ''  " >
+			USER_TYPE =#{userType,jdbcType=VARCHAR },
+		</if>
+		<if test="loginState != null and loginState != ''  " >
+			LOGIN_STATE =#{loginState,jdbcType=VARCHAR },
+		</if>
+		<if test="loginTime != null and loginTime != ''  " >
+			LOGIN_TIME =#{loginTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="logoutTime != null and logoutTime != ''  " >
+			LOGOUT_TIME =#{logoutTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="logoutType != null and logoutType != ''  " >
+			LOGOUT_TYPE =#{logoutType,jdbcType=VARCHAR },
+		</if>
+		<if test="loginIp != null and loginIp != ''  " >
+			LOGIN_IP =#{loginIp,jdbcType=VARCHAR },
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			SESSION_ID =#{sessionId,jdbcType=VARCHAR },
+		</if>
+		<if test="retry != null and retry != ''  " >
+			RETRY =#{retry,jdbcType=INTEGER },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			CTRY_CD =#{ctryCd,jdbcType=VARCHAR },
+		</if>
+		<if test="province != null and province != ''  " >
+			PROVINCE =#{province,jdbcType=VARCHAR },
+		</if>
+		<if test="city != null and city != ''  " >
+			CITY =#{city,jdbcType=VARCHAR },
+		</if>
+		<if test="zone != null and zone != ''  " >
+			ZONE =#{zone,jdbcType=VARCHAR },
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },
+		</if>
+		<if test="phone != null and phone != ''  " >
+			PHONE =#{phone,jdbcType=VARCHAR },
+		</if>
+		<if test="depapment != null and depapment != ''  " >
+			DEPAPMENT =#{depapment,jdbcType=VARCHAR },
+		</if>
+		<if test="post != null and post != ''  " >
+			POST =#{post,jdbcType=VARCHAR },
+		</if>
+		<if test="email != null and email != ''  " >
+			EMAIL =#{email,jdbcType=VARCHAR },
+		</if>
+		<if test="cellphome != null and cellphome != ''  " >
+			CELLPHOME =#{cellphome,jdbcType=VARCHAR },
+		</if>
+		<if test="passwordUpdate != null and passwordUpdate != ''  " >
+			PASSWORD_UPDATE =#{passwordUpdate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="passwordExpireDate != null and passwordExpireDate != ''  " >
+			PASSWORD_EXPIRE_DATE =#{passwordExpireDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject1 != null and textObject1 != ''  " >
+			TEXT_OBJECT1 =#{textObject1,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject2 != null and textObject2 != ''  " >
+			TEXT_OBJECT2 =#{textObject2,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject3 != null and textObject3 != ''  " >
+			TEXT_OBJECT3 =#{textObject3,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject4 != null and textObject4 != ''  " >
+			TEXT_OBJECT4 =#{textObject4,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject5 != null and textObject5 != ''  " >
+			TEXT_OBJECT5 =#{textObject5,jdbcType=VARCHAR },
+		</if>
+		<if test="textObject6 != null and textObject6 != ''  " >
+			TEXT_OBJECT6 =#{textObject6,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		USER_ID = #{userId, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclUser">
+		update TM_ACL_USER 
+		<trim prefix="set" suffixOverrides=","> 
+			PASSWORD =#{password,jdbcType=VARCHAR },		
+			SALT =#{salt,jdbcType=VARCHAR },		
+			USER_NO =#{userNo,jdbcType=VARCHAR },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+			USER_NAME =#{userName,jdbcType=VARCHAR },		
+			BRANCH_CODE =#{branchCode,jdbcType=VARCHAR },		
+			STATE_UPDATE =#{stateUpdate,jdbcType=TIMESTAMP },		
+			WORK_STATUS =#{workStatus,jdbcType=VARCHAR },		
+			WORK_STATUS_UPDATE =#{workStatusUpdate,jdbcType=TIMESTAMP },		
+			WORK_STATUS_UPDATE_END =#{workStatusUpdateEnd,jdbcType=TIMESTAMP },		
+			USER_TYPE =#{userType,jdbcType=VARCHAR },		
+			LOGIN_STATE =#{loginState,jdbcType=VARCHAR },		
+			LOGIN_TIME =#{loginTime,jdbcType=TIMESTAMP },		
+			LOGOUT_TIME =#{logoutTime,jdbcType=TIMESTAMP },		
+			LOGOUT_TYPE =#{logoutType,jdbcType=VARCHAR },		
+			LOGIN_IP =#{loginIp,jdbcType=VARCHAR },		
+			SESSION_ID =#{sessionId,jdbcType=VARCHAR },		
+			RETRY =#{retry,jdbcType=INTEGER },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CTRY_CD =#{ctryCd,jdbcType=VARCHAR },		
+			PROVINCE =#{province,jdbcType=VARCHAR },		
+			CITY =#{city,jdbcType=VARCHAR },		
+			ZONE =#{zone,jdbcType=VARCHAR },		
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },		
+			PHONE =#{phone,jdbcType=VARCHAR },		
+			DEPAPMENT =#{depapment,jdbcType=VARCHAR },		
+			POST =#{post,jdbcType=VARCHAR },		
+			EMAIL =#{email,jdbcType=VARCHAR },		
+			CELLPHOME =#{cellphome,jdbcType=VARCHAR },		
+			PASSWORD_UPDATE =#{passwordUpdate,jdbcType=TIMESTAMP },		
+			PASSWORD_EXPIRE_DATE =#{passwordExpireDate,jdbcType=TIMESTAMP },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			TEXT_OBJECT1 =#{textObject1,jdbcType=VARCHAR },		
+			TEXT_OBJECT2 =#{textObject2,jdbcType=VARCHAR },		
+			TEXT_OBJECT3 =#{textObject3,jdbcType=VARCHAR },		
+			TEXT_OBJECT4 =#{textObject4,jdbcType=VARCHAR },		
+			TEXT_OBJECT5 =#{textObject5,jdbcType=VARCHAR },		
+			TEXT_OBJECT6 =#{textObject6,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		USER_ID = #{userId, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_USER_TABLE_FIELD" />		
+		from TM_ACL_USER
+		where 
+		USER_ID = #{userId, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_USER_TABLE_FIELD" />		
+ 		from TM_ACL_USER
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="password != null and password != ''  " >
+			and PASSWORD = #{password,jdbcType=VARCHAR }
+		</if>
+		<if test="salt != null and salt != ''  " >
+			and SALT = #{salt,jdbcType=VARCHAR }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="stateUpdate != null and stateUpdate != ''  " >
+			and STATE_UPDATE = #{stateUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="workStatus != null and workStatus != ''  " >
+			and WORK_STATUS = #{workStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="workStatusUpdate != null and workStatusUpdate != ''  " >
+			and WORK_STATUS_UPDATE = #{workStatusUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="workStatusUpdateEnd != null and workStatusUpdateEnd != ''  " >
+			and WORK_STATUS_UPDATE_END = #{workStatusUpdateEnd,jdbcType=TIMESTAMP }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="loginState != null and loginState != ''  " >
+			and LOGIN_STATE = #{loginState,jdbcType=VARCHAR }
+		</if>
+		<if test="loginTime != null and loginTime != ''  " >
+			and LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="logoutTime != null and logoutTime != ''  " >
+			and LOGOUT_TIME = #{logoutTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="logoutType != null and logoutType != ''  " >
+			and LOGOUT_TYPE = #{logoutType,jdbcType=VARCHAR }
+		</if>
+		<if test="loginIp != null and loginIp != ''  " >
+			and LOGIN_IP = #{loginIp,jdbcType=VARCHAR }
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			and SESSION_ID = #{sessionId,jdbcType=VARCHAR }
+		</if>
+		<if test="retry != null and retry != ''  " >
+			and RETRY = #{retry,jdbcType=INTEGER }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			and CTRY_CD = #{ctryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="province != null and province != ''  " >
+			and PROVINCE = #{province,jdbcType=VARCHAR }
+		</if>
+		<if test="city != null and city != ''  " >
+			and CITY = #{city,jdbcType=VARCHAR }
+		</if>
+		<if test="zone != null and zone != ''  " >
+			and ZONE = #{zone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="phone != null and phone != ''  " >
+			and PHONE = #{phone,jdbcType=VARCHAR }
+		</if>
+		<if test="depapment != null and depapment != ''  " >
+			and DEPAPMENT = #{depapment,jdbcType=VARCHAR }
+		</if>
+		<if test="post != null and post != ''  " >
+			and POST = #{post,jdbcType=VARCHAR }
+		</if>
+		<if test="email != null and email != ''  " >
+			and EMAIL = #{email,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphome != null and cellphome != ''  " >
+			and CELLPHOME = #{cellphome,jdbcType=VARCHAR }
+		</if>
+		<if test="passwordUpdate != null and passwordUpdate != ''  " >
+			and PASSWORD_UPDATE = #{passwordUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="passwordExpireDate != null and passwordExpireDate != ''  " >
+			and PASSWORD_EXPIRE_DATE = #{passwordExpireDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject1 != null and textObject1 != ''  " >
+			and TEXT_OBJECT1 = #{textObject1,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject2 != null and textObject2 != ''  " >
+			and TEXT_OBJECT2 = #{textObject2,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject3 != null and textObject3 != ''  " >
+			and TEXT_OBJECT3 = #{textObject3,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject4 != null and textObject4 != ''  " >
+			and TEXT_OBJECT4 = #{textObject4,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject5 != null and textObject5 != ''  " >
+			and TEXT_OBJECT5 = #{textObject5,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject6 != null and textObject6 != ''  " >
+			and TEXT_OBJECT6 = #{textObject6,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_USER
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="password != null and password != ''  " >
+			and PASSWORD = #{password,jdbcType=VARCHAR }
+		</if>
+		<if test="salt != null and salt != ''  " >
+			and SALT = #{salt,jdbcType=VARCHAR }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="stateUpdate != null and stateUpdate != ''  " >
+			and STATE_UPDATE = #{stateUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="workStatus != null and workStatus != ''  " >
+			and WORK_STATUS = #{workStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="workStatusUpdate != null and workStatusUpdate != ''  " >
+			and WORK_STATUS_UPDATE = #{workStatusUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="workStatusUpdateEnd != null and workStatusUpdateEnd != ''  " >
+			and WORK_STATUS_UPDATE_END = #{workStatusUpdateEnd,jdbcType=TIMESTAMP }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="loginState != null and loginState != ''  " >
+			and LOGIN_STATE = #{loginState,jdbcType=VARCHAR }
+		</if>
+		<if test="loginTime != null and loginTime != ''  " >
+			and LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="logoutTime != null and logoutTime != ''  " >
+			and LOGOUT_TIME = #{logoutTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="logoutType != null and logoutType != ''  " >
+			and LOGOUT_TYPE = #{logoutType,jdbcType=VARCHAR }
+		</if>
+		<if test="loginIp != null and loginIp != ''  " >
+			and LOGIN_IP = #{loginIp,jdbcType=VARCHAR }
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			and SESSION_ID = #{sessionId,jdbcType=VARCHAR }
+		</if>
+		<if test="retry != null and retry != ''  " >
+			and RETRY = #{retry,jdbcType=INTEGER }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			and CTRY_CD = #{ctryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="province != null and province != ''  " >
+			and PROVINCE = #{province,jdbcType=VARCHAR }
+		</if>
+		<if test="city != null and city != ''  " >
+			and CITY = #{city,jdbcType=VARCHAR }
+		</if>
+		<if test="zone != null and zone != ''  " >
+			and ZONE = #{zone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="phone != null and phone != ''  " >
+			and PHONE = #{phone,jdbcType=VARCHAR }
+		</if>
+		<if test="depapment != null and depapment != ''  " >
+			and DEPAPMENT = #{depapment,jdbcType=VARCHAR }
+		</if>
+		<if test="post != null and post != ''  " >
+			and POST = #{post,jdbcType=VARCHAR }
+		</if>
+		<if test="email != null and email != ''  " >
+			and EMAIL = #{email,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphome != null and cellphome != ''  " >
+			and CELLPHOME = #{cellphome,jdbcType=VARCHAR }
+		</if>
+		<if test="passwordUpdate != null and passwordUpdate != ''  " >
+			and PASSWORD_UPDATE = #{passwordUpdate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="passwordExpireDate != null and passwordExpireDate != ''  " >
+			and PASSWORD_EXPIRE_DATE = #{passwordExpireDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject1 != null and textObject1 != ''  " >
+			and TEXT_OBJECT1 = #{textObject1,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject2 != null and textObject2 != ''  " >
+			and TEXT_OBJECT2 = #{textObject2,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject3 != null and textObject3 != ''  " >
+			and TEXT_OBJECT3 = #{textObject3,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject4 != null and textObject4 != ''  " >
+			and TEXT_OBJECT4 = #{textObject4,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject5 != null and textObject5 != ''  " >
+			and TEXT_OBJECT5 = #{textObject5,jdbcType=VARCHAR }
+		</if>
+		<if test="textObject6 != null and textObject6 != ''  " >
+			and TEXT_OBJECT6 = #{textObject6,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

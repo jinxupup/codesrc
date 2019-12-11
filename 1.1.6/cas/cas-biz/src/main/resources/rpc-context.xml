@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 导入扫描注解 -->
+	<context:component-scan base-package="com.jjb.cas.biz" />
+
+	<!-- ecms-adapter作为生产方，cas-biz作为消费方 -->
+	<bean id="messageSendService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="ecms.rpc.messageSendService" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.MessageSendService"/>
+	</bean>
+	<bean id="immediatelyBuildCardService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="ecms.rpc.immediatelyBuildCardService" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.ImmediatelyBuildCardService"/>
+	</bean>
+	<!-- ecms-adapter作为生产方，cas-biz作为消费方 -->
+	<bean id="creditSysPushService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="ecms.rpc.creditSysPush" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.CreditSysPushService"/>
+	</bean>
+</beans>

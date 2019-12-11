@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.biz.TmAclRole" >
+    <resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclRole" >
+        <id column="ROLE_ID" property="roleId" jdbcType="INTEGER"/>
+        <result column="ORG" property="org" jdbcType="VARCHAR" />       
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />  
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+        <result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+    </resultMap>
+    <!-- 根据用户ID获取该用户下的所有角色 -->
+    
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map" >
+		select 	ORG  , ROLE_ID  , ROLE_NAME  ,
+			 REMARK  , CREATE_DATE  , CREATE_BY  , UPDATE_DATE  ,
+			 UPDATE_BY  , JPA_VERSION 
+		from TM_ACL_ROLE 
+		where TM_ACL_ROLE.ROLE_ID 
+		IN (SELECT TM_ACL_USER_ROLE .ROLE_ID from TM_ACL_USER_ROLE where TM_ACL_USER_ROLE.USER_ID=#{userId,jdbcType=INTEGER }
+		and TM_ACL_USER_ROLE.ORG = #{org,jdbcType=VARCHAR })
+		and TM_ACL_ROLE.ORG = #{org,jdbcType=VARCHAR }
+	</select>  
+
+      <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+        select  ORG  , ROLE_ID  , ROLE_NAME  ,
+			 REMARK  , CREATE_DATE  , CREATE_BY  , UPDATE_DATE  ,
+			 UPDATE_BY  , JPA_VERSION 		
+ 		from TM_ACL_ROLE
+       	where 1=1 
+        <if test="roleId != null and roleId != ''  " >
+            and ROLE_ID = #{roleId,jdbcType=INTEGER }
+        </if>
+        <if test="org != null and org != ''  " >
+            and ORG = #{org,jdbcType=VARCHAR }
+        </if>    
+        <if test="roleName != null and roleName != ''  " >
+            and ROLE_NAME like '%${roleName}%'
+        </if>
+        
+ 		<!-- modify by H.N 20171031:when the login user is not the superuser,do not show the superuser's message -->
+        <if test="isNotSuperUser != null and isNotSuperUser != ''  " >
+            and ROLE_NAME != 'root'
+        </if>
+        
+        <if test="remark != null and remark != ''  " >
+            and REMARK = #{remark,jdbcType=VARCHAR }
+        </if>      
+        <if test="createDate != null and createDate != ''  " >
+            and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+        </if>
+        <if test="createBy != null and createBy != ''  " >
+            and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+        </if>
+        <if test="updateDate != null and updateDate != ''  " >
+            and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+        </if>
+        <if test="updateBy != null and updateBy != ''  " >
+            and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+        </if>
+        <if test="version != null and version != ''  " >
+            and JPA_VERSION = #{version,jdbcType=INTEGER }
+        </if>
+        	order by ROLE_ID ASC  
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="roleId" parameterType="com.jjb.acl.infrastructure.TmAclRole" >
+	        insert into TM_ACL_ROLE ( ORG , ROLE_NAME , REMARK ,CREATE_DATE ,
+                						CREATE_BY , UPDATE_DATE , UPDATE_BY , JPA_VERSION )
+	        values (  #{org,jdbcType=VARCHAR } ,
+	            	  #{roleName,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } ,
+	             	  #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , 
+	             	  #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } ,
+	             	  #{version,jdbcType=INTEGER }
+	   				)
+	</insert> 
+	
+	<select id="selectRoleResourceAuthType" resultType="String"  parameterType="map" >
+		SELECT DISTINCT C.RESOURCE_AUTH_TYPE FROM TM_ACL_ROLE A 
+			INNER JOIN TM_ACL_ROLE_RESOURCE B ON A.ROLE_ID=B.ROLE_ID
+			INNER JOIN TM_ACL_RESOURCE C ON B.SYS_TYPE=C.SYS_TYPE AND B.RESOURCE_CODE=C.RESOURCE_CODE		
+        WHERE A.ORG = #{org,jdbcType=VARCHAR } AND B.ORG = #{org,jdbcType=VARCHAR }
+         AND C.ORG = #{org,jdbcType=VARCHAR } 
+            
+         <if test="roleId != null and roleId != ''  " >
+            and A.ROLE_ID = #{roleId,jdbcType=INTEGER }
+         </if>
+        
+    </select>    
+</mapper>

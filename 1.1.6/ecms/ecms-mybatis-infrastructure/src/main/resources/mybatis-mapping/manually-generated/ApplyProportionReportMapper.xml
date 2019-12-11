@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyProportionReportMappper">
+    <resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyProportionReportDto" >
+        <id column="DATE" property="date" jdbcType="DATE"/>
+        <result column="SUG_SUCCESS_TIME" property="sugSuccessTime" jdbcType="VARCHAR" />
+        <result column="REAL_SUCCESS_TIME" property="realSuccessTime" jdbcType="VARCHAR" />
+        <result column="SUCCESS_TIME_PERCENT" property="successTimePercent" jdbcType="VARCHAR" />
+        <result column="SUG_REJECT_TIME" property="sugRejectTime" jdbcType="VARCHAR" />
+        <result column="REAL_REJECT_TIME" property="realRejectTime" jdbcType="VARCHAR" />
+        <result column="REJECT_TIME_PERCENT" property="rejectTimePercent" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <select id="selectMain" resultMap="BaseResultMap" parameterType="map">
+	     select cast(h.create_date as Date) as date,
+			   count(CASE WHEN h.RTF_STATE = 'H18' THEN h.RTF_STATE END) as SUG_SUCCESS_TIME,
+			   count(CASE WHEN h.RTF_STATE in ('L05','P05') THEN h.RTF_STATE END) as REAL_SUCCESS_TIME,
+			   concat(case when  count(CASE WHEN h.RTF_STATE in ('L05','P05') THEN h.RTF_STATE END)=0 then 0 else 
+			   		cast(round(count(CASE WHEN h.RTF_STATE = 'H18' THEN h.RTF_STATE END)*1.0/ count(CASE WHEN h.RTF_STATE in ('L05','P05') THEN h.RTF_STATE END)*100,2) as decimal(5,2)) end,'%') as SUCCESS_TIME_PERCENT,
+			   count(CASE WHEN h.RTF_STATE = 'H17' THEN h.RTF_STATE END) as SUG_REJECT_TIME,
+			   count(CASE WHEN h.RTF_STATE = 'M05' THEN h.RTF_STATE END) as REAL_REJECT_TIME,
+			   concat(case when count(CASE WHEN h.RTF_STATE = 'M05' THEN h.RTF_STATE END)=0 then 0 else 
+			   		cast(round(count(CASE WHEN h.RTF_STATE = 'H17' THEN h.RTF_STATE END)*1.0/count(CASE WHEN h.RTF_STATE = 'M05' THEN h.RTF_STATE END)*100,2) as decimal(5,2)) end,'%') as REJECT_TIME_PERCENT
+			   from tm_app_history h 
+		    <if test=" applySuccessStartDate!=null and applySuccessStartDate!='' and applySuccessEndDate!=null and applySuccessEndDate!=''">
+				where h.create_date between #{applySuccessStartDate} and #{applySuccessEndDate} 
+			</if> 
+				group by cast(h.create_date as Date)
+    </select>
+    
+</mapper>

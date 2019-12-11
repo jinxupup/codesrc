@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="r0000CreateApply" class="com.jjb.ecms.batch.s0000.R0001CreateApply" scope="step"/>
+	
+	<bean id="p0000CreateApply" class="com.jjb.ecms.batch.s0000.P0001CreateApply"/>
+	
+	<bean id="w0000CreateApply" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyFileItem"/>
+		<property name="resource" ref="resS000000Apply"/>
+	</bean>
+	<bean id="w0000CreateEtcCar" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.EtcCarInfoItem"/>
+		<property name="resource" ref="resS000000EtcCar"/>
+	</bean>	
+	<bean id="applyCompositeWriter" class="com.jjb.unicorn.batch.PropertyDelegateWriter" scope="step">
+	    <property name="writers">
+	    	<map>
+	    		<entry key="applyFileItemList" value-ref="w0000CreateApply"/>
+	    		<entry key="etcCarInfo" value-ref="w0000CreateEtcCar"/>
+	    	</map>
+	    </property>
+	</bean>
+</beans>

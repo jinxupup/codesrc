@@ -1,0 +1,10 @@
+#JDBC\u76f8\u5173\u53c2\u6570\uff0c\u4ee5JDBC\u4e3a\u524d\u7f00
+jdbcDriver=com.mysql.jdbc.Driver
+jdbcTestSql=select * from sysibm.dual
+jdbcMaxActive=100
+jdbcUrl=jdbc:mysql://127.0.0.1:3306/acl3
+jdbcUsername=root
+jdbcPassword=root
+poolInitialSize=10
+poollMinIdle=5
+poolMaxActive=30

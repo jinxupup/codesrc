@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmRiskListMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmRiskList" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="RISKLIST_SRC" property="risklistSrc" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELL_PHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" />
+		<result column="HOME_ADD" property="homeAdd" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+		<result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+		<result column="REASON" property="reason" jdbcType="VARCHAR" />
+		<result column="MEMO" property="memo" jdbcType="VARCHAR" />
+		<result column="VALID_DATE" property="validDate" jdbcType="TIMESTAMP" />
+		<result column="ACT_TYPE" property="actType" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="TM_RISK_LIST_TABLE_FIELD">ID,ORG,RISKLIST_SRC,NAME,ID_TYPE,ID_NO,CELL_PHONE,HOME_PHONE,HOME_ADD,CORP_NAME,EMP_PHONE,EMP_ADD,REASON,MEMO,VALID_DATE,ACT_TYPE,JPA_VERSION,OB_TEXT1,OB_TEXT2,OB_TEXT3,OB_TEXT4,OB_DECIMAL1,OB_DECIMAL2,UPDATE_DATE,OB_DATE2,CREATE_DATE</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_RISK_LIST_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_RISK_LIST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmRiskList" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_RISK_LIST ( <include refid="TM_RISK_LIST_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{risklistSrc,jdbcType=VARCHAR } ,
+			 #{name,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{cellPhone,jdbcType=VARCHAR } ,
+			 #{homePhone,jdbcType=VARCHAR } , #{homeAdd,jdbcType=VARCHAR } , #{corpName,jdbcType=VARCHAR } , #{empPhone,jdbcType=VARCHAR } ,
+			 #{empAdd,jdbcType=VARCHAR } , #{reason,jdbcType=VARCHAR } , #{memo,jdbcType=VARCHAR } , #{validDate,jdbcType=TIMESTAMP } ,
+			 #{actType,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } , #{obText1,jdbcType=VARCHAR } , #{obText2,jdbcType=VARCHAR } ,
+			 #{obText3,jdbcType=VARCHAR } , #{obText4,jdbcType=VARCHAR } , #{obDecimal1,jdbcType=DECIMAL } , #{obDecimal2,jdbcType=DECIMAL } ,
+			 #{updateDate,jdbcType=TIMESTAMP } , #{obDate2,jdbcType=TIMESTAMP } , #{createDate,jdbcType=TIMESTAMP } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmRiskList">
+		update TM_RISK_LIST 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="risklistSrc != null and risklistSrc != ''  " >
+			RISKLIST_SRC =#{risklistSrc,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			HOME_PHONE =#{homePhone,jdbcType=VARCHAR },
+		</if>
+		<if test="homeAdd != null and homeAdd != ''  " >
+			HOME_ADD =#{homeAdd,jdbcType=VARCHAR },
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			EMP_PHONE =#{empPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },
+		</if>
+		<if test="reason != null and reason != ''  " >
+			REASON =#{reason,jdbcType=VARCHAR },
+		</if>
+		<if test="memo != null and memo != ''  " >
+			MEMO =#{memo,jdbcType=VARCHAR },
+		</if>
+		<if test="validDate != null and validDate != ''  " >
+			VALID_DATE =#{validDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="actType != null and actType != ''  " >
+			ACT_TYPE =#{actType,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmRiskList">
+		update TM_RISK_LIST 
+		<trim prefix="set" suffixOverrides=","> 
+			RISKLIST_SRC =#{risklistSrc,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },		
+			HOME_PHONE =#{homePhone,jdbcType=VARCHAR },		
+			HOME_ADD =#{homeAdd,jdbcType=VARCHAR },		
+			CORP_NAME =#{corpName,jdbcType=VARCHAR },		
+			EMP_PHONE =#{empPhone,jdbcType=VARCHAR },		
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },		
+			REASON =#{reason,jdbcType=VARCHAR },		
+			MEMO =#{memo,jdbcType=VARCHAR },		
+			VALID_DATE =#{validDate,jdbcType=TIMESTAMP },		
+			ACT_TYPE =#{actType,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },		
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },		
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },		
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },		
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },		
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_RISK_LIST_TABLE_FIELD" />		
+		from TM_RISK_LIST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_RISK_LIST_TABLE_FIELD" />		
+ 		from TM_RISK_LIST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="risklistSrc != null and risklistSrc != ''  " >
+			and RISKLIST_SRC = #{risklistSrc,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			and HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+		</if>
+		<if test="homeAdd != null and homeAdd != ''  " >
+			and HOME_ADD = #{homeAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			and EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="reason != null and reason != ''  " >
+			and REASON = #{reason,jdbcType=VARCHAR }
+		</if>
+		<if test="memo != null and memo != ''  " >
+			and MEMO = #{memo,jdbcType=VARCHAR }
+		</if>
+		<if test="validDate != null and validDate != ''  " >
+			and VALID_DATE = #{validDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="actType != null and actType != ''  " >
+			and ACT_TYPE = #{actType,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_RISK_LIST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="risklistSrc != null and risklistSrc != ''  " >
+			and RISKLIST_SRC = #{risklistSrc,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="homePhone != null and homePhone != ''  " >
+			and HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+		</if>
+		<if test="homeAdd != null and homeAdd != ''  " >
+			and HOME_ADD = #{homeAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != ''  " >
+			and CORP_NAME = #{corpName,jdbcType=VARCHAR }
+		</if>
+		<if test="empPhone != null and empPhone != ''  " >
+			and EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="reason != null and reason != ''  " >
+			and REASON = #{reason,jdbcType=VARCHAR }
+		</if>
+		<if test="memo != null and memo != ''  " >
+			and MEMO = #{memo,jdbcType=VARCHAR }
+		</if>
+		<if test="validDate != null and validDate != ''  " >
+			and VALID_DATE = #{validDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="actType != null and actType != ''  " >
+			and ACT_TYPE = #{actType,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

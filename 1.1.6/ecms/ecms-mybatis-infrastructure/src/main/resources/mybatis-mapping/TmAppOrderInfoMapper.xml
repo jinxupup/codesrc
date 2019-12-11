@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppOrderInfoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppOrderInfo" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="LICENSE_TYPE" property="licenseType" jdbcType="VARCHAR" />
+		<result column="LICENSEPERSON" property="licenseperson" jdbcType="VARCHAR" />
+		<result column="BRANDN_AME" property="brandnAme" jdbcType="VARCHAR" />
+		<result column="USER_DEFINED" property="userDefined" jdbcType="VARCHAR" />
+		<result column="GUIDE_PRICE" property="guidePrice" jdbcType="VARCHAR" />
+		<result column="USED_TIME" property="usedTime" jdbcType="DECIMAL" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="ENGINE_NO" property="engineNo" jdbcType="VARCHAR" />
+		<result column="MILEAGE" property="mileage" jdbcType="VARCHAR" />
+		<result column="FIRST_DATE" property="firstDate" jdbcType="VARCHAR" />
+		<result column="APPRAISAL" property="appraisal" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="OB_DATE1" property="obDate1" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="CARSERIES_NAME" property="carseriesName" jdbcType="VARCHAR" />
+		<result column="CARMODEL_NAME" property="carmodelName" jdbcType="VARCHAR" />
+		<result column="YEAR" property="year" jdbcType="VARCHAR" />
+		<result column="EXOWNER_NAME" property="exownerName" jdbcType="VARCHAR" />
+		<result column="EXID_TYPE" property="exidType" jdbcType="VARCHAR" />
+		<result column="EXID_NUMBER" property="exidNumber" jdbcType="VARCHAR" />
+		<result column="EXPHONE_NUMBER" property="exphoneNumber" jdbcType="VARCHAR" />
+		<result column="PROJECT_SUM" property="projectSum" jdbcType="DECIMAL" />
+		<result column="FINANCING_SUM" property="financingSum" jdbcType="DECIMAL" />
+		<result column="LEASING_TERM" property="leasingTerm" jdbcType="INTEGER" />
+		<result column="RENT_SUM" property="rentSum" jdbcType="DECIMAL" />
+		<result column="MONTH_PAYMENT" property="monthPayment" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="TM_APP_ORDER_INFO_TABLE_FIELD">ID,ORG,APP_NO,LICENSE_TYPE,LICENSEPERSON,BRANDN_AME,USER_DEFINED,GUIDE_PRICE,USED_TIME,VIN,ENGINE_NO,MILEAGE,FIRST_DATE,APPRAISAL,OB_TEXT3,OB_TEXT4,OB_DECIMAL1,OB_DECIMAL2,OB_DATE1,OB_DATE2,JPA_VERSION,CARSERIES_NAME,CARMODEL_NAME,YEAR,EXOWNER_NAME,EXID_TYPE,EXID_NUMBER,EXPHONE_NUMBER,PROJECT_SUM,FINANCING_SUM,LEASING_TERM,RENT_SUM,MONTH_PAYMENT</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_ORDER_INFO_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_ORDER_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppOrderInfo" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_ORDER_INFO ( <include refid="TM_APP_ORDER_INFO_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{licenseType,jdbcType=VARCHAR } , #{licenseperson,jdbcType=VARCHAR } , #{brandnAme,jdbcType=VARCHAR } , #{userDefined,jdbcType=VARCHAR } ,
+			 #{guidePrice,jdbcType=VARCHAR } , #{usedTime,jdbcType=DECIMAL } , #{vin,jdbcType=VARCHAR } , #{engineNo,jdbcType=VARCHAR } ,
+			 #{mileage,jdbcType=VARCHAR } , #{firstDate,jdbcType=VARCHAR } , #{appraisal,jdbcType=VARCHAR } , #{obText3,jdbcType=VARCHAR } ,
+			 #{obText4,jdbcType=VARCHAR } , #{obDecimal1,jdbcType=DECIMAL } , #{obDecimal2,jdbcType=DECIMAL } , #{obDate1,jdbcType=TIMESTAMP } ,
+			 #{obDate2,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } , #{carseriesName,jdbcType=VARCHAR } , #{carmodelName,jdbcType=VARCHAR } ,
+			 #{year,jdbcType=VARCHAR } , #{exownerName,jdbcType=VARCHAR } , #{exidType,jdbcType=VARCHAR } , #{exidNumber,jdbcType=VARCHAR } ,
+			 #{exphoneNumber,jdbcType=VARCHAR } , #{projectSum,jdbcType=DECIMAL } , #{financingSum,jdbcType=DECIMAL } , #{leasingTerm,jdbcType=INTEGER } ,
+			 #{rentSum,jdbcType=DECIMAL } , #{monthPayment,jdbcType=DECIMAL } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppOrderInfo">
+		update TM_APP_ORDER_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="licenseType != null and licenseType != ''  " >
+			LICENSE_TYPE =#{licenseType,jdbcType=VARCHAR },
+		</if>
+		<if test="licenseperson != null and licenseperson != ''  " >
+			LICENSEPERSON =#{licenseperson,jdbcType=VARCHAR },
+		</if>
+		<if test="brandnAme != null and brandnAme != ''  " >
+			BRANDN_AME =#{brandnAme,jdbcType=VARCHAR },
+		</if>
+		<if test="userDefined != null and userDefined != ''  " >
+			USER_DEFINED =#{userDefined,jdbcType=VARCHAR },
+		</if>
+		<if test="guidePrice != null and guidePrice != ''  " >
+			GUIDE_PRICE =#{guidePrice,jdbcType=VARCHAR },
+		</if>
+		<if test="usedTime != null and usedTime != ''  " >
+			USED_TIME =#{usedTime,jdbcType=DECIMAL },
+		</if>
+		<if test="vin != null and vin != ''  " >
+			VIN =#{vin,jdbcType=VARCHAR },
+		</if>
+		<if test="engineNo != null and engineNo != ''  " >
+			ENGINE_NO =#{engineNo,jdbcType=VARCHAR },
+		</if>
+		<if test="mileage != null and mileage != ''  " >
+			MILEAGE =#{mileage,jdbcType=VARCHAR },
+		</if>
+		<if test="firstDate != null and firstDate != ''  " >
+			FIRST_DATE =#{firstDate,jdbcType=VARCHAR },
+		</if>
+		<if test="appraisal != null and appraisal != ''  " >
+			APPRAISAL =#{appraisal,jdbcType=VARCHAR },
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			OB_DATE1 =#{obDate1,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="carseriesName != null and carseriesName != ''  " >
+			CARSERIES_NAME =#{carseriesName,jdbcType=VARCHAR },
+		</if>
+		<if test="carmodelName != null and carmodelName != ''  " >
+			CARMODEL_NAME =#{carmodelName,jdbcType=VARCHAR },
+		</if>
+		<if test="year != null and year != ''  " >
+			YEAR =#{year,jdbcType=VARCHAR },
+		</if>
+		<if test="exownerName != null and exownerName != ''  " >
+			EXOWNER_NAME =#{exownerName,jdbcType=VARCHAR },
+		</if>
+		<if test="exidType != null and exidType != ''  " >
+			EXID_TYPE =#{exidType,jdbcType=VARCHAR },
+		</if>
+		<if test="exidNumber != null and exidNumber != ''  " >
+			EXID_NUMBER =#{exidNumber,jdbcType=VARCHAR },
+		</if>
+		<if test="exphoneNumber != null and exphoneNumber != ''  " >
+			EXPHONE_NUMBER =#{exphoneNumber,jdbcType=VARCHAR },
+		</if>
+		<if test="projectSum != null and projectSum != ''  " >
+			PROJECT_SUM =#{projectSum,jdbcType=DECIMAL },
+		</if>
+		<if test="financingSum != null and financingSum != ''  " >
+			FINANCING_SUM =#{financingSum,jdbcType=DECIMAL },
+		</if>
+		<if test="leasingTerm != null and leasingTerm != ''  " >
+			LEASING_TERM =#{leasingTerm,jdbcType=INTEGER },
+		</if>
+		<if test="rentSum != null and rentSum != ''  " >
+			RENT_SUM =#{rentSum,jdbcType=DECIMAL },
+		</if>
+		<if test="monthPayment != null and monthPayment != ''  " >
+			MONTH_PAYMENT =#{monthPayment,jdbcType=DECIMAL },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppOrderInfo">
+		update TM_APP_ORDER_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			LICENSE_TYPE =#{licenseType,jdbcType=VARCHAR },		
+			LICENSEPERSON =#{licenseperson,jdbcType=VARCHAR },		
+			BRANDN_AME =#{brandnAme,jdbcType=VARCHAR },		
+			USER_DEFINED =#{userDefined,jdbcType=VARCHAR },		
+			GUIDE_PRICE =#{guidePrice,jdbcType=VARCHAR },		
+			USED_TIME =#{usedTime,jdbcType=DECIMAL },		
+			VIN =#{vin,jdbcType=VARCHAR },		
+			ENGINE_NO =#{engineNo,jdbcType=VARCHAR },		
+			MILEAGE =#{mileage,jdbcType=VARCHAR },		
+			FIRST_DATE =#{firstDate,jdbcType=VARCHAR },		
+			APPRAISAL =#{appraisal,jdbcType=VARCHAR },		
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },		
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },		
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },		
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },		
+			OB_DATE1 =#{obDate1,jdbcType=TIMESTAMP },		
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			CARSERIES_NAME =#{carseriesName,jdbcType=VARCHAR },		
+			CARMODEL_NAME =#{carmodelName,jdbcType=VARCHAR },		
+			YEAR =#{year,jdbcType=VARCHAR },		
+			EXOWNER_NAME =#{exownerName,jdbcType=VARCHAR },		
+			EXID_TYPE =#{exidType,jdbcType=VARCHAR },		
+			EXID_NUMBER =#{exidNumber,jdbcType=VARCHAR },		
+			EXPHONE_NUMBER =#{exphoneNumber,jdbcType=VARCHAR },		
+			PROJECT_SUM =#{projectSum,jdbcType=DECIMAL },		
+			FINANCING_SUM =#{financingSum,jdbcType=DECIMAL },		
+			LEASING_TERM =#{leasingTerm,jdbcType=INTEGER },		
+			RENT_SUM =#{rentSum,jdbcType=DECIMAL },		
+			MONTH_PAYMENT =#{monthPayment,jdbcType=DECIMAL },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_ORDER_INFO_TABLE_FIELD" />		
+		from TM_APP_ORDER_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_ORDER_INFO_TABLE_FIELD" />		
+ 		from TM_APP_ORDER_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="licenseType != null and licenseType != ''  " >
+			and LICENSE_TYPE = #{licenseType,jdbcType=VARCHAR }
+		</if>
+		<if test="licenseperson != null and licenseperson != ''  " >
+			and LICENSEPERSON = #{licenseperson,jdbcType=VARCHAR }
+		</if>
+		<if test="brandnAme != null and brandnAme != ''  " >
+			and BRANDN_AME = #{brandnAme,jdbcType=VARCHAR }
+		</if>
+		<if test="userDefined != null and userDefined != ''  " >
+			and USER_DEFINED = #{userDefined,jdbcType=VARCHAR }
+		</if>
+		<if test="guidePrice != null and guidePrice != ''  " >
+			and GUIDE_PRICE = #{guidePrice,jdbcType=VARCHAR }
+		</if>
+		<if test="usedTime != null and usedTime != ''  " >
+			and USED_TIME = #{usedTime,jdbcType=DECIMAL }
+		</if>
+		<if test="vin != null and vin != ''  " >
+			and VIN = #{vin,jdbcType=VARCHAR }
+		</if>
+		<if test="engineNo != null and engineNo != ''  " >
+			and ENGINE_NO = #{engineNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mileage != null and mileage != ''  " >
+			and MILEAGE = #{mileage,jdbcType=VARCHAR }
+		</if>
+		<if test="firstDate != null and firstDate != ''  " >
+			and FIRST_DATE = #{firstDate,jdbcType=VARCHAR }
+		</if>
+		<if test="appraisal != null and appraisal != ''  " >
+			and APPRAISAL = #{appraisal,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			and OB_DATE1 = #{obDate1,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="carseriesName != null and carseriesName != ''  " >
+			and CARSERIES_NAME = #{carseriesName,jdbcType=VARCHAR }
+		</if>
+		<if test="carmodelName != null and carmodelName != ''  " >
+			and CARMODEL_NAME = #{carmodelName,jdbcType=VARCHAR }
+		</if>
+		<if test="year != null and year != ''  " >
+			and YEAR = #{year,jdbcType=VARCHAR }
+		</if>
+		<if test="exownerName != null and exownerName != ''  " >
+			and EXOWNER_NAME = #{exownerName,jdbcType=VARCHAR }
+		</if>
+		<if test="exidType != null and exidType != ''  " >
+			and EXID_TYPE = #{exidType,jdbcType=VARCHAR }
+		</if>
+		<if test="exidNumber != null and exidNumber != ''  " >
+			and EXID_NUMBER = #{exidNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="exphoneNumber != null and exphoneNumber != ''  " >
+			and EXPHONE_NUMBER = #{exphoneNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="projectSum != null and projectSum != ''  " >
+			and PROJECT_SUM = #{projectSum,jdbcType=DECIMAL }
+		</if>
+		<if test="financingSum != null and financingSum != ''  " >
+			and FINANCING_SUM = #{financingSum,jdbcType=DECIMAL }
+		</if>
+		<if test="leasingTerm != null and leasingTerm != ''  " >
+			and LEASING_TERM = #{leasingTerm,jdbcType=INTEGER }
+		</if>
+		<if test="rentSum != null and rentSum != ''  " >
+			and RENT_SUM = #{rentSum,jdbcType=DECIMAL }
+		</if>
+		<if test="monthPayment != null and monthPayment != ''  " >
+			and MONTH_PAYMENT = #{monthPayment,jdbcType=DECIMAL }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_ORDER_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="licenseType != null and licenseType != ''  " >
+			and LICENSE_TYPE = #{licenseType,jdbcType=VARCHAR }
+		</if>
+		<if test="licenseperson != null and licenseperson != ''  " >
+			and LICENSEPERSON = #{licenseperson,jdbcType=VARCHAR }
+		</if>
+		<if test="brandnAme != null and brandnAme != ''  " >
+			and BRANDN_AME = #{brandnAme,jdbcType=VARCHAR }
+		</if>
+		<if test="userDefined != null and userDefined != ''  " >
+			and USER_DEFINED = #{userDefined,jdbcType=VARCHAR }
+		</if>
+		<if test="guidePrice != null and guidePrice != ''  " >
+			and GUIDE_PRICE = #{guidePrice,jdbcType=VARCHAR }
+		</if>
+		<if test="usedTime != null and usedTime != ''  " >
+			and USED_TIME = #{usedTime,jdbcType=DECIMAL }
+		</if>
+		<if test="vin != null and vin != ''  " >
+			and VIN = #{vin,jdbcType=VARCHAR }
+		</if>
+		<if test="engineNo != null and engineNo != ''  " >
+			and ENGINE_NO = #{engineNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mileage != null and mileage != ''  " >
+			and MILEAGE = #{mileage,jdbcType=VARCHAR }
+		</if>
+		<if test="firstDate != null and firstDate != ''  " >
+			and FIRST_DATE = #{firstDate,jdbcType=VARCHAR }
+		</if>
+		<if test="appraisal != null and appraisal != ''  " >
+			and APPRAISAL = #{appraisal,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			and OB_DATE1 = #{obDate1,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="carseriesName != null and carseriesName != ''  " >
+			and CARSERIES_NAME = #{carseriesName,jdbcType=VARCHAR }
+		</if>
+		<if test="carmodelName != null and carmodelName != ''  " >
+			and CARMODEL_NAME = #{carmodelName,jdbcType=VARCHAR }
+		</if>
+		<if test="year != null and year != ''  " >
+			and YEAR = #{year,jdbcType=VARCHAR }
+		</if>
+		<if test="exownerName != null and exownerName != ''  " >
+			and EXOWNER_NAME = #{exownerName,jdbcType=VARCHAR }
+		</if>
+		<if test="exidType != null and exidType != ''  " >
+			and EXID_TYPE = #{exidType,jdbcType=VARCHAR }
+		</if>
+		<if test="exidNumber != null and exidNumber != ''  " >
+			and EXID_NUMBER = #{exidNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="exphoneNumber != null and exphoneNumber != ''  " >
+			and EXPHONE_NUMBER = #{exphoneNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="projectSum != null and projectSum != ''  " >
+			and PROJECT_SUM = #{projectSum,jdbcType=DECIMAL }
+		</if>
+		<if test="financingSum != null and financingSum != ''  " >
+			and FINANCING_SUM = #{financingSum,jdbcType=DECIMAL }
+		</if>
+		<if test="leasingTerm != null and leasingTerm != ''  " >
+			and LEASING_TERM = #{leasingTerm,jdbcType=INTEGER }
+		</if>
+		<if test="rentSum != null and rentSum != ''  " >
+			and RENT_SUM = #{rentSum,jdbcType=DECIMAL }
+		</if>
+		<if test="monthPayment != null and monthPayment != ''  " >
+			and MONTH_PAYMENT = #{monthPayment,jdbcType=DECIMAL }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

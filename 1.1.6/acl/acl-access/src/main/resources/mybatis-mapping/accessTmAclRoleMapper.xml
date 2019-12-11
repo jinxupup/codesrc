@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.access.TmAclRole" >
+    <resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclRole" >
+        <id column="ROLE_ID" property="roleId" jdbcType="INTEGER"/>
+        <result column="ORG" property="org" jdbcType="VARCHAR" />       
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />  
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+        <result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+    </resultMap>
+
+   
+    <select id="selectRoleIds" resultMap="BaseResultMap" parameterType="map" >
+    
+    SELECT 
+			 A.ORG  , A.ROLE_ID  , A.ROLE_NAME  ,
+			 A.REMARK  , A.CREATE_DATE  , A.CREATE_BY  , A.UPDATE_DATE  ,
+			 A.UPDATE_BY  , A.JPA_VERSION
+		FROM
+           TM_ACL_ROLE A,TM_ACL_USER_ROLE B, TM_ACL_USER C
+		WHERE 1=1  AND C.USER_ID = B.USER_ID AND A.ROLE_ID=B.ROLE_ID 
+		AND A.ORG=B.ORG AND A.ORG =C.ORG AND C.USER_NO = #{userNo, jdbcType=INTEGER}
+		
+		AND A.ORG = #{org,jdbcType=VARCHAR }
+        
+    </select>
+    
+</mapper>

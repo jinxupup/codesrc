@@ -1,0 +1,59 @@
+/* .navbar-default{background-color:#DEDEDE}
+.breadcrumb{background-color:#DEDEDE}
+#page-wrapper {background-color: #EAEAEA;}
+#page-primary{background-color: #f1f4f0;}
+.panel{background-color: #f1f4f0;}
+body {background-color: #f1f4f0;}
+#page-wrapper{background-color: #f1f4f0;}
+#page-primary{background-color: #f1f4f0;}
+.panel{background-color: #f1f4f0;}
+#panel{background-color: #f1f4f0;}
+#panel-body{background-color: #f1f4f0;}
+.table-striped>tbody>tr:nth-of-type(odd){background-color:#e1e4e8}
+option{background-color: #f2f9f2;}
+.form-control{background-color:#f2f9f2;}
+.form-control > ul{background-color:#f2f9f2;}
+.ms-choice {background-color:#f2f9f2;}
+tr > th {background-color:#83B4E0;}
+
+.panel-primary{
+	width:100%;
+}
+.tab-content{
+	width:100%;
+}
+.container-fluid{
+	padding-right:2px;
+	padding-left:2px;
+	margin-right:auto;
+	margin-left:auto;
+}
+.row{
+	margin-right:0px;
+	margin-left:0px;
+}
+#loginName{
+	margin-bottom:5px;
+}
+.breadcrumb{
+	padding-top:6px;
+	padding-bottom:3px;
+	margin-bottom:3px;
+	line-height:1.1;
+	height:26px;
+}
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6{
+	font-size:12.5px;
+}
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner {
+  text-align:center;
+  padding: 2px;
+  line-height: 24px;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fixed-table-container .bs-checkbox .th-inner {
+    padding: 0 0;
+} */

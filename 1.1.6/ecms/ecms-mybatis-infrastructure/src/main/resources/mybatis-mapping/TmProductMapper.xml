@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmProductMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmProduct" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+		<result column="PRODUCT_STATUS" property="productStatus" jdbcType="VARCHAR" />
+		<result column="CARD_CLASS" property="cardClass" jdbcType="VARCHAR" />
+		<result column="BIN" property="bin" jdbcType="VARCHAR" />
+		<result column="CARD_NO_RANGE_CEIL" property="cardNoRangeCeil" jdbcType="VARCHAR" />
+		<result column="CARD_NO_RANGE_FLR" property="cardNoRangeFlr" jdbcType="VARCHAR" />
+		<result column="FABRICATION_IND" property="fabricationInd" jdbcType="VARCHAR" />
+		<result column="IS_ETC" property="isEtc" jdbcType="VARCHAR" />
+		<result column="SUB_CARD_TYPE" property="subCardType" jdbcType="VARCHAR" />
+		<result column="APPROVAL_MAXIMUM" property="approvalMaximum" jdbcType="DECIMAL" />
+		<result column="IF_ENABLE_ATTACH_CARD" property="ifEnableAttachCard" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_PRODUCT_TABLE_FIELD">ID,ORG,PRODUCT_CD,PRODUCT_DESC,PRODUCT_STATUS,CARD_CLASS,BIN,CARD_NO_RANGE_CEIL,CARD_NO_RANGE_FLR,FABRICATION_IND,IS_ETC,SUB_CARD_TYPE,APPROVAL_MAXIMUM,IF_ENABLE_ATTACH_CARD,CREATE_TIME,CREATE_USER,UPDATE_TIME,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_PRODUCT_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_PRODUCT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmProduct" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_PRODUCT ( <include refid="TM_PRODUCT_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{productCd,jdbcType=VARCHAR } ,
+			 #{productDesc,jdbcType=VARCHAR } , #{productStatus,jdbcType=VARCHAR } , #{cardClass,jdbcType=VARCHAR } , #{bin,jdbcType=VARCHAR } ,
+			 #{cardNoRangeCeil,jdbcType=VARCHAR } , #{cardNoRangeFlr,jdbcType=VARCHAR } , #{fabricationInd,jdbcType=VARCHAR } , #{isEtc,jdbcType=VARCHAR } ,
+			 #{subCardType,jdbcType=VARCHAR } , #{approvalMaximum,jdbcType=DECIMAL } , #{ifEnableAttachCard,jdbcType=VARCHAR } , #{createTime,jdbcType=TIMESTAMP } ,
+			 #{createUser,jdbcType=VARCHAR } , #{updateTime,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProduct">
+		update TM_PRODUCT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			PRODUCT_DESC =#{productDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="productStatus != null and productStatus != ''  " >
+			PRODUCT_STATUS =#{productStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="cardClass != null and cardClass != ''  " >
+			CARD_CLASS =#{cardClass,jdbcType=VARCHAR },
+		</if>
+		<if test="bin != null and bin != ''  " >
+			BIN =#{bin,jdbcType=VARCHAR },
+		</if>
+		<if test="cardNoRangeCeil != null and cardNoRangeCeil != ''  " >
+			CARD_NO_RANGE_CEIL =#{cardNoRangeCeil,jdbcType=VARCHAR },
+		</if>
+		<if test="cardNoRangeFlr != null and cardNoRangeFlr != ''  " >
+			CARD_NO_RANGE_FLR =#{cardNoRangeFlr,jdbcType=VARCHAR },
+		</if>
+		<if test="fabricationInd != null and fabricationInd != ''  " >
+			FABRICATION_IND =#{fabricationInd,jdbcType=VARCHAR },
+		</if>
+		<if test="isEtc != null and isEtc != ''  " >
+			IS_ETC =#{isEtc,jdbcType=VARCHAR },
+		</if>
+		<if test="subCardType != null and subCardType != ''  " >
+			SUB_CARD_TYPE =#{subCardType,jdbcType=VARCHAR },
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			APPROVAL_MAXIMUM =#{approvalMaximum,jdbcType=DECIMAL },
+		</if>
+		<if test="ifEnableAttachCard != null and ifEnableAttachCard != ''  " >
+			IF_ENABLE_ATTACH_CARD =#{ifEnableAttachCard,jdbcType=VARCHAR },
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProduct">
+		update TM_PRODUCT 
+		<trim prefix="set" suffixOverrides=","> 
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			PRODUCT_DESC =#{productDesc,jdbcType=VARCHAR },		
+			PRODUCT_STATUS =#{productStatus,jdbcType=VARCHAR },		
+			CARD_CLASS =#{cardClass,jdbcType=VARCHAR },		
+			BIN =#{bin,jdbcType=VARCHAR },		
+			CARD_NO_RANGE_CEIL =#{cardNoRangeCeil,jdbcType=VARCHAR },		
+			CARD_NO_RANGE_FLR =#{cardNoRangeFlr,jdbcType=VARCHAR },		
+			FABRICATION_IND =#{fabricationInd,jdbcType=VARCHAR },		
+			IS_ETC =#{isEtc,jdbcType=VARCHAR },		
+			SUB_CARD_TYPE =#{subCardType,jdbcType=VARCHAR },		
+			APPROVAL_MAXIMUM =#{approvalMaximum,jdbcType=DECIMAL },		
+			IF_ENABLE_ATTACH_CARD =#{ifEnableAttachCard,jdbcType=VARCHAR },		
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_PRODUCT_TABLE_FIELD" />		
+		from TM_PRODUCT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_PRODUCT_TABLE_FIELD" />		
+ 		from TM_PRODUCT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			and PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="productStatus != null and productStatus != ''  " >
+			and PRODUCT_STATUS = #{productStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="cardClass != null and cardClass != ''  " >
+			and CARD_CLASS = #{cardClass,jdbcType=VARCHAR }
+		</if>
+		<if test="bin != null and bin != ''  " >
+			and BIN = #{bin,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNoRangeCeil != null and cardNoRangeCeil != ''  " >
+			and CARD_NO_RANGE_CEIL = #{cardNoRangeCeil,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNoRangeFlr != null and cardNoRangeFlr != ''  " >
+			and CARD_NO_RANGE_FLR = #{cardNoRangeFlr,jdbcType=VARCHAR }
+		</if>
+		<if test="fabricationInd != null and fabricationInd != ''  " >
+			and FABRICATION_IND = #{fabricationInd,jdbcType=VARCHAR }
+		</if>
+		<if test="isEtc != null and isEtc != ''  " >
+			and IS_ETC = #{isEtc,jdbcType=VARCHAR }
+		</if>
+		<if test="subCardType != null and subCardType != ''  " >
+			and SUB_CARD_TYPE = #{subCardType,jdbcType=VARCHAR }
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			and APPROVAL_MAXIMUM = #{approvalMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="ifEnableAttachCard != null and ifEnableAttachCard != ''  " >
+			and IF_ENABLE_ATTACH_CARD = #{ifEnableAttachCard,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_PRODUCT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="productDesc != null and productDesc != ''  " >
+			and PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="productStatus != null and productStatus != ''  " >
+			and PRODUCT_STATUS = #{productStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="cardClass != null and cardClass != ''  " >
+			and CARD_CLASS = #{cardClass,jdbcType=VARCHAR }
+		</if>
+		<if test="bin != null and bin != ''  " >
+			and BIN = #{bin,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNoRangeCeil != null and cardNoRangeCeil != ''  " >
+			and CARD_NO_RANGE_CEIL = #{cardNoRangeCeil,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNoRangeFlr != null and cardNoRangeFlr != ''  " >
+			and CARD_NO_RANGE_FLR = #{cardNoRangeFlr,jdbcType=VARCHAR }
+		</if>
+		<if test="fabricationInd != null and fabricationInd != ''  " >
+			and FABRICATION_IND = #{fabricationInd,jdbcType=VARCHAR }
+		</if>
+		<if test="isEtc != null and isEtc != ''  " >
+			and IS_ETC = #{isEtc,jdbcType=VARCHAR }
+		</if>
+		<if test="subCardType != null and subCardType != ''  " >
+			and SUB_CARD_TYPE = #{subCardType,jdbcType=VARCHAR }
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			and APPROVAL_MAXIMUM = #{approvalMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="ifEnableAttachCard != null and ifEnableAttachCard != ''  " >
+			and IF_ENABLE_ATTACH_CARD = #{ifEnableAttachCard,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

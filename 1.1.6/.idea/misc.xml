@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/acl/acl-web" />
+    <file type="web" url="file://$PROJECT_DIR$/ams/ams-web" />
+    <file type="web" url="file://$PROJECT_DIR$/cas/cas-web" />
+    <file type="web" url="file://$PROJECT_DIR$/cmp/cmp-app" />
+    <file type="web" url="file://$PROJECT_DIR$/ecmsc/ecmsc-app" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/cas/pom.xml" />
+        <option value="$PROJECT_DIR$/acl/pom.xml" />
+        <option value="$PROJECT_DIR$/ams/pom.xml" />
+        <option value="$PROJECT_DIR$/cmp/pom.xml" />
+        <option value="$PROJECT_DIR$/ecms/pom.xml" />
+        <option value="$PROJECT_DIR$/ecmsc/pom.xml" />
+        <option value="$PROJECT_DIR$/unicorn/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/ecmsc/ecmsc-app/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_10" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

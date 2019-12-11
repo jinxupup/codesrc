@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="r2001ApplySucceedReport" class="com.jjb.ecms.batch.s2000.R2001ApplySucceedReport" scope="step"/>
+	
+	<bean id="p2001ApplySucceedReport" class="com.jjb.ecms.batch.s2000.P2001ApplySucceedReport" scope="step"/>
+	
+	<!-- <bean id="w2001ApplySucceedReport" class="com.jjb.acl.gmp.sdk.BatchFileWriter" scope="step">
+		<description>每日审批通过报表</description>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.report.cas.ApplySucceedReport"/>
+		<property name="filename" value="S200001ApplySucceedReport"/>
+	</bean>
+	<bean id="e2001Exporter" class="com.jjb.fts.service.sdk.batch.DbFileExporter" scope="step">
+		<property name="instanceName" value="#{env.instanceName}" />
+	    <property name="systemType" value="CAS" />
+		<property name="filenames" value="S200001ApplySucceedReport"/>
+	</bean> -->
+	
+	<bean id="w2001ApplySucceedReport" class="com.jjb.unicorn.batch.YakFileItemWriter" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.report.cas.ApplySucceedReport"/>
+		<property name="resource" ref="s200001ApplySucceedReport"/>
+	</bean>
+	
+	<bean id="e2000Exporter" class="com.jjb.unicorn.batch.BatchResourceExporter" scope="step">
+		<property name="taskExecutor" ref="asyncTaskExecutor" />
+	    <property name="commandExecutionUtil" ref="yakCommandExecution" />
+	    <property name="executeCommand" value="#{env.exporterCommand}" />
+		<property name="fileResource">
+			<list>
+				<ref bean="s200001ApplySucceedReport"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

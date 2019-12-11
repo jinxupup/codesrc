@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmProductMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmProduct" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_STATUS" property="productStatus" jdbcType="VARCHAR" />
+		<result column="BRAND" property="brand" jdbcType="VARCHAR" />
+		<result column="CARD_CLASS" property="cardClass" jdbcType="VARCHAR" />
+		<result column="JOINT_CODE" property="jointCode" jdbcType="VARCHAR" />
+		<result column="JOINT_DESC" property="jointDesc" jdbcType="VARCHAR" />
+		<result column="BIN" property="bin" jdbcType="VARCHAR" />
+		<result column="CARD_NO_LEN" property="cardNoLen" jdbcType="INTEGER" />
+		<result column="CARD_NO_RANGE_CEIL" property="cardNoRangeCeil" jdbcType="VARCHAR" />
+		<result column="CARD_NO_RANGE_FLR" property="cardNoRangeFlr" jdbcType="VARCHAR" />
+		<result column="NEW_CARD_VAILD_PERIOD" property="newCardVaildPeriod" jdbcType="INTEGER" />
+		<result column="RENEW_VAILD_PERIOD" property="renewVaildPeriod" jdbcType="INTEGER" />
+		<result column="RENEW_CHECK_METHOD" property="renewCheckMethod" jdbcType="VARCHAR" />
+		<result column="RATE_FLOAN_IND" property="rateFloanInd" jdbcType="VARCHAR" />
+		<result column="FABRICATION_IND" property="fabricationInd" jdbcType="VARCHAR" />
+		<result column="IS_CARD_SET" property="isCardSet" jdbcType="VARCHAR" />
+		<result column="IS_ETC" property="isEtc" jdbcType="VARCHAR" />
+		<result column="SUB_CARD_TYPE" property="subCardType" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CREATE_UESR" property="createUesr" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="PROCDEF_KEY" property="procdefKey" jdbcType="VARCHAR" />
+		<result column="POINT_RULE" property="pointRule" jdbcType="VARCHAR" />
+		<result column="SUP_PRODUCT_CD" property="supProductCd" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_PRODUCT_TABLE_FIELD">ID,ORG,PRODUCT_CD,PRODUCT_DESC,PRODUCT_TYPE,PRODUCT_STATUS,BRAND,CARD_CLASS,JOINT_CODE,JOINT_DESC,BIN,CARD_NO_LEN,CARD_NO_RANGE_CEIL,CARD_NO_RANGE_FLR,NEW_CARD_VAILD_PERIOD,RENEW_VAILD_PERIOD,RENEW_CHECK_METHOD,RATE_FLOAN_IND,FABRICATION_IND,IS_CARD_SET,IS_ETC,SUB_CARD_TYPE,CREATE_TIME,CREATE_UESR,UPDATE_TIME,UPDATE_USER,PROCDEF_KEY,POINT_RULE,SUP_PRODUCT_CD</sql>
+
+	<sql id="TM_PRODUCT_TABLE_INSERT_FIELD">ORG,PRODUCT_CD,PRODUCT_DESC,PRODUCT_TYPE,PRODUCT_STATUS,BRAND,CARD_CLASS,JOINT_CODE,JOINT_DESC,BIN,CARD_NO_LEN,CARD_NO_RANGE_CEIL,CARD_NO_RANGE_FLR,NEW_CARD_VAILD_PERIOD,RENEW_VAILD_PERIOD,RENEW_CHECK_METHOD,RATE_FLOAN_IND,FABRICATION_IND,IS_CARD_SET,IS_ETC,SUB_CARD_TYPE,CREATE_TIME,CREATE_UESR,UPDATE_TIME,UPDATE_USER,PROCDEF_KEY,POINT_RULE,SUP_PRODUCT_CD</sql>
+	
+	<!-- 查找可降级卡产品 (写死有效卡产品)-->
+	<select id="selectDemotionProduct" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_PRODUCT_TABLE_FIELD" />		
+ 		from TM_PRODUCT
+		where 1=1 
+		AND PRODUCT_STATUS = 'A'
+		
+	<!-- 	<if test="cardClass_in != null and cardClass_in != ''  ">
+			and CARD_CLASS IN
+			<foreach item="item" index="index" collection="cardClass_in" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if> -->
+		
+		<if test="subCardType_ne != null and subCardType_ne.length>0 ">
+			and SUB_CARD_TYPE NOT IN
+			<foreach item="item" index="index" collection="subCardType_ne" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	
+	
+	
+	
+	
+</mapper>

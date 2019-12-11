@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmFieldMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmField" >
+		<id column="FIELD_ID" property="fieldId" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="FIELD_EN" property="fieldEn" jdbcType="VARCHAR" />
+		<result column="FIELD_NAME" property="fieldName" jdbcType="VARCHAR" />
+		<result column="TAB_NAME" property="tabName" jdbcType="VARCHAR" />
+		<result column="TAB_DESC" property="tabDesc" jdbcType="VARCHAR" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="IF_CANCEL" property="ifCancel" jdbcType="VARCHAR" />
+		<result column="DEF_VALUE" property="defValue" jdbcType="VARCHAR" />
+		<result column="DICT_TYPE" property="dictType" jdbcType="VARCHAR" />
+		<result column="FIELD_CHANGE" property="fieldChange" jdbcType="VARCHAR" />
+		<result column="TEXT_NAME" property="textName" jdbcType="VARCHAR" />
+		<result column="FIELD_NULLABLE" property="fieldNullable" jdbcType="VARCHAR" />
+		<result column="SHOW_CODE" property="showCode" jdbcType="VARCHAR" />
+		<result column="FIELD_REGEXP" property="fieldRegexp" jdbcType="VARCHAR" />
+		<result column="MAX_LENGTH" property="maxLength" jdbcType="VARCHAR" />
+		<result column="BETWEEN_MIN" property="betweenMin" jdbcType="VARCHAR" />
+		<result column="BETWEEN_MAX" property="betweenMax" jdbcType="VARCHAR" />
+		<result column="FIELD_AR" property="fieldAr" jdbcType="VARCHAR" />
+		<result column="LABEL_AR" property="labelAr" jdbcType="VARCHAR" />
+		<result column="INPUT_AR" property="inputAr" jdbcType="VARCHAR" />
+		<result column="COMPONENT_TYPE" property="componentType" jdbcType="VARCHAR" />
+		<result column="IF_READONLY" property="ifReadonly" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="IS_ROW" property="isRow" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_FIELD_TABLE_FIELD">FIELD_ID,ORG,FIELD_EN,FIELD_NAME,TAB_NAME,TAB_DESC,IF_USED,IF_CANCEL,DEF_VALUE,DICT_TYPE,FIELD_CHANGE,TEXT_NAME,FIELD_NULLABLE,SHOW_CODE,FIELD_REGEXP,MAX_LENGTH,BETWEEN_MIN,BETWEEN_MAX,FIELD_AR,LABEL_AR,INPUT_AR,COMPONENT_TYPE,IF_READONLY,CREATE_USER,CREATE_DATE,UPDATE_USER,UPDATE_DATE,JPA_VERSION,REMARK,IS_ROW</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_FIELD_FIELD_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_FIELD
+		where 
+		FIELD_ID = #{fieldId, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmField" >
+		<selectKey keyProperty="fieldId" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_FIELD ( <include refid="TM_FIELD_TABLE_FIELD" /> )
+		values (  #{fieldId,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{fieldEn,jdbcType=VARCHAR } ,
+			 #{fieldName,jdbcType=VARCHAR } , #{tabName,jdbcType=VARCHAR } , #{tabDesc,jdbcType=VARCHAR } , #{ifUsed,jdbcType=VARCHAR } ,
+			 #{ifCancel,jdbcType=VARCHAR } , #{defValue,jdbcType=VARCHAR } , #{dictType,jdbcType=VARCHAR } , #{fieldChange,jdbcType=VARCHAR } ,
+			 #{textName,jdbcType=VARCHAR } , #{fieldNullable,jdbcType=VARCHAR } , #{showCode,jdbcType=VARCHAR } , #{fieldRegexp,jdbcType=VARCHAR } ,
+			 #{maxLength,jdbcType=VARCHAR } , #{betweenMin,jdbcType=VARCHAR } , #{betweenMax,jdbcType=VARCHAR } , #{fieldAr,jdbcType=VARCHAR } ,
+			 #{labelAr,jdbcType=VARCHAR } , #{inputAr,jdbcType=VARCHAR } , #{componentType,jdbcType=VARCHAR } , #{ifReadonly,jdbcType=VARCHAR } ,
+			 #{createUser,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } ,
+			 #{jpaVersion,jdbcType=INTEGER } , #{remark,jdbcType=VARCHAR } , #{isRow,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmField">
+		update TM_FIELD 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="fieldEn != null and fieldEn != ''  " >
+			FIELD_EN =#{fieldEn,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldName != null and fieldName != ''  " >
+			FIELD_NAME =#{fieldName,jdbcType=VARCHAR },
+		</if>
+		<if test="tabName != null and tabName != ''  " >
+			TAB_NAME =#{tabName,jdbcType=VARCHAR },
+		</if>
+		<if test="tabDesc != null and tabDesc != ''  " >
+			TAB_DESC =#{tabDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },
+		</if>
+		<if test="ifCancel != null and ifCancel != ''  " >
+			IF_CANCEL =#{ifCancel,jdbcType=VARCHAR },
+		</if>
+		<if test="defValue != null and defValue != ''  " >
+			DEF_VALUE =#{defValue,jdbcType=VARCHAR },
+		</if>
+		<if test="dictType != null and dictType != ''  " >
+			DICT_TYPE =#{dictType,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldChange != null and fieldChange != ''  " >
+			FIELD_CHANGE =#{fieldChange,jdbcType=VARCHAR },
+		</if>
+		<if test="textName != null and textName != ''  " >
+			TEXT_NAME =#{textName,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldNullable != null and fieldNullable != ''  " >
+			FIELD_NULLABLE =#{fieldNullable,jdbcType=VARCHAR },
+		</if>
+		<if test="showCode != null and showCode != ''  " >
+			SHOW_CODE =#{showCode,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldRegexp != null and fieldRegexp != ''  " >
+			FIELD_REGEXP =#{fieldRegexp,jdbcType=VARCHAR },
+		</if>
+		<if test="maxLength != null and maxLength != ''  " >
+			MAX_LENGTH =#{maxLength,jdbcType=VARCHAR },
+		</if>
+		<if test="betweenMin != null and betweenMin != ''  " >
+			BETWEEN_MIN =#{betweenMin,jdbcType=VARCHAR },
+		</if>
+		<if test="betweenMax != null and betweenMax != ''  " >
+			BETWEEN_MAX =#{betweenMax,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldAr != null and fieldAr != ''  " >
+			FIELD_AR =#{fieldAr,jdbcType=VARCHAR },
+		</if>
+		<if test="labelAr != null and labelAr != ''  " >
+			LABEL_AR =#{labelAr,jdbcType=VARCHAR },
+		</if>
+		<if test="inputAr != null and inputAr != ''  " >
+			INPUT_AR =#{inputAr,jdbcType=VARCHAR },
+		</if>
+		<if test="componentType != null and componentType != ''  " >
+			COMPONENT_TYPE =#{componentType,jdbcType=VARCHAR },
+		</if>
+		<if test="ifReadonly != null and ifReadonly != ''  " >
+			IF_READONLY =#{ifReadonly,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="isRow != null and isRow != ''  " >
+			IS_ROW =#{isRow,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		FIELD_ID = #{fieldId, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmField">
+		update TM_FIELD 
+		<trim prefix="set" suffixOverrides=","> 
+			FIELD_EN =#{fieldEn,jdbcType=VARCHAR },		
+			FIELD_NAME =#{fieldName,jdbcType=VARCHAR },		
+			TAB_NAME =#{tabName,jdbcType=VARCHAR },		
+			TAB_DESC =#{tabDesc,jdbcType=VARCHAR },		
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },		
+			IF_CANCEL =#{ifCancel,jdbcType=VARCHAR },		
+			DEF_VALUE =#{defValue,jdbcType=VARCHAR },		
+			DICT_TYPE =#{dictType,jdbcType=VARCHAR },		
+			FIELD_CHANGE =#{fieldChange,jdbcType=VARCHAR },		
+			TEXT_NAME =#{textName,jdbcType=VARCHAR },		
+			FIELD_NULLABLE =#{fieldNullable,jdbcType=VARCHAR },		
+			SHOW_CODE =#{showCode,jdbcType=VARCHAR },		
+			FIELD_REGEXP =#{fieldRegexp,jdbcType=VARCHAR },		
+			MAX_LENGTH =#{maxLength,jdbcType=VARCHAR },		
+			BETWEEN_MIN =#{betweenMin,jdbcType=VARCHAR },		
+			BETWEEN_MAX =#{betweenMax,jdbcType=VARCHAR },		
+			FIELD_AR =#{fieldAr,jdbcType=VARCHAR },		
+			LABEL_AR =#{labelAr,jdbcType=VARCHAR },		
+			INPUT_AR =#{inputAr,jdbcType=VARCHAR },		
+			COMPONENT_TYPE =#{componentType,jdbcType=VARCHAR },		
+			IF_READONLY =#{ifReadonly,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			IS_ROW =#{isRow,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		FIELD_ID = #{fieldId, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_FIELD_TABLE_FIELD" />		
+		from TM_FIELD
+		where 
+		FIELD_ID = #{fieldId, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_FIELD_TABLE_FIELD" />		
+ 		from TM_FIELD
+		where 1=1 
+		<if test="fieldId != null and fieldId != ''  " >
+			and FIELD_ID = #{fieldId,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldEn != null and fieldEn != ''  " >
+			and FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldName != null and fieldName != ''  " >
+			and FIELD_NAME = #{fieldName,jdbcType=VARCHAR }
+		</if>
+		<if test="tabName != null and tabName != ''  " >
+			and TAB_NAME = #{tabName,jdbcType=VARCHAR }
+		</if>
+		<if test="tabDesc != null and tabDesc != ''  " >
+			and TAB_DESC = #{tabDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="ifCancel != null and ifCancel != ''  " >
+			and IF_CANCEL = #{ifCancel,jdbcType=VARCHAR }
+		</if>
+		<if test="defValue != null and defValue != ''  " >
+			and DEF_VALUE = #{defValue,jdbcType=VARCHAR }
+		</if>
+		<if test="dictType != null and dictType != ''  " >
+			and DICT_TYPE = #{dictType,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldChange != null and fieldChange != ''  " >
+			and FIELD_CHANGE = #{fieldChange,jdbcType=VARCHAR }
+		</if>
+		<if test="textName != null and textName != ''  " >
+			and TEXT_NAME = #{textName,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldNullable != null and fieldNullable != ''  " >
+			and FIELD_NULLABLE = #{fieldNullable,jdbcType=VARCHAR }
+		</if>
+		<if test="showCode != null and showCode != ''  " >
+			and SHOW_CODE = #{showCode,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldRegexp != null and fieldRegexp != ''  " >
+			and FIELD_REGEXP = #{fieldRegexp,jdbcType=VARCHAR }
+		</if>
+		<if test="maxLength != null and maxLength != ''  " >
+			and MAX_LENGTH = #{maxLength,jdbcType=VARCHAR }
+		</if>
+		<if test="betweenMin != null and betweenMin != ''  " >
+			and BETWEEN_MIN = #{betweenMin,jdbcType=VARCHAR }
+		</if>
+		<if test="betweenMax != null and betweenMax != ''  " >
+			and BETWEEN_MAX = #{betweenMax,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldAr != null and fieldAr != ''  " >
+			and FIELD_AR = #{fieldAr,jdbcType=VARCHAR }
+		</if>
+		<if test="labelAr != null and labelAr != ''  " >
+			and LABEL_AR = #{labelAr,jdbcType=VARCHAR }
+		</if>
+		<if test="inputAr != null and inputAr != ''  " >
+			and INPUT_AR = #{inputAr,jdbcType=VARCHAR }
+		</if>
+		<if test="componentType != null and componentType != ''  " >
+			and COMPONENT_TYPE = #{componentType,jdbcType=VARCHAR }
+		</if>
+		<if test="ifReadonly != null and ifReadonly != ''  " >
+			and IF_READONLY = #{ifReadonly,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="isRow != null and isRow != ''  " >
+			and IS_ROW = #{isRow,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_FIELD
+		where 1=1 
+		<if test="fieldId != null and fieldId != ''  " >
+			and FIELD_ID = #{fieldId,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldEn != null and fieldEn != ''  " >
+			and FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldName != null and fieldName != ''  " >
+			and FIELD_NAME = #{fieldName,jdbcType=VARCHAR }
+		</if>
+		<if test="tabName != null and tabName != ''  " >
+			and TAB_NAME = #{tabName,jdbcType=VARCHAR }
+		</if>
+		<if test="tabDesc != null and tabDesc != ''  " >
+			and TAB_DESC = #{tabDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="ifCancel != null and ifCancel != ''  " >
+			and IF_CANCEL = #{ifCancel,jdbcType=VARCHAR }
+		</if>
+		<if test="defValue != null and defValue != ''  " >
+			and DEF_VALUE = #{defValue,jdbcType=VARCHAR }
+		</if>
+		<if test="dictType != null and dictType != ''  " >
+			and DICT_TYPE = #{dictType,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldChange != null and fieldChange != ''  " >
+			and FIELD_CHANGE = #{fieldChange,jdbcType=VARCHAR }
+		</if>
+		<if test="textName != null and textName != ''  " >
+			and TEXT_NAME = #{textName,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldNullable != null and fieldNullable != ''  " >
+			and FIELD_NULLABLE = #{fieldNullable,jdbcType=VARCHAR }
+		</if>
+		<if test="showCode != null and showCode != ''  " >
+			and SHOW_CODE = #{showCode,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldRegexp != null and fieldRegexp != ''  " >
+			and FIELD_REGEXP = #{fieldRegexp,jdbcType=VARCHAR }
+		</if>
+		<if test="maxLength != null and maxLength != ''  " >
+			and MAX_LENGTH = #{maxLength,jdbcType=VARCHAR }
+		</if>
+		<if test="betweenMin != null and betweenMin != ''  " >
+			and BETWEEN_MIN = #{betweenMin,jdbcType=VARCHAR }
+		</if>
+		<if test="betweenMax != null and betweenMax != ''  " >
+			and BETWEEN_MAX = #{betweenMax,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldAr != null and fieldAr != ''  " >
+			and FIELD_AR = #{fieldAr,jdbcType=VARCHAR }
+		</if>
+		<if test="labelAr != null and labelAr != ''  " >
+			and LABEL_AR = #{labelAr,jdbcType=VARCHAR }
+		</if>
+		<if test="inputAr != null and inputAr != ''  " >
+			and INPUT_AR = #{inputAr,jdbcType=VARCHAR }
+		</if>
+		<if test="componentType != null and componentType != ''  " >
+			and COMPONENT_TYPE = #{componentType,jdbcType=VARCHAR }
+		</if>
+		<if test="ifReadonly != null and ifReadonly != ''  " >
+			and IF_READONLY = #{ifReadonly,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="isRow != null and isRow != ''  " >
+			and IS_ROW = #{isRow,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

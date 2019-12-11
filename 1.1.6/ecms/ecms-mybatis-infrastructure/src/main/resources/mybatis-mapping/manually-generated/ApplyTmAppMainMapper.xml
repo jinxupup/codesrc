@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmAppMain">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppMain" >
+		<id column="APP_NO" property="appNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="APP_LMT" property="appLmt" jdbcType="DECIMAL" />
+		<result column="SUG_LMT" property="sugLmt" jdbcType="DECIMAL" />
+		<result column="CHK_LMT" property="chkLmt" jdbcType="DECIMAL" />
+		<result column="PRIM_CARD_NO" property="primCacdNo" jdbcType="VARCHAR" />
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="CUST_CLASS" property="custClass" jdbcType="VARCHAR" />
+		<result column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="POINT_RESULT" property="pointResult" jdbcType="INTEGER" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="BANK_CUSTOMER_ID" property="bankCustomerId" jdbcType="VARCHAR" />
+		<result column="APPROVE_QUICK_FLAG" property="approveQuickFlag" jdbcType="VARCHAR" />
+		<result column="IF_REFUSE" property="ifRefuse" jdbcType="CHAR" />
+		<result column="IF_ATTACH_REFUSE" property="ifAttachRefuse" jdbcType="VARCHAR" />
+		<result column="IS_URGENT_CARD" property="isUrgentCard" jdbcType="VARCHAR" />
+		<result column="IS_PRIORITY" property="isPriority" jdbcType="VARCHAR" />
+		<result column="IS_PRD_CHANGE" property="isPrdChange" jdbcType="VARCHAR" />
+		<result column="IS_INITIATE_RETRIAL" property="isInitiateRetrial" jdbcType="VARCHAR" />
+		<result column="IS_RETURNED" property="isReturned" jdbcType="VARCHAR" />
+		<result column="IS_SEND_SMS_PATCH" property="isSendSmsPatch" jdbcType="VARCHAR" />
+		<result column="IS_SEND_SMS_REFUSED" property="isSendSmsRefused" jdbcType="VARCHAR" />
+		<result column="IS_CLT" property="isClt" jdbcType="VARCHAR" />
+		<result column="APPNO_EXTERNAL" property="appnoExternal" jdbcType="VARCHAR" />
+		<result column="APPNO_ATTACH_EXTERNAL" property="appnoAttachExternal" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="TASK_NUM" property="taskNum" jdbcType="VARCHAR" />
+		<result column="IMAGE_NUM" property="imageNum" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_TEXT5" property="obText5" jdbcType="VARCHAR" />
+		<result column="OB_TEXT6" property="obText6" jdbcType="VARCHAR" />
+		<result column="OB_TEXT7" property="obText7" jdbcType="VARCHAR" />
+		<result column="OB_TEXT8" property="obText8" jdbcType="VARCHAR" />
+		<result column="OB_TEXT9" property="obText9" jdbcType="VARCHAR" />
+		<result column="OB_TEXT10" property="obText10" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="OB_DATE1" property="obDate1" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+		<result column="LAST_OP_USER" property="lastOpUser" jdbcType="VARCHAR" />
+		<result column="OWNER" property="owner" jdbcType="VARCHAR" />
+		<result column="ASSIGNEE" property="assignee" jdbcType="VARCHAR" />
+		<result column="TASK_DEF_KEY" property="taskDefKey" jdbcType="VARCHAR" />
+		<result column="TASK_NAME" property="taskName" jdbcType="VARCHAR" />
+		<result column="TASK_ID" property="taskId" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--重复申请判定 -征审系统是否已存在(不是失败的都为重复申请) -->
+	<select id="selectApsSystemAppByParam" resultMap="BaseResultMap" parameterType="map" >
+		select m.* from TM_APP_MAIN m ,TM_APP_CUST_INFO a
+		where m.APP_NO=a.APP_NO and m.ORG=a.ORG and m.RTF_STATE not in ('M05','A20','A05')
+		and m.APP_TYPE <![CDATA[<>]]> 'S'
+		<if test="org != null and org != ''  " >
+			and m.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			AND m.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			AND m.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			AND a.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND a.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+	</select>
+	<select id="fetchOldUserInfo" resultMap="BaseResultMap" parameterType="map">
+		SELECT  MAIN.*
+		FROM TM_APP_MAIN  MAIN, TM_APP_CUST_INFO APP
+		WHERE  MAIN.APP_NO=APP.APP_NO  AND MAIN.IF_REFUSE='Y' AND  MAIN.APP_TYPE !='S'
+		AND  MAIN.RTF_STATE  IN ('L05','N05','P05')
+
+		<if test="idType != null and idType != ''  " >
+			and APP.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and APP.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		order by  MAIN.CREATE_DATE desc
+	</select>
+
+	<update id="updateApplyStatus" parameterType="map">
+	    UPDATE TM_APP_MAIN SET RTF_STATE='L05' WHERE RTF_STATE='K10' AND ACC_LMT IS NOT NULL
+	</update>
+
+	<!-- 根据idType 和 idNo 获取复核完成之后的申请件，按时间降序，只取第一条-->
+	<select id="selectReviewFinished" resultMap="BaseResultMap" parameterType="map">
+		SELECT *
+		FROM TM_APP_MAIN MAIN
+		WHERE MAIN.RTF_STATE NOT IN ('A05','A10','A20','A30','B05')
+		<if test="idType != null and idType != ''  " >
+			AND MAIN.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND MAIN.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		ORDER BY MAIN.CREATE_DATE DESC FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<!--重复申请判定 -征审系统是否已存在(不是失败的都为重复申请) -->
+	<select id="selecTmAppMainByParam" resultMap="BaseResultMap" parameterType="map" >
+		select m.* from TM_APP_MAIN m ,TM_APP_CUST_INFO a
+		<!--  预录入重复判断去掉  and m.RTF_STATE not in ('M05','A20','A05')
+		and m.APP_TYPE <![CDATA[<>]]> 'S'-->
+		where m.APP_NO=a.APP_NO and m.ORG=a.ORG and m.RTF_STATE not in ('M05','A20','A05','A10','B15')
+		<if test="org != null and org != ''  " >
+			and m.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			AND m.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			AND m.NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			AND m.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="primCacdNo != null and primCacdNo != ''  " >
+			AND a.PRIM_CARD_NO = #{primCacdNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			AND a.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND a.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		ORDER BY m.APP_NO DESC
+	</select>
+
+	<!-- 老夫无能为力，只能这么来命名这个id，因为上面已经把id给用死了 -->
+	<select id="selectOnlyTmAppMainByParam" resultMap="BaseResultMap" parameterType="map" >
+		select m.* from TM_APP_MAIN m
+		where 1=1
+		<if test="org != null and org != ''  " >
+			and m.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			AND m.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			AND m.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			AND a.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			AND a.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="updateStartDate != null and updateStartDate != ''  ">
+			and m.UPDATE_DATE <![CDATA[ >= ]]>
+			#{updateStartDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateEndDate != null and updateEndDate != ''  ">
+			and m.UPDATE_DATE  <![CDATA[ <= ]]>
+			#{updateEndDate,jdbcType=TIMESTAMP }
+		</if>
+		ORDER BY m.APP_NO
+	</select>
+	<!--SELECT * FROM ( SELECT ROWNUM rn ,a.*FROM(SELECT*FROM TM_APP_MAIN)a)WHERE rn>102 AND rn<200;-->
+
+	<select id="select100" resultMap="BaseResultMap" parameterType="map">
+		select m.* From TM_APP_MAIN m ,TM_APP_NODE_INFO i
+		where m.APP_NO=i.APP_NO
+		and (m.REFUSE_CODE is null or m.REFUSE_CODE='F')
+		and m.IMAGE_NUM is NULL
+		and i.RESULT_CODE is NULL
+		and i.INFO_TYPE='A085'
+		AND I.MEMO IS NULL
+		and rownum <![CDATA[<=]]> #{rownum,jdbcType=VARCHAR }
+	</select>
+	<!--使用卡表与申请主表结合查询出异常件列表-->
+	<select id="selectMkCardexList" resultMap="BaseResultMap" parameterType="map" >
+	SELECT M.*
+		FROM TM_APP_MAIN M, TM_MIR_CARD C
+		WHERE M.APP_NO = C.APP_NO
+		AND M.ID_NO = C.ID_NO
+		AND M.NAME = C.NAME
+		AND	M.PRODUCT_CD = C.PRODUCT_CD
+		AND M.RTF_STATE NOT IN 'P05'
+	</select>
+
+	<!--查询申请件状态为L05、N05、Q05的申请件且核心的卡帐客返还数据也没有的申请件清单-->
+	<select id="selectMkCardAgain" resultMap="BaseResultMap" parameterType="map" >
+		SELECT A.*
+	  	FROM TM_APP_MAIN A
+	 	WHERE (A.RTF_STATE IN('L05','N05' ,'Q05'))
+	  	 AND (A.APP_NO NOT IN (SELECT c.APP_NO FROM TM_MIR_CARD c where c.PRODUCT_CD=a.APP_NO))
+	</select>
+
+
+	<!--获取在同卡同申的时候已经通过预审的父类申请件-->
+
+	<select id="PreCheckedSqlId" resultMap="BaseResultMap" parameterType="map">
+	  SELECT DISTINCT A.*
+	  FROM TM_APP_MAIN A,TM_APP_HISTORY B
+	  WHERE 1=1
+	  AND A.TASK_NUM='0'
+	  AND A.APP_NO=B.APP_NO
+	  AND B.RTF_STATE='B20'
+	</select>
+
+	<!-- 多卡同申时查询满足taskNum字段条件的申请件-->
+	<select id="ToPreCheckId" resultMap="BaseResultMap" parameterType="map">
+		SELECT *
+		FROM TM_APP_MAIN MAIN
+		WHERE 1=1
+		AND MAIN.RTF_STATE = 'B16'
+		<if test="taskNum != null and taskNum != ''  " >
+			AND MAIN.TASK_NUM = #{taskNum,jdbcType=VARCHAR }
+		</if>
+		ORDER BY MAIN.CREATE_DATE ASC
+	</select>
+
+
+	<select id="selectApplyTask" resultMap="BaseResultMap" parameterType="map" >
+		select m.* from TM_APP_MAIN m
+		where 1=1
+		<if test="rtfState != null and rtfState != ''  " >
+			and m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		and m.app_no not in ( SELECT e.business_key_ FROM act_ru_execution e WHERE e.business_key_= m.app_no)
+		and   m.REFUSE_CODE2 is null
+		and  m.REFUSE_CODE3 is not null
+		and m.create_date &lt;  (sysdate-5/1440)
+		<if test="refuseTimes != null and refuseTimes != ''  " >
+			and   m.REFUSE_CODE3 &lt;  #{refuseTimes,jdbcType=VARCHAR }
+		</if>
+		<if test="appSouce != null and appSouce != ''  " >
+			and   m.APP_SOURCE != #{appSouce,jdbcType=VARCHAR }
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+	</select>
+
+</mapper>

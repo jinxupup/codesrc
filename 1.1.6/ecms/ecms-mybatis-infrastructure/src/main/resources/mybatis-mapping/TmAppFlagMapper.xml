@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppFlagMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppFlag" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="FLAG_TYPE" property="flagType" jdbcType="VARCHAR" />
+		<result column="FLAG_CODE" property="flagCode" jdbcType="VARCHAR" />
+		<result column="FLAG_DESC" property="flagDesc" jdbcType="VARCHAR" />
+		<result column="FLAG_STATUS" property="flagStatus" jdbcType="VARCHAR" />
+		<result column="FLAG_LEVEL" property="flagLevel" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_FLAG_TABLE_FIELD">ID,APP_NO,FLAG_TYPE,FLAG_CODE,FLAG_DESC,FLAG_STATUS,FLAG_LEVEL,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_FLAG_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_FLAG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppFlag" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_FLAG ( <include refid="TM_APP_FLAG_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{appNo,jdbcType=VARCHAR } , #{flagType,jdbcType=VARCHAR } ,
+			 #{flagCode,jdbcType=VARCHAR } , #{flagDesc,jdbcType=VARCHAR } , #{flagStatus,jdbcType=VARCHAR } , #{flagLevel,jdbcType=VARCHAR } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppFlag">
+		update TM_APP_FLAG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="flagType != null and flagType != ''  " >
+			FLAG_TYPE =#{flagType,jdbcType=VARCHAR },
+		</if>
+		<if test="flagCode != null and flagCode != ''  " >
+			FLAG_CODE =#{flagCode,jdbcType=VARCHAR },
+		</if>
+		<if test="flagDesc != null and flagDesc != ''  " >
+			FLAG_DESC =#{flagDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="flagStatus != null and flagStatus != ''  " >
+			FLAG_STATUS =#{flagStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="flagLevel != null and flagLevel != ''  " >
+			FLAG_LEVEL =#{flagLevel,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppFlag">
+		update TM_APP_FLAG 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			FLAG_TYPE =#{flagType,jdbcType=VARCHAR },		
+			FLAG_CODE =#{flagCode,jdbcType=VARCHAR },		
+			FLAG_DESC =#{flagDesc,jdbcType=VARCHAR },		
+			FLAG_STATUS =#{flagStatus,jdbcType=VARCHAR },		
+			FLAG_LEVEL =#{flagLevel,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_FLAG_TABLE_FIELD" />		
+		from TM_APP_FLAG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_FLAG_TABLE_FIELD" />		
+ 		from TM_APP_FLAG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="flagType != null and flagType != ''  " >
+			and FLAG_TYPE = #{flagType,jdbcType=VARCHAR }
+		</if>
+		<if test="flagCode != null and flagCode != ''  " >
+			and FLAG_CODE = #{flagCode,jdbcType=VARCHAR }
+		</if>
+		<if test="flagDesc != null and flagDesc != ''  " >
+			and FLAG_DESC = #{flagDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="flagStatus != null and flagStatus != ''  " >
+			and FLAG_STATUS = #{flagStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="flagLevel != null and flagLevel != ''  " >
+			and FLAG_LEVEL = #{flagLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_FLAG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="flagType != null and flagType != ''  " >
+			and FLAG_TYPE = #{flagType,jdbcType=VARCHAR }
+		</if>
+		<if test="flagCode != null and flagCode != ''  " >
+			and FLAG_CODE = #{flagCode,jdbcType=VARCHAR }
+		</if>
+		<if test="flagDesc != null and flagDesc != ''  " >
+			and FLAG_DESC = #{flagDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="flagStatus != null and flagStatus != ''  " >
+			and FLAG_STATUS = #{flagStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="flagLevel != null and flagLevel != ''  " >
+			and FLAG_LEVEL = #{flagLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

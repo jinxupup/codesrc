@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppMsgSendMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppMsgSend" >
+		<id column="APP_NO" property="appNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CELL_PHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+		<result column="CONDITION " property="condition" jdbcType="VARCHAR" />
+		<result column="REMARK " property="remark" jdbcType="VARCHAR" />
+		<result column="MSG_SEND_TIMES" property="msgSendTimes" jdbcType="VARCHAR" />
+		<result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR" />
+		<result column="TONKEN_ID" property="tonkenId" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="TM_APP_MSG_SEND_TABLE_FIELD">APP_NO,ORG,NAME,CELL_PHONE,ID_NO,MSG_CONTENT,CONDITION ,REMARK ,MSG_SEND_TIMES,MSG_TYPE,TONKEN_ID,CREATE_DATE,UPDATE_TIME</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_MSG_SEND
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppMsgSend" >
+		insert into TM_APP_MSG_SEND ( <include refid="TM_APP_MSG_SEND_TABLE_FIELD" /> )
+		values (  #{appNo,jdbcType=VARCHAR } , #{org,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } ,
+			 #{cellPhone,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{msgContent,jdbcType=VARCHAR } , #{condition,jdbcType=VARCHAR } ,
+			 #{remark,jdbcType=VARCHAR } , #{msgSendTimes,jdbcType=VARCHAR } , #{msgType,jdbcType=VARCHAR } , #{tonkenId,jdbcType=VARCHAR } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{updateTime,jdbcType=TIMESTAMP } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppMsgSend">
+		update TM_APP_MSG_SEND 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="msgContent != null and msgContent != ''  " >
+			MSG_CONTENT =#{msgContent,jdbcType=VARCHAR },
+		</if>
+		<if test="condition != null and condition != ''  " >
+			CONDITION  =#{condition,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK  =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="msgSendTimes != null and msgSendTimes != ''  " >
+			MSG_SEND_TIMES =#{msgSendTimes,jdbcType=VARCHAR },
+		</if>
+		<if test="msgType != null and msgType != ''  " >
+			MSG_TYPE =#{msgType,jdbcType=VARCHAR },
+		</if>
+		<if test="tonkenId != null and tonkenId != ''  " >
+			TONKEN_ID =#{tonkenId,jdbcType=VARCHAR },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		</trim>
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppMsgSend">
+		update TM_APP_MSG_SEND 
+		<trim prefix="set" suffixOverrides=","> 
+			NAME =#{name,jdbcType=VARCHAR },		
+			CELL_PHONE =#{cellPhone,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			MSG_CONTENT =#{msgContent,jdbcType=VARCHAR },		
+			CONDITION  =#{condition,jdbcType=VARCHAR },		
+			REMARK  =#{remark,jdbcType=VARCHAR },		
+			MSG_SEND_TIMES =#{msgSendTimes,jdbcType=VARCHAR },		
+			MSG_TYPE =#{msgType,jdbcType=VARCHAR },		
+			TONKEN_ID =#{tonkenId,jdbcType=VARCHAR },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+		</trim>
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_MSG_SEND_TABLE_FIELD" />		
+		from TM_APP_MSG_SEND
+		where 
+		APP_NO = #{appNo, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_MSG_SEND_TABLE_FIELD" />		
+ 		from TM_APP_MSG_SEND
+		where 1=1 
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="msgContent != null and msgContent != ''  " >
+			and MSG_CONTENT = #{msgContent,jdbcType=VARCHAR }
+		</if>
+		<if test="condition != null and condition != ''  " >
+			and CONDITION  = #{condition,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK  = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="msgSendTimes != null and msgSendTimes != ''  " >
+			and MSG_SEND_TIMES = #{msgSendTimes,jdbcType=VARCHAR }
+		</if>
+		<if test="msgType != null and msgType != ''  " >
+			and MSG_TYPE = #{msgType,jdbcType=VARCHAR }
+		</if>
+		<if test="tonkenId != null and tonkenId != ''  " >
+			and TONKEN_ID = #{tonkenId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_MSG_SEND
+		where 1=1 
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+			and CELL_PHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="msgContent != null and msgContent != ''  " >
+			and MSG_CONTENT = #{msgContent,jdbcType=VARCHAR }
+		</if>
+		<if test="condition != null and condition != ''  " >
+			and CONDITION  = #{condition,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK  = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="msgSendTimes != null and msgSendTimes != ''  " >
+			and MSG_SEND_TIMES = #{msgSendTimes,jdbcType=VARCHAR }
+		</if>
+		<if test="msgType != null and msgType != ''  " >
+			and MSG_TYPE = #{msgType,jdbcType=VARCHAR }
+		</if>
+		<if test="tonkenId != null and tonkenId != ''  " >
+			and TONKEN_ID = #{tonkenId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

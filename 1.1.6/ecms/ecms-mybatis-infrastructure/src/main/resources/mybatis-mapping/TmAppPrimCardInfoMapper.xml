@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppPrimCardInfoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppPrimCardInfo" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="CARDFACE_CD" property="cardfaceCd" jdbcType="VARCHAR" />
+		<result column="CARD_FETCH_METHOD" property="cardFetchMethod" jdbcType="VARCHAR" />
+		<result column="CARD_MAILER_IND" property="cardMailerInd" jdbcType="VARCHAR" />
+		<result column="CARD_SEND_ADD_TYPE" property="cardSendAddType" jdbcType="VARCHAR" />
+		<result column="FETCH_BRANCH" property="fetchBranch" jdbcType="VARCHAR" />
+		<result column="STMT_MEDIA_TYPE" property="stmtMediaType" jdbcType="VARCHAR" />
+		<result column="STMT_MAIL_ADDR_IND" property="stmtMailAddrInd" jdbcType="VARCHAR" />
+		<result column="BILLING_CYCLE" property="billingCycle" jdbcType="VARCHAR" />
+		<result column="DD_IND" property="ddInd" jdbcType="VARCHAR" />
+		<result column="DD_BANK_ACCT_NO" property="ddBankAcctNo" jdbcType="VARCHAR" />
+		<result column="DD_BANK_NAME" property="ddBankName" jdbcType="VARCHAR" />
+		<result column="DD_BANK_ACCT_NAME" property="ddBankAcctName" jdbcType="VARCHAR" />
+		<result column="DD_BANK_BRANCH" property="ddBankBranch" jdbcType="VARCHAR" />
+		<result column="DD_BANK_ACCT_NO_TYPE" property="ddBankAcctNoType" jdbcType="VARCHAR" />
+		<result column="CREDIT_TYPE_OTHER" property="creditTypeOther" jdbcType="VARCHAR" />
+		<result column="OTHER_CARD_NO" property="otherCardNo" jdbcType="VARCHAR" />
+		<result column="IS_PRD_CHANGE" property="isPrdChange" jdbcType="VARCHAR" />
+		<result column="SPREADER_NO" property="spreaderNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_NAME" property="spreaderName" jdbcType="VARCHAR" />
+		<result column="SPREADER_TELEPHONE" property="spreaderTelephone" jdbcType="VARCHAR" />
+		<result column="SPREADER_CARD_NO" property="spreaderCardNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_IS_BANK_EMPLOYEE" property="spreaderIsBankEmployee" jdbcType="VARCHAR" />
+		<result column="SPREADER_BRANCH_ONE" property="spreaderBranchOne" jdbcType="VARCHAR" />
+		<result column="SPREADER_BRANCH_TWO" property="spreaderBranchTwo" jdbcType="VARCHAR" />
+		<result column="SPREADER_BRANCH_THREE" property="spreaderBranchThree" jdbcType="VARCHAR" />
+		<result column="SPREADER_TYPE" property="spreaderType" jdbcType="VARCHAR" />
+		<result column="SPREADER_MODE" property="spreaderMode" jdbcType="VARCHAR" />
+		<result column="SPREADER_CORP_PRE_NO" property="spreaderCorpPreNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_SUP_CODE" property="spreaderSupCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_TEAM_CODE" property="spreaderTeamCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_AREA_CODE" property="spreaderAreaCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_IS_EFF" property="spreaderIsEff" jdbcType="VARCHAR" />
+		<result column="REVIEW_NO" property="reviewNo" jdbcType="VARCHAR" />
+		<result column="REVIEW_NAME" property="reviewName" jdbcType="VARCHAR" />
+		<result column="REVIEW_TELEPHONE" property="reviewTelephone" jdbcType="VARCHAR" />
+		<result column="REVIEW_BRANCH_ONE" property="reviewBranchOne" jdbcType="VARCHAR" />
+		<result column="REVIEW_BRANCH_TWO" property="reviewBranchTwo" jdbcType="VARCHAR" />
+		<result column="REVIEW_BRANCH_THREE" property="reviewBranchThree" jdbcType="VARCHAR" />
+		<result column="PRE_NO" property="preNo" jdbcType="VARCHAR" />
+		<result column="PRE_NAME" property="preName" jdbcType="VARCHAR" />
+		<result column="PRE_TELEPHONE" property="preTelephone" jdbcType="VARCHAR" />
+		<result column="PRE_BRANCH_ONE" property="preBranchOne" jdbcType="VARCHAR" />
+		<result column="PRE_BRANCH_TWO" property="preBranchTwo" jdbcType="VARCHAR" />
+		<result column="PRE_BRANCH_THREE" property="preBranchThree" jdbcType="VARCHAR" />
+		<result column="INPUT_NO" property="inputNo" jdbcType="VARCHAR" />
+		<result column="INPUT_NAME" property="inputName" jdbcType="VARCHAR" />
+		<result column="INPUT_TELEPHONE" property="inputTelephone" jdbcType="VARCHAR" />
+		<result column="INPUT_BRANCH_ONE" property="inputBranchOne" jdbcType="VARCHAR" />
+		<result column="INPUT_BRANCH_TWO" property="inputBranchTwo" jdbcType="VARCHAR" />
+		<result column="INPUT_BRANCH_THREE" property="inputBranchThree" jdbcType="VARCHAR" />
+		<result column="INPUT_DATE" property="inputDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_PRIM_CARD_INFO_TABLE_FIELD">ID,ORG,APP_NO,CARDFACE_CD,CARD_FETCH_METHOD,CARD_MAILER_IND,CARD_SEND_ADD_TYPE,FETCH_BRANCH,STMT_MEDIA_TYPE,STMT_MAIL_ADDR_IND,BILLING_CYCLE,DD_IND,DD_BANK_ACCT_NO,DD_BANK_NAME,DD_BANK_ACCT_NAME,DD_BANK_BRANCH,DD_BANK_ACCT_NO_TYPE,CREDIT_TYPE_OTHER,OTHER_CARD_NO,IS_PRD_CHANGE,SPREADER_NO,SPREADER_NAME,SPREADER_TELEPHONE,SPREADER_CARD_NO,SPREADER_IS_BANK_EMPLOYEE,SPREADER_BRANCH_ONE,SPREADER_BRANCH_TWO,SPREADER_BRANCH_THREE,SPREADER_TYPE,SPREADER_MODE,SPREADER_CORP_PRE_NO,SPREADER_SUP_CODE,SPREADER_TEAM_CODE,SPREADER_AREA_CODE,SPREADER_IS_EFF,REVIEW_NO,REVIEW_NAME,REVIEW_TELEPHONE,REVIEW_BRANCH_ONE,REVIEW_BRANCH_TWO,REVIEW_BRANCH_THREE,PRE_NO,PRE_NAME,PRE_TELEPHONE,PRE_BRANCH_ONE,PRE_BRANCH_TWO,PRE_BRANCH_THREE,INPUT_NO,INPUT_NAME,INPUT_TELEPHONE,INPUT_BRANCH_ONE,INPUT_BRANCH_TWO,INPUT_BRANCH_THREE,INPUT_DATE,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_PRIM_CARD_INFO_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_PRIM_CARD_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppPrimCardInfo" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_PRIM_CARD_INFO ( <include refid="TM_APP_PRIM_CARD_INFO_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{cardfaceCd,jdbcType=VARCHAR } , #{cardFetchMethod,jdbcType=VARCHAR } , #{cardMailerInd,jdbcType=VARCHAR } , #{cardSendAddType,jdbcType=VARCHAR } ,
+			 #{fetchBranch,jdbcType=VARCHAR } , #{stmtMediaType,jdbcType=VARCHAR } , #{stmtMailAddrInd,jdbcType=VARCHAR } , #{billingCycle,jdbcType=VARCHAR } ,
+			 #{ddInd,jdbcType=VARCHAR } , #{ddBankAcctNo,jdbcType=VARCHAR } , #{ddBankName,jdbcType=VARCHAR } , #{ddBankAcctName,jdbcType=VARCHAR } ,
+			 #{ddBankBranch,jdbcType=VARCHAR } , #{ddBankAcctNoType,jdbcType=VARCHAR } , #{creditTypeOther,jdbcType=VARCHAR } , #{otherCardNo,jdbcType=VARCHAR } ,
+			 #{isPrdChange,jdbcType=VARCHAR } , #{spreaderNo,jdbcType=VARCHAR } , #{spreaderName,jdbcType=VARCHAR } , #{spreaderTelephone,jdbcType=VARCHAR } ,
+			 #{spreaderCardNo,jdbcType=VARCHAR } , #{spreaderIsBankEmployee,jdbcType=VARCHAR } , #{spreaderBranchOne,jdbcType=VARCHAR } , #{spreaderBranchTwo,jdbcType=VARCHAR } ,
+			 #{spreaderBranchThree,jdbcType=VARCHAR } , #{spreaderType,jdbcType=VARCHAR } , #{spreaderMode,jdbcType=VARCHAR } , #{spreaderCorpPreNo,jdbcType=VARCHAR } ,
+			 #{spreaderSupCode,jdbcType=VARCHAR } , #{spreaderTeamCode,jdbcType=VARCHAR } , #{spreaderAreaCode,jdbcType=VARCHAR } , #{spreaderIsEff,jdbcType=VARCHAR } ,
+			 #{reviewNo,jdbcType=VARCHAR } , #{reviewName,jdbcType=VARCHAR } , #{reviewTelephone,jdbcType=VARCHAR } , #{reviewBranchOne,jdbcType=VARCHAR } ,
+			 #{reviewBranchTwo,jdbcType=VARCHAR } , #{reviewBranchThree,jdbcType=VARCHAR } , #{preNo,jdbcType=VARCHAR } , #{preName,jdbcType=VARCHAR } ,
+			 #{preTelephone,jdbcType=VARCHAR } , #{preBranchOne,jdbcType=VARCHAR } , #{preBranchTwo,jdbcType=VARCHAR } , #{preBranchThree,jdbcType=VARCHAR } ,
+			 #{inputNo,jdbcType=VARCHAR } , #{inputName,jdbcType=VARCHAR } , #{inputTelephone,jdbcType=VARCHAR } , #{inputBranchOne,jdbcType=VARCHAR } ,
+			 #{inputBranchTwo,jdbcType=VARCHAR } , #{inputBranchThree,jdbcType=VARCHAR } , #{inputDate,jdbcType=TIMESTAMP } , #{createDate,jdbcType=TIMESTAMP } ,
+			 #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPrimCardInfo">
+		update TM_APP_PRIM_CARD_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cardfaceCd != null and cardfaceCd != ''  " >
+			CARDFACE_CD =#{cardfaceCd,jdbcType=VARCHAR },
+		</if>
+		<if test="cardFetchMethod != null and cardFetchMethod != ''  " >
+			CARD_FETCH_METHOD =#{cardFetchMethod,jdbcType=VARCHAR },
+		</if>
+		<if test="cardMailerInd != null and cardMailerInd != ''  " >
+			CARD_MAILER_IND =#{cardMailerInd,jdbcType=VARCHAR },
+		</if>
+		<if test="cardSendAddType != null and cardSendAddType != ''  " >
+			CARD_SEND_ADD_TYPE =#{cardSendAddType,jdbcType=VARCHAR },
+		</if>
+		<if test="fetchBranch != null and fetchBranch != ''  " >
+			FETCH_BRANCH =#{fetchBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="stmtMediaType != null and stmtMediaType != ''  " >
+			STMT_MEDIA_TYPE =#{stmtMediaType,jdbcType=VARCHAR },
+		</if>
+		<if test="stmtMailAddrInd != null and stmtMailAddrInd != ''  " >
+			STMT_MAIL_ADDR_IND =#{stmtMailAddrInd,jdbcType=VARCHAR },
+		</if>
+		<if test="billingCycle != null and billingCycle != ''  " >
+			BILLING_CYCLE =#{billingCycle,jdbcType=VARCHAR },
+		</if>
+		<if test="ddInd != null and ddInd != ''  " >
+			DD_IND =#{ddInd,jdbcType=VARCHAR },
+		</if>
+		<if test="ddBankAcctNo != null and ddBankAcctNo != ''  " >
+			DD_BANK_ACCT_NO =#{ddBankAcctNo,jdbcType=VARCHAR },
+		</if>
+		<if test="ddBankName != null and ddBankName != ''  " >
+			DD_BANK_NAME =#{ddBankName,jdbcType=VARCHAR },
+		</if>
+		<if test="ddBankAcctName != null and ddBankAcctName != ''  " >
+			DD_BANK_ACCT_NAME =#{ddBankAcctName,jdbcType=VARCHAR },
+		</if>
+		<if test="ddBankBranch != null and ddBankBranch != ''  " >
+			DD_BANK_BRANCH =#{ddBankBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="ddBankAcctNoType != null and ddBankAcctNoType != ''  " >
+			DD_BANK_ACCT_NO_TYPE =#{ddBankAcctNoType,jdbcType=VARCHAR },
+		</if>
+		<if test="creditTypeOther != null and creditTypeOther != ''  " >
+			CREDIT_TYPE_OTHER =#{creditTypeOther,jdbcType=VARCHAR },
+		</if>
+		<if test="otherCardNo != null and otherCardNo != ''  " >
+			OTHER_CARD_NO =#{otherCardNo,jdbcType=VARCHAR },
+		</if>
+		<if test="isPrdChange != null and isPrdChange != ''  " >
+			IS_PRD_CHANGE =#{isPrdChange,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderNo != null and spreaderNo != ''  " >
+			SPREADER_NO =#{spreaderNo,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderTelephone != null and spreaderTelephone != ''  " >
+			SPREADER_TELEPHONE =#{spreaderTelephone,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderCardNo != null and spreaderCardNo != ''  " >
+			SPREADER_CARD_NO =#{spreaderCardNo,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderIsBankEmployee != null and spreaderIsBankEmployee != ''  " >
+			SPREADER_IS_BANK_EMPLOYEE =#{spreaderIsBankEmployee,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBranchOne != null and spreaderBranchOne != ''  " >
+			SPREADER_BRANCH_ONE =#{spreaderBranchOne,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBranchTwo != null and spreaderBranchTwo != ''  " >
+			SPREADER_BRANCH_TWO =#{spreaderBranchTwo,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBranchThree != null and spreaderBranchThree != ''  " >
+			SPREADER_BRANCH_THREE =#{spreaderBranchThree,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderType != null and spreaderType != ''  " >
+			SPREADER_TYPE =#{spreaderType,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderMode != null and spreaderMode != ''  " >
+			SPREADER_MODE =#{spreaderMode,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderCorpPreNo != null and spreaderCorpPreNo != ''  " >
+			SPREADER_CORP_PRE_NO =#{spreaderCorpPreNo,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderSupCode != null and spreaderSupCode != ''  " >
+			SPREADER_SUP_CODE =#{spreaderSupCode,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderTeamCode != null and spreaderTeamCode != ''  " >
+			SPREADER_TEAM_CODE =#{spreaderTeamCode,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderAreaCode != null and spreaderAreaCode != ''  " >
+			SPREADER_AREA_CODE =#{spreaderAreaCode,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderIsEff != null and spreaderIsEff != ''  " >
+			SPREADER_IS_EFF =#{spreaderIsEff,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewNo != null and reviewNo != ''  " >
+			REVIEW_NO =#{reviewNo,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewName != null and reviewName != ''  " >
+			REVIEW_NAME =#{reviewName,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewTelephone != null and reviewTelephone != ''  " >
+			REVIEW_TELEPHONE =#{reviewTelephone,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewBranchOne != null and reviewBranchOne != ''  " >
+			REVIEW_BRANCH_ONE =#{reviewBranchOne,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewBranchTwo != null and reviewBranchTwo != ''  " >
+			REVIEW_BRANCH_TWO =#{reviewBranchTwo,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewBranchThree != null and reviewBranchThree != ''  " >
+			REVIEW_BRANCH_THREE =#{reviewBranchThree,jdbcType=VARCHAR },
+		</if>
+		<if test="preNo != null and preNo != ''  " >
+			PRE_NO =#{preNo,jdbcType=VARCHAR },
+		</if>
+		<if test="preName != null and preName != ''  " >
+			PRE_NAME =#{preName,jdbcType=VARCHAR },
+		</if>
+		<if test="preTelephone != null and preTelephone != ''  " >
+			PRE_TELEPHONE =#{preTelephone,jdbcType=VARCHAR },
+		</if>
+		<if test="preBranchOne != null and preBranchOne != ''  " >
+			PRE_BRANCH_ONE =#{preBranchOne,jdbcType=VARCHAR },
+		</if>
+		<if test="preBranchTwo != null and preBranchTwo != ''  " >
+			PRE_BRANCH_TWO =#{preBranchTwo,jdbcType=VARCHAR },
+		</if>
+		<if test="preBranchThree != null and preBranchThree != ''  " >
+			PRE_BRANCH_THREE =#{preBranchThree,jdbcType=VARCHAR },
+		</if>
+		<if test="inputNo != null and inputNo != ''  " >
+			INPUT_NO =#{inputNo,jdbcType=VARCHAR },
+		</if>
+		<if test="inputName != null and inputName != ''  " >
+			INPUT_NAME =#{inputName,jdbcType=VARCHAR },
+		</if>
+		<if test="inputTelephone != null and inputTelephone != ''  " >
+			INPUT_TELEPHONE =#{inputTelephone,jdbcType=VARCHAR },
+		</if>
+		<if test="inputBranchOne != null and inputBranchOne != ''  " >
+			INPUT_BRANCH_ONE =#{inputBranchOne,jdbcType=VARCHAR },
+		</if>
+		<if test="inputBranchTwo != null and inputBranchTwo != ''  " >
+			INPUT_BRANCH_TWO =#{inputBranchTwo,jdbcType=VARCHAR },
+		</if>
+		<if test="inputBranchThree != null and inputBranchThree != ''  " >
+			INPUT_BRANCH_THREE =#{inputBranchThree,jdbcType=VARCHAR },
+		</if>
+		<if test="inputDate != null and inputDate != ''  " >
+			INPUT_DATE =#{inputDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPrimCardInfo">
+		update TM_APP_PRIM_CARD_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			CARDFACE_CD =#{cardfaceCd,jdbcType=VARCHAR },		
+			CARD_FETCH_METHOD =#{cardFetchMethod,jdbcType=VARCHAR },		
+			CARD_MAILER_IND =#{cardMailerInd,jdbcType=VARCHAR },		
+			CARD_SEND_ADD_TYPE =#{cardSendAddType,jdbcType=VARCHAR },		
+			FETCH_BRANCH =#{fetchBranch,jdbcType=VARCHAR },		
+			STMT_MEDIA_TYPE =#{stmtMediaType,jdbcType=VARCHAR },		
+			STMT_MAIL_ADDR_IND =#{stmtMailAddrInd,jdbcType=VARCHAR },		
+			BILLING_CYCLE =#{billingCycle,jdbcType=VARCHAR },		
+			DD_IND =#{ddInd,jdbcType=VARCHAR },		
+			DD_BANK_ACCT_NO =#{ddBankAcctNo,jdbcType=VARCHAR },		
+			DD_BANK_NAME =#{ddBankName,jdbcType=VARCHAR },		
+			DD_BANK_ACCT_NAME =#{ddBankAcctName,jdbcType=VARCHAR },		
+			DD_BANK_BRANCH =#{ddBankBranch,jdbcType=VARCHAR },		
+			DD_BANK_ACCT_NO_TYPE =#{ddBankAcctNoType,jdbcType=VARCHAR },		
+			CREDIT_TYPE_OTHER =#{creditTypeOther,jdbcType=VARCHAR },		
+			OTHER_CARD_NO =#{otherCardNo,jdbcType=VARCHAR },		
+			IS_PRD_CHANGE =#{isPrdChange,jdbcType=VARCHAR },		
+			SPREADER_NO =#{spreaderNo,jdbcType=VARCHAR },		
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },		
+			SPREADER_TELEPHONE =#{spreaderTelephone,jdbcType=VARCHAR },		
+			SPREADER_CARD_NO =#{spreaderCardNo,jdbcType=VARCHAR },		
+			SPREADER_IS_BANK_EMPLOYEE =#{spreaderIsBankEmployee,jdbcType=VARCHAR },		
+			SPREADER_BRANCH_ONE =#{spreaderBranchOne,jdbcType=VARCHAR },		
+			SPREADER_BRANCH_TWO =#{spreaderBranchTwo,jdbcType=VARCHAR },		
+			SPREADER_BRANCH_THREE =#{spreaderBranchThree,jdbcType=VARCHAR },		
+			SPREADER_TYPE =#{spreaderType,jdbcType=VARCHAR },		
+			SPREADER_MODE =#{spreaderMode,jdbcType=VARCHAR },		
+			SPREADER_CORP_PRE_NO =#{spreaderCorpPreNo,jdbcType=VARCHAR },		
+			SPREADER_SUP_CODE =#{spreaderSupCode,jdbcType=VARCHAR },		
+			SPREADER_TEAM_CODE =#{spreaderTeamCode,jdbcType=VARCHAR },		
+			SPREADER_AREA_CODE =#{spreaderAreaCode,jdbcType=VARCHAR },		
+			SPREADER_IS_EFF =#{spreaderIsEff,jdbcType=VARCHAR },		
+			REVIEW_NO =#{reviewNo,jdbcType=VARCHAR },		
+			REVIEW_NAME =#{reviewName,jdbcType=VARCHAR },		
+			REVIEW_TELEPHONE =#{reviewTelephone,jdbcType=VARCHAR },		
+			REVIEW_BRANCH_ONE =#{reviewBranchOne,jdbcType=VARCHAR },		
+			REVIEW_BRANCH_TWO =#{reviewBranchTwo,jdbcType=VARCHAR },		
+			REVIEW_BRANCH_THREE =#{reviewBranchThree,jdbcType=VARCHAR },		
+			PRE_NO =#{preNo,jdbcType=VARCHAR },		
+			PRE_NAME =#{preName,jdbcType=VARCHAR },		
+			PRE_TELEPHONE =#{preTelephone,jdbcType=VARCHAR },		
+			PRE_BRANCH_ONE =#{preBranchOne,jdbcType=VARCHAR },		
+			PRE_BRANCH_TWO =#{preBranchTwo,jdbcType=VARCHAR },		
+			PRE_BRANCH_THREE =#{preBranchThree,jdbcType=VARCHAR },		
+			INPUT_NO =#{inputNo,jdbcType=VARCHAR },		
+			INPUT_NAME =#{inputName,jdbcType=VARCHAR },		
+			INPUT_TELEPHONE =#{inputTelephone,jdbcType=VARCHAR },		
+			INPUT_BRANCH_ONE =#{inputBranchOne,jdbcType=VARCHAR },		
+			INPUT_BRANCH_TWO =#{inputBranchTwo,jdbcType=VARCHAR },		
+			INPUT_BRANCH_THREE =#{inputBranchThree,jdbcType=VARCHAR },		
+			INPUT_DATE =#{inputDate,jdbcType=TIMESTAMP },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_PRIM_CARD_INFO_TABLE_FIELD" />		
+		from TM_APP_PRIM_CARD_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_PRIM_CARD_INFO_TABLE_FIELD" />		
+ 		from TM_APP_PRIM_CARD_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardfaceCd != null and cardfaceCd != ''  " >
+			and CARDFACE_CD = #{cardfaceCd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardFetchMethod != null and cardFetchMethod != ''  " >
+			and CARD_FETCH_METHOD = #{cardFetchMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="cardMailerInd != null and cardMailerInd != ''  " >
+			and CARD_MAILER_IND = #{cardMailerInd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardSendAddType != null and cardSendAddType != ''  " >
+			and CARD_SEND_ADD_TYPE = #{cardSendAddType,jdbcType=VARCHAR }
+		</if>
+		<if test="fetchBranch != null and fetchBranch != ''  " >
+			and FETCH_BRANCH = #{fetchBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="stmtMediaType != null and stmtMediaType != ''  " >
+			and STMT_MEDIA_TYPE = #{stmtMediaType,jdbcType=VARCHAR }
+		</if>
+		<if test="stmtMailAddrInd != null and stmtMailAddrInd != ''  " >
+			and STMT_MAIL_ADDR_IND = #{stmtMailAddrInd,jdbcType=VARCHAR }
+		</if>
+		<if test="billingCycle != null and billingCycle != ''  " >
+			and BILLING_CYCLE = #{billingCycle,jdbcType=VARCHAR }
+		</if>
+		<if test="ddInd != null and ddInd != ''  " >
+			and DD_IND = #{ddInd,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctNo != null and ddBankAcctNo != ''  " >
+			and DD_BANK_ACCT_NO = #{ddBankAcctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankName != null and ddBankName != ''  " >
+			and DD_BANK_NAME = #{ddBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctName != null and ddBankAcctName != ''  " >
+			and DD_BANK_ACCT_NAME = #{ddBankAcctName,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankBranch != null and ddBankBranch != ''  " >
+			and DD_BANK_BRANCH = #{ddBankBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctNoType != null and ddBankAcctNoType != ''  " >
+			and DD_BANK_ACCT_NO_TYPE = #{ddBankAcctNoType,jdbcType=VARCHAR }
+		</if>
+		<if test="creditTypeOther != null and creditTypeOther != ''  " >
+			and CREDIT_TYPE_OTHER = #{creditTypeOther,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCardNo != null and otherCardNo != ''  " >
+			and OTHER_CARD_NO = #{otherCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="isPrdChange != null and isPrdChange != ''  " >
+			and IS_PRD_CHANGE = #{isPrdChange,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNo != null and spreaderNo != ''  " >
+			and SPREADER_NO = #{spreaderNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderTelephone != null and spreaderTelephone != ''  " >
+			and SPREADER_TELEPHONE = #{spreaderTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderCardNo != null and spreaderCardNo != ''  " >
+			and SPREADER_CARD_NO = #{spreaderCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderIsBankEmployee != null and spreaderIsBankEmployee != ''  " >
+			and SPREADER_IS_BANK_EMPLOYEE = #{spreaderIsBankEmployee,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchOne != null and spreaderBranchOne != ''  " >
+			and SPREADER_BRANCH_ONE = #{spreaderBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchTwo != null and spreaderBranchTwo != ''  " >
+			and SPREADER_BRANCH_TWO = #{spreaderBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchThree != null and spreaderBranchThree != ''  " >
+			and SPREADER_BRANCH_THREE = #{spreaderBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderType != null and spreaderType != ''  " >
+			and SPREADER_TYPE = #{spreaderType,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderMode != null and spreaderMode != ''  " >
+			and SPREADER_MODE = #{spreaderMode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderCorpPreNo != null and spreaderCorpPreNo != ''  " >
+			and SPREADER_CORP_PRE_NO = #{spreaderCorpPreNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderSupCode != null and spreaderSupCode != ''  " >
+			and SPREADER_SUP_CODE = #{spreaderSupCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderTeamCode != null and spreaderTeamCode != ''  " >
+			and SPREADER_TEAM_CODE = #{spreaderTeamCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderAreaCode != null and spreaderAreaCode != ''  " >
+			and SPREADER_AREA_CODE = #{spreaderAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderIsEff != null and spreaderIsEff != ''  " >
+			and SPREADER_IS_EFF = #{spreaderIsEff,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewNo != null and reviewNo != ''  " >
+			and REVIEW_NO = #{reviewNo,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewName != null and reviewName != ''  " >
+			and REVIEW_NAME = #{reviewName,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewTelephone != null and reviewTelephone != ''  " >
+			and REVIEW_TELEPHONE = #{reviewTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchOne != null and reviewBranchOne != ''  " >
+			and REVIEW_BRANCH_ONE = #{reviewBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchTwo != null and reviewBranchTwo != ''  " >
+			and REVIEW_BRANCH_TWO = #{reviewBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchThree != null and reviewBranchThree != ''  " >
+			and REVIEW_BRANCH_THREE = #{reviewBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="preNo != null and preNo != ''  " >
+			and PRE_NO = #{preNo,jdbcType=VARCHAR }
+		</if>
+		<if test="preName != null and preName != ''  " >
+			and PRE_NAME = #{preName,jdbcType=VARCHAR }
+		</if>
+		<if test="preTelephone != null and preTelephone != ''  " >
+			and PRE_TELEPHONE = #{preTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchOne != null and preBranchOne != ''  " >
+			and PRE_BRANCH_ONE = #{preBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchTwo != null and preBranchTwo != ''  " >
+			and PRE_BRANCH_TWO = #{preBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchThree != null and preBranchThree != ''  " >
+			and PRE_BRANCH_THREE = #{preBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="inputNo != null and inputNo != ''  " >
+			and INPUT_NO = #{inputNo,jdbcType=VARCHAR }
+		</if>
+		<if test="inputName != null and inputName != ''  " >
+			and INPUT_NAME = #{inputName,jdbcType=VARCHAR }
+		</if>
+		<if test="inputTelephone != null and inputTelephone != ''  " >
+			and INPUT_TELEPHONE = #{inputTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchOne != null and inputBranchOne != ''  " >
+			and INPUT_BRANCH_ONE = #{inputBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchTwo != null and inputBranchTwo != ''  " >
+			and INPUT_BRANCH_TWO = #{inputBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchThree != null and inputBranchThree != ''  " >
+			and INPUT_BRANCH_THREE = #{inputBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="inputDate != null and inputDate != ''  " >
+			and INPUT_DATE = #{inputDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_PRIM_CARD_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardfaceCd != null and cardfaceCd != ''  " >
+			and CARDFACE_CD = #{cardfaceCd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardFetchMethod != null and cardFetchMethod != ''  " >
+			and CARD_FETCH_METHOD = #{cardFetchMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="cardMailerInd != null and cardMailerInd != ''  " >
+			and CARD_MAILER_IND = #{cardMailerInd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardSendAddType != null and cardSendAddType != ''  " >
+			and CARD_SEND_ADD_TYPE = #{cardSendAddType,jdbcType=VARCHAR }
+		</if>
+		<if test="fetchBranch != null and fetchBranch != ''  " >
+			and FETCH_BRANCH = #{fetchBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="stmtMediaType != null and stmtMediaType != ''  " >
+			and STMT_MEDIA_TYPE = #{stmtMediaType,jdbcType=VARCHAR }
+		</if>
+		<if test="stmtMailAddrInd != null and stmtMailAddrInd != ''  " >
+			and STMT_MAIL_ADDR_IND = #{stmtMailAddrInd,jdbcType=VARCHAR }
+		</if>
+		<if test="billingCycle != null and billingCycle != ''  " >
+			and BILLING_CYCLE = #{billingCycle,jdbcType=VARCHAR }
+		</if>
+		<if test="ddInd != null and ddInd != ''  " >
+			and DD_IND = #{ddInd,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctNo != null and ddBankAcctNo != ''  " >
+			and DD_BANK_ACCT_NO = #{ddBankAcctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankName != null and ddBankName != ''  " >
+			and DD_BANK_NAME = #{ddBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctName != null and ddBankAcctName != ''  " >
+			and DD_BANK_ACCT_NAME = #{ddBankAcctName,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankBranch != null and ddBankBranch != ''  " >
+			and DD_BANK_BRANCH = #{ddBankBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="ddBankAcctNoType != null and ddBankAcctNoType != ''  " >
+			and DD_BANK_ACCT_NO_TYPE = #{ddBankAcctNoType,jdbcType=VARCHAR }
+		</if>
+		<if test="creditTypeOther != null and creditTypeOther != ''  " >
+			and CREDIT_TYPE_OTHER = #{creditTypeOther,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCardNo != null and otherCardNo != ''  " >
+			and OTHER_CARD_NO = #{otherCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="isPrdChange != null and isPrdChange != ''  " >
+			and IS_PRD_CHANGE = #{isPrdChange,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNo != null and spreaderNo != ''  " >
+			and SPREADER_NO = #{spreaderNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderTelephone != null and spreaderTelephone != ''  " >
+			and SPREADER_TELEPHONE = #{spreaderTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderCardNo != null and spreaderCardNo != ''  " >
+			and SPREADER_CARD_NO = #{spreaderCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderIsBankEmployee != null and spreaderIsBankEmployee != ''  " >
+			and SPREADER_IS_BANK_EMPLOYEE = #{spreaderIsBankEmployee,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchOne != null and spreaderBranchOne != ''  " >
+			and SPREADER_BRANCH_ONE = #{spreaderBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchTwo != null and spreaderBranchTwo != ''  " >
+			and SPREADER_BRANCH_TWO = #{spreaderBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBranchThree != null and spreaderBranchThree != ''  " >
+			and SPREADER_BRANCH_THREE = #{spreaderBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderType != null and spreaderType != ''  " >
+			and SPREADER_TYPE = #{spreaderType,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderMode != null and spreaderMode != ''  " >
+			and SPREADER_MODE = #{spreaderMode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderCorpPreNo != null and spreaderCorpPreNo != ''  " >
+			and SPREADER_CORP_PRE_NO = #{spreaderCorpPreNo,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderSupCode != null and spreaderSupCode != ''  " >
+			and SPREADER_SUP_CODE = #{spreaderSupCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderTeamCode != null and spreaderTeamCode != ''  " >
+			and SPREADER_TEAM_CODE = #{spreaderTeamCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderAreaCode != null and spreaderAreaCode != ''  " >
+			and SPREADER_AREA_CODE = #{spreaderAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderIsEff != null and spreaderIsEff != ''  " >
+			and SPREADER_IS_EFF = #{spreaderIsEff,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewNo != null and reviewNo != ''  " >
+			and REVIEW_NO = #{reviewNo,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewName != null and reviewName != ''  " >
+			and REVIEW_NAME = #{reviewName,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewTelephone != null and reviewTelephone != ''  " >
+			and REVIEW_TELEPHONE = #{reviewTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchOne != null and reviewBranchOne != ''  " >
+			and REVIEW_BRANCH_ONE = #{reviewBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchTwo != null and reviewBranchTwo != ''  " >
+			and REVIEW_BRANCH_TWO = #{reviewBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewBranchThree != null and reviewBranchThree != ''  " >
+			and REVIEW_BRANCH_THREE = #{reviewBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="preNo != null and preNo != ''  " >
+			and PRE_NO = #{preNo,jdbcType=VARCHAR }
+		</if>
+		<if test="preName != null and preName != ''  " >
+			and PRE_NAME = #{preName,jdbcType=VARCHAR }
+		</if>
+		<if test="preTelephone != null and preTelephone != ''  " >
+			and PRE_TELEPHONE = #{preTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchOne != null and preBranchOne != ''  " >
+			and PRE_BRANCH_ONE = #{preBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchTwo != null and preBranchTwo != ''  " >
+			and PRE_BRANCH_TWO = #{preBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="preBranchThree != null and preBranchThree != ''  " >
+			and PRE_BRANCH_THREE = #{preBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="inputNo != null and inputNo != ''  " >
+			and INPUT_NO = #{inputNo,jdbcType=VARCHAR }
+		</if>
+		<if test="inputName != null and inputName != ''  " >
+			and INPUT_NAME = #{inputName,jdbcType=VARCHAR }
+		</if>
+		<if test="inputTelephone != null and inputTelephone != ''  " >
+			and INPUT_TELEPHONE = #{inputTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchOne != null and inputBranchOne != ''  " >
+			and INPUT_BRANCH_ONE = #{inputBranchOne,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchTwo != null and inputBranchTwo != ''  " >
+			and INPUT_BRANCH_TWO = #{inputBranchTwo,jdbcType=VARCHAR }
+		</if>
+		<if test="inputBranchThree != null and inputBranchThree != ''  " >
+			and INPUT_BRANCH_THREE = #{inputBranchThree,jdbcType=VARCHAR }
+		</if>
+		<if test="inputDate != null and inputDate != ''  " >
+			and INPUT_DATE = #{inputDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

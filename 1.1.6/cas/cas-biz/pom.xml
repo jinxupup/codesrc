@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.cas</groupId>
+		<artifactId>cas-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>cas-biz</artifactId>
+	<name>cas-biz</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-sdk</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-mybatis-infrastructure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-facility</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-service-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-biz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-biz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-access</artifactId>
+		</dependency>
+ 		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-infrastructure</artifactId>
+			<version>${acl.version}</version>
+		</dependency>
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<!-- activiti -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
+<!--        <dependency>
+            <groupId>com.jjccb</groupId>
+            <artifactId>utils</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>-->
+    </dependencies>
+</project>

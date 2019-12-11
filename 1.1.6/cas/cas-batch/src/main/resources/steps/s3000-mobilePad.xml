@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<!-- 读取申请件送入文件入库 -->
+	<bean id="r3000ApplyMobilePad" class="com.jjb.unicorn.batch.YakFileItemReader">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.ApplyMobilePadItem"/>
+		<property name="resource" ref="resS3000ApplyMobilePad"/>
+	</bean>
+	
+	<bean id="p3000ApplyMobilePad" class="com.jjb.ecms.batch.s3000.P3000ApplyMobilePad"/>
+	
+	<bean id="w3000ApplyMobilePad" class="com.jjb.ecms.batch.ApsEntityManagerClearWriter"/>
+	
+	<!-- 读取申请件送入发起流程  -->
+	<bean id="r3001ApplyMobilePad" class="com.jjb.ecms.batch.s3000.R3001ApplyMobilePad"/>
+	
+	<bean id="p3001ApplyMobilePad" class="com.jjb.ecms.batch.s3000.P3001ApplyMobilePad"/>
+	
+	
+	<!-- 创建申请件状态文件 -->
+	<bean id="r3002ApplyStatus" class="com.jjb.ecms.batch.s3000.R3002ApplyStatus"/>
+	
+	<bean id="p3002ApplyStatus" class="com.jjb.ecms.batch.s3000.P3002ApplyStatus"/>
+	
+	<bean id="w3002ApplyStatus" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.MobilePadResponseItem"/>
+		<property name="resource" ref="resS003002ApplyStatus"/>
+	</bean>	
+	
+	<!-- 创建申请录入必输项参数文件 -->
+	<bean id="r3003ApplyNecessaryElement" class="com.jjb.ecms.batch.s3000.R3003ApplyNecessaryElement"/>
+	
+	<bean id="p3003ApplyNecessaryElement" class="com.jjb.ecms.batch.s3000.P3003ApplyNecessaryElement"/>
+	
+	<bean id="w3003ApplyNecessaryElement" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.ApplyNecessaryElementItem"/>
+		<property name="resource" ref="resS003003ApplyNecessaryElement"/>
+	</bean>	
+	
+	<!-- 创建机构产品卡面文件 -->
+	<bean id="r3004ApplyParameter" class="com.jjb.ecms.batch.s3000.NouseReader">
+		<property name="count" value="1"></property>
+	</bean>
+	
+	<bean id="p3004ApplyParameter" class="com.jjb.ecms.batch.s3000.P3004ApplyParameter"/>
+	
+	<bean id="applyProduct" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.ProductItem"/>
+		<property name="resource" ref="resS003004ApplyProduct"/>
+	</bean>
+	
+	<bean id="applyPhyCardItem" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.PhyCardItem"/>
+		<property name="resource" ref="resS003004ApplyPhyCardItem"/>
+	</bean>
+	
+	<bean id="applyOrganization" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.OrganizationItem"/>
+		<property name="resource" ref="resS003004ApplyOrganization"/>
+	</bean>
+	
+	<bean id="w3004ApplyParameter" class="com.jjb.unicorn.batch.PropertyDelegateWriter">
+		<property name="writers">
+	    	<map>
+	    		<entry key="productItem" value-ref="applyProduct"/>
+	    		<entry key="phyCardItem" value-ref="applyPhyCardItem"/>
+	    		<entry key="organizationItem" value-ref="applyOrganization"/>
+	    	</map>
+	    </property>
+	</bean>	
+	
+	<!-- 创建拍照参数文件 -->
+	<bean id="r3005ApplyCameraParam" class="com.jjb.ecms.batch.s3000.R3005ApplyCameraParam"/>
+	
+	<bean id="p3005ApplyCameraParam" class="com.jjb.ecms.batch.s3000.P3005ApplyCameraParam"/>
+	
+	<bean id="w3005ApplyCameraParam" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.CameraParamItem"/>
+		<property name="resource" ref="resS003005ApplyCameraParam"/>
+	</bean>	
+		
+	<!-- 保存附件信息 -->
+	<bean id="r3006ApplyAccessory" class="com.jjb.ecms.batch.s3000.NouseReader">
+		<property name="count" value="1"></property>
+	</bean>
+	
+	<bean id="p3006ApplyAccessory" class="com.jjb.ecms.batch.s3000.P3006ApplyAccessory">
+		<property name="path" value="#{env.batchWorkDir}"/>
+	</bean>
+	
+	<bean id="w3006ApplyAccessory" class="com.jjb.ecms.batch.ApsEntityManagerClearWriter"/>
+	
+	<!-- 申请枚举文件 -->
+	<bean id="r3007ApplyEnums" class="com.jjb.ecms.batch.s3000.NouseReader">
+		<property name="count" value="1"></property>
+	</bean>
+	
+	<bean id="p3007ApplyEnums" class="com.jjb.ecms.batch.s3000.P3007ApplyEnums">
+		<property name="enumsClassList">
+			<list>  
+				<value>申请类型|com.jjb.jyd.dictionary.enums.AppType</value>
+				<value>客户类型|com.jjb.ecms.param.def.enums.ClientType</value>
+				<value>快速审批标志|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>是否接受推广邮件|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>推广渠道|com.jjb.ecms.param.def.enums.SaleType</value>
+				<value>证件类型|com.jjb.jyd.dictionary.enums.IdType</value>
+				<value>性别|com.jjb.jyd.dictionary.enums.Gender</value>
+				<value>是否永久居住|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>婚姻状况|com.jjb.jyd.dictionary.enums.MaritalStatus</value>
+				<value>教育状况|com.jjb.jyd.dictionary.enums.EducationType</value>
+				<value>房屋持有类型|com.jjb.jyd.dictionary.enums.HouseOwnership</value>
+				<value>住宅类型|com.jjb.jyd.dictionary.enums.HouseType</value>
+				<value>个人资产类型|com.jjb.jyd.dictionary.enums.LiquidAsset</value>
+				<value>职业|com.jjb.jyd.dictionary.enums.OccupationType</value>
+				<value>公司职务|com.jjb.jyd.dictionary.enums.EmpPositionAttrType</value>
+				<value>职称|com.jjb.jyd.dictionary.enums.TitleOfTechnicalType</value>
+				<value>是否行内员工|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>公司性质|com.jjb.jyd.dictionary.enums.CorpStructure</value>
+				<value>公司行业类别|com.jjb.jyd.dictionary.enums.EmpType</value>
+				<value>联系人与申请人关系|com.jjb.jyd.dictionary.enums.Relationship</value>
+				<value>工作稳定性|com.jjb.jyd.dictionary.enums.EmpStability</value>
+				<value>是否在职|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>是否消费凭密|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>是否彩照卡|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>领卡方式|com.jjb.jyd.dictionary.enums.CardFetchMethod</value>
+				<value>卡片寄送地址标志|com.jjb.ecms.param.def.enums.ApplyAddressType</value>
+				<value>账单介质类型|com.jjb.jyd.dictionary.enums.StmtMediaType</value>
+				<value>账单寄送地址标志|com.jjb.ecms.param.def.enums.ApplyAddressType</value>
+				<value>约定还款类型|com.jjb.jyd.dictionary.enums.DdIndicator</value>
+				<value>与主卡持卡人关系|com.jjb.jyd.dictionary.enums.Relationship</value>
+				<value>风险情况|com.jjb.jyd.dictionary.enums.SocialStatus</value>
+				<value>投保状态|com.jjb.ecms.param.def.enums.InsureStateType</value>
+				<value>是否企业法人|com.jjb.jyd.dictionary.enums.Indicator</value>
+				<value>房产类型|com.jjb.jyd.dictionary.enums.HouseOwnership</value>
+				<value>自购车辆情况|com.jjb.ecms.param.def.enums.CarStateType</value>
+				<value>抵押物类型|com.jjb.ecms.param.def.enums.CollateralType</value>
+				<value>质押物类型|com.jjb.ecms.param.def.enums.PledgeType</value>
+				<value>其他信用卡类型|com.jjb.ecms.param.def.enums.CreditTypeOtherType</value>
+				
+                	
+            	</list> 
+		</property>
+	</bean>
+	
+	<bean id="w3007ApplyEnums" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.ApplyEnumsItem"/>
+		<property name="resource" ref="resS003007ApplyEnums"/>
+	</bean>	
+
+	<!-- 申请补件文件  -->
+	<bean id="r3008ApplyAppAdd" class="com.jjb.ecms.batch.s3000.R3008ApplyAppAdd"/>
+	
+	<bean id="p3008ApplyAppAdd" class="com.jjb.ecms.batch.s3000.P3008ApplyAppAdd"/>
+	
+	<bean id="w3008ApplyAppAdd" class="com.jjb.unicorn.batch.YakFileItemWriter">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.param.def.ApplyAppAddItem"/>
+		<property name="resource" ref="resS003008ApplyAppAdd"/>
+	</bean>		
+</beans>

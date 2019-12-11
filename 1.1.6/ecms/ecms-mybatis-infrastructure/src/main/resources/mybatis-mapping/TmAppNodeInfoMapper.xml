@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppNodeInfoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppNodeInfo" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="PRO_NUM" property="proNum" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="INFO_TYPE" property="infoType" jdbcType="VARCHAR" />
+		<result column="CONTENT" property="content" jdbcType="CLOB" />
+		<result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="MEMO" property="memo" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="SETUP_DATE" property="setupDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_NODE_INFO_TABLE_FIELD">ID,ORG,APP_NO,PRO_NUM,PRO_NAME,INFO_TYPE,CONTENT,RESULT_CODE,REMARK,MEMO,OPERATOR_ID,SETUP_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_NODE_INFO_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_NODE_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppNodeInfo" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_NODE_INFO ( <include refid="TM_APP_NODE_INFO_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{proNum,jdbcType=VARCHAR } , #{proName,jdbcType=VARCHAR } , #{infoType,jdbcType=VARCHAR } , #{content,jdbcType=CLOB } ,
+			 #{resultCode,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } , #{memo,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } ,
+			 #{setupDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppNodeInfo">
+		update TM_APP_NODE_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			PRO_NUM =#{proNum,jdbcType=VARCHAR },
+		</if>
+		<if test="proName != null and proName != ''  " >
+			PRO_NAME =#{proName,jdbcType=VARCHAR },
+		</if>
+		<if test="infoType != null and infoType != ''  " >
+			INFO_TYPE =#{infoType,jdbcType=VARCHAR },
+		</if>
+		<if test="content != null and content != ''  " >
+			CONTENT =#{content,jdbcType=CLOB },
+		</if>
+		<if test="resultCode != null and resultCode != ''  " >
+			RESULT_CODE =#{resultCode,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="memo != null and memo != ''  " >
+			MEMO =#{memo,jdbcType=VARCHAR },
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppNodeInfo">
+		update TM_APP_NODE_INFO 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			PRO_NUM =#{proNum,jdbcType=VARCHAR },		
+			PRO_NAME =#{proName,jdbcType=VARCHAR },		
+			INFO_TYPE =#{infoType,jdbcType=VARCHAR },		
+			CONTENT =#{content,jdbcType=CLOB },		
+			RESULT_CODE =#{resultCode,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			MEMO =#{memo,jdbcType=VARCHAR },		
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_NODE_INFO_TABLE_FIELD" />		
+		from TM_APP_NODE_INFO
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_NODE_INFO_TABLE_FIELD" />		
+ 		from TM_APP_NODE_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			and PRO_NUM = #{proNum,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != ''  " >
+			and PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		<if test="infoType != null and infoType != ''  " >
+			and INFO_TYPE = #{infoType,jdbcType=VARCHAR }
+		</if>
+		<if test="content != null and content != ''  " >
+			and CONTENT = #{content,jdbcType=CLOB }
+		</if>
+		<if test="resultCode != null and resultCode != ''  " >
+			and RESULT_CODE = #{resultCode,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="memo != null and memo != ''  " >
+			and MEMO = #{memo,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_NODE_INFO
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			and PRO_NUM = #{proNum,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != ''  " >
+			and PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		<if test="infoType != null and infoType != ''  " >
+			and INFO_TYPE = #{infoType,jdbcType=VARCHAR }
+		</if>
+		<if test="content != null and content != ''  " >
+			and CONTENT = #{content,jdbcType=CLOB }
+		</if>
+		<if test="resultCode != null and resultCode != ''  " >
+			and RESULT_CODE = #{resultCode,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="memo != null and memo != ''  " >
+			and MEMO = #{memo,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

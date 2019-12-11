@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.cas</groupId>
+		<artifactId>cas-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>cas-batch</artifactId>
+	<name>cas- Batch - 批量处理组件</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-mybatis-infrastructure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.cas</groupId>
+			<artifactId>cas-biz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-sdk</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jslsolucoes/ojdbc6 -->
+		<dependency>
+			<groupId>com.jslsolucoes</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.1.0</version>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-batch</artifactId>
+		</dependency>
+		<!-- AspectJ 依赖项 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- 测试相关 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.xuxueli</groupId>
+			<artifactId>xxl-job-core</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-handler</artifactId>
+			<version>4.1.35.Final</version>
+		</dependency> -->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>dependency/</classpathPrefix>
+							<mainClass>org.springframework.batch.core.launch.support.CommandLineJobRunner</mainClass>
+							<!-- <useUniqueVersions>false</useUniqueVersions> -->
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

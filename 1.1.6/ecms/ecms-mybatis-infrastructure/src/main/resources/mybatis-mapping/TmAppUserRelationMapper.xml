@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppUserRelationMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppUserRelation" >
+		<id column="ID" property="id" jdbcType="BIGINT"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CONDITION" property="condition" jdbcType="VARCHAR" />
+		<result column="HIGHTER_USER_NO" property="highterUserNo" jdbcType="VARCHAR" />
+		<result column="HIGHTER_USER" property="highterUser" jdbcType="VARCHAR" />
+		<result column="LOWER_USER_NO" property="lowerUserNo" jdbcType="VARCHAR" />
+		<result column="LOWER_USER" property="lowerUser" jdbcType="VARCHAR" />
+		<result column="RANK" property="rank" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="GROUPS" property="groups" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="BIGINT" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="CHECK_GROUPS" property="checkGroups" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_USER_RELATION_TABLE_FIELD">ID,ORG,USER_NO,NAME,CONDITION,HIGHTER_USER_NO,HIGHTER_USER,LOWER_USER_NO,LOWER_USER,RANK,USER_TYPE,GROUPS,JPA_VERSION,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,CHECK_GROUPS</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_USER_RELATION
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppUserRelation" >
+		insert into TM_APP_USER_RELATION ( <include refid="TM_APP_USER_RELATION_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=BIGINT } , #{org,jdbcType=VARCHAR } , #{userNo,jdbcType=VARCHAR } ,
+			 #{name,jdbcType=VARCHAR } , #{condition,jdbcType=VARCHAR } , #{highterUserNo,jdbcType=VARCHAR } , #{highterUser,jdbcType=VARCHAR } ,
+			 #{lowerUserNo,jdbcType=VARCHAR } , #{lowerUser,jdbcType=VARCHAR } , #{rank,jdbcType=VARCHAR } , #{userType,jdbcType=VARCHAR } ,
+			 #{groups,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=BIGINT } , #{createDate,jdbcType=TIMESTAMP } , #{createUser,jdbcType=VARCHAR } ,
+			 #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{checkGroups,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppUserRelation">
+		update TM_APP_USER_RELATION 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="userNo != null and userNo != ''  " >
+			USER_NO =#{userNo,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="condition != null and condition != ''  " >
+			CONDITION =#{condition,jdbcType=VARCHAR },
+		</if>
+		<if test="highterUserNo != null and highterUserNo != ''  " >
+			HIGHTER_USER_NO =#{highterUserNo,jdbcType=VARCHAR },
+		</if>
+		<if test="highterUser != null and highterUser != ''  " >
+			HIGHTER_USER =#{highterUser,jdbcType=VARCHAR },
+		</if>
+		<if test="lowerUserNo != null and lowerUserNo != ''  " >
+			LOWER_USER_NO =#{lowerUserNo,jdbcType=VARCHAR },
+		</if>
+		<if test="lowerUser != null and lowerUser != ''  " >
+			LOWER_USER =#{lowerUser,jdbcType=VARCHAR },
+		</if>
+		<if test="rank != null and rank != ''  " >
+			RANK =#{rank,jdbcType=VARCHAR },
+		</if>
+		<if test="userType != null and userType != ''  " >
+			USER_TYPE =#{userType,jdbcType=VARCHAR },
+		</if>
+		<if test="groups != null and groups != ''  " >
+			GROUPS =#{groups,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=BIGINT },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="checkGroups != null and checkGroups != ''  " >
+			CHECK_GROUPS =#{checkGroups,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppUserRelation">
+		update TM_APP_USER_RELATION 
+		<trim prefix="set" suffixOverrides=","> 
+			USER_NO =#{userNo,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			CONDITION =#{condition,jdbcType=VARCHAR },		
+			HIGHTER_USER_NO =#{highterUserNo,jdbcType=VARCHAR },		
+			HIGHTER_USER =#{highterUser,jdbcType=VARCHAR },		
+			LOWER_USER_NO =#{lowerUserNo,jdbcType=VARCHAR },		
+			LOWER_USER =#{lowerUser,jdbcType=VARCHAR },		
+			RANK =#{rank,jdbcType=VARCHAR },		
+			USER_TYPE =#{userType,jdbcType=VARCHAR },		
+			GROUPS =#{groups,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=BIGINT },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			CHECK_GROUPS =#{checkGroups,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_USER_RELATION_TABLE_FIELD" />		
+		from TM_APP_USER_RELATION
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_USER_RELATION_TABLE_FIELD" />		
+ 		from TM_APP_USER_RELATION
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="condition != null and condition != ''  " >
+			and CONDITION = #{condition,jdbcType=VARCHAR }
+		</if>
+		<if test="highterUserNo != null and highterUserNo != ''  " >
+			and HIGHTER_USER_NO = #{highterUserNo,jdbcType=VARCHAR }
+		</if>
+		<if test="highterUser != null and highterUser != ''  " >
+			and HIGHTER_USER = #{highterUser,jdbcType=VARCHAR }
+		</if>
+		<if test="lowerUserNo != null and lowerUserNo != ''  " >
+			and LOWER_USER_NO = #{lowerUserNo,jdbcType=VARCHAR }
+		</if>
+		<if test="lowerUser != null and lowerUser != ''  " >
+			and LOWER_USER = #{lowerUser,jdbcType=VARCHAR }
+		</if>
+		<if test="rank != null and rank != ''  " >
+			and RANK = #{rank,jdbcType=VARCHAR }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="groups != null and groups != ''  " >
+			and GROUPS = #{groups,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=BIGINT }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="checkGroups != null and checkGroups != ''  " >
+			and CHECK_GROUPS = #{checkGroups,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_USER_RELATION
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="condition != null and condition != ''  " >
+			and CONDITION = #{condition,jdbcType=VARCHAR }
+		</if>
+		<if test="highterUserNo != null and highterUserNo != ''  " >
+			and HIGHTER_USER_NO = #{highterUserNo,jdbcType=VARCHAR }
+		</if>
+		<if test="highterUser != null and highterUser != ''  " >
+			and HIGHTER_USER = #{highterUser,jdbcType=VARCHAR }
+		</if>
+		<if test="lowerUserNo != null and lowerUserNo != ''  " >
+			and LOWER_USER_NO = #{lowerUserNo,jdbcType=VARCHAR }
+		</if>
+		<if test="lowerUser != null and lowerUser != ''  " >
+			and LOWER_USER = #{lowerUser,jdbcType=VARCHAR }
+		</if>
+		<if test="rank != null and rank != ''  " >
+			and RANK = #{rank,jdbcType=VARCHAR }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="groups != null and groups != ''  " >
+			and GROUPS = #{groups,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=BIGINT }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="checkGroups != null and checkGroups != ''  " >
+			and CHECK_GROUPS = #{checkGroups,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

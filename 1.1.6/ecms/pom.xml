@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.unicorn</groupId>
+		<artifactId>unicorn-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.jjb.ecms</groupId>
+	<artifactId>ecms-parent</artifactId>
+	<version>1.1.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>ecms - 申请处理系统</name>
+
+
+	<modules>
+		<module>ecms-mybatis-infrastructure</module>
+		<module>ecms-facility</module>
+		<module>ecms-service-api</module>
+		<module>ecms-biz</module>
+		<module>ecms-adapter</module>
+	</modules>
+
+<!--	<scm>
+		<connection>scm:svn:https://10.109.2.212/svn/jjb-xyk/code_src/ecms/1.0.2</connection>
+		<developerConnection>scm:svn:https://10.109.2.212/svn/jjb-xyk/code_src/ecms/1.0.2</developerConnection>
+	</scm>-->
+
+	<properties>
+	    <java.version>1.8</java.version>
+		<unicorn.version>1.1.6-SNAPSHOT</unicorn.version>
+		<acl.version>1.1.6-SNAPSHOT</acl.version>
+		<http.version>3.1</http.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- ecms依赖 -->
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-mybatis-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-facility</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-service-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-biz</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- unicorn、acl、ams、cas系统依赖 -->
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-facility</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-cache</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-facility</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-access</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-api</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-sdk</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.mina</groupId>
+				<artifactId>mina-core</artifactId>
+				<version>${mina.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- 所有的项目都要用到的依赖项 -->
+	<dependencies>
+	</dependencies>
+</project>

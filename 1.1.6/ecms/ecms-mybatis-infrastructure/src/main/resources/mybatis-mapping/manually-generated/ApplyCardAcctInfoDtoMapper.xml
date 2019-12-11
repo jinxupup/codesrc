@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyCardAcctInfoDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyCardAcctInfoDto" >
+		<id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ACCT_NO" property="acctNo" jdbcType="VARCHAR" />
+		<result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ACCT_TYPE" property="acctType" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<result column="PYH_CD" property="pyhCd" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+		<result column="SETUP_DATE" property="setupDate" jdbcType="TIMESTAMP" />
+		<result column="CARD_EXPIRE_DATE" property="cardExpireDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		select B.ID_TYPE ,B.ID_NO ,B.CARD_NO ,B.PRODUCT_CD ,C.CREDIT_LIMIT ,B.BLOCK_CODE ,B.CARD_EXPIRE_DATE
+		from  TM_MIR_CARD B left outer join TM_APP_CUST_INFO D on B.APP_NO=D.APP_NO
+		left outer join TM_MIR_MAKE_RES  C on B.APP_NO=C.APP_NO
+		where 1=1
+		<if test="idType != null and idType != ''  " >
+			and B.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and B.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNo != null and cardNo != ''  " >
+			and B.CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by #{_SORT_NAME} #{_SORT_ORDER}
+			</if>
+		</if>
+	</select>
+</mapper>

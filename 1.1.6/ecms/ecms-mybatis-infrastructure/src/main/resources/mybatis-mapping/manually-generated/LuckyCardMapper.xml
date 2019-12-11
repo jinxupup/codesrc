@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.LuckyCardMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.UnLocakCardDto" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="CHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+		<result column="LOCK_REASON" property="lockReason" jdbcType="VARCHAR" />
+		<result column="OPER_ID" property="operId" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_LUCKY_CARD_TABLE_FIELD">A.ID,A.APP_NO,A.ORG,A.NAME,A.ID_TYPE,A.ID_NO,A.CELLPHONE,A.CARD_NO,A.LOCK_REASON,A.OPER_ID,A.UPDATE_TIME,A.JPA_VERSION,A.STATUS,B.RTF_STATE</sql>
+
+	<sql id="TM_LUCKY_CARD_TABLE_INSERT_FIELD">APP_NO,ORG,NAME,ID_TYPE,ID_NO,CELLPHONE,CARD_NO,LOCK_REASON,OPER_ID,UPDATE_TIME,JPA_VERSION,STATUS,RTF_STATE</sql>
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		SELECT <include refid="TM_LUCKY_CARD_TABLE_FIELD"/> FROM TM_LUCKY_CARD A ,TM_APP_MAIN B
+		WHERE A.APP_NO = B.APP_NO
+		<if test="appNo != null and appNo != ''  " >
+			and A.APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and A.NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and A.ID_TYPE = #{idType,jdbcType=CHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and A.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and A.CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNo != null and cardNo != ''  " >
+			and A.CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="lockReason != null and lockReason != ''  " >
+			and A.LOCK_REASON = #{lockReason,jdbcType=VARCHAR }
+		</if>
+		<if test="operId != null and operId != ''  " >
+			and A.OPER_ID = #{operId,jdbcType=VARCHAR }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and A.UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="status != null and status != ''  " >
+			and A.STATUS = #{status,jdbcType=CHAR }
+		</if>
+	
+	</select>
+
+
+</mapper>

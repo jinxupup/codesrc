@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmMessageTemplateMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmMessageTemplate" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="TE_CODE" property="teCode" jdbcType="VARCHAR" />
+		<result column="TE_DESC" property="teDesc" jdbcType="VARCHAR" />
+		<result column="SYSTEM_TYPE" property="systemType" jdbcType="VARCHAR" />
+		<result column="MSGCATEGORY" property="msgcategory" jdbcType="VARCHAR" />
+		<result column="SENDING_METHOD" property="sendingMethod" jdbcType="VARCHAR" />
+		<result column="ENABLED" property="enabled" jdbcType="VARCHAR" />
+		<result column="CONTENT_TEMPLATE" property="contentTemplate" jdbcType="VARCHAR" />
+		<result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_MESSAGE_TEMPLATE_TABLE_FIELD">ID,TE_CODE,TE_DESC,SYSTEM_TYPE,MSGCATEGORY,SENDING_METHOD,ENABLED,CONTENT_TEMPLATE,START_TIME,END_TIME,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_MESSAGE_TEMPLATE_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_MESSAGE_TEMPLATE
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmMessageTemplate" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_MESSAGE_TEMPLATE ( <include refid="TM_MESSAGE_TEMPLATE_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{teCode,jdbcType=VARCHAR } , #{teDesc,jdbcType=VARCHAR } ,
+			 #{systemType,jdbcType=VARCHAR } , #{msgcategory,jdbcType=VARCHAR } , #{sendingMethod,jdbcType=VARCHAR } , #{enabled,jdbcType=VARCHAR } ,
+			 #{contentTemplate,jdbcType=VARCHAR } , #{startTime,jdbcType=TIMESTAMP } , #{endTime,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMessageTemplate">
+		update TM_MESSAGE_TEMPLATE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="teCode != null and teCode != ''  " >
+			TE_CODE =#{teCode,jdbcType=VARCHAR },
+		</if>
+		<if test="teDesc != null and teDesc != ''  " >
+			TE_DESC =#{teDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="systemType != null and systemType != ''  " >
+			SYSTEM_TYPE =#{systemType,jdbcType=VARCHAR },
+		</if>
+		<if test="msgcategory != null and msgcategory != ''  " >
+			MSGCATEGORY =#{msgcategory,jdbcType=VARCHAR },
+		</if>
+		<if test="sendingMethod != null and sendingMethod != ''  " >
+			SENDING_METHOD =#{sendingMethod,jdbcType=VARCHAR },
+		</if>
+		<if test="enabled != null and enabled != ''  " >
+			ENABLED =#{enabled,jdbcType=VARCHAR },
+		</if>
+		<if test="contentTemplate != null and contentTemplate != ''  " >
+			CONTENT_TEMPLATE =#{contentTemplate,jdbcType=VARCHAR },
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMessageTemplate">
+		update TM_MESSAGE_TEMPLATE 
+		<trim prefix="set" suffixOverrides=","> 
+			TE_CODE =#{teCode,jdbcType=VARCHAR },		
+			TE_DESC =#{teDesc,jdbcType=VARCHAR },		
+			SYSTEM_TYPE =#{systemType,jdbcType=VARCHAR },		
+			MSGCATEGORY =#{msgcategory,jdbcType=VARCHAR },		
+			SENDING_METHOD =#{sendingMethod,jdbcType=VARCHAR },		
+			ENABLED =#{enabled,jdbcType=VARCHAR },		
+			CONTENT_TEMPLATE =#{contentTemplate,jdbcType=VARCHAR },		
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },		
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_MESSAGE_TEMPLATE_TABLE_FIELD" />		
+		from TM_MESSAGE_TEMPLATE
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_MESSAGE_TEMPLATE_TABLE_FIELD" />		
+ 		from TM_MESSAGE_TEMPLATE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="teCode != null and teCode != ''  " >
+			and TE_CODE = #{teCode,jdbcType=VARCHAR }
+		</if>
+		<if test="teDesc != null and teDesc != ''  " >
+			and TE_DESC = #{teDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="systemType != null and systemType != ''  " >
+			and SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR }
+		</if>
+		<if test="msgcategory != null and msgcategory != ''  " >
+			and MSGCATEGORY = #{msgcategory,jdbcType=VARCHAR }
+		</if>
+		<if test="sendingMethod != null and sendingMethod != ''  " >
+			and SENDING_METHOD = #{sendingMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="enabled != null and enabled != ''  " >
+			and ENABLED = #{enabled,jdbcType=VARCHAR }
+		</if>
+		<if test="contentTemplate != null and contentTemplate != ''  " >
+			and CONTENT_TEMPLATE = #{contentTemplate,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_MESSAGE_TEMPLATE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="teCode != null and teCode != ''  " >
+			and TE_CODE = #{teCode,jdbcType=VARCHAR }
+		</if>
+		<if test="teDesc != null and teDesc != ''  " >
+			and TE_DESC = #{teDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="systemType != null and systemType != ''  " >
+			and SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR }
+		</if>
+		<if test="msgcategory != null and msgcategory != ''  " >
+			and MSGCATEGORY = #{msgcategory,jdbcType=VARCHAR }
+		</if>
+		<if test="sendingMethod != null and sendingMethod != ''  " >
+			and SENDING_METHOD = #{sendingMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="enabled != null and enabled != ''  " >
+			and ENABLED = #{enabled,jdbcType=VARCHAR }
+		</if>
+		<if test="contentTemplate != null and contentTemplate != ''  " >
+			and CONTENT_TEMPLATE = #{contentTemplate,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

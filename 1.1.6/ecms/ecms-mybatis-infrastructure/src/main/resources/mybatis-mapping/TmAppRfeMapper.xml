@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppRfeMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppRfe" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="SPREADER_BANK" property="spreaderBank" jdbcType="VARCHAR" />
+		<result column="SPREADER_NAME" property="spreaderName" jdbcType="VARCHAR" />
+		<result column="SPREADER_NUM" property="spreaderNum" jdbcType="VARCHAR" />
+		<result column="PB_SOURCE" property="pbSource" jdbcType="VARCHAR" />
+		<result column="PB_TYPE" property="pbType" jdbcType="VARCHAR" />
+		<result column="PB_START_DATE" property="pbStartDate" jdbcType="TIMESTAMP" />
+		<result column="PB_ST_BATCH_DATE" property="pbStBatchDate" jdbcType="TIMESTAMP" />
+		<result column="PB_TIMEOUT_DATE" property="pbTimeoutDate" jdbcType="TIMESTAMP" />
+		<result column="PB_OUT_BATCH_DATE" property="pbOutBatchDate" jdbcType="TIMESTAMP" />
+		<result column="PB_START_TIME" property="pbStartTime" jdbcType="VARCHAR" />
+		<result column="PB_TIME_WAIT" property="pbTimeWait" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="IS_OK" property="isOk" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_RFE_TABLE_FIELD">ID,ORG,APP_NO,APP_TYPE,NAME,ID_TYPE,ID_NO,CELLPHONE,SPREADER_BANK,SPREADER_NAME,SPREADER_NUM,PB_SOURCE,PB_TYPE,PB_START_DATE,PB_ST_BATCH_DATE,PB_TIMEOUT_DATE,PB_OUT_BATCH_DATE,PB_START_TIME,PB_TIME_WAIT,JPA_VERSION,IS_OK,OPERATOR_ID</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_RFE_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_RFE
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppRfe" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_RFE ( <include refid="TM_APP_RFE_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{appType,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } ,
+			 #{cellphone,jdbcType=VARCHAR } , #{spreaderBank,jdbcType=VARCHAR } , #{spreaderName,jdbcType=VARCHAR } , #{spreaderNum,jdbcType=VARCHAR } ,
+			 #{pbSource,jdbcType=VARCHAR } , #{pbType,jdbcType=VARCHAR } , #{pbStartDate,jdbcType=TIMESTAMP } , #{pbStBatchDate,jdbcType=TIMESTAMP } ,
+			 #{pbTimeoutDate,jdbcType=TIMESTAMP } , #{pbOutBatchDate,jdbcType=TIMESTAMP } , #{pbStartTime,jdbcType=VARCHAR } , #{pbTimeWait,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } , #{isOk,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppRfe">
+		update TM_APP_RFE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="appType != null and appType != ''  " >
+			APP_TYPE =#{appType,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBank != null and spreaderBank != ''  " >
+			SPREADER_BANK =#{spreaderBank,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			SPREADER_NUM =#{spreaderNum,jdbcType=VARCHAR },
+		</if>
+		<if test="pbSource != null and pbSource != ''  " >
+			PB_SOURCE =#{pbSource,jdbcType=VARCHAR },
+		</if>
+		<if test="pbType != null and pbType != ''  " >
+			PB_TYPE =#{pbType,jdbcType=VARCHAR },
+		</if>
+		<if test="pbStartDate != null and pbStartDate != ''  " >
+			PB_START_DATE =#{pbStartDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="pbStBatchDate != null and pbStBatchDate != ''  " >
+			PB_ST_BATCH_DATE =#{pbStBatchDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="pbTimeoutDate != null and pbTimeoutDate != ''  " >
+			PB_TIMEOUT_DATE =#{pbTimeoutDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="pbOutBatchDate != null and pbOutBatchDate != ''  " >
+			PB_OUT_BATCH_DATE =#{pbOutBatchDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="pbStartTime != null and pbStartTime != ''  " >
+			PB_START_TIME =#{pbStartTime,jdbcType=VARCHAR },
+		</if>
+		<if test="pbTimeWait != null and pbTimeWait != ''  " >
+			PB_TIME_WAIT =#{pbTimeWait,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="isOk != null and isOk != ''  " >
+			IS_OK =#{isOk,jdbcType=VARCHAR },
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppRfe">
+		update TM_APP_RFE 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			APP_TYPE =#{appType,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },		
+			SPREADER_BANK =#{spreaderBank,jdbcType=VARCHAR },		
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },		
+			SPREADER_NUM =#{spreaderNum,jdbcType=VARCHAR },		
+			PB_SOURCE =#{pbSource,jdbcType=VARCHAR },		
+			PB_TYPE =#{pbType,jdbcType=VARCHAR },		
+			PB_START_DATE =#{pbStartDate,jdbcType=TIMESTAMP },		
+			PB_ST_BATCH_DATE =#{pbStBatchDate,jdbcType=TIMESTAMP },		
+			PB_TIMEOUT_DATE =#{pbTimeoutDate,jdbcType=TIMESTAMP },		
+			PB_OUT_BATCH_DATE =#{pbOutBatchDate,jdbcType=TIMESTAMP },		
+			PB_START_TIME =#{pbStartTime,jdbcType=VARCHAR },		
+			PB_TIME_WAIT =#{pbTimeWait,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			IS_OK =#{isOk,jdbcType=VARCHAR },		
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_RFE_TABLE_FIELD" />		
+		from TM_APP_RFE
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_RFE_TABLE_FIELD" />		
+ 		from TM_APP_RFE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBank != null and spreaderBank != ''  " >
+			and SPREADER_BANK = #{spreaderBank,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			and SPREADER_NUM = #{spreaderNum,jdbcType=VARCHAR }
+		</if>
+		<if test="pbSource != null and pbSource != ''  " >
+			and PB_SOURCE = #{pbSource,jdbcType=VARCHAR }
+		</if>
+		<if test="pbType != null and pbType != ''  " >
+			and PB_TYPE = #{pbType,jdbcType=VARCHAR }
+		</if>
+		<if test="pbStartDate != null and pbStartDate != ''  " >
+			and PB_START_DATE = #{pbStartDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbStBatchDate != null and pbStBatchDate != ''  " >
+			and PB_ST_BATCH_DATE = #{pbStBatchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbTimeoutDate != null and pbTimeoutDate != ''  " >
+			and PB_TIMEOUT_DATE = #{pbTimeoutDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbOutBatchDate != null and pbOutBatchDate != ''  " >
+			and PB_OUT_BATCH_DATE = #{pbOutBatchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbStartTime != null and pbStartTime != ''  " >
+			and PB_START_TIME = #{pbStartTime,jdbcType=VARCHAR }
+		</if>
+		<if test="pbTimeWait != null and pbTimeWait != ''  " >
+			and PB_TIME_WAIT = #{pbTimeWait,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="isOk != null and isOk != ''  " >
+			and IS_OK = #{isOk,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_RFE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBank != null and spreaderBank != ''  " >
+			and SPREADER_BANK = #{spreaderBank,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			and SPREADER_NUM = #{spreaderNum,jdbcType=VARCHAR }
+		</if>
+		<if test="pbSource != null and pbSource != ''  " >
+			and PB_SOURCE = #{pbSource,jdbcType=VARCHAR }
+		</if>
+		<if test="pbType != null and pbType != ''  " >
+			and PB_TYPE = #{pbType,jdbcType=VARCHAR }
+		</if>
+		<if test="pbStartDate != null and pbStartDate != ''  " >
+			and PB_START_DATE = #{pbStartDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbStBatchDate != null and pbStBatchDate != ''  " >
+			and PB_ST_BATCH_DATE = #{pbStBatchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbTimeoutDate != null and pbTimeoutDate != ''  " >
+			and PB_TIMEOUT_DATE = #{pbTimeoutDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbOutBatchDate != null and pbOutBatchDate != ''  " >
+			and PB_OUT_BATCH_DATE = #{pbOutBatchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="pbStartTime != null and pbStartTime != ''  " >
+			and PB_START_TIME = #{pbStartTime,jdbcType=VARCHAR }
+		</if>
+		<if test="pbTimeWait != null and pbTimeWait != ''  " >
+			and PB_TIME_WAIT = #{pbTimeWait,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="isOk != null and isOk != ''  " >
+			and IS_OK = #{isOk,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.FieldProductDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.FieldProductDto" >
+		<id column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+		<result column="IF_REQUIRED_ITEM" property="ifRequiredItem" jdbcType="VARCHAR" />
+		<result column="IF_REVIEW_ITEM" property="ifReviewItem" jdbcType="VARCHAR" />
+		<result column="FIELD_ID" property="fieldId" jdbcType="INTEGER" />
+		<result column="FIELD_EN" property="fieldEn" jdbcType="VARCHAR" />
+		<result column="FIELD_NAME" property="fieldName" jdbcType="VARCHAR" />
+		<result column="TAB_NAME" property="tabName" jdbcType="VARCHAR" />
+		<result column="TAB_DESC" property="tabDesc" jdbcType="VARCHAR" />
+		<result column="FIELD_REGION" property="fieldRegion" jdbcType="VARCHAR" />
+		<result column="FIELD_REGION_CN" property="fieldRegionCn" jdbcType="VARCHAR" />
+		<result column="FIELD_SORT" property="fieldSort" jdbcType="INTEGER" />
+		<result column="IS_INPUT" property="isInput" jdbcType="VARCHAR" />
+		<result column="IS_REVIEW" property="isReview" jdbcType="VARCHAR" />
+		<result column="REVIEW_SORT" property="reviewSort" jdbcType="INTEGER" />
+		<result column="VALUE1" property="value1" jdbcType="VARCHAR" />
+		<result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+		<result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+		<result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+		<result column="VALUE5" property="value5" jdbcType="VARCHAR" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="IF_CANCEL" property="ifCancel" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="FIELD_REMARK" property="fieldRemark" jdbcType="VARCHAR" />
+		<result column="DEF_VALUE" property="defValue" jdbcType="VARCHAR" />
+		<result column="COMPONENT_TYPE" property="componentType" jdbcType="VARCHAR" />
+		<result column="DICT_TYPE" property="dictType" jdbcType="VARCHAR" />
+		<result column="FIELD_CHANGE" property="fieldChange" jdbcType="VARCHAR" />
+		<result column="TEXT_NAME" property="textName" jdbcType="VARCHAR" />
+		<result column="FIELD_NULLABLE" property="fieldNullable" jdbcType="VARCHAR" />
+		<result column="SHOW_CODE" property="showCode" jdbcType="VARCHAR" />
+		<result column="FIELD_REGEXP" property="fieldRegexp" jdbcType="VARCHAR" />
+		<result column="MAX_LENGTH" property="maxLength" jdbcType="VARCHAR" />
+		<result column="BETWEEN_MIN" property="betweenMin" jdbcType="VARCHAR" />
+		<result column="BETWEEN_MAX" property="betweenMax" jdbcType="VARCHAR" />
+		<result column="FIELD_AR" property="fieldAr" jdbcType="VARCHAR" />
+		<result column="LABEL_AR" property="labelAr" jdbcType="VARCHAR" />
+		<result column="INPUT_AR" property="inputAr" jdbcType="VARCHAR" />
+		<result column="IF_READONLY" property="ifReadonly" jdbcType="VARCHAR" />
+		<result column="IS_ROW" property="isRow" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		select A.PRODUCT_CD, A.IF_REQUIRED_ITEM, A.IF_REVIEW_ITEM, A.FIELD_REGION, A.FIELD_SORT, A.IS_INPUT, A.IS_REVIEW,
+			A.REVIEW_SORT,A.VALUE1, A.VALUE2, A.VALUE3, A.VALUE4, A.VALUE5, A.OB_TEXT1, A.OB_TEXT2, A.OB_TEXT3, A.OB_TEXT4, A.REMARK,
+			B.FIELD_ID, B.FIELD_EN, B.FIELD_NAME, B.TAB_NAME, B.TAB_DESC, B.IF_USED, B.IF_CANCEL, B.REMARK as FIELD_REMARK,
+			B.DEF_VALUE, B.COMPONENT_TYPE, B.DICT_TYPE, B.FIELD_CHANGE, B.TEXT_NAME, B.FIELD_NULLABLE, B.SHOW_CODE, B.FIELD_REGEXP, B.MAX_LENGTH,
+			B.BETWEEN_MIN, B.BETWEEN_MAX, B.FIELD_AR, B.LABEL_AR, B.INPUT_AR, B.IF_READONLY,B.IS_ROW
+			from TM_FIELD_PRODUCT A, TM_FIELD B
+		where A.FIELD_EN = B.FIELD_EN
+		<if test="productCd != null and productCd != ''  " >
+			and A.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldId != null and fieldId != ''  " >
+			and B.FIELD_ID = #{fieldId,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldEn != null and fieldEn != ''  " >
+			and B.FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and B.IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="tabName != null and tabName != ''  " >
+			and B.TAB_NAME = #{tabName,jdbcType=VARCHAR }
+		</if>
+			ORDER BY 
+			<!-- A.FIELD_SORT,A.REVIEW_SORT,A.OB_TEXT1 asc -->
+			a.FIELD_REGION,b.TAB_NAME,a.FIELD_SORT,A.REVIEW_SORT,A.OB_TEXT1 asc
+	</select>
+	
+	<select id="selectProducts" resultMap="BaseResultMap" parameterType="map">
+		select A.PRODUCT_CD,B.PRODUCT_DESC
+			from TM_FIELD_PRODUCT A, TM_PRODUCT B
+		where A.PRODUCT_CD = B.PRODUCT_CD
+		group by A.PRODUCT_CD,B.PRODUCT_DESC
+		<if test="productCd != null and productCd != '' " >
+			having A.PRODUCT_CD != #{productCd,jdbcType=VARCHAR }
+		</if>
+	</select>
+	
+	<delete id="deleteFieldProduct" parameterType="map">
+		
+			delete from TM_FIELD_PRODUCT
+			where 
+			<if test="productCd != null and productCd != '' " >
+				PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+			</if>
+			<if test="fieldId != null and fieldId != '' " >
+				Field_ID = #{fieldId, jdbcType=INTEGER}
+			</if>
+			<if test="fieldEn != null and fieldEn != '' " >
+				FIELD_EN = #{fieldEn, jdbcType=INTEGER}
+			</if>
+	</delete>
+	
+	<select id="selectByTmFieldAndFieldProduct" resultMap="BaseResultMap" parameterType="map" >
+		select f.FIELD_ID, f.FIELD_NAME,f.FIELD_EN,f.TAB_NAME,f.TAB_DESC,t.CODE_NAME as FIELD_REGION_CN,
+			t.PRODUCT_CD,t.FIELD_REGION,t.FIELD_SORT,t.IF_REQUIRED_ITEM,t.IF_REVIEW_ITEM,t.REVIEW_SORT,t.IS_INPUT,t.IS_REVIEW,
+        	t.VALUE1,t.VALUE2,t.VALUE3,t.VALUE4,t.VALUE5,t.OB_TEXT1,t.OB_TEXT2,t.OB_TEXT3,t.OB_TEXT4,
+        	t.REMARK,t.CREATE_USER,t.CREATE_DATE,t.JPA_VERSION
+ 		from TM_FIELD f left join  
+ 			(select P.*,d.CODE_NAME from TM_FIELD_PRODUCT p, TM_ACL_DICT d 
+ 				where 1=1 
+ 				and d.TYPE='FieldRegion' 
+ 				and d.CODE=p.FIELD_REGION 
+				<if test="productCd != null and productCd != ''  " >
+					and p.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+				</if>
+				<if test="field != null and field != ''  " >
+					and p.FIELD = #{field,jdbcType=VARCHAR }
+				</if>
+				<if test="fieldId != null and fieldId != ''  " >
+					and p.FIELD_ID = #{fieldId,jdbcType=INTEGER }
+				</if>
+				<if test="fieldEn != null and fieldEn != ''  " >
+					and p.FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+				</if>
+				<if test="fieldRegion != null and fieldRegion != ''  " >
+					and p.FIELD_REGION = #{fieldRegion,jdbcType=VARCHAR }
+				</if>
+				<if test="fieldSort != null and fieldSort != ''  " >
+					and p.FIELD_SORT = #{fieldSort,jdbcType=INTEGER }
+				</if>
+				<if test="ifRequiredItem != null and ifRequiredItem != ''  " >
+					and p.IF_REQUIRED_ITEM = #{ifRequiredItem,jdbcType=VARCHAR }
+				</if>
+				<if test="ifReviewItem != null and ifReviewItem != ''  " >
+					and p.IF_REVIEW_ITEM = #{ifReviewItem,jdbcType=VARCHAR }
+				</if>
+				<if test="reviewSort != null and reviewSort != ''  " >
+					and p.REVIEW_SORT = #{reviewSort,jdbcType=INTEGER }
+				</if>
+				<if test="isInput != null and isInput != ''  " >
+					and p.IS_INPUT = #{isInput,jdbcType=VARCHAR }
+				</if>
+				<if test="isReview != null and isReview != ''  " >
+					and p.IS_REVIEW = #{isReview,jdbcType=VARCHAR }
+				</if>
+				<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+					<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+						order by ${_SORT_NAME} ${_SORT_ORDER} 
+					</if>
+				</if>
+			) t on t.FIELD_EN=f.FIELD_EN
+			where f.IF_USED='Y'
+	</select>
+	
+</mapper>

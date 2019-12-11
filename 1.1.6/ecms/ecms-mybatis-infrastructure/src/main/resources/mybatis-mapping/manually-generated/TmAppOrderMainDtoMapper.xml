@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.TmAppOrderMainDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppOrderMain" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ALL_PRODUCT_CDS" property="allProductCds" jdbcType="VARCHAR" />
+		<result column="VALID_PRODUCT_CDS" property="validProductCds" jdbcType="VARCHAR" />
+		<result column="VALID_PRODUCT_TYPE" property="validProductType" jdbcType="VARCHAR" />
+		<result column="TIMER_STATE" property="timerState" jdbcType="VARCHAR" />
+		<result column="REQ_JSON" property="reqJson" jdbcType="CLOB" />
+		<result column="EXCEPTION_MSG" property="exceptionMsg" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_ORDER_MAIN_TABLE_FIELD">ID,ORG,APP_NO,ID_NO,ALL_PRODUCT_CDS,VALID_PRODUCT_CDS,VALID_PRODUCT_TYPE,TIMER_STATE,REQ_JSON,EXCEPTION_MSG,CREATE_DATE,UPDATE_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_ORDER_MAIN_ID.nextval</sql>
+
+	<select id="selectpage" resultMap="BaseResultMap" parameterType="map" >
+		select  M.APP_NO , M.ID_NO , M.ALL_PRODUCT_CDS ,M.VALID_PRODUCT_CDS ,M.VALID_PRODUCT_TYPE ,M.TIMER_STATE ,M.EXCEPTION_MSG ,M.CREATE_DATE ,M.UPDATE_DATE
+ 		from TM_APP_ORDER_MAIN M
+		where 1=1
+		<if test="appNo != null and appNo != '' " >
+			AND APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idNo != null and idNo != '' " >
+			AND ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="validProductType != null and validProductType != ''  " >
+			and VALID_PRODUCT_TYPE = #{validProductType,jdbcType=VARCHAR }
+		</if>
+		<if test="timerState != null and timerState != ''  " >
+			and TIMER_STATE = #{timerState,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			CREATE_DATE ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		CREATE_DATE DESC
+
+	</select>
+
+	<select id="selectByTimerState" resultMap="BaseResultMap" parameterType="map" >
+		select M.*
+		from TM_APP_ORDER_MAIN M
+		where 1=1
+		<if test="timerState != null and timerState != ''  " >
+			and TIMER_STATE = #{timerState,jdbcType=VARCHAR }
+		</if>
+		AND ROWNUM &lt;=10
+		ORDER BY M.CREATE_DATE ASC
+	</select>
+
+	<update id="updateByRtfAndTimerState" parameterType="com.jjb.ecms.infrastructure.TmAppOrderMain">
+		UPDATE TM_APP_ORDER_MAIN SET TIMER_STATE='P' WHERE APP_NO IN
+		(SELECT M.APP_NO FROM TM_APP_MAIN A ,TM_APP_ORDER_MAIN M
+		WHERE A.APP_NO=M.APP_NO
+			AND  A.RTF_STATE='M05'
+		<if test="timerState != null and timerState != ''  ">
+			AND M.TIMER_STATE = #{timerState,jdbcType=VARCHAR }
+		</if>
+			AND M.VALID_PRODUCT_CDS like '%0%' AND ROWNUM &lt;=10)
+	</update>
+
+	<select id="selectByAppNoAndRtf" resultMap="BaseResultMap" parameterType="map" >
+		select M.*
+		from TM_APP_ORDER_MAIN M,TM_APP_MAIN A
+		where 1=1
+		AND M.APP_NO=A.APP_NO
+		<if test="appNo != null and appNo != ''  " >
+			and A.APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		AND  A.RTF_STATE IN ('B16','F03','B28')
+	</select>
+
+
+
+</mapper>

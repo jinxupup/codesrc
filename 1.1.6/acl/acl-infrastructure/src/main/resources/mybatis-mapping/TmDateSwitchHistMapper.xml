@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmDateSwitchHistMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmDateSwitchHist" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="SWITCH_TIME" property="switchTime" jdbcType="TIMESTAMP" />
+		<result column="SWITCH_USER" property="switchUser" jdbcType="VARCHAR" />
+		<result column="PRE_SWITCH_DATE" property="preSwitchDate" jdbcType="TIMESTAMP" />
+		<result column="POST_BUSINESS_DATE" property="postBusinessDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_DATE_SWITCH_HIST_TABLE_FIELD">ID,SWITCH_TIME,SWITCH_USER,PRE_SWITCH_DATE,POST_BUSINESS_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_DATE_SWITCH_HIST_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_DATE_SWITCH_HIST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmDateSwitchHist" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_DATE_SWITCH_HIST ( <include refid="TM_DATE_SWITCH_HIST_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{switchTime,jdbcType=TIMESTAMP } , #{switchUser,jdbcType=VARCHAR } ,
+			 #{preSwitchDate,jdbcType=TIMESTAMP } , #{postBusinessDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmDateSwitchHist">
+		update TM_DATE_SWITCH_HIST 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="switchTime != null and switchTime != ''  " >
+			SWITCH_TIME =#{switchTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="switchUser != null and switchUser != ''  " >
+			SWITCH_USER =#{switchUser,jdbcType=VARCHAR },
+		</if>
+		<if test="preSwitchDate != null and preSwitchDate != ''  " >
+			PRE_SWITCH_DATE =#{preSwitchDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="postBusinessDate != null and postBusinessDate != ''  " >
+			POST_BUSINESS_DATE =#{postBusinessDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmDateSwitchHist">
+		update TM_DATE_SWITCH_HIST 
+		<trim prefix="set" suffixOverrides=","> 
+			SWITCH_TIME =#{switchTime,jdbcType=TIMESTAMP },		
+			SWITCH_USER =#{switchUser,jdbcType=VARCHAR },		
+			PRE_SWITCH_DATE =#{preSwitchDate,jdbcType=TIMESTAMP },		
+			POST_BUSINESS_DATE =#{postBusinessDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_DATE_SWITCH_HIST_TABLE_FIELD" />		
+		from TM_DATE_SWITCH_HIST
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_DATE_SWITCH_HIST_TABLE_FIELD" />		
+ 		from TM_DATE_SWITCH_HIST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="switchTime != null and switchTime != ''  " >
+			and SWITCH_TIME = #{switchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="switchUser != null and switchUser != ''  " >
+			and SWITCH_USER = #{switchUser,jdbcType=VARCHAR }
+		</if>
+		<if test="preSwitchDate != null and preSwitchDate != ''  " >
+			and PRE_SWITCH_DATE = #{preSwitchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="postBusinessDate != null and postBusinessDate != ''  " >
+			and POST_BUSINESS_DATE = #{postBusinessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_DATE_SWITCH_HIST
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="switchTime != null and switchTime != ''  " >
+			and SWITCH_TIME = #{switchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="switchUser != null and switchUser != ''  " >
+			and SWITCH_USER = #{switchUser,jdbcType=VARCHAR }
+		</if>
+		<if test="preSwitchDate != null and preSwitchDate != ''  " >
+			and PRE_SWITCH_DATE = #{preSwitchDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="postBusinessDate != null and postBusinessDate != ''  " >
+			and POST_BUSINESS_DATE = #{postBusinessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

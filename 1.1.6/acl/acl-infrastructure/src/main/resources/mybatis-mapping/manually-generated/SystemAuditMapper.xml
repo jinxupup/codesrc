@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.gmp.biz.SystemAuditMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmSystemAudit" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="PARAM_KEY" property="paramKey" jdbcType="VARCHAR" />
+		<result column="PARAM_OPERATION" property="paramOperation" jdbcType="VARCHAR" />
+		<result column="NEW_OBJECT" property="newObject" jdbcType="CLOB" />
+		<result column="OLD_OBJECT" property="oldObject" jdbcType="CLOB" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="TM_SYSTEM_AUDIT_TABLE_FIELD">ID,ORG,OPERATOR_ID,PARAM_KEY,PARAM_OPERATION,NEW_OBJECT,OLD_OBJECT,UPDATE_USER,UPDATE_DATE</sql>
+
+	<sql id="TM_SYSTEM_AUDIT_TABLE_INSERT_FIELD">ORG,OPERATOR_ID,PARAM_KEY,PARAM_OPERATION,NEW_OBJECT,OLD_OBJECT,UPDATE_USER,UPDATE_DATE</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_SYSTEM_AUDIT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmSystemAudit" useGeneratedKeys="true" keyProperty="id" >
+		insert into TM_SYSTEM_AUDIT ( <include refid="TM_SYSTEM_AUDIT_TABLE_INSERT_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } ,
+			 #{paramKey,jdbcType=VARCHAR } , #{paramOperation,jdbcType=VARCHAR } , #{newObject,jdbcType=CLOB } , #{oldObject,jdbcType=CLOB } ,
+			 #{updateUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmSystemAudit">
+		update TM_SYSTEM_AUDIT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		<if test="paramKey != null and paramKey != ''  " >
+			PARAM_KEY =#{paramKey,jdbcType=VARCHAR },
+		</if>
+		<if test="paramOperation != null and paramOperation != ''  " >
+			PARAM_OPERATION =#{paramOperation,jdbcType=VARCHAR },
+		</if>
+		<if test="newObject != null and newObject != ''  " >
+			NEW_OBJECT =#{newObject,jdbcType=CLOB },
+		</if>
+		<if test="oldObject != null and oldObject != ''  " >
+			OLD_OBJECT =#{oldObject,jdbcType=CLOB },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmSystemAudit">
+		update TM_SYSTEM_AUDIT 
+		<trim prefix="set" suffixOverrides=","> 
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+			PARAM_KEY =#{paramKey,jdbcType=VARCHAR },		
+			PARAM_OPERATION =#{paramOperation,jdbcType=VARCHAR },		
+			NEW_OBJECT =#{newObject,jdbcType=CLOB },		
+			OLD_OBJECT =#{oldObject,jdbcType=CLOB },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_SYSTEM_AUDIT_TABLE_FIELD" />		
+		from TM_SYSTEM_AUDIT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_SYSTEM_AUDIT_TABLE_FIELD" />		
+ 		from TM_SYSTEM_AUDIT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			AND OPERATOR_ID LIKE CONCAT(CONCAT('%',#{operatorId,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="paramKey != null and paramKey != ''  " >
+			and PARAM_KEY = #{paramKey,jdbcType=VARCHAR }
+		</if>
+		<if test="paramOperation != null and paramOperation != ''  " >
+			and PARAM_OPERATION = #{paramOperation,jdbcType=VARCHAR }
+		</if>
+		<if test="newObject != null and newObject != ''  " >
+			and NEW_OBJECT = #{newObject,jdbcType=CLOB }
+		</if>
+		<if test="oldObject != null and oldObject != ''  " >
+			and OLD_OBJECT = #{oldObject,jdbcType=CLOB }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="beginDate != null and beginDate != '' " >
+			AND UPDATE_DATE &gt;= #{beginDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' " >
+			AND UPDATE_DATE &lt;= #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			UPDATE_DATE ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		UPDATE_DATE DESC
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_SYSTEM_AUDIT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="paramKey != null and paramKey != ''  " >
+			and PARAM_KEY = #{paramKey,jdbcType=VARCHAR }
+		</if>
+		<if test="paramOperation != null and paramOperation != ''  " >
+			and PARAM_OPERATION = #{paramOperation,jdbcType=VARCHAR }
+		</if>
+		<if test="newObject != null and newObject != ''  " >
+			and NEW_OBJECT = #{newObject,jdbcType=CLOB }
+		</if>
+		<if test="oldObject != null and oldObject != ''  " >
+			and OLD_OBJECT = #{oldObject,jdbcType=CLOB }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="beginDate != null and beginDate != '' " >
+			AND UPDATE_DATE &gt;= #{beginDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' " >
+			AND UPDATE_DATE &lt;= #{endDate,jdbcType=TIMESTAMP }
+		</if> 
+
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+
+</mapper>

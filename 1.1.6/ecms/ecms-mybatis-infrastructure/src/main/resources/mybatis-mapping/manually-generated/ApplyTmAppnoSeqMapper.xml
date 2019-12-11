@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmAppnoSeqMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppnoSeq" >
+		<id column="SEQ" property="seq" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APPNO_SEQ_TABLE_FIELD">ORG,SEQ,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APPNO_SEQ_SEQ.nextval</sql>
+
+	<select id="getSeqBySequence" resultMap="BaseResultMap" parameterType="map"  >
+		select <include refid="TABLE_SEQUENCE" /> as SEQ from dual
+	</select>
+</mapper>

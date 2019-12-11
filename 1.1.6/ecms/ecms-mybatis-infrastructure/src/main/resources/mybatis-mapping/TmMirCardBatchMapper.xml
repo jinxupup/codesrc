@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmMirCardBatchMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmMirCardBatch" >
+		<id column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ACCT_NO" property="acctNo" jdbcType="VARCHAR" />
+		<result column="LATEST_CARD_NO" property="latestCardNo" jdbcType="VARCHAR" />
+		<result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ACCT_TYPE" property="acctType" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<result column="PYH_CD" property="pyhCd" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+		<result column="APP_REJECT_REASON" property="appRejectReason" jdbcType="VARCHAR" />
+		<result column="SETUP_DATE" property="setupDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="CARD_EXPIRE_DATE" property="cardExpireDate" jdbcType="TIMESTAMP" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ACTIVATE_IND" property="activateInd" jdbcType="VARCHAR" />
+		<result column="ACTIVATE_DATE" property="activateDate" jdbcType="TIMESTAMP" />
+		<result column="OVERDUE_IND" property="overdueInd" jdbcType="VARCHAR" />
+		<result column="OVERDUE_NUMBER" property="overdueNumber" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="IF_SWIPED" property="ifSwiped" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_MIR_CARD_BATCH_TABLE_FIELD">ORG,ACCT_NO,CARD_NO,LATEST_CARD_NO,CUST_ID,PRODUCT_CD,ACCT_TYPE,BSC_SUPP_IND,PYH_CD,OWNING_BRANCH,APP_NO,BLOCK_CODE,APP_REJECT_REASON,SETUP_DATE,JPA_VERSION,CARD_EXPIRE_DATE,ID_NO,ID_TYPE,NAME,ACTIVATE_IND,ACTIVATE_DATE,OVERDUE_IND,OVERDUE_NUMBER,UPDATE_TIME,IF_SWIPED</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_MIR_CARD_BATCH
+		where 
+		CARD_NO = #{cardNo, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmMirCardBatch" >
+		insert into TM_MIR_CARD_BATCH ( <include refid="TM_MIR_CARD_BATCH_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{acctNo,jdbcType=VARCHAR } , #{cardNo,jdbcType=VARCHAR } ,
+			 #{latestCardNo,jdbcType=VARCHAR } , #{custId,jdbcType=VARCHAR } , #{productCd,jdbcType=VARCHAR } , #{acctType,jdbcType=VARCHAR } ,
+			 #{bscSuppInd,jdbcType=VARCHAR } , #{pyhCd,jdbcType=VARCHAR } , #{owningBranch,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{blockCode,jdbcType=VARCHAR } , #{appRejectReason,jdbcType=VARCHAR } , #{setupDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } ,
+			 #{cardExpireDate,jdbcType=TIMESTAMP } , #{idNo,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } ,
+			 #{activateInd,jdbcType=VARCHAR } , #{activateDate,jdbcType=TIMESTAMP } , #{overdueInd,jdbcType=VARCHAR } , #{overdueNumber,jdbcType=VARCHAR } ,
+			 #{updateTime,jdbcType=TIMESTAMP } , #{ifSwiped,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirCardBatch">
+		update TM_MIR_CARD_BATCH 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="acctNo != null and acctNo != ''  " >
+			ACCT_NO =#{acctNo,jdbcType=VARCHAR },
+		</if>
+		<if test="latestCardNo != null and latestCardNo != ''  " >
+			LATEST_CARD_NO =#{latestCardNo,jdbcType=VARCHAR },
+		</if>
+		<if test="custId != null and custId != ''  " >
+			CUST_ID =#{custId,jdbcType=VARCHAR },
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="acctType != null and acctType != ''  " >
+			ACCT_TYPE =#{acctType,jdbcType=VARCHAR },
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			BSC_SUPP_IND =#{bscSuppInd,jdbcType=VARCHAR },
+		</if>
+		<if test="pyhCd != null and pyhCd != ''  " >
+			PYH_CD =#{pyhCd,jdbcType=VARCHAR },
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="blockCode != null and blockCode != ''  " >
+			BLOCK_CODE =#{blockCode,jdbcType=VARCHAR },
+		</if>
+		<if test="appRejectReason != null and appRejectReason != ''  " >
+			APP_REJECT_REASON =#{appRejectReason,jdbcType=VARCHAR },
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="cardExpireDate != null and cardExpireDate != ''  " >
+			CARD_EXPIRE_DATE =#{cardExpireDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="activateInd != null and activateInd != ''  " >
+			ACTIVATE_IND =#{activateInd,jdbcType=VARCHAR },
+		</if>
+		<if test="activateDate != null and activateDate != ''  " >
+			ACTIVATE_DATE =#{activateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="overdueInd != null and overdueInd != ''  " >
+			OVERDUE_IND =#{overdueInd,jdbcType=VARCHAR },
+		</if>
+		<if test="overdueNumber != null and overdueNumber != ''  " >
+			OVERDUE_NUMBER =#{overdueNumber,jdbcType=VARCHAR },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="ifSwiped != null and ifSwiped != ''  " >
+			IF_SWIPED =#{ifSwiped,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		CARD_NO = #{cardNo, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirCardBatch">
+		update TM_MIR_CARD_BATCH 
+		<trim prefix="set" suffixOverrides=","> 
+			ACCT_NO =#{acctNo,jdbcType=VARCHAR },		
+			LATEST_CARD_NO =#{latestCardNo,jdbcType=VARCHAR },		
+			CUST_ID =#{custId,jdbcType=VARCHAR },		
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			ACCT_TYPE =#{acctType,jdbcType=VARCHAR },		
+			BSC_SUPP_IND =#{bscSuppInd,jdbcType=VARCHAR },		
+			PYH_CD =#{pyhCd,jdbcType=VARCHAR },		
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },		
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			BLOCK_CODE =#{blockCode,jdbcType=VARCHAR },		
+			APP_REJECT_REASON =#{appRejectReason,jdbcType=VARCHAR },		
+			SETUP_DATE =#{setupDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			CARD_EXPIRE_DATE =#{cardExpireDate,jdbcType=TIMESTAMP },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ACTIVATE_IND =#{activateInd,jdbcType=VARCHAR },		
+			ACTIVATE_DATE =#{activateDate,jdbcType=TIMESTAMP },		
+			OVERDUE_IND =#{overdueInd,jdbcType=VARCHAR },		
+			OVERDUE_NUMBER =#{overdueNumber,jdbcType=VARCHAR },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			IF_SWIPED =#{ifSwiped,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		CARD_NO = #{cardNo, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_MIR_CARD_BATCH_TABLE_FIELD" />		
+		from TM_MIR_CARD_BATCH
+		where 
+		CARD_NO = #{cardNo, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_MIR_CARD_BATCH_TABLE_FIELD" />		
+ 		from TM_MIR_CARD_BATCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="acctNo != null and acctNo != ''  " >
+			and ACCT_NO = #{acctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNo != null and cardNo != ''  " >
+			and CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="latestCardNo != null and latestCardNo != ''  " >
+			and LATEST_CARD_NO = #{latestCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="custId != null and custId != ''  " >
+			and CUST_ID = #{custId,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="acctType != null and acctType != ''  " >
+			and ACCT_TYPE = #{acctType,jdbcType=VARCHAR }
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			and BSC_SUPP_IND = #{bscSuppInd,jdbcType=VARCHAR }
+		</if>
+		<if test="pyhCd != null and pyhCd != ''  " >
+			and PYH_CD = #{pyhCd,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="blockCode != null and blockCode != ''  " >
+			and BLOCK_CODE = #{blockCode,jdbcType=VARCHAR }
+		</if>
+		<if test="appRejectReason != null and appRejectReason != ''  " >
+			and APP_REJECT_REASON = #{appRejectReason,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="cardExpireDate != null and cardExpireDate != ''  " >
+			and CARD_EXPIRE_DATE = #{cardExpireDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="activateInd != null and activateInd != ''  " >
+			and ACTIVATE_IND = #{activateInd,jdbcType=VARCHAR }
+		</if>
+		<if test="activateDate != null and activateDate != ''  " >
+			and ACTIVATE_DATE = #{activateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="overdueInd != null and overdueInd != ''  " >
+			and OVERDUE_IND = #{overdueInd,jdbcType=VARCHAR }
+		</if>
+		<if test="overdueNumber != null and overdueNumber != ''  " >
+			and OVERDUE_NUMBER = #{overdueNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="ifSwiped != null and ifSwiped != ''  " >
+			and IF_SWIPED = #{ifSwiped,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_MIR_CARD_BATCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="acctNo != null and acctNo != ''  " >
+			and ACCT_NO = #{acctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNo != null and cardNo != ''  " >
+			and CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="latestCardNo != null and latestCardNo != ''  " >
+			and LATEST_CARD_NO = #{latestCardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="custId != null and custId != ''  " >
+			and CUST_ID = #{custId,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="acctType != null and acctType != ''  " >
+			and ACCT_TYPE = #{acctType,jdbcType=VARCHAR }
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			and BSC_SUPP_IND = #{bscSuppInd,jdbcType=VARCHAR }
+		</if>
+		<if test="pyhCd != null and pyhCd != ''  " >
+			and PYH_CD = #{pyhCd,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="blockCode != null and blockCode != ''  " >
+			and BLOCK_CODE = #{blockCode,jdbcType=VARCHAR }
+		</if>
+		<if test="appRejectReason != null and appRejectReason != ''  " >
+			and APP_REJECT_REASON = #{appRejectReason,jdbcType=VARCHAR }
+		</if>
+		<if test="setupDate != null and setupDate != ''  " >
+			and SETUP_DATE = #{setupDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="cardExpireDate != null and cardExpireDate != ''  " >
+			and CARD_EXPIRE_DATE = #{cardExpireDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="activateInd != null and activateInd != ''  " >
+			and ACTIVATE_IND = #{activateInd,jdbcType=VARCHAR }
+		</if>
+		<if test="activateDate != null and activateDate != ''  " >
+			and ACTIVATE_DATE = #{activateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="overdueInd != null and overdueInd != ''  " >
+			and OVERDUE_IND = #{overdueInd,jdbcType=VARCHAR }
+		</if>
+		<if test="overdueNumber != null and overdueNumber != ''  " >
+			and OVERDUE_NUMBER = #{overdueNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="ifSwiped != null and ifSwiped != ''  " >
+			and IF_SWIPED = #{ifSwiped,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

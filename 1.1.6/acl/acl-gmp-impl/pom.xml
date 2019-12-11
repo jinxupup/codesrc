@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.acl</groupId>
+		<artifactId>acl-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>acl-gmp-impl</artifactId>
+	<name>acl-gmp-sdk</name>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-mq</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-facility</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-sdk</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-infrastructure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-biz</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-test</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- AspectJ 依赖项 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-aspects</artifactId>
+		</dependency>
+		<!-- 命令行支持 -->
+		<dependency>
+			<groupId>jline</groupId>
+			<artifactId>jline</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+		</dependency>
+		<!-- dbcp连接池和db2驱动 -->
+		<!-- <dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> 
+			</dependency><dependency> <groupId>com.ibm.db2</groupId> <artifactId>db2jcc</artifactId> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.hsqldb</groupId> 
+			<artifactId>hsqldb</artifactId> <scope>runtime</scope> </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/com.jslsolucoes/ojdbc6 -->
+		<dependency>
+			<groupId>com.jslsolucoes</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.ethz.ganymed</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>build210</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjrt</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjtools</artifactId>
+						<version>1.8.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<complianceLevel>1.8</complianceLevel>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+				<!-- <executions> <execution> <goals> <goal>compile</goal> <goal>test-compile</goal> 
+					</goals> </execution> </executions> -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>dependency/</classpathPrefix>
+							<mainClass>com.jjb.unicorn.facility.service.ServiceDaemon</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="r2601RfeRpt" class="com.jjb.ecms.batch.s2600.R2601RfeRpt" scope="step"/>
+	
+	<bean id="p2601RfeRpt" class="com.jjb.ecms.batch.s2600.P2601RfeRpt" scope="step"/>
+	
+	<!-- <bean id="w2601applyPatchBlotRpt" class="com.jjb.acl.gmp.sdk.BatchFileWriter" scope="step">
+		<description>补件提醒报表</description>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.report.cas.ApplyPatchBlotReport"/>
+		<property name="filename" value="S260001ApplyPatchBlotReport"/>
+	</bean>
+	<bean id="e2601Exporter" class="com.jjb.fts.service.sdk.batch.DbFileExporter" scope="step">
+		<property name="instanceName" value="#{env.instanceName}" />
+	    <property name="systemType" value="CAS" />
+		<property name="filenames" value="S260001ApplyPatchBlotReport"/>
+	</bean> -->  
+	
+	<bean id="w2601applyPatchBlotRpt" class="com.jjb.unicorn.batch.YakFileItemWriter" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.report.cas.ApplyPatchBlotReport"/>
+		<property name="resource" ref="s260001ApplyPatchBlotReport"/>
+	</bean>
+	
+	<bean id="e2600Exporter" class="com.jjb.unicorn.batch.BatchResourceExporter" scope="step">
+		<property name="taskExecutor" ref="asyncTaskExecutor" />
+	    <property name="commandExecutionUtil" ref="yakCommandExecution" />
+	    <property name="executeCommand" value="#{env.exporterCommand}" />
+		<property name="fileResource">
+			<list>
+				<ref bean="s260001ApplyPatchBlotReport"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.TmAppBatchMapper">
+	<select id="r3008ApplyAppAdd" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT ID from TM_APP_ADD
+	</select>
+
+	<select id="r3005ApplyCameraParam" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT ID from TM_CAMERA_PARAM
+	</select>
+
+	<select id="r2501ApplyRejectReport" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT APP_NO from TM_APP_MAIN WHERE IF_END='N' and
+		RTF_STATE='M05';
+
+	</select>
+	
+	
+	 <select id="r4000ReportData" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+		where RTF_STATE not in ('N05','O05','P05')
+
+	</select>
+	
+	  <select id="r5000ReportData" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+
+	</select>
+	
+	
+	 <select id="r0001CreateApply" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+		where RTF_STATE = 'L05'
+
+	  </select>
+	
+	 <select id="r2001ApplySucceedReport" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+		where RTF_STATE = 'P05'
+	  </select>
+	
+	 <select id="tmAppMainByRtfState" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+		where RTF_STATE = 'M05' and IF_REFUSE = 'N'
+	  </select>
+	
+	 <select id="tmAppAttachFail" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select APP_NO
+		from TM_APP_MAIN
+		where RTF_STATE = 'M05' and IF_REFUSE = 'N'
+	 </select>
+
+	   <select id="tmAppRfe" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+	       SELECT ID from TM_APP_RFE
+	    </select>
+</mapper>

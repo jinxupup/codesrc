@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyInfoPreDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyInfoPreDto" >
+		<id column="APP_NO" property="appNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />	
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />	
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />	
+		<result column="CREDIT_LIMIT" property="creditLimit" jdbcType="VARCHAR" />	
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />	
+		<result column="CARD_EXPIRE_DATE" property="cardExpireDate" jdbcType="VARCHAR" />	
+		<result column="TASK_OWNER" property="taskOwner" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		select A.APP_NO ,A.APP_TYPE ,A.PRODUCT_CD ,A.RTF_STATE ,A.CREATE_USER ,A.CREATE_DATE ,A.TASK_OWNER,A.REFUSE_CODE,B.NAME ,B.ID_TYPE ,B.ID_NO ,B.CELLPHONE
+		from TM_APP_MAIN A, TM_APP_CUST_INFO B 
+		where A.app_no=B.app_no
+		<if test="appNo != null and appNo != ''  " >
+			and A.APP_NO != #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and A.RTF_STATE = 'A05'
+		</if>
+		<if test="rtfState == null or rtfState == ''  ">
+			and A.RTF_STATE NOT in ('A05','A10','A20')
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and A.CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>			
+		<if test="name != null and name != ''  " >
+			and A.NAME like CONCAT(CONCAT('%', #{name,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and A.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and A.ID_NO like CONCAT(CONCAT('%', #{idNo,jdbcType=VARCHAR}), '%')
+		</if>
+		order by A.CREATE_DATE desc
+	</select>	
+</mapper>

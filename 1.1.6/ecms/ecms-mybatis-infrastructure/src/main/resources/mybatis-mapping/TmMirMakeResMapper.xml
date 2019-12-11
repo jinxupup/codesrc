@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmMirMakeResMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmMirMakeRes" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="EMB_NAME" property="embName" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL" />
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+		<result column="REASON_CODE" property="reasonCode" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_MIR_MAKE_RES_TABLE_FIELD">ID,ORG,PRODUCT_CD,APP_NO,ID_TYPE,ID_NO,EMB_NAME,BSC_SUPP_IND,CREDIT_LIMIT,COMPANY_NAME,REASON_CODE,OWNING_BRANCH,CREATE_TIME,UPDATE_TIME,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_MIR_MAKE_RES_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_MIR_MAKE_RES
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmMirMakeRes" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_MIR_MAKE_RES ( <include refid="TM_MIR_MAKE_RES_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{productCd,jdbcType=VARCHAR } ,
+			 #{appNo,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{embName,jdbcType=VARCHAR } ,
+			 #{bscSuppInd,jdbcType=VARCHAR } , #{creditLimit,jdbcType=DECIMAL } , #{companyName,jdbcType=VARCHAR } , #{reasonCode,jdbcType=VARCHAR } ,
+			 #{owningBranch,jdbcType=VARCHAR } , #{createTime,jdbcType=TIMESTAMP } , #{updateTime,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirMakeRes">
+		update TM_MIR_MAKE_RES 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="embName != null and embName != ''  " >
+			EMB_NAME =#{embName,jdbcType=VARCHAR },
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			BSC_SUPP_IND =#{bscSuppInd,jdbcType=VARCHAR },
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			CREDIT_LIMIT =#{creditLimit,jdbcType=DECIMAL },
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },
+		</if>
+		<if test="reasonCode != null and reasonCode != ''  " >
+			REASON_CODE =#{reasonCode,jdbcType=VARCHAR },
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirMakeRes">
+		update TM_MIR_MAKE_RES 
+		<trim prefix="set" suffixOverrides=","> 
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			EMB_NAME =#{embName,jdbcType=VARCHAR },		
+			BSC_SUPP_IND =#{bscSuppInd,jdbcType=VARCHAR },		
+			CREDIT_LIMIT =#{creditLimit,jdbcType=DECIMAL },		
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },		
+			REASON_CODE =#{reasonCode,jdbcType=VARCHAR },		
+			OWNING_BRANCH =#{owningBranch,jdbcType=VARCHAR },		
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_MIR_MAKE_RES_TABLE_FIELD" />		
+		from TM_MIR_MAKE_RES
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_MIR_MAKE_RES_TABLE_FIELD" />		
+ 		from TM_MIR_MAKE_RES
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="embName != null and embName != ''  " >
+			and EMB_NAME = #{embName,jdbcType=VARCHAR }
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			and BSC_SUPP_IND = #{bscSuppInd,jdbcType=VARCHAR }
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			and CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="reasonCode != null and reasonCode != ''  " >
+			and REASON_CODE = #{reasonCode,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_MIR_MAKE_RES
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="embName != null and embName != ''  " >
+			and EMB_NAME = #{embName,jdbcType=VARCHAR }
+		</if>
+		<if test="bscSuppInd != null and bscSuppInd != ''  " >
+			and BSC_SUPP_IND = #{bscSuppInd,jdbcType=VARCHAR }
+		</if>
+		<if test="creditLimit != null and creditLimit != ''  " >
+			and CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="reasonCode != null and reasonCode != ''  " >
+			and REASON_CODE = #{reasonCode,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch != ''  " >
+			and OWNING_BRANCH = #{owningBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplySuccessReportMapper">
+	<resultMap id="BaseResultMap"
+		type="com.jjb.ecms.facility.dto.ApplySuccessReportQueryDto">
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="K10" property="k10" jdbcType="VARCHAR" />
+		<result column="A10" property="a10" jdbcType="VARCHAR" />
+		<result column="B10" property="b10" jdbcType="VARCHAR" />
+		<result column="F30" property="f30" jdbcType="VARCHAR" />
+		<result column="F10" property="f10" jdbcType="VARCHAR" />		
+		<result column="F20" property="f20" jdbcType="VARCHAR" />
+		<result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="selectMain" resultMap="BaseResultMap" parameterType="map">
+	   select a.APP_NO,a.ID_TYPE,a.ID_NO,a.NAME,a.APP_TYPE,a.PRODUCT_CD,a.ACC_LMT,a.OWNING_BRANCH,a.APP_SOURCE,b.K10,
+	   COALESCE(b.A10,s.a10) A10,
+	   COALESCE(b.B10,s.b10) B10,
+	   COALESCE(b.F30,s.F30) F30,
+	   COALESCE(b.F10,s.F10) F10,
+	   COALESCE(b.F20,s.F20) F20,
+	   b.check_date from TM_APP_MAIN a
+       inner join (SELECT * FROM (
+       SELECT APP_NO,
+       MAX(CASE WHEN RTF_STATE = 'A10'
+           THEN OPERATOR_ID END) AS A10,
+       MAX(CASE WHEN RTF_STATE = 'B10'
+           THEN OPERATOR_ID END) AS B10,
+       MAX(CASE WHEN RTF_STATE = 'F20'
+           THEN OPERATOR_ID END) AS F20,
+       MAX(CASE WHEN RTF_STATE = 'F10'
+           THEN OPERATOR_ID END) AS F10,
+       MAX(CASE WHEN RTF_STATE = 'K10'
+           THEN OPERATOR_ID END) AS K10,
+       MAX(CASE WHEN RTF_STATE = 'F30'
+           THEN OPERATOR_ID END) AS F30,
+       MAX(CASE WHEN RTF_STATE = 'K10'
+           THEN CREATE_DATE END) AS check_date
+       FROM TM_APP_HISTORY 
+       where RTF_STATE in ('A10','B10','F20','F10','K10','F30') 
+       group by APP_NO
+       ) tmp where 1=1 
+       <if test=" applySuccessStartDate!=null and applySuccessStartDate!='' and applySuccessEndDate!=null and applySuccessEndDate!=''">
+			and check_date between #{applySuccessStartDate} and #{applySuccessEndDate} 
+		</if>
+		 ) b on a.APP_NO=b.APP_NO 
+		  left join (select ab.ob_text7,b.K10,b.A10,b.B10 ,b.F30,b.F10 ,b.F20 ,b.check_date,ab.RTF_STATE from TM_APP_MAIN ab inner join (SELECT * FROM (
+          SELECT APP_NO, MAX(CASE WHEN RTF_STATE = 'A10' THEN OPERATOR_ID END) AS A10, MAX(CASE WHEN RTF_STATE = 'B10'  THEN OPERATOR_ID END) AS B10, MAX(CASE WHEN RTF_STATE = 'F20' THEN OPERATOR_ID END) AS F20,
+               MAX(CASE WHEN RTF_STATE = 'F10' THEN OPERATOR_ID END) AS F10, MAX(CASE WHEN RTF_STATE = 'K10' THEN OPERATOR_ID END) AS K10,
+               MAX(CASE WHEN RTF_STATE = 'F30' THEN OPERATOR_ID END) AS F30,
+               MAX(CASE WHEN RTF_STATE = 'K10' THEN CREATE_DATE END) AS check_date,
+               MAX(CASE WHEN RTF_STATE = 'A30' then OPERATOR_ID end) as A30 FROM (select * from tm_app_history where APP_NO in ( select app_no from tm_app_main where ob_text7 is not null and ob_text7 != APP_NO )) aa 
+               where RTF_STATE in ('A10','B10','F20','F10','K10','F30','A30') 
+               group by APP_NO
+               ) tmp where 1=1  ) b on ab.APP_NO=b.APP_NO ) s  on s.ob_text7 = a.app_no
+       where a.RTF_STATE in ('K10','L05','P05') 
+       <if test="branchCodes != null and branchCodes.length>0  ">
+			and a.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="branchCodes" 
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if> 
+		<if test="branch != null and branch != ''  " >
+			and a.OWNING_BRANCH= #{branch}
+		</if>
+		<if test="productCd !=null and productCd !='' ">
+			and a.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="appType !=null and appType !='' ">
+			and a.APP_TYPE=#{appType} 
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+			and a.APP_SOURCE=#{appSource} 
+		</if>
+    </select>
+    
+	<select id="selectMainToReport" resultMap="BaseResultMap" parameterType="map">
+	select a.APP_NO,a.ID_TYPE||'-'||H.CODE_NAME AS ID_TYPE,a.ID_NO,a.NAME,a.APP_TYPE||'-'||f.CODE_NAME as APP_TYPE,a.PRODUCT_CD||'-'||e.PRODUCT_DESC AS PRODUCT_CD,a.ACC_LMT,a.OWNING_BRANCH||'-'||d.BRANCH_NAME AS OWNING_BRANCH,a.APP_SOURCE||'-'||G.CODE_NAME AS APP_SOURCE,b.K10,
+	   COALESCE(b.A10,s.a10) A10,
+	   COALESCE(b.B10,s.b10) B10,
+	   COALESCE(b.F30,s.F30) F30,
+	   COALESCE(b.F10,s.F10) F10,
+	   COALESCE(b.F20,s.F20) F20,
+	   b.check_date from TM_APP_MAIN a
+       inner join (SELECT * FROM (
+       SELECT APP_NO,
+       MAX(CASE WHEN RTF_STATE = 'A10'
+           THEN OPERATOR_ID END) AS A10,
+       MAX(CASE WHEN RTF_STATE = 'B10'
+           THEN OPERATOR_ID END) AS B10,
+       MAX(CASE WHEN RTF_STATE = 'F20'
+           THEN OPERATOR_ID END) AS F20,
+       MAX(CASE WHEN RTF_STATE = 'F10'
+           THEN OPERATOR_ID END) AS F10,
+       MAX(CASE WHEN RTF_STATE = 'K10'
+           THEN OPERATOR_ID END) AS K10,
+       MAX(CASE WHEN RTF_STATE = 'F30'
+           THEN OPERATOR_ID END) AS F30,
+       MAX(CASE WHEN RTF_STATE = 'K10'
+           THEN CREATE_DATE END) AS check_date
+       FROM TM_APP_HISTORY 
+       where RTF_STATE in ('A10','B10','F20','F10','K10','F30') 
+       group by APP_NO
+       ) tmp where 1=1  
+       <if test=" applySuccessStartDate!=null and applySuccessStartDate!='' and applySuccessEndDate!=null and applySuccessEndDate!=''">
+			and check_date between #{applySuccessStartDate} and #{applySuccessEndDate} 
+		</if>
+		  ) b on a.APP_NO=b.APP_NO 
+		  left join (select ab.ob_text7,b.K10,b.A10,b.B10 ,b.F30,b.F10 ,b.F20 ,b.check_date,ab.RTF_STATE from TM_APP_MAIN ab inner join (SELECT * FROM (
+          SELECT APP_NO, MAX(CASE WHEN RTF_STATE = 'A10' THEN OPERATOR_ID END) AS A10, MAX(CASE WHEN RTF_STATE = 'B10'  THEN OPERATOR_ID END) AS B10, MAX(CASE WHEN RTF_STATE = 'F20' THEN OPERATOR_ID END) AS F20,
+               MAX(CASE WHEN RTF_STATE = 'F10' THEN OPERATOR_ID END) AS F10, MAX(CASE WHEN RTF_STATE = 'K10' THEN OPERATOR_ID END) AS K10,
+               MAX(CASE WHEN RTF_STATE = 'F30' THEN OPERATOR_ID END) AS F30,
+               MAX(CASE WHEN RTF_STATE = 'K10' THEN CREATE_DATE END) AS check_date,
+               MAX(CASE WHEN RTF_STATE = 'A30' then OPERATOR_ID end) as A30 FROM (select * from tm_app_history where APP_NO in ( select app_no from tm_app_main where ob_text7 is not null and ob_text7 != APP_NO )) aa 
+               where RTF_STATE in ('A10','B10','F20','F10','K10','F30','A30') 
+               group by APP_NO
+               ) tmp where 1=1  ) b on ab.APP_NO=b.APP_NO ) s  on s.ob_text7 = a.app_no
+          left join TM_ACL_BRANCH d on d.BRANCH_CODE = a.OWNING_BRANCH
+          left join tm_product e on e.PRODUCT_CD=a.PRODUCT_CD
+          left join (select CODE,CODE_NAME from tm_acl_dict where type='AppType') f on f.CODE = a.APP_TYPE
+          LEFT JOIN (select CODE,CODE_NAME from tm_acl_dict where type='AppSource') G ON G.CODE = a.APP_SOURCE
+          LEFT JOIN (SELECT CODE,CODE_NAME FROM TM_ACL_DICT WHERE TYPE='IdType') H ON H.CODE= A.ID_TYPE
+       where a.RTF_STATE in ('K10','L05','P05')
+       <if test="branchCodes != null and branchCodes.length>0  ">
+			and a.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="branchCodes" 
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if> 
+		<if test="branch != null and branch != ''  " >
+			and a.OWNING_BRANCH= #{branch}
+		</if>
+		<if test="productCd !=null and productCd !='' ">
+			and a.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="appType !=null and appType !='' ">
+			and a.APP_TYPE=#{appType} 
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+			and a.APP_SOURCE=#{appSource} 
+		</if>
+		<if test="org !=null and org!='' ">
+			and d.ORG = #{org}
+		</if>
+    </select>
+</mapper>

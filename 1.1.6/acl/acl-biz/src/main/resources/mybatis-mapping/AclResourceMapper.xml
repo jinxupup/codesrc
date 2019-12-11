@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.biz.TmAclResource">
+   <resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclResource" >
+        <id column="ORG" property="org" jdbcType="VARCHAR"/>
+        <id column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+        <result column="SYS_TYPE" property="sysType" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="PARENT_RESOURCE_CODE" property="parentResourceCode" jdbcType="VARCHAR" />
+        <result column="PARENT_PATH" property="parentPath" jdbcType="VARCHAR" />
+        <result column="HREF" property="href" jdbcType="VARCHAR" />
+        <result column="ICON" property="icon" jdbcType="VARCHAR" />
+        <result column="SORT" property="sort" jdbcType="INTEGER" />
+        <result column="IS_USED" property="isUsed" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+        <result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+        <result column="RESOURCE_AUTH_TYPE" property="resourceAuthType" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+        select  ORG  , RESOURCE_CODE  , RESOURCE_NAME  ,
+             SYS_TYPE  , TYPE  , PARENT_RESOURCE_CODE  , PARENT_PATH  ,
+             HREF  , ICON  , SORT  , IS_USED  ,
+             REMARK  , CREATE_DATE  , CREATE_BY  , UPDATE_DATE  ,
+             UPDATE_BY  , JPA_VERSION ,RESOURCE_AUTH_TYPE      
+        from TM_ACL_RESOURCE
+        where 1=1 
+        <if test="org != null and org != ''  " >
+            and ORG = #{org,jdbcType=VARCHAR }
+        </if>
+        <if test="resourceCode != null and resourceCode != ''  " >
+            and RESOURCE_CODE like CONCAT(CONCAT('%', #{resourceCode,jdbcType=VARCHAR}), '%')
+        </if>
+        <if test="resourceName != null and resourceName != ''  " >
+            and RESOURCE_NAME like CONCAT(CONCAT('%', #{resourceName,jdbcType=VARCHAR}), '%')
+        </if>
+        <if test="sysType != null and sysType != ''  " >
+            and SYS_TYPE = #{sysType,jdbcType=VARCHAR }
+        </if>
+        <if test="type != null and type != ''  " >
+            and TYPE = #{type,jdbcType=VARCHAR }
+        </if>
+        <if test="parentResourceCode != null and parentResourceCode != ''  " >
+            and PARENT_RESOURCE_CODE = #{parentResourceCode,jdbcType=VARCHAR }
+        </if>
+        <if test="parentPath != null and parentPath != ''  " >
+            and PARENT_PATH = #{parentPath,jdbcType=VARCHAR }
+        </if>
+        <if test="href != null and href != ''  " >
+            and HREF = #{href,jdbcType=VARCHAR }
+        </if>
+        <if test="icon != null and icon != ''  " >
+            and ICON = #{icon,jdbcType=VARCHAR }
+        </if>
+        <if test="sort != null and sort != ''  " >
+            and SORT = #{sort,jdbcType=INTEGER }
+        </if>
+        <if test="isUsed != null and isUsed != ''  " >
+            and IS_USED = #{isUsed,jdbcType=VARCHAR }
+        </if>
+        <if test="remark != null and remark != ''  " >
+            and REMARK = #{remark,jdbcType=VARCHAR }
+        </if>
+        <if test="resourceAuthType != null and resourceAuthType != ''  " >
+			and RESOURCE_AUTH_TYPE = #{resourceAuthType,jdbcType=VARCHAR }
+		</if>
+
+        order by SYS_TYPE asc,PARENT_RESOURCE_CODE asc , sort asc ,RESOURCE_CODE asc
+        
+
+    </select>
+</mapper>

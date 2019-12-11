@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="fileWaitCustomerAccountCard" class="com.jjb.unicorn.batch.ResourceWaitingTask" scope="step">
+		<description>等待文件</description>
+		<!-- 这部分文件强制等待，如果不存在则轮询，注意waitResource属性及list标签必须存在-->
+		<property name="waitResources">
+			<list>
+				<ref bean="s920002ApsCustomer"/>
+				<!-- 账户文件 -->
+				<ref bean="S1201AccountItemInfoDas"/>
+				<!-- 卡片文件 -->
+				<ref bean="S1201CardItemInfoDas"/>
+			</list>
+		</property>
+	</bean>
+</beans>

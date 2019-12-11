@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<!-- 开启自动注入 -->
+	<context:annotation-config />
+	
+	
+	<!-- <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1" ref="redisSentinelConfig" />
+	</bean> -->
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<constructor-arg name="sentinelConfig" ref="redisSentinelConfig" />
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+		<!-- <property name="poolConfig" ref="poolConfig" /> 如果不是哨兵模式，把这行放开，注释掉上面两行的构造方法注入 -->
+		<property name="port" value="#{env['redisPort']?: 7001" />
+		<property name="hostName" value="#{env['#{env['redisHost']?:'127.0.0.1'}" />
+		<property name="password" value="#{env['redisPass']?:''}" />
+		<property name="timeout" value="#{env['redisTimeout']?: 60000}" />
+		
+	</bean>  
+	
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 最大连接数 -->
+		<property name="maxTotal" value="#{env['redisMaxTotal']?:8000}" />
+		<!-- 最大空闲等待时间 -->
+		<property name="maxIdle" value="#{env['redisMaxIdle']?:5}" />
+		<!-- 表示IDLE Object Evitor 两次扫描之间的毫秒数 -->
+		<property name="timeBetweenEvictionRunsMillis"
+			value="#{env['redisTimeBetweenEvictionRunsMillis']?:30000}" />
+		<!-- #表示一个对象至少停留在IDLE状态的最短时间，然后才能被idle object evitor 扫描并驱逐； 
+			这一项只有在timeBetweenEvictionRunsMillis大于0时才有意义 -->
+		<property name="minEvictableIdleTimeMillis"
+			value="#{env['redisMinEvictableIdleTimeMillis']?:1800000}" />
+		<!-- -->
+		<property name="softMinEvictableIdleTimeMillis"
+			value="#{env['redisSoftMinEvictableIdleTimeMillis']?:1800000}" />
+		<!-- 最大等待时间 -->
+		<property name="maxWaitMillis"
+			value="#{env['redisMaxWaitMillis']?:10000}" />
+		<property name="testOnBorrow"
+			value="#{env['redisTestOnBorrow']?:'true'}" /><!-- -->
+		<property name="testWhileIdle"
+			value="#{env['redisTestWhileIdle']?:'false'}" /><!-- -->
+		<property name="testOnReturn"
+			value="#{env['redisTestOnReturn']?:'false'}" /><!-- -->
+		<property name="blockWhenExhausted"
+			value="#{env['redisBlockWhenExhausted']?:'false'}" /><!-- -->
+	</bean>
+	<bean id="redisSentinelConfig" class="com.jjb.unicorn.cache.config.RedisSentinelConfig">
+		<constructor-arg name="redisMaster" index="0" value="#{env['redisMaster']?:'spdbmaster'}"/>
+		<constructor-arg name="redisSentinels" index="1" value="#{env['redisSentinels']?:'127.0.0.1:17001'}"/>
+	</bean>
+	
+</beans>

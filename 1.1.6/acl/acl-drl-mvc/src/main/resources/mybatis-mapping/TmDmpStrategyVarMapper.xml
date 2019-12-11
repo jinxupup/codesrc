@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.dmp.infrastructure.mapping.TmDmpStrategyVarMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.dmp.infrastructure.TmDmpStrategyVar" >
+		<id column="ST_CLASS" property="stClass" jdbcType="VARCHAR"/>
+		<id column="VAR_TYPE" property="varType" jdbcType="VARCHAR"/>
+		<id column="VAR_CD" property="varCd" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="VAR_NAME" property="varName" jdbcType="VARCHAR" />
+		<result column="IS_INPUT" property="isInput" jdbcType="VARCHAR" />
+		<result column="IS_OUTPUT" property="isOutput" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_DMP_STRATEGY_VAR_TABLE_FIELD">ORG,ST_CLASS,VAR_TYPE,VAR_CD,VAR_NAME,IS_INPUT,IS_OUTPUT,REMARK,IF_USED,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_DMP_STRATEGY_VAR
+		where 
+		ST_CLASS = #{stClass, jdbcType=VARCHAR}
+ 	and 		VAR_TYPE = #{varType, jdbcType=VARCHAR}
+ 	and 		VAR_CD = #{varCd, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategyVar" >
+		insert into TM_DMP_STRATEGY_VAR ( <include refid="TM_DMP_STRATEGY_VAR_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{stClass,jdbcType=VARCHAR } , #{varType,jdbcType=VARCHAR } ,
+			 #{varCd,jdbcType=VARCHAR } , #{varName,jdbcType=VARCHAR } , #{isInput,jdbcType=VARCHAR } , #{isOutput,jdbcType=VARCHAR } ,
+			 #{remark,jdbcType=VARCHAR } , #{ifUsed,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } ,
+			 #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategyVar">
+		update TM_DMP_STRATEGY_VAR 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="varName != null and varName != ''  " >
+			VAR_NAME =#{varName,jdbcType=VARCHAR },
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			IS_INPUT =#{isInput,jdbcType=VARCHAR },
+		</if>
+		<if test="isOutput != null and isOutput != ''  " >
+			IS_OUTPUT =#{isOutput,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ST_CLASS = #{stClass, jdbcType=VARCHAR}
+ 	and 		VAR_TYPE = #{varType, jdbcType=VARCHAR}
+ 	and 		VAR_CD = #{varCd, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategyVar">
+		update TM_DMP_STRATEGY_VAR 
+		<trim prefix="set" suffixOverrides=","> 
+			VAR_NAME =#{varName,jdbcType=VARCHAR },		
+			IS_INPUT =#{isInput,jdbcType=VARCHAR },		
+			IS_OUTPUT =#{isOutput,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ST_CLASS = #{stClass, jdbcType=VARCHAR}
+ 	and 		VAR_TYPE = #{varType, jdbcType=VARCHAR}
+ 	and 		VAR_CD = #{varCd, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_DMP_STRATEGY_VAR_TABLE_FIELD" />		
+		from TM_DMP_STRATEGY_VAR
+		where 
+		ST_CLASS = #{stClass, jdbcType=VARCHAR}
+ 	and 		VAR_TYPE = #{varType, jdbcType=VARCHAR}
+ 	and 		VAR_CD = #{varCd, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_DMP_STRATEGY_VAR_TABLE_FIELD" />		
+ 		from TM_DMP_STRATEGY_VAR
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stClass != null and stClass != ''  " >
+			and ST_CLASS = #{stClass,jdbcType=VARCHAR }
+		</if>
+		<if test="varType != null and varType != ''  " >
+			and VAR_TYPE = #{varType,jdbcType=VARCHAR }
+		</if>
+		<if test="varCd != null and varCd != ''  " >
+			and VAR_CD = #{varCd,jdbcType=VARCHAR }
+		</if>
+		<if test="varName != null and varName != ''  " >
+			and VAR_NAME = #{varName,jdbcType=VARCHAR }
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			and IS_INPUT = #{isInput,jdbcType=VARCHAR }
+		</if>
+		<if test="isOutput != null and isOutput != ''  " >
+			and IS_OUTPUT = #{isOutput,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_DMP_STRATEGY_VAR
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stClass != null and stClass != ''  " >
+			and ST_CLASS = #{stClass,jdbcType=VARCHAR }
+		</if>
+		<if test="varType != null and varType != ''  " >
+			and VAR_TYPE = #{varType,jdbcType=VARCHAR }
+		</if>
+		<if test="varCd != null and varCd != ''  " >
+			and VAR_CD = #{varCd,jdbcType=VARCHAR }
+		</if>
+		<if test="varName != null and varName != ''  " >
+			and VAR_NAME = #{varName,jdbcType=VARCHAR }
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			and IS_INPUT = #{isInput,jdbcType=VARCHAR }
+		</if>
+		<if test="isOutput != null and isOutput != ''  " >
+			and IS_OUTPUT = #{isOutput,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

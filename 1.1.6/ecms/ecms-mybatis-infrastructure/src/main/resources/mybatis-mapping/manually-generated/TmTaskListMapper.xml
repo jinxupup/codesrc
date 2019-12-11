@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.TmTaskList">
+	<resultMap id="BaseResultMap"
+			   type="com.jjb.ecms.facility.dto.ApplyTaskListDto">
+		<id column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_INFO" property="spreaderInfo" jdbcType="VARCHAR" />
+		<result column="SPREADER_NO" property="spreaderNo" jdbcType="VARCHAR" />
+		<result column="SPREADER_NAME" property="spreaderName" jdbcType="VARCHAR" />
+		<result column="INPUT_INFO" property="inputInfo" jdbcType="VARCHAR" />
+		<result column="INPUT_NO" property="inputNo" jdbcType="VARCHAR" />
+		<result column="INPUT_Name" property="inputName" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_LMT" property="appLmt" jdbcType="VARCHAR" />
+		<result column="CHK_LMT" property="chkLmt" jdbcType="VARCHAR" />
+		<result column="SUG_LMT" property="sugLmt" jdbcType="VARCHAR" />
+		<result column="APPROVE_QUICK_FLAG" property="approveQuickFlag" jdbcType="VARCHAR" />
+		<result column="IS_PRIORITY" property="isPriority" jdbcType="VARCHAR" />
+		<result column="IS_INITIATE_RETRIAL" property="isInitiateRetrial" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="PROC_INST_ID_" property="proInstId" jdbcType="INTEGER" />
+		<result column="PROC_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="TASK_ID" property="taskId" jdbcType="VARCHAR" />
+		<result column="TASK_NAME" property="taskName" jdbcType="VARCHAR" />
+		<result column="OWNER_" property="owner" jdbcType="VARCHAR" />
+		<result column="ASSIGNEE_" property="assignee" jdbcType="VARCHAR" />
+		<result column="TASK_DEF_KEY" property="taskDefKey" jdbcType="VARCHAR" />
+		<result column="CLAIM_TIME" property="claimTime" jdbcType="TIMESTAMP" />
+		<result column="CREATE_DATE" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="IS_RETURNED" property="backMark" jdbcType="VARCHAR" />
+		<result column="TASK_LAST_OP_USER" property="taskLastOpUser" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="retrialFlag" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="FLAG_CODE" property="appFlag" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询未分配的任务 -->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		SELECT M.APP_NO,M.APP_TYPE,M.NAME, M.ID_TYPE,M.ID_NO, M.PRODUCT_CD ,M.APP_LMT, M.CHK_LMT, M.ACC_LMT,M.SUG_LMT,
+		M.RTF_STATE,M.APP_PROPERTY,M.OWNING_BRANCH,M.CORP_NAME,M.CREATE_DATE , M.CREATE_DATE createTime,M.TASK_LAST_OP_USER,
+		I.SPREADER_NAME,I.SPREADER_NO ,t.*,t.ID_ TASK_ID,t. NAME_ TASK_NAME, t.TASK_DEF_KEY_ TASK_DEF_KEY,ROWNUM
+		FROM ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_CUST_INFO A,TM_APP_MAIN M, Tm_App_Prim_Card_Info I
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			,TM_APP_FLAG C
+		</if>
+		WHERE t.PROC_INST_ID_=e.PROC_INST_ID_
+		AND e.BUSINESS_KEY_=M.APP_NO
+		AND I.App_No=M.APP_NO
+		AND A.APP_NO=M.APP_NO
+		AND (t.OWNER_ IS NULL OR t.OWNER_='')
+		AND t.id_ IS NOT NULL
+		AND M.RTF_STATE NOT IN ('A20','P05','N05','M05','L05')
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			AND C.APP_NO=M.APP_NO AND C.FLAG_STATUS='A'
+			and C.FLAG_CODE IN
+			<foreach item="item" index="index" collection="appFlag"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="taskName != null and taskName != '' ">
+			and t.TASK_DEF_KEY_ = #{taskName,jdbcType=VARCHAR }
+			<!-- and A.NAME_ LIKE '%'||#{taskName,jdbcType=VARCHAR }||'%' -->
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != '' ">
+			and 	A.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="name != null and name != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and A.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			and A.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="corpName != null and corpName != '' ">
+			and A.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="cellPhone != null and cellPhone != '' ">
+			and A.CELLPHONE LIKE CONCAT(CONCAT('%',#{cellPhone,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appSource != null and appSource != '' ">
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="custType != null and custType != '' ">
+			and m.CUST_TYPE = #{custType,jdbcType=VARCHAR }
+		</if>
+		<if test="chkLmt != null and chkLmt != '' ">
+			and m.CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="lastOpUser != null and lastOpUser != '' ">
+			and m.LAST_OP_USER = #{lastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and m.CREATE_DATE <![CDATA[ >= ]]>
+			#{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and m.CREATE_DATE <![CDATA[ <= ]]>
+			#{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<!-- <if test="acceptName != null and acceptName != '' ">
+			and p.ACCEPT_NAME = #{acceptName,jdbcType=VARCHAR }
+		</if>
+		<if test="acceptNum != null and acceptNum != '' ">
+			and p.ACCEPT_NO = #{acceptNo,jdbcType=VARCHAR }
+		</if> -->
+		<if test="taskDefKeys != null and taskDefKeys !='' "><!-- 该条件实为 所属组 -->
+			and ( ${taskDefKeys} )
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0 ">
+			and m.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="spreaderInfo != null and spreaderInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%')
+			or I.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			A.NAME ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		(CASE WHEN M.APP_PROPERTY = 'Q' THEN 0 WHEN M.APP_PROPERTY = 'V' THEN 1 ELSE 2 END) ,
+		m.CREATE_DATE ASC,A.NAME ASC
+	</select>
+	<!-- 查询预审待分配的任务 -->
+	<select id="selectPreAll" resultMap="BaseResultMap" parameterType="map">
+		SELECT M.APP_NO,M.APP_TYPE,M.NAME, M.ID_TYPE,M.ID_NO, M.PRODUCT_CD ,M.APP_LMT, M.CHK_LMT, M.ACC_LMT,M.SUG_LMT,
+		M.RTF_STATE,M.APP_PROPERTY,M.OWNING_BRANCH,M.CORP_NAME,M.CREATE_DATE , M.UPDATE_DATE claimTime,M.TASK_LAST_OP_USER,
+		I.SPREADER_NAME,I.SPREADER_NO ,I.INPUT_NO,I.INPUT_NAME,
+		t.*,t.ID_ TASK_ID,t. NAME_ TASK_NAME, t.TASK_DEF_KEY_ TASK_DEF_KEY,ROWNUM
+		FROM ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_CUST_INFO A,TM_APP_MAIN M,Tm_App_Prim_Card_Info I
+		WHERE t.PROC_INST_ID_=e.PROC_INST_ID_
+		AND e.BUSINESS_KEY_=M.APP_NO
+		AND I.App_No=M.APP_NO
+		AND A.APP_NO=M.APP_NO
+		AND (t.OWNER_ IS NULL OR t.OWNER_='')
+		AND t.id_ IS NOT NULL
+		AND M.RTF_STATE NOT IN ('A20','P05','N05','M05','L05')
+
+		<if test="taskName != null and taskName != '' ">
+			and t.TASK_DEF_KEY_ = #{taskName,jdbcType=VARCHAR }
+			<!-- and A.NAME_ LIKE '%'||#{taskName,jdbcType=VARCHAR }||'%' -->
+		</if>
+		<if test="appNo != null and appNo != '' ">
+			and 	A.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+
+		<if test="name != null and name != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and A.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			and A.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="corpName != null and corpName != '' ">
+			and A.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appSource != null and appSource != '' ">
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="custType != null and custType != '' ">
+			and m.CUST_TYPE = #{custType,jdbcType=VARCHAR }
+		</if>
+		<if test="chkLmt != null and chkLmt != '' ">
+			and m.CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and m.CREATE_DATE <![CDATA[ >= ]]>
+			#{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and m.CREATE_DATE <![CDATA[ <= ]]>
+			#{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<!-- <if test="acceptName != null and acceptName != '' ">
+			and p.ACCEPT_NAME = #{acceptName,jdbcType=VARCHAR }
+		</if>
+		<if test="acceptNum != null and acceptNum != '' ">
+			and p.ACCEPT_NO = #{acceptNo,jdbcType=VARCHAR }
+		</if> -->
+		<if test="taskDefKeys != null and taskDefKeys !='' "><!-- 该条件实为 所属组 -->
+			and ( ${taskDefKeys} )
+		</if>
+		<if test="spreaderInfo != null and spreaderInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%')
+			or I.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		<if test="inputInfo != null and inputInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.INPUT_NAME LIKE CONCAT(CONCAT('%',#{inputInfo,jdbcType=VARCHAR }),'%')
+			or I.INPUT_NO LIKE CONCAT(CONCAT('%',#{inputInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0 ">
+			and m.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			A.NAME ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		(CASE WHEN M.APP_PROPERTY = 'Q' THEN 0 WHEN M.APP_PROPERTY = 'V' THEN 1 ELSE 2 END) ,
+		m.CREATE_DATE ASC,A.NAME ASC
+	</select>
+
+	<!-- 查询我的任务 -->
+	<select id="selectMy" resultMap="BaseResultMap" parameterType="map">
+		SELECT M.APP_NO,M.APP_TYPE,M.NAME, M.ID_TYPE,M.ID_NO, M.PRODUCT_CD ,M.APP_LMT, M.CHK_LMT, M.ACC_LMT,M.SUG_LMT,
+		M.RTF_STATE,M.APP_PROPERTY,M.OWNING_BRANCH,M.CORP_NAME,M.CREATE_DATE , M.UPDATE_DATE ,M.TASK_LAST_OP_USER,
+		I.SPREADER_NAME,I.SPREADER_NO ,t.*,t.ID_ TASK_ID,t. NAME_ TASK_NAME, t.TASK_DEF_KEY_ TASK_DEF_KEY,ROWNUM,A.CELLPHONE,t.CREATE_TIME_ CLAIM_TIME
+		FROM ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_CUST_INFO A,TM_APP_MAIN M, Tm_App_Prim_Card_Info I
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			,TM_APP_FLAG C
+		</if>
+		WHERE t.PROC_INST_ID_=e.PROC_INST_ID_
+		AND e.BUSINESS_KEY_=M.APP_NO
+		AND I.App_No=M.APP_NO
+		AND A.APP_NO=M.APP_NO
+		AND t.id_ IS NOT NULL
+		AND M.RTF_STATE NOT IN ('A20','P05','N05','M05','L05')
+
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			AND C.APP_NO=M.APP_NO AND C.FLAG_STATUS='A'
+			and C.FLAG_CODE IN
+			<foreach item="item" index="index" collection="appFlag"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userId != null and userId != '' ">
+			and t.OWNER_ = #{userId,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != '' ">
+			and A.CELLPHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != '' ">
+			and 	A.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="taskName != null and taskName != '' ">
+			and t.TASK_DEF_KEY_ = #{taskName,jdbcType=VARCHAR }
+			<!-- and A.NAME_ LIKE '%'||#{taskName,jdbcType=VARCHAR }||'%' -->
+		</if>
+		<if test="name != null and name != '' ">
+			and A.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			and A.ID_NO LIKE	CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="inputInfo != null and inputInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.INPUT_NAME LIKE CONCAT(CONCAT('%',#{inputInfo,jdbcType=VARCHAR }),'%')
+			or I.INPUT_NO LIKE CONCAT(CONCAT('%',#{inputInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		<if test="corpName != null and corpName != '' ">
+			and A.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != '' ">
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="custType != null and custType != '' ">
+			and A.CUST_TYPE = #{custType,jdbcType=VARCHAR }
+		</if>
+		<if test="chkLmt != null and chkLmt != '' ">
+			and m.CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<!-- <if test="acceptName != null and acceptName != '' ">
+			and	p.ACCEPT_NAME = #{acceptName,jdbcType=VARCHAR }
+		</if>
+		<if test="acceptNum != null and acceptNum != '' ">
+			and p.ACCEPT_NUM = #{acceptNum,jdbcType=VARCHAR }
+		</if> -->
+		<!--	<if test="lastOpUser != null and lastOpUser != '' ">
+                and m.LAST_OP_USER = #{lastOpUser,jdbcType=VARCHAR }
+            </if>TmTaskList-->
+		<if test="startDate != null and startDate != '' ">
+			and m.CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and m.CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="taskDefKeys != null and taskDefKeys !='' "><!-- 该条件实为 所属组 -->
+			and ( ${taskDefKeys} )
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0 ">
+			and m.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch"
+					 open="(" separator="," close=")"> #{item}
+			</foreach>
+		</if>
+		<if test="spreaderInfo != null and spreaderInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%')
+			or I.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			A.NAME ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		(CASE WHEN M.APP_PROPERTY = 'Q' THEN 0 WHEN M.APP_PROPERTY = 'V' THEN 1 ELSE 2 END) ,
+		CLAIM_TIME ASC,A.NAME ASC
+	</select>
+
+	<!-- 查询已完成任务 -->
+	<select id="selectComplete" resultMap="BaseResultMap" parameterType="map">
+		SELECT M.APP_NO,M.APP_TYPE,M.NAME, M.ID_TYPE,M.ID_NO, M.PRODUCT_CD ,M.TASK_LAST_OP_USER,
+		M.RTF_STATE,M.APP_PROPERTY,M.OWNING_BRANCH,M.CORP_NAME,M.CREATE_DATE , M.UPDATE_DATE ,T.OPERATOR_ID,
+		T.PRO_NAME,I.SPREADER_NAME,I.SPREADER_NO ,ROWNUM,A.CELLPHONE
+		FROM TM_APP_HISTORY T,TM_APP_CUST_INFO A,TM_APP_MAIN M, Tm_App_Prim_Card_Info I
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			,TM_APP_FLAG C
+		</if>
+		WHERE I.App_No=M.APP_NO
+		AND A.APP_NO=M.APP_NO
+		AND T.APP_NO=A.APP_NO
+		AND T.RTF_STATE not in('A05','H15')
+		AND T.id IN (SELECT max(id)
+		FROM tm_app_history GROUP BY app_no,PRO_NAME)
+
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			AND C.APP_NO=M.APP_NO AND C.FLAG_STATUS='A'
+			and C.FLAG_CODE IN
+			<foreach item="item" index="index" collection="appFlag"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="operatorId != null and operatorId != '' ">
+			and T.OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="cellPhone != null and cellPhone != '' ">
+			and A.CELLPHONE = #{cellPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != '' ">
+			and 	A.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="name != null and name != '' ">
+			and A.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			and A.ID_NO LIKE	CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="corpName != null and corpName != '' ">
+			and A.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and m.CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and m.CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="appSource != null and appSource != '' ">
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0 ">
+			and m.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch"
+					 open="(" separator="," close=")"> #{item}
+			</foreach>
+		</if>
+		<if test="spreaderInfo != null and spreaderInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%')
+			or I.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			A.NAME ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		(CASE WHEN M.APP_PROPERTY = 'Q' THEN 0 WHEN M.APP_PROPERTY = 'V' THEN 1 ELSE 2 END) ,
+		A.NAME ASC
+	</select>
+
+
+
+	<!-- 查询已分配的任务 -->
+	<select id="selectTransferAll" resultMap="BaseResultMap" parameterType="map">
+		SELECT M.APP_NO,M.APP_TYPE,M.NAME, M.ID_TYPE,M.ID_NO, M.PRODUCT_CD ,M.APP_LMT, M.CHK_LMT, M.ACC_LMT,M.SUG_LMT,
+		M.RTF_STATE,M.APP_PROPERTY,M.OWNING_BRANCH,M.CORP_NAME,M.CREATE_DATE ,M.UPDATE_DATE claimTime,M.TASK_LAST_OP_USER,
+		I.SPREADER_NAME,I.SPREADER_NO ,	t.*,t.ID_ TASK_ID,t. NAME_ TASK_NAME, t.TASK_DEF_KEY_ TASK_DEF_KEY,ROWNUM
+		FROM ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_CUST_INFO A,TM_APP_MAIN M, Tm_App_Prim_Card_Info I 
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			,TM_APP_FLAG C
+		</if>
+		WHERE t.PROC_INST_ID_=e.PROC_INST_ID_
+		AND e.BUSINESS_KEY_=M.APP_NO
+		AND I.App_No=M.APP_NO
+		AND A.APP_NO=M.APP_NO
+		AND (t.OWNER_ IS not NULL OR t.OWNER_<![CDATA[ <> ]]>'')
+		AND t.id_ IS NOT NULL
+		AND M.RTF_STATE NOT IN ('A20','P05','N05','M05','L05')
+		<!-- 只有用到了 客户申请件标签做查询条件才关联该表做查询 -->
+		<if test="appFlag != null and appFlag != '' ">
+			AND C.APP_NO=M.APP_NO AND C.FLAG_STATUS='A'
+			and C.FLAG_CODE IN
+			<foreach item="item" index="index" collection="appFlag"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="taskName != null and taskName != '' ">
+			and t.TASK_DEF_KEY_ = #{taskName,jdbcType=VARCHAR }
+		</if>
+
+		<if test="appNo != null and appNo != '' ">
+			and 	A.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="name != null and name != '' ">
+			and A.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			and A.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="corpName != null and corpName != '' ">
+			and A.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appSource != null and appSource != '' ">
+			and m.APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="custType != null and custType != '' ">
+			and m.CUST_TYPE = #{custType,jdbcType=VARCHAR }
+		</if>
+		<if test="chkLmt != null and chkLmt != '' ">
+			and m.CHK_LMT = #{chkLmt,jdbcType=DECIMAL }
+		</if>
+		<!-- <if test="acceptName != null and acceptName != '' ">
+			and p.ACCEPT_NAME = #{acceptName,jdbcType=VARCHAR }
+		</if>
+		<if test="acceptNum != null and acceptNum != '' ">
+			and p.ACCEPT_NUM = #{acceptNum,jdbcType=VARCHAR }
+		</if> -->
+
+		<if test="taskLastOpUser != null and taskLastOpUser != '' ">
+			and m.TASK_LAST_OP_USER = #{taskLastOpUser,jdbcType=VARCHAR }
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and m.CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and m.CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="owner != null and owner != '' ">
+			and t.OWNER_ = #{owner,jdbcType=VARCHAR }
+		</if>
+		<if test="taskDefKeys != null and taskDefKeys.length>0 ">
+			and t.TASK_DEF_KEY_ IN
+			<foreach item="item" index="index" collection="taskDefKeys"
+					 open="(" separator="," close=")"> #{item}
+			</foreach>
+		</if>
+		<if test="owningBranch != null and owningBranch.length>0 ">
+			and m.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="owningBranch"
+					 open="(" separator="," close=")"> #{item}
+			</foreach>
+		</if>
+		<if test="spreaderInfo != null and spreaderInfo != '' ">
+			<!-- and A.NAME = #{name,jdbcType=VARCHAR } -->
+			and (I.SPREADER_NAME LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%')
+			or I.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderInfo,jdbcType=VARCHAR }),'%'))
+		</if>
+		ORDER BY
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME == 'TASK_NAME'" >
+			A.NAME ${_SORT_ORDER} ,
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != '' and _SORT_NAME != 'TASK_NAME'" >
+			${_SORT_NAME} ${_SORT_ORDER} ,
+		</if>
+		(CASE WHEN M.APP_PROPERTY = 'Q' THEN 0 WHEN M.APP_PROPERTY = 'V' THEN 1 ELSE 2 END) ,
+		m.CREATE_DATE ASC,A.NAME ASC
+	</select>
+
+	<!-- 根据身份证信息查询该人是否有未完成审批的申请件(异步查询征信) -->
+	<select id="selectByIdNo" resultMap="BaseResultMap" parameterType="map">
+		select A.NAME , A.ID_TYPE, A.ID_NO, C.APP_NO, C.RTF_STATE
+		from TM_APP_CUST_INFO A, TM_APP_MAIN C
+		where A.APP_NO=C.APP_NO
+		AND M.RTF_STATE NOT IN ('A20','P05','N05','M05','L05')
+		<if test="name != null and name != '' ">
+			AND A.NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != '' ">
+			AND A.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != '' ">
+			AND A.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		order by A.APP_NO desc
+	</select>
+</mapper>

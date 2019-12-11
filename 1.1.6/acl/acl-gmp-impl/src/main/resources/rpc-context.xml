@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<!-- 因为配置特殊，这里不能导入gmp-sdk-mq-context.xml -->
+
+	<!-- RabbitMQ连接池 -->
+ 	<task:executor id="amqpConnectionTaskExecutor" pool-size="#{env['mqConnRecvThreads']?:1}"/>
+	<rabbit:connection-factory id="rabbitConnectionFactory" channel-cache-size="#{env['mqChannelCacheSize']?:10}" executor="amqpConnectionTaskExecutor" addresses="#{env['mqAddresses']}" virtual-host="#{env['mqVHost']?:'/dev'}" username="#{env['mqUser']?:'guest'}" password="#{env['mqPassword']?:'guest'}"/>
+	
+	<!-- 标准的建立Queue的参数 -->
+	<rabbit:queue-arguments id="amqpQueueArguments">
+	</rabbit:queue-arguments>
+
+	<rabbit:queue id="amqpTemplateReplyQueue" queue-arguments="amqpQueueArguments"/>	<!-- 固定响应队列 -->
+	<rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="#{env['mqRPCTimeout']?:30000}" message-converter="gmpMessageConverter" reply-queue="amqpTemplateReplyQueue">
+		<rabbit:reply-listener concurrency="2"/>
+	</rabbit:template>
+	<!-- 供自动创建队列 -->
+	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
+	
+	<!-- 队列列表，没有就自动创建 -->
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="gmpManagementQueue" name="global.gmp.rpc.global-management"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="gmpComponentQueue" name="global.gmp.rpc.managed-component"/>
+	
+	<!-- 心跳报文相关 -->
+	<!-- 这里不用task:annotation-driven是因为主程序里有可能使用，不能出现多次。 -->
+	<bean id="gmpHeartbeatProcessor" class="com.jjb.acl.gmp.sdk.HeartbeatProcessor" depends-on="amqpTemplate"/>
+	<task:scheduled-tasks>
+		<task:scheduled ref="gmpHeartbeatProcessor" method="beatHeart" fixed-delay="#{env['processHeartbeatInterval']?:60000}"/>
+	</task:scheduled-tasks>
+
+	<!-- 到这里为止，与gmp-sdk-mq-context.xml中前部分相同 -->
+	
+	<!-- 供刷新路由用，与gmpapp中相同，以后考虑合并 -->
+	<rabbit:template id="instanceRouteRefreshTemplate" exchange="global.gmp.ex.cache" routing-key="gmp.instance-route" message-converter="gmpMessageConverter" connection-factory="rabbitConnectionFactory"/>
+	
+	<!-- 供刷新密钥用 -->
+	<rabbit:template id="hspKeyRefreshTemplate" exchange="global.hsp.ex.key-refresh" routing-key="#" message-converter="gmpMessageConverter" connection-factory="rabbitConnectionFactory"/>
+
+	<!-- 供发送参数刷新广播消息 -->
+	<rabbit:template id="parameterRefreshExchange" exchange="global.gmp.ex.cache" routing-key="bmp.parameter" message-converter="gmpMessageConverter" connection-factory="rabbitConnectionFactory"/>
+
+	<!-- 业务组件导出及容器 -->
+	<bean id="globalManagementService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="globalManagementServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.acl.gmp.api.GlobalManagementService"/>
+	</bean>
+
+	<bean id="managedComponentService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="managedComponentServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.acl.gmp.api.ManagedComponentService"/>
+	</bean>
+
+	<bean id="gmpMessageConverter" class="com.jjb.acl.gmp.sdk.GMPMessageConverter"/>
+
+	<rabbit:template id="branchRefreshAllExchange" exchange="global.gmp.ex.cache" routing-key="bmp.branch" message-converter="gmpMessageConverter" connection-factory="rabbitConnectionFactory"/>
+	
+	<rabbit:listener-container requeue-rejected="false" concurrency="#{env['mqServiceConcurrency']?:1}">
+		<rabbit:listener ref="globalManagementService" queues="gmpManagementQueue"/>
+		<rabbit:listener ref="managedComponentService" queues="gmpComponentQueue"/>
+	</rabbit:listener-container>
+	
+</beans>

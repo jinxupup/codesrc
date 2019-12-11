@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <bean id="r0010ApplyResponse" class="com.jjb.fts.service.sdk.batch.DbFileReader" scope="step">
+		<description>核心系统回还文件</description>
+		<property name="instanceName" value="#{env.instanceName}" />
+	    <property name="systemType" value="CAS" />
+	    <property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyResponseItem" />
+	    <property name="filename" value="s000010Response" />
+	</bean> -->
+	
+	<bean id="r0020CardResult" class="com.jjb.unicorn.batch.YakFileItemReader" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.CardMakerResultItem"/>
+		<property name="resource" ref="cardResult"/>
+	</bean>
+	
+	<bean id="p0020CardResult" class="com.jjb.ecms.batch.s1200.P1200CardResult" scope="step"/>
+	
+	<bean id="w0020CardResult" class="com.jjb.ecms.batch.ApsEntityManagerClearWriter"/>
+	
+</beans>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<!-- <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true" /> -->
+
+	<!-- 开启自动注入 -->
+	<context:annotation-config />
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 最大连接数 -->
+		<property name="maxTotal" value="#{env['redisMaxTotal']?:8000}" />
+		<!-- 最大空闲等待时间 -->
+		<property name="maxIdle" value="#{env['redisMaxIdle']?:5}" />
+		<!-- 表示IDLE Object Evitor 两次扫描之间的毫秒数 -->
+		<property name="timeBetweenEvictionRunsMillis"
+			value="#{env['redisTimeBetweenEvictionRunsMillis']?:30000}" />
+		<!-- #表示一个对象至少停留在IDLE状态的最短时间，然后才能被idle object evitor 扫描并驱逐； 
+			这一项只有在timeBetweenEvictionRunsMillis大于0时才有意义 -->
+		<property name="minEvictableIdleTimeMillis"
+			value="#{env['redisMinEvictableIdleTimeMillis']?:1800000}" />
+		<!-- -->
+		<property name="softMinEvictableIdleTimeMillis"
+			value="#{env['redisSoftMinEvictableIdleTimeMillis']?:1800000}" />
+		<!-- 最大等待时间 -->
+		<property name="maxWaitMillis"
+			value="#{env['redisMaxWaitMillis']?:10000}" />
+		<property name="testOnBorrow"
+			value="#{env['redisTestOnBorrow']?:'true'}" /><!-- -->
+		<property name="testWhileIdle"
+			value="#{env['redisTestWhileIdle']?:'false'}" /><!-- -->
+		<property name="testOnReturn"
+			value="#{env['redisTestOnReturn']?:'false'}" /><!-- -->
+		<property name="blockWhenExhausted"
+			value="#{env['redisBlockWhenExhausted']?:'false'}" /><!-- -->
+	</bean>
+	<bean id="redisSentinelConfig"
+		class="com.jjb.unicorn.cache.config.RedisSentinelConfig">
+		<constructor-arg name="redisMaster" value="#{env['redisMaster']?:'spdbmaster'}"/>
+		<constructor-arg name="redisSentinels" value="#{env['redisSentinels']?:'127.0.0.1:17001'}"/>
+		
+		<!-- <property name="master">
+			<bean name="masterNode"
+				class="org.springframework.data.redis.connection.RedisNode">
+				必须指定主节点名称
+				<property name="name" value="#{env['redisMaster']?:'spdbmaster'}"/>
+				<constructor-arg name="host" value="${redis.host}"/>
+				<constructor-arg name="port" value="6379"/>
+			</bean>
+		</property> -->
+		
+		<!-- <property name="redisMaster" value="#{env['redisMaster']?:'spdbmaster'}"/>
+		<property name="redisSentinels" value="#{env['redisSentinels']?:'127.0.0.1:17001'}"/> -->
+		<!-- <property name="sentinels">
+			<set>
+				<bean name="sentinelNode1"
+					class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg name="host" value="#{env['redisSentinelHost1']?:''}" />
+					<constructor-arg name="port" value="#{env['redisSentinelPort1']?:}" />
+				</bean>
+				<bean name="sentinelNode2"
+					class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg name="host" value="#{env['redisSentinelHost2']?:''}" />
+					<constructor-arg name="port" value="#{env['redisSentinelPort2']?:}" />
+				</bean>
+				<bean name="sentinelNode3"
+					class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg name="host" value="#{env['redisSentinelHost3']?:''}" />
+					<constructor-arg name="port" value="#{env['redisSentinelPort3']?:}" />
+				</bean>
+			</set>
+		</property> -->
+	</bean>
+	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg index="0" name="sentinelConfig" ref="redisSentinelConfig" />
+		<constructor-arg index="1" ref="jedisPoolConfig" />
+		<!-- <constructor-arg index="2" ref="">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg name="host" value="#{env['#{env['redisHost']?:'127.0.0.1'}" />
+					<constructor-arg name="port" value="#{env['redisPort']?: 7001" />
+					<property name="password" value="#{env['redisPass']?:''}" />
+					<property name="connectionTimeout" value="#{env['redisTimeout']?: 60000}" />
+				</bean>
+			</list>
+		</constructor-arg> -->
+	</bean>
+
+</beans>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclParamMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclParam" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+		<result column="VALUE" property="value" jdbcType="VARCHAR" />
+		<result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+		<result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+		<result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="IF_CAN_DEL" property="ifCanDel" jdbcType="VARCHAR" />
+		<result column="CATAGORY" property="catagory" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_PARAM_TABLE_FIELD">ORG,ID,TYPE,TYPE_NAME,CODE,CODE_NAME,VALUE,VALUE2,VALUE3,VALUE4,REMARK,SORT,IF_USED,IF_CAN_DEL,CATAGORY,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_ACL_PARAM_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_PARAM
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclParam" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_ACL_PARAM ( <include refid="TM_ACL_PARAM_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{id,jdbcType=INTEGER } , #{type,jdbcType=VARCHAR } ,
+			 #{typeName,jdbcType=VARCHAR } , #{code,jdbcType=VARCHAR } , #{codeName,jdbcType=VARCHAR } , #{value,jdbcType=VARCHAR } ,
+			 #{value2,jdbcType=VARCHAR } , #{value3,jdbcType=VARCHAR } , #{value4,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } ,
+			 #{sort,jdbcType=INTEGER } , #{ifUsed,jdbcType=VARCHAR } , #{ifCanDel,jdbcType=VARCHAR } , #{catagory,jdbcType=VARCHAR } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclParam">
+		update TM_ACL_PARAM 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="type != null and type != ''  " >
+			TYPE =#{type,jdbcType=VARCHAR },
+		</if>
+		<if test="typeName != null and typeName != ''  " >
+			TYPE_NAME =#{typeName,jdbcType=VARCHAR },
+		</if>
+		<if test="code != null and code != ''  " >
+			CODE =#{code,jdbcType=VARCHAR },
+		</if>
+		<if test="codeName != null and codeName != ''  " >
+			CODE_NAME =#{codeName,jdbcType=VARCHAR },
+		</if>
+		<if test="value != null and value != ''  " >
+			VALUE =#{value,jdbcType=VARCHAR },
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			VALUE2 =#{value2,jdbcType=VARCHAR },
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			VALUE3 =#{value3,jdbcType=VARCHAR },
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			VALUE4 =#{value4,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="sort != null and sort != ''  " >
+			SORT =#{sort,jdbcType=INTEGER },
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },
+		</if>
+		<if test="ifCanDel != null and ifCanDel != ''  " >
+			IF_CAN_DEL =#{ifCanDel,jdbcType=VARCHAR },
+		</if>
+		<if test="catagory != null and catagory != ''  " >
+			CATAGORY =#{catagory,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclParam">
+		update TM_ACL_PARAM 
+		<trim prefix="set" suffixOverrides=","> 
+			TYPE =#{type,jdbcType=VARCHAR },		
+			TYPE_NAME =#{typeName,jdbcType=VARCHAR },		
+			CODE =#{code,jdbcType=VARCHAR },		
+			CODE_NAME =#{codeName,jdbcType=VARCHAR },		
+			VALUE =#{value,jdbcType=VARCHAR },		
+			VALUE2 =#{value2,jdbcType=VARCHAR },		
+			VALUE3 =#{value3,jdbcType=VARCHAR },		
+			VALUE4 =#{value4,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			SORT =#{sort,jdbcType=INTEGER },		
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },		
+			IF_CAN_DEL =#{ifCanDel,jdbcType=VARCHAR },		
+			CATAGORY =#{catagory,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_PARAM_TABLE_FIELD" />		
+		from TM_ACL_PARAM
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_PARAM_TABLE_FIELD" />		
+ 		from TM_ACL_PARAM
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="typeName != null and typeName != ''  " >
+			and TYPE_NAME = #{typeName,jdbcType=VARCHAR }
+		</if>
+		<if test="code != null and code != ''  " >
+			and CODE = #{code,jdbcType=VARCHAR }
+		</if>
+		<if test="codeName != null and codeName != ''  " >
+			and CODE_NAME = #{codeName,jdbcType=VARCHAR }
+		</if>
+		<if test="value != null and value != ''  " >
+			and VALUE = #{value,jdbcType=VARCHAR }
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			and VALUE2 = #{value2,jdbcType=VARCHAR }
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			and VALUE3 = #{value3,jdbcType=VARCHAR }
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			and VALUE4 = #{value4,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="ifCanDel != null and ifCanDel != ''  " >
+			and IF_CAN_DEL = #{ifCanDel,jdbcType=VARCHAR }
+		</if>
+		<if test="catagory != null and catagory != ''  " >
+			and CATAGORY = #{catagory,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_PARAM
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="typeName != null and typeName != ''  " >
+			and TYPE_NAME = #{typeName,jdbcType=VARCHAR }
+		</if>
+		<if test="code != null and code != ''  " >
+			and CODE = #{code,jdbcType=VARCHAR }
+		</if>
+		<if test="codeName != null and codeName != ''  " >
+			and CODE_NAME = #{codeName,jdbcType=VARCHAR }
+		</if>
+		<if test="value != null and value != ''  " >
+			and VALUE = #{value,jdbcType=VARCHAR }
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			and VALUE2 = #{value2,jdbcType=VARCHAR }
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			and VALUE3 = #{value3,jdbcType=VARCHAR }
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			and VALUE4 = #{value4,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="ifCanDel != null and ifCanDel != ''  " >
+			and IF_CAN_DEL = #{ifCanDel,jdbcType=VARCHAR }
+		</if>
+		<if test="catagory != null and catagory != ''  " >
+			and CATAGORY = #{catagory,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

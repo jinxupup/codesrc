@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.biz.TmAclBranch">
+	<select id="selectAll" resultMap="com.jjb.acl.infrastructure.mapping.TmAclBranchMapper.BaseResultMap" parameterType="map" >
+		select * 
+ 		from TM_ACL_BRANCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE like CONCAT(CONCAT('%', #{branchCode,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="branchName != null and branchName != ''  " >
+			and BRANCH_NAME like CONCAT(CONCAT('%', #{branchName,jdbcType=VARCHAR}), '%') 
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			and PARENT_CODE = #{parentCode,jdbcType=VARCHAR }
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			and PARENT_PATH = #{parentPath,jdbcType=VARCHAR }
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			and BRANCH_LEVEL = #{branchLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="branchType != null and branchType != ''  " >
+			and BRANCH_TYPE = #{branchType,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			and CTRY_CD = #{ctryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="province != null and province != ''  " >
+			and PROVINCE = #{province,jdbcType=VARCHAR }
+		</if>
+		<if test="city != null and city != ''  " >
+			and CITY = #{city,jdbcType=VARCHAR }
+		</if>
+		<if test="zone != null and zone != ''  " >
+			and ZONE = #{zone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="zipCode != null and zipCode != ''  " >
+			and ZIP_CODE = #{zipCode,jdbcType=VARCHAR }
+		</if>
+		<if test="contactUser != null and contactUser != ''  " >
+			and CONTACT_USER = #{contactUser,jdbcType=VARCHAR }
+		</if>
+		<if test="phone != null and phone != ''  " >
+			and PHONE = #{phone,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="version != null and version != ''  " >
+			and JPA_VERSION = #{version,jdbcType=INTEGER }
+		</if>
+		order by PARENT_PATH asc , PARENT_CODE asc 
+	</select>
+	
+	<select id="selectCodes" resultType="String" parameterType="map" >
+		select   BRANCH_CODE 					
+ 		from TM_ACL_BRANCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="branchName != null and branchName != ''  " >
+			and BRANCH_NAME like CONCAT(CONCAT('%', #{branchName,jdbcType=VARCHAR}), '%') 
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			and PARENT_CODE = #{parentCode,jdbcType=VARCHAR }
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			and PARENT_PATH = #{parentPath,jdbcType=VARCHAR }
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			and BRANCH_LEVEL = #{branchLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="branchType != null and branchType != ''  " >
+			and BRANCH_TYPE = #{branchType,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			and CTRY_CD = #{ctryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="province != null and province != ''  " >
+			and PROVINCE = #{province,jdbcType=VARCHAR }
+		</if>
+		<if test="city != null and city != ''  " >
+			and CITY = #{city,jdbcType=VARCHAR }
+		</if>
+		<if test="zone != null and zone != ''  " >
+			and ZONE = #{zone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="zipCode != null and zipCode != ''  " >
+			and ZIP_CODE = #{zipCode,jdbcType=VARCHAR }
+		</if>
+		<if test="contactUser != null and contactUser != ''  " >
+			and CONTACT_USER = #{contactUser,jdbcType=VARCHAR }
+		</if>
+		<if test="phone != null and phone != ''  " >
+			and PHONE = #{phone,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="version != null and version != ''  " >
+			and JPA_VERSION = #{version,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectLeftLikePath" resultMap="com.jjb.acl.infrastructure.mapping.TmAclBranchMapper.BaseResultMap" parameterType="map" >
+		select * 					
+ 		from TM_ACL_BRANCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="branchName != null and branchName != ''  " >
+			and BRANCH_NAME like CONCAT(CONCAT('%', #{branchName,jdbcType=VARCHAR}), '%') 
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			and PARENT_CODE = #{parentCode,jdbcType=VARCHAR }
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			and PARENT_PATH like '${parentPath}%' 
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			and BRANCH_LEVEL = #{branchLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="branchType != null and branchType != ''  " >
+			and BRANCH_TYPE = #{branchType,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ctryCd != null and ctryCd != ''  " >
+			and CTRY_CD = #{ctryCd,jdbcType=VARCHAR }
+		</if>
+		<if test="province != null and province != ''  " >
+			and PROVINCE = #{province,jdbcType=VARCHAR }
+		</if>
+		<if test="city != null and city != ''  " >
+			and CITY = #{city,jdbcType=VARCHAR }
+		</if>
+		<if test="zone != null and zone != ''  " >
+			and ZONE = #{zone,jdbcType=VARCHAR }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="zipCode != null and zipCode != ''  " >
+			and ZIP_CODE = #{zipCode,jdbcType=VARCHAR }
+		</if>
+		<if test="contactUser != null and contactUser != ''  " >
+			and CONTACT_USER = #{contactUser,jdbcType=VARCHAR }
+		</if>
+		<if test="phone != null and phone != ''  " >
+			and PHONE = #{phone,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="version != null and version != ''  " >
+			and JPA_VERSION = #{version,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+	</select>
+</mapper>

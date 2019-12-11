@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppExcePoolMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppExcePool" >
+		<id column="ID" property="id" jdbcType="BIGINT"/>
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="NEXT_RTF_STATE" property="nextRtfState" jdbcType="VARCHAR" />
+		<result column="EXCE_TYPE" property="exceType" jdbcType="VARCHAR" />
+		<result column="EXCE_RTF_STATE" property="exceRtfState" jdbcType="VARCHAR" />
+		<result column="EXCE_ACT_TASK_NAME" property="exceActTaskName" jdbcType="VARCHAR" />
+		<result column="EXCE_ACT_TASK_ID" property="exceActTaskId" jdbcType="VARCHAR" />
+		<result column="EXCE_STATUS" property="exceStatus" jdbcType="VARCHAR" />
+		<result column="EXCE_REASON" property="exceReason" jdbcType="VARCHAR" />
+		<result column="EXCE_TIME" property="exceTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_EXCE_POOL_TABLE_FIELD">ID,APP_NO,NAME,ID_NO,CELLPHONE,APP_TYPE,PRODUCT_CD,APP_SOURCE,NEXT_RTF_STATE,EXCE_TYPE,EXCE_RTF_STATE,EXCE_ACT_TASK_NAME,EXCE_ACT_TASK_ID,EXCE_STATUS,EXCE_REASON,EXCE_TIME,UPDATE_TIME,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_EXCE_POOL_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_EXCE_POOL
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppExcePool" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_EXCE_POOL ( <include refid="TM_APP_EXCE_POOL_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=BIGINT } , #{appNo,jdbcType=VARCHAR } , #{name,jdbcType=VARCHAR } ,
+			 #{idNo,jdbcType=VARCHAR } , #{cellphone,jdbcType=VARCHAR } , #{appType,jdbcType=VARCHAR } , #{productCd,jdbcType=VARCHAR } ,
+			 #{appSource,jdbcType=VARCHAR } , #{nextRtfState,jdbcType=VARCHAR } , #{exceType,jdbcType=VARCHAR } , #{exceRtfState,jdbcType=VARCHAR } ,
+			 #{exceActTaskName,jdbcType=VARCHAR } , #{exceActTaskId,jdbcType=VARCHAR } , #{exceStatus,jdbcType=VARCHAR } , #{exceReason,jdbcType=VARCHAR } ,
+			 #{exceTime,jdbcType=TIMESTAMP } , #{updateTime,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppExcePool">
+		update TM_APP_EXCE_POOL 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },
+		</if>
+		<if test="appType != null and appType != ''  " >
+			APP_TYPE =#{appType,jdbcType=VARCHAR },
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },
+		</if>
+		<if test="nextRtfState != null and nextRtfState != ''  " >
+			NEXT_RTF_STATE =#{nextRtfState,jdbcType=VARCHAR },
+		</if>
+		<if test="exceType != null and exceType != ''  " >
+			EXCE_TYPE =#{exceType,jdbcType=VARCHAR },
+		</if>
+		<if test="exceRtfState != null and exceRtfState != ''  " >
+			EXCE_RTF_STATE =#{exceRtfState,jdbcType=VARCHAR },
+		</if>
+		<if test="exceActTaskName != null and exceActTaskName != ''  " >
+			EXCE_ACT_TASK_NAME =#{exceActTaskName,jdbcType=VARCHAR },
+		</if>
+		<if test="exceActTaskId != null and exceActTaskId != ''  " >
+			EXCE_ACT_TASK_ID =#{exceActTaskId,jdbcType=VARCHAR },
+		</if>
+		<if test="exceStatus != null and exceStatus != ''  " >
+			EXCE_STATUS =#{exceStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="exceReason != null and exceReason != ''  " >
+			EXCE_REASON =#{exceReason,jdbcType=VARCHAR },
+		</if>
+		<if test="exceTime != null and exceTime != ''  " >
+			EXCE_TIME =#{exceTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppExcePool">
+		update TM_APP_EXCE_POOL 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },		
+			APP_TYPE =#{appType,jdbcType=VARCHAR },		
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			APP_SOURCE =#{appSource,jdbcType=VARCHAR },		
+			NEXT_RTF_STATE =#{nextRtfState,jdbcType=VARCHAR },		
+			EXCE_TYPE =#{exceType,jdbcType=VARCHAR },		
+			EXCE_RTF_STATE =#{exceRtfState,jdbcType=VARCHAR },		
+			EXCE_ACT_TASK_NAME =#{exceActTaskName,jdbcType=VARCHAR },		
+			EXCE_ACT_TASK_ID =#{exceActTaskId,jdbcType=VARCHAR },		
+			EXCE_STATUS =#{exceStatus,jdbcType=VARCHAR },		
+			EXCE_REASON =#{exceReason,jdbcType=VARCHAR },		
+			EXCE_TIME =#{exceTime,jdbcType=TIMESTAMP },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_EXCE_POOL_TABLE_FIELD" />		
+		from TM_APP_EXCE_POOL
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_EXCE_POOL_TABLE_FIELD" />		
+ 		from TM_APP_EXCE_POOL
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="nextRtfState != null and nextRtfState != ''  " >
+			and NEXT_RTF_STATE = #{nextRtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="exceType != null and exceType != ''  " >
+			and EXCE_TYPE = #{exceType,jdbcType=VARCHAR }
+		</if>
+		<if test="exceRtfState != null and exceRtfState != ''  " >
+			and EXCE_RTF_STATE = #{exceRtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="exceActTaskName != null and exceActTaskName != ''  " >
+			and EXCE_ACT_TASK_NAME = #{exceActTaskName,jdbcType=VARCHAR }
+		</if>
+		<if test="exceActTaskId != null and exceActTaskId != ''  " >
+			and EXCE_ACT_TASK_ID = #{exceActTaskId,jdbcType=VARCHAR }
+		</if>
+		<if test="exceStatus != null and exceStatus != ''  " >
+			and EXCE_STATUS = #{exceStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="exceReason != null and exceReason != ''  " >
+			and EXCE_REASON = #{exceReason,jdbcType=VARCHAR }
+		</if>
+		<if test="exceTime != null and exceTime != ''  " >
+			and EXCE_TIME = #{exceTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_EXCE_POOL
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="appType != null and appType != ''  " >
+			and APP_TYPE = #{appType,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="appSource != null and appSource != ''  " >
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="nextRtfState != null and nextRtfState != ''  " >
+			and NEXT_RTF_STATE = #{nextRtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="exceType != null and exceType != ''  " >
+			and EXCE_TYPE = #{exceType,jdbcType=VARCHAR }
+		</if>
+		<if test="exceRtfState != null and exceRtfState != ''  " >
+			and EXCE_RTF_STATE = #{exceRtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="exceActTaskName != null and exceActTaskName != ''  " >
+			and EXCE_ACT_TASK_NAME = #{exceActTaskName,jdbcType=VARCHAR }
+		</if>
+		<if test="exceActTaskId != null and exceActTaskId != ''  " >
+			and EXCE_ACT_TASK_ID = #{exceActTaskId,jdbcType=VARCHAR }
+		</if>
+		<if test="exceStatus != null and exceStatus != ''  " >
+			and EXCE_STATUS = #{exceStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="exceReason != null and exceReason != ''  " >
+			and EXCE_REASON = #{exceReason,jdbcType=VARCHAR }
+		</if>
+		<if test="exceTime != null and exceTime != ''  " >
+			and EXCE_TIME = #{exceTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

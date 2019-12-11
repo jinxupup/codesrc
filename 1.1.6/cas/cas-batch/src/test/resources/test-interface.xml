@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- S0000 -->
+ 	<bean id="resS000000Apply" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>申请文件</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyFileItem"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+	
+ 	<bean id="resS000000EtcCar" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>ETC申请文件</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.EtcCarInfoItem"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+
+	<!-- S0010 -->
+ 	<bean id="resS000010Response" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>读取回还文件</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyResponseItem"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+	
+	<!-- S1500 -->
+	<bean id="resS150001Response" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>读取卡帐文件</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.SynchroCardAcctInfoItem"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+	
+		<!-- S2600 -->
+ 	<bean id="s260001ApplyPatchBlotReport" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>补件报表</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.report.cas.ApplyPatchBlotReport"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+	
+	<bean id="resS004000ReportData" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>未审批卸数文件</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyFileItem"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>
+	
+	<!-- S2000 
+ 	<bean id="resS200001ApplySucceedReport" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>通过报表</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.ecms.batch.s2000.I2001ApplySucceedReport"/>
+		<property name="deleteOnExit" value="false"/>
+	</bean>-->
+	
+	<!-- S2500 
+	<bean id="resS200001ApplyRejectReport" class="com.jjb.unicorn.batch.YakFileResourceMock">
+		<description>拒绝报表</description>
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader" />
+		<property name="fileDetailClass"
+			value="com.jjb.ecms.batch.s2500.I2001ApplyRejectReport" />
+		<property name="deleteOnExit" value="false" />
+	</bean>-->
+	
+	<!-- 读取申请件送入文件入库-->
+<!-- 	<bean id="S3000ApplyMobilePad" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请件送入文件</description>
+		<property name="resource" value="file:D:/test/input/S3000ApplyMobilePad"/>
+	</bean> -->
+	<!-- S3002 申请件状态文件 开始-->
+<!-- 	<bean id="resS003002ApplyStatus" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请文件</description>
+		<property name="resource" value="file:D:/test/input/S003002ApplyStatus"/>
+	</bean> -->
+	<!-- S3003 申请录入必输项参数文件 -->
+<!-- 	<bean id="resS003003ApplyNecessaryElement" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请录入必输项参数文件</description>
+		<property name="resource" value="file:D:/test/input/S003003ApplyNecessaryElement"/>
+	</bean> -->
+		
+	<!-- S3004 产品文件  -->
+<!-- 	<bean id="resS003004ApplyProduct" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请录入必输项参数文件</description>
+		<property name="resource" value="file:D:/test/input/S003004ApplyApplyProduct"/>
+	</bean> -->
+	
+	<!-- S3004 卡面文件 -->
+<!-- 	<bean id="resS003004ApplyPhyCardItem" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请录入必输项参数文件</description>
+		<property name="resource" value="file:D:/test/input/S003004ApplyPhyCard"/>
+	</bean> -->
+	
+	<!-- S3004 机构文件 -->
+<!-- 	<bean id="resS003004ApplyOrganization" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请录入必输项参数文件</description>
+		<property name="resource" value="file:D:/test/input/S003003ApplyOrganization"/>
+	</bean> -->
+	
+	<!-- S3005 拍照参数文件 -->
+<!-- 	<bean id="resS003005ApplyCameraParam" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请录入必输项参数文件</description>
+		<property name="resource" value="file:D:/test/input/S003005ApplyCameraParam"/>
+	</bean> -->
+	
+	<!-- S3007申请枚举文件 -->
+<!-- 	<bean id="resS003007ApplyEnums" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请枚举文件</description>
+		<property name="resource" value="file:D:/test/input/S003007ApplyEnums"/>
+	</bean> -->
+	<!-- S3008申请补件文件 -->
+<!-- 	<bean id="resS003008ApplyAppAdd" class="com.jjb.unicorn.batch.ResourceFactoryBean">
+		<description>申请补件文件</description>
+		<property name="resource" value="file:D:/test/input/S003008ApplyAppAdd"/>
+	</bean> -->
+	
+</beans>

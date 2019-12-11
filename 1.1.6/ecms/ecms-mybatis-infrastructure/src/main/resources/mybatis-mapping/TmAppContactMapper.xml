@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppContactMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppContact" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="CONTACT_TYPE" property="contactType" jdbcType="VARCHAR" />
+		<result column="CONTACT_NAME" property="contactName" jdbcType="VARCHAR" />
+		<result column="CONTACT_RELATION" property="contactRelation" jdbcType="VARCHAR" />
+		<result column="CONTACT_MOBILE" property="contactMobile" jdbcType="VARCHAR" />
+		<result column="CONTACT_TELEPHONE" property="contactTelephone" jdbcType="VARCHAR" />
+		<result column="CONTACT_EMP_PHONE" property="contactEmpPhone" jdbcType="VARCHAR" />
+		<result column="CONTACT_ID_TYPE" property="contactIdType" jdbcType="VARCHAR" />
+		<result column="CONTACT_ID_NO" property="contactIdNo" jdbcType="VARCHAR" />
+		<result column="CONTACT_BIRTHDAY" property="contactBirthday" jdbcType="TIMESTAMP" />
+		<result column="CONTACT_CORP_POST" property="contactCorpPost" jdbcType="VARCHAR" />
+		<result column="CONTACT_CORP_FAX" property="contactCorpFax" jdbcType="VARCHAR" />
+		<result column="CONTACT_EMP_NAME" property="contactEmpName" jdbcType="VARCHAR" />
+		<result column="CONTACT_GENDER" property="contactGender" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_CONTACT_TABLE_FIELD">ID,ORG,APP_NO,CONTACT_TYPE,CONTACT_NAME,CONTACT_RELATION,CONTACT_MOBILE,CONTACT_TELEPHONE,CONTACT_EMP_PHONE,CONTACT_ID_TYPE,CONTACT_ID_NO,CONTACT_BIRTHDAY,CONTACT_CORP_POST,CONTACT_CORP_FAX,CONTACT_EMP_NAME,CONTACT_GENDER,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_CONTACT_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_CONTACT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppContact" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_CONTACT ( <include refid="TM_APP_CONTACT_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{contactType,jdbcType=VARCHAR } , #{contactName,jdbcType=VARCHAR } , #{contactRelation,jdbcType=VARCHAR } , #{contactMobile,jdbcType=VARCHAR } ,
+			 #{contactTelephone,jdbcType=VARCHAR } , #{contactEmpPhone,jdbcType=VARCHAR } , #{contactIdType,jdbcType=VARCHAR } , #{contactIdNo,jdbcType=VARCHAR } ,
+			 #{contactBirthday,jdbcType=TIMESTAMP } , #{contactCorpPost,jdbcType=VARCHAR } , #{contactCorpFax,jdbcType=VARCHAR } , #{contactEmpName,jdbcType=VARCHAR } ,
+			 #{contactGender,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } ,
+			 #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppContact">
+		update TM_APP_CONTACT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="contactType != null and contactType != ''  " >
+			CONTACT_TYPE =#{contactType,jdbcType=VARCHAR },
+		</if>
+		<if test="contactName != null and contactName != ''  " >
+			CONTACT_NAME =#{contactName,jdbcType=VARCHAR },
+		</if>
+		<if test="contactRelation != null and contactRelation != ''  " >
+			CONTACT_RELATION =#{contactRelation,jdbcType=VARCHAR },
+		</if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+			CONTACT_MOBILE =#{contactMobile,jdbcType=VARCHAR },
+		</if>
+		<if test="contactTelephone != null and contactTelephone != ''  " >
+			CONTACT_TELEPHONE =#{contactTelephone,jdbcType=VARCHAR },
+		</if>
+		<if test="contactEmpPhone != null and contactEmpPhone != ''  " >
+			CONTACT_EMP_PHONE =#{contactEmpPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="contactIdType != null and contactIdType != ''  " >
+			CONTACT_ID_TYPE =#{contactIdType,jdbcType=VARCHAR },
+		</if>
+		<if test="contactIdNo != null and contactIdNo != ''  " >
+			CONTACT_ID_NO =#{contactIdNo,jdbcType=VARCHAR },
+		</if>
+		<if test="contactBirthday != null and contactBirthday != ''  " >
+			CONTACT_BIRTHDAY =#{contactBirthday,jdbcType=TIMESTAMP },
+		</if>
+		<if test="contactCorpPost != null and contactCorpPost != ''  " >
+			CONTACT_CORP_POST =#{contactCorpPost,jdbcType=VARCHAR },
+		</if>
+		<if test="contactCorpFax != null and contactCorpFax != ''  " >
+			CONTACT_CORP_FAX =#{contactCorpFax,jdbcType=VARCHAR },
+		</if>
+		<if test="contactEmpName != null and contactEmpName != ''  " >
+			CONTACT_EMP_NAME =#{contactEmpName,jdbcType=VARCHAR },
+		</if>
+		<if test="contactGender != null and contactGender != ''  " >
+			CONTACT_GENDER =#{contactGender,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppContact">
+		update TM_APP_CONTACT 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			CONTACT_TYPE =#{contactType,jdbcType=VARCHAR },		
+			CONTACT_NAME =#{contactName,jdbcType=VARCHAR },		
+			CONTACT_RELATION =#{contactRelation,jdbcType=VARCHAR },		
+			CONTACT_MOBILE =#{contactMobile,jdbcType=VARCHAR },		
+			CONTACT_TELEPHONE =#{contactTelephone,jdbcType=VARCHAR },		
+			CONTACT_EMP_PHONE =#{contactEmpPhone,jdbcType=VARCHAR },		
+			CONTACT_ID_TYPE =#{contactIdType,jdbcType=VARCHAR },		
+			CONTACT_ID_NO =#{contactIdNo,jdbcType=VARCHAR },		
+			CONTACT_BIRTHDAY =#{contactBirthday,jdbcType=TIMESTAMP },		
+			CONTACT_CORP_POST =#{contactCorpPost,jdbcType=VARCHAR },		
+			CONTACT_CORP_FAX =#{contactCorpFax,jdbcType=VARCHAR },		
+			CONTACT_EMP_NAME =#{contactEmpName,jdbcType=VARCHAR },		
+			CONTACT_GENDER =#{contactGender,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_CONTACT_TABLE_FIELD" />		
+		from TM_APP_CONTACT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_CONTACT_TABLE_FIELD" />		
+ 		from TM_APP_CONTACT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="contactType != null and contactType != ''  " >
+			and CONTACT_TYPE = #{contactType,jdbcType=VARCHAR }
+		</if>
+		<if test="contactName != null and contactName != ''  " >
+			and CONTACT_NAME = #{contactName,jdbcType=VARCHAR }
+		</if>
+		<if test="contactRelation != null and contactRelation != ''  " >
+			and CONTACT_RELATION = #{contactRelation,jdbcType=VARCHAR }
+		</if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+			and CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+		</if>
+		<if test="contactTelephone != null and contactTelephone != ''  " >
+			and CONTACT_TELEPHONE = #{contactTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="contactEmpPhone != null and contactEmpPhone != ''  " >
+			and CONTACT_EMP_PHONE = #{contactEmpPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="contactIdType != null and contactIdType != ''  " >
+			and CONTACT_ID_TYPE = #{contactIdType,jdbcType=VARCHAR }
+		</if>
+		<if test="contactIdNo != null and contactIdNo != ''  " >
+			and CONTACT_ID_NO = #{contactIdNo,jdbcType=VARCHAR }
+		</if>
+		<if test="contactBirthday != null and contactBirthday != ''  " >
+			and CONTACT_BIRTHDAY = #{contactBirthday,jdbcType=TIMESTAMP }
+		</if>
+		<if test="contactCorpPost != null and contactCorpPost != ''  " >
+			and CONTACT_CORP_POST = #{contactCorpPost,jdbcType=VARCHAR }
+		</if>
+		<if test="contactCorpFax != null and contactCorpFax != ''  " >
+			and CONTACT_CORP_FAX = #{contactCorpFax,jdbcType=VARCHAR }
+		</if>
+		<if test="contactEmpName != null and contactEmpName != ''  " >
+			and CONTACT_EMP_NAME = #{contactEmpName,jdbcType=VARCHAR }
+		</if>
+		<if test="contactGender != null and contactGender != ''  " >
+			and CONTACT_GENDER = #{contactGender,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_CONTACT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="contactType != null and contactType != ''  " >
+			and CONTACT_TYPE = #{contactType,jdbcType=VARCHAR }
+		</if>
+		<if test="contactName != null and contactName != ''  " >
+			and CONTACT_NAME = #{contactName,jdbcType=VARCHAR }
+		</if>
+		<if test="contactRelation != null and contactRelation != ''  " >
+			and CONTACT_RELATION = #{contactRelation,jdbcType=VARCHAR }
+		</if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+			and CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+		</if>
+		<if test="contactTelephone != null and contactTelephone != ''  " >
+			and CONTACT_TELEPHONE = #{contactTelephone,jdbcType=VARCHAR }
+		</if>
+		<if test="contactEmpPhone != null and contactEmpPhone != ''  " >
+			and CONTACT_EMP_PHONE = #{contactEmpPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="contactIdType != null and contactIdType != ''  " >
+			and CONTACT_ID_TYPE = #{contactIdType,jdbcType=VARCHAR }
+		</if>
+		<if test="contactIdNo != null and contactIdNo != ''  " >
+			and CONTACT_ID_NO = #{contactIdNo,jdbcType=VARCHAR }
+		</if>
+		<if test="contactBirthday != null and contactBirthday != ''  " >
+			and CONTACT_BIRTHDAY = #{contactBirthday,jdbcType=TIMESTAMP }
+		</if>
+		<if test="contactCorpPost != null and contactCorpPost != ''  " >
+			and CONTACT_CORP_POST = #{contactCorpPost,jdbcType=VARCHAR }
+		</if>
+		<if test="contactCorpFax != null and contactCorpFax != ''  " >
+			and CONTACT_CORP_FAX = #{contactCorpFax,jdbcType=VARCHAR }
+		</if>
+		<if test="contactEmpName != null and contactEmpName != ''  " >
+			and CONTACT_EMP_NAME = #{contactEmpName,jdbcType=VARCHAR }
+		</if>
+		<if test="contactGender != null and contactGender != ''  " >
+			and CONTACT_GENDER = #{contactGender,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

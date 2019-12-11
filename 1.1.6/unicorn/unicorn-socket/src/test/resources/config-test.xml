@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<message cal_mac_fields="0,2,3,4,7,11,18,25,32,33,38,39,41,42,90"
+	pwd_fields="52" mac_fields="64||128">
+	<encoding>GBK</encoding>
+	<headType>FIELD_ONLY</headType>
+	<head>
+		<entry>
+			<index>1</index>
+			<field>
+				<name>Header Length</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>2</index>
+			<field>
+				<name>Header Flag and Version</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>3</index>
+			<field>
+				<name>Total Message Length</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>11</index>
+			<field>
+				<name>MTI</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+	</head>
+	<bodyType>ISO_8583</bodyType>
+	<body>
+		<entry>
+			<index>0</index>
+			<field>
+				<name>Primary Bitmap</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>1</index>
+			<field>
+				<name>Secondary Bitmap</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>2</index>
+			<field>
+				<name>Primary Account Number</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>19</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>3</index>
+			<field>
+				<name>Processing Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+	</body>
+</message>

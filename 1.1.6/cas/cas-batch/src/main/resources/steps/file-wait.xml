@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="fileWait" class="com.jjb.unicorn.batch.ResourceWaitingTask" scope="step">
+		<description>等待文件</description>
+		<!-- 这部分文件强制等待，如果不存在则轮询，注意waitResource属性及list标签必须存在-->
+		<property name="waitResources">
+			<list>
+				<ref bean="s000010Response"/>
+				<ref bean="cardResult"/>
+				<!-- <ref bean="s150001Response"/> -->
+			</list>
+		</property>
+	</bean>
+	
+	<!--等待核心商户额度余额信息同步文件 -->
+	<bean id="merchantLoanBalInfoFileWait" class="com.jjb.unicorn.batch.ResourceWaitingTask" scope="step">
+		<description>等待核心商户额度余额信息同步文件</description>
+		<property name="waitResources">
+			<list>
+				<ref bean="merchantLoanBalInfo"/>
+			</list>
+		</property>
+	</bean>
+</beans>

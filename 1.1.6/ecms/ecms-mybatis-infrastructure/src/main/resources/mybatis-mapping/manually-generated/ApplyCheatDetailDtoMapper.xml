@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyCheatDetailDto">
+    <resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyCheatDetailDto" >
+        <id column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+        <result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="CELLPHONE" property="cellPhone" jdbcType="VARCHAR" />
+        <result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" />
+        <result column="HOME_ADD" property="homeAdd" jdbcType="VARCHAR" />
+        <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+        <result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+        <result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+        <result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+        <result column="OWNER" property="owner" jdbcType="VARCHAR" />
+        <result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+        <result column="DIFF_CURR_DAY" property="diffCurrDay" jdbcType="INTEGER" />
+        <result column="DIFF_CURR_TIME" property="diffCurrTime" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="BaseBlackListResultMap" type="com.jjb.ecms.facility.dto.ApplyBlackListDetailDto" >
+        <id column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="BLACKLIST_SRC" property="blacklistSrc" jdbcType="VARCHAR" />
+        <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+        <result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="CELLPHONE" property="cellPhone" jdbcType="VARCHAR" />
+        <result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" />
+        <result column="HOME_ADD" property="homeAdd" jdbcType="VARCHAR" />
+        <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+        <result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+        <result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+        <result column="ACT_TYPE" property="actionType" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 根据主卡申请人手机号码查找 -->
+    <select id="selectByCellPhone" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+            AND TM_APP_CUST_INFO.CELLPHONE = #{cellPhone,jdbcType=VARCHAR }
+        </if>
+        
+        <if test="idType_ne != null and idType_ne != '' and idNo_ne != null and idNo_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!-- 根据主卡申请人手机号码查找 -->
+    <select id="selectByCellPhone7DigitDup" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT   (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="cellPhone != null and cellPhone != ''  " >
+            AND TM_APP_CUST_INFO.CELLPHONE LIKE CONCAT(CONCAT('%',#{cellPhone,jdbcType=VARCHAR }),'%')
+        </if>
+        <if test="idType_ne != null and idType_ne != '' and idNo_ne != null and idNo_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!-- 根据主卡申请人证件类型、证件号码查找 ，排除同一个名字滴 -->
+    <select id="selectByIdTypeAndIdNo" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+        <if test="name_ne != null and name_ne != ''  " >
+            AND TM_APP_CUST_INFO.name <![CDATA[<>]]> #{name_ne,jdbcType=VARCHAR }
+        </if>
+    </select>
+    
+    <!--根据申请人家庭号码查找（排除证件号码） -->
+    <select id="selectByHomePhone" resultMap="BaseResultMap" parameterType="map" >
+	   SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="homePhone != null and homePhone != ''  " >
+            AND TM_APP_CUST_INFO.HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != '' and idType != null and idType != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--根据申请人单位号码查找（排除证件号码、单位名称） -->
+    <select id="selectByEmpPhone" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+        <if test="corpName_ne != null and corpName_ne != ''  " >
+            AND TM_APP_CUST_INFO.corp_name <![CDATA[<>]]> #{corpName_ne,jdbcType=VARCHAR }
+        </if>
+		<if test="empPhone != null and empPhone != ''  " >
+            AND TM_APP_CUST_INFO.EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != '' and idType != null and idType != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--根据申请人家庭地址查找 -->
+    <select id="selectByHomeAdd" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="homeAdd != null and homeAdd != ''  " >
+            AND TM_APP_CUST_INFO.HOME_STATE || TM_APP_CUST_INFO.HOME_CITY || TM_APP_CUST_INFO.EMP_ZONE || TM_APP_CUST_INFO.HOME_ADD = #{homeAdd,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--单位电话对应多个单位名称 -->
+    <select id="selectByEmpPhoneForApp" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="empPhone != null and empPhone != ''  " >
+            AND TM_APP_CUST_INFO.EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+        </if>
+		<if test="corpName != null and corpName != ''  " >
+            AND TM_APP_CUST_INFO.CORP_NAME <![CDATA[<>]]> #{corpName,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--根据申请人单位地址查找 -->
+    <select id="selectByEmpAdd" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="empAdd != null and empAdd != ''  " >
+            AND TM_APP_CUST_INFO.EMP_PROVINCE || TM_APP_CUST_INFO.EMP_CITY || TM_APP_CUST_INFO.EMP_ZONE || TM_APP_CUST_INFO.EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--半年内申请次数，包括所有状态 -->
+    <select id="selectByApplyCreateDate" resultMap="BaseResultMap" parameterType="map" >
+	   SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+		<if test="date != null and date != ''  " >
+            AND TM_APP_MAIN.CREATE_DATE <![CDATA[>]]> #{date,jdbcType=TIMESTAMP }
+        </if>
+    </select>
+    <!--半年内申请成功 -->
+    <select id="selectByApplySuccess" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,OWNER,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN  	
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE IN ('L05','P05','N05')
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+		<if test="date != null and date != ''  " >
+            AND TM_APP_MAIN.CREATE_DATE <![CDATA[>]]> #{date,jdbcType=TIMESTAMP }
+        </if>
+    </select>
+    
+    <!--半年内申请失败 -->
+    <select id="selectByApplyFail" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,OWNER,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE IN ('M05')
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+		<if test="date != null and date != ''  " >
+            AND TM_APP_MAIN.CREATE_DATE <![CDATA[>]]> #{date,jdbcType=TIMESTAMP }
+        </if>
+    </select>
+    <!--是否在征审系统中存在 -->
+    <select id="selectByInApsSystem" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(m.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-m.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	a.*,TASK.OWNER_,m.REFUSE_CODE,m.RTF_STATE
+	    FROM  
+	    TM_APP_CUST_INFO a ,  TM_APP_MAIN m
+	    LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=m.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	    WHERE m.APP_NO = a.APP_NO
+			AND m.ORG = a.ORG 
+			AND m.RTF_STATE NOT IN ('N05','P05','L05','A05','A20')
+			<if test="appNo != null and appNo != ''  " >
+	            AND m.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+	        </if>
+			<if test="idType != null and idType != ''  " >
+	            AND a.ID_TYPE = #{idType,jdbcType=VARCHAR }
+	        </if>
+			<if test="idNo != null and idNo != ''  " >
+	            AND a.ID_NO = #{idNo,jdbcType=VARCHAR }
+	        </if>
+			<if test="productCd != null and productCd != ''  " >
+	            AND m.PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+	        </if>
+	        <if test="appType_notIn != null and appType_notIn.length>0 ">
+				and m.APP_TYPE NOT IN
+				<foreach item="item" index="index" collection="appType_notIn" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+	        <if test="appType_in != null and appType_in.length>0  ">
+				and m.APP_TYPE IN
+				<foreach item="item" index="index" collection="appType_in" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+    </select>
+    <!--联系人多人匹配 -->
+    <select id="selectByContactPhone" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	    FROM TM_APP_CUST_INFO,TM_APP_CONTACT,TM_APP_MAIN
+	    LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	    WHERE TM_APP_MAIN.APP_NO = TM_APP_CUST_INFO.APP_NO 
+		AND TM_APP_MAIN.APP_NO = TM_APP_CONTACT.APP_NO
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="contactName != null and contactName != ''  " >
+            AND TM_APP_CONTACT.CONTACT_NAME = #{contactName,jdbcType=VARCHAR }
+        </if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+            AND TM_APP_CONTACT.CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!--申请人邮箱多人匹配  -->
+    <select id="selectByEmail" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="email != null and email != ''  " >
+            AND TM_APP_CUST_INFO.EMAIL = #{email,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo != null and idNo != '' and idType != null and idType != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo,jdbcType=VARCHAR } 
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--申请人单位地址对住宅地址单人匹配  -->
+    <select id="selectByEmpAddHomeAdd" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO
+        AND TM_APP_CUST_INFO.EMP_PROVINCE || TM_APP_CUST_INFO.EMP_CITY || TM_APP_CUST_INFO.EMP_ZONE || TM_APP_CUST_INFO.EMP_ADD = TM_APP_CUST_INFO.HOME_STATE || TM_APP_CUST_INFO.HOME_CITY || TM_APP_CUST_INFO.HOME_ZONE || TM_APP_CUST_INFO.HOME_ADD
+        AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO = #{appNo,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR } 
+        </if>
+        <if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR } 
+        </if>
+    </select>
+    <!--申请人宅电对单电多人匹配 -->
+    <select id="selectByHomePhoneNEmpPhone" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="homePhone != null and homePhone != ''  " >
+			<!-- 查询有其他件的单位电话和传进来的该件的住宅电话相同 -->
+            AND TM_APP_CUST_INFO.EMP_PHONE = #{homePhone,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo != null and idNo != '' and idType != null and idType != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo,jdbcType=VARCHAR } 
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--申请人联系人姓名多人匹配 -->
+    <select id="selectByContactName" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	    FROM TM_APP_CUST_INFO,TM_APP_CONTACT,TM_APP_MAIN
+	    LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	    WHERE TM_APP_MAIN.APP_NO = TM_APP_CUST_INFO.APP_NO 
+		AND TM_APP_MAIN.APP_NO = TM_APP_CONTACT.APP_NO
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="contactName != null and contactName != ''  " >
+            AND TM_APP_CONTACT.CONTACT_NAME <![CDATA[<>]]> #{contactName,jdbcType=VARCHAR }
+        </if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+            AND TM_APP_CONTACT.CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    <!--申请人邮寄地址（不为空）多人匹配 -->
+    <select id="selectByMailerInd" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	 	FROM TM_APP_CUST_INFO ,TM_APP_CUST_INFO,TM_APP_MAIN 
+	 	LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.ORG = TM_APP_CUST_INFO.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_CUST_INFO.APP_NO 
+	 	AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="cardMailerInd != null and cardMailerInd != ''  " >
+            AND TM_APP_CUST_INFO.CARD_MAILER_IND = #{cardMailerInd,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo != null and idNo != '' and idType != null and idType != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo,jdbcType=VARCHAR } 
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!--申请人单位电话及联系人多人匹配 -->
+    <select id="selectByEmpPhoneAndContact" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	    FROM TM_APP_CUST_INFO,TM_APP_CONTACT,TM_APP_MAIN
+	    LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	    WHERE TM_APP_MAIN.APP_NO = TM_APP_CUST_INFO.APP_NO 
+		AND TM_APP_MAIN.APP_NO = TM_APP_CONTACT.APP_NO
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="contactName != null and contactName != ''  " >
+            AND TM_APP_CONTACT.CONTACT_NAME = #{contactName,jdbcType=VARCHAR }
+        </if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+            AND TM_APP_CONTACT.CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+        </if>
+        <if test="corpName != null and corpName != ''  " >
+            AND TM_APP_CUST_INFO.corp_name <![CDATA[<>]]> #{corpName_ne,jdbcType=VARCHAR }
+        </if>
+		<if test="empPhone != null and empPhone != ''  " >
+            AND TM_APP_CUST_INFO.EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!--申请人家庭电话及联系人多人匹配 -->
+    <select id="selectByHomePhoneAndContact" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT  (days(current_date) - days(TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_DAY,  
+    	timestampdiff(16,CHAR(TIMESTAMP(current_date)-TM_APP_MAIN.CREATE_DATE)) AS DIFF_CURR_TIME  ,
+    	TM_APP_CUST_INFO.*,TASK.OWNER_,REFUSE_CODE,RTF_STATE
+	    FROM TM_APP_CUST_INFO,TM_APP_CONTACT,TM_APP_MAIN
+	    LEFT JOIN ACT_RU_EXECUTION E ON E.BUSINESS_KEY_=TM_APP_MAIN.APP_NO 
+		LEFT JOIN ACT_RU_TASK TASK ON E.PROC_INST_ID_ = TASK.PROC_INST_ID_ 
+	    WHERE TM_APP_MAIN.APP_NO = TM_APP_CUST_INFO.APP_NO 
+		AND TM_APP_MAIN.APP_NO = TM_APP_CONTACT.APP_NO
+		AND TM_APP_MAIN.RTF_STATE <![CDATA[<>]]> 'A20'
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR }
+        </if>
+		<if test="contactName != null and contactName != ''  " >
+            AND TM_APP_CONTACT.CONTACT_NAME = #{contactName,jdbcType=VARCHAR }
+        </if>
+		<if test="contactMobile != null and contactMobile != ''  " >
+            AND TM_APP_CONTACT.CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR }
+        </if>
+		<if test="homePhone != null and homePhone != ''  " >
+            AND TM_APP_CUST_INFO.HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+        </if>
+        <if test="idNo_ne != null and idNo_ne != '' and idType_ne != null and idType_ne != ''  " >
+            AND <![CDATA[(]]> TM_APP_CUST_INFO.ID_NO <![CDATA[<>]]> #{idNo_ne,jdbcType=VARCHAR }
+            OR TM_APP_CUST_INFO.ID_TYPE <![CDATA[<>]]> #{idType_ne,jdbcType=VARCHAR } <![CDATA[)]]>
+        </if>
+    </select>
+    
+    <!--怀疑个人身份黑名单 -->
+    <select id="selectByBlackListName" resultMap="BaseBlackListResultMap" parameterType="map" >
+	    SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="idType != null and idType != ''  " >
+            AND TM_PERSONAL_BLACKLIST.ID_TYPE = #{idType,jdbcType=VARCHAR }
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_PERSONAL_BLACKLIST.ID_NO = #{idNo,jdbcType=VARCHAR }
+        </if>
+		<if test="name != null and name != ''  " >
+            AND TM_PERSONAL_BLACKLIST.NAME = #{name,jdbcType=VARCHAR }
+        </if>
+        <if test="actType != null and actType != ''  " >
+            AND TM_PERSONAL_BLACKLIST.ACT_TYPE = #{actType,jdbcType=VARCHAR }
+        </if>
+    </select>
+    
+    <!--怀疑个人移动电话黑名单 -->
+    <select id="selectByBlackListCellPhone" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="cellPhone != null and cellPhone != ''  " >
+            AND TM_PERSONAL_BLACKLIST.CELLPHONE = #{cellPhone,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人家庭电话黑名单 -->
+    <select id="selectByBlackListHomePhone" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="homePhone != null and homePhone != ''  " >
+            AND TM_PERSONAL_BLACKLIST.HOME_PHONE = #{homePhone,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人公司电话黑名单 -->
+    <select id="selectByBlackListEmpPhone" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="empPhone != null and empPhone != ''  " >
+            AND TM_PERSONAL_BLACKLIST.EMP_PHONE = #{empPhone,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人家庭地址黑名单 -->
+    <select id="selectByBlackListHomeAdd" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="homeAdd != null and homeAdd != ''  " >
+            AND TM_PERSONAL_BLACKLIST.HOME_ADD = #{homeAdd,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人公司地址黑名单 -->
+    <select id="selectByBlackListEmpAdd" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="empAdd != null and empAdd != ''  " >
+            AND TM_PERSONAL_BLACKLIST.EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人公司名称黑名单 -->
+    <select id="selectByBlackListCorpName" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="corpName != null and corpName != ''  " >
+            AND TM_PERSONAL_BLACKLIST.CORP_NAME = #{corpName,jdbcType=VARCHAR }
+        </if>
+    </select>
+    <!--怀疑个人邮箱黑名单 -->
+    <select id="selectByBlackListEmail" resultMap="BaseBlackListResultMap" parameterType="map" >
+	   SELECT TM_PERSONAL_BLACKLIST.*
+	 	FROM TM_PERSONAL_BLACKLIST
+	 	WHERE TM_PERSONAL_BLACKLIST.VALID_DATE > CURRENT DATE
+		<if test="email != null and email != ''  " >
+            AND TM_PERSONAL_BLACKLIST.OB_TEXT1 = #{email,jdbcType=VARCHAR }
+        </if>
+    </select>
+ 	<!-- 在指定日期前根据证件号码、手机号、状态查询申请数量 -->
+    <select id="countByApplyBasicProps" resultType="java.lang.Integer" parameterType="map" >
+	    SELECT count(*)
+	 	FROM TM_APP_CUST_INFO ,TM_APP_MAIN  	
+	 	WHERE TM_APP_CUST_INFO.ORG = TM_APP_MAIN.ORG 
+	 	AND TM_APP_CUST_INFO.APP_NO = TM_APP_MAIN.APP_NO 
+	 	<if test="states != null and states.size > 0">
+	 		AND TM_APP_MAIN.RTF_STATE IN 
+	 		<foreach item="item" index="index" collection="states" open="(" separator="," close=")">
+        		#{item.name}
+    		</foreach>
+	 	</if>
+	 	<if test="neStates != null and neStates.size > 0">
+	 		AND TM_APP_MAIN.RTF_STATE NOT IN 
+	 		<foreach item="item" index="index" collection="neStates" open="(" separator="," close=")">
+        		#{item.name}
+    		</foreach>
+	 	</if>
+		<if test="appNo != null and appNo != ''  " >
+            AND TM_APP_MAIN.APP_NO <![CDATA[<>]]> #{appNo,jdbcType=VARCHAR}
+        </if>
+       	<if test="neName != null and neName != ''  " >
+            AND TM_APP_MAIN.NAME <![CDATA[<>]]> #{neName,jdbcType=VARCHAR}
+        </if>
+		<if test="idType != null and idType != ''  " >
+            AND TM_APP_CUST_INFO.ID_TYPE = #{idType,jdbcType=VARCHAR}
+        </if>
+		<if test="idNo != null and idNo != ''  " >
+            AND TM_APP_CUST_INFO.ID_NO = #{idNo,jdbcType=VARCHAR}
+        </if>
+        <if test="cellPhone != null and cellPhone != ''  " >
+            AND TM_APP_CUST_INFO.CELLPHONE LIKE CONCAT(CONCAT('%',#{cellPhone,jdbcType=VARCHAR }),'%')
+        </if>
+		<if test="date != null and date != ''  " >
+            AND TM_APP_MAIN.CREATE_DATE <![CDATA[>]]> #{date,jdbcType=TIMESTAMP}
+        </if>
+    </select>    
+</mapper>

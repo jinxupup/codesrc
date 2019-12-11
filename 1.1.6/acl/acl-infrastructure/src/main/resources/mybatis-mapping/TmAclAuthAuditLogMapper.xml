@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclAuthAuditLogMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclAuthAuditLog" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+		<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="AUDIT_TYPE" property="auditType" jdbcType="VARCHAR" />
+		<result column="VISIBLE_AUDIT_BRANCH_NO" property="visibleAuditBranchNo" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="AUDIT_BRANCH_NO" property="auditBranchNo" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="CREATE_BRANCH_NO" property="createBranchNo" jdbcType="VARCHAR" />
+		<result column="CREATE_REMARK" property="createRemark" jdbcType="VARCHAR" />
+		<result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+		<result column="CHECK_BY" property="checkBy" jdbcType="VARCHAR" />
+		<result column="CHECK_REMARK" property="checkRemark" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_AUTH_AUDIT_LOG_TABLE_FIELD">ID,ORG,ROLE_ID,ROLE_NAME,USER_ID,USER_NO,USER_NAME,USER_TYPE,AUDIT_TYPE,VISIBLE_AUDIT_BRANCH_NO,STATUS,AUDIT_BRANCH_NO,CREATE_DATE,CREATE_BY,CREATE_BRANCH_NO,CREATE_REMARK,CHECK_DATE,CHECK_BY,CHECK_REMARK,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_ACL_AUTH_AUDIT_LOG_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_AUTH_AUDIT_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclAuthAuditLog" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_ACL_AUTH_AUDIT_LOG ( <include refid="TM_ACL_AUTH_AUDIT_LOG_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{roleId,jdbcType=INTEGER } ,
+			 #{roleName,jdbcType=VARCHAR } , #{userId,jdbcType=INTEGER } , #{userNo,jdbcType=VARCHAR } , #{userName,jdbcType=VARCHAR } ,
+			 #{userType,jdbcType=VARCHAR } , #{auditType,jdbcType=VARCHAR } , #{visibleAuditBranchNo,jdbcType=VARCHAR } , #{status,jdbcType=VARCHAR } ,
+			 #{auditBranchNo,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , #{createBranchNo,jdbcType=VARCHAR } ,
+			 #{createRemark,jdbcType=VARCHAR } , #{checkDate,jdbcType=TIMESTAMP } , #{checkBy,jdbcType=VARCHAR } , #{checkRemark,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclAuthAuditLog">
+		update TM_ACL_AUTH_AUDIT_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="roleId != null and roleId != ''  " >
+			ROLE_ID =#{roleId,jdbcType=INTEGER },
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			ROLE_NAME =#{roleName,jdbcType=VARCHAR },
+		</if>
+		<if test="userId != null and userId != ''  " >
+			USER_ID =#{userId,jdbcType=INTEGER },
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			USER_NO =#{userNo,jdbcType=VARCHAR },
+		</if>
+		<if test="userName != null and userName != ''  " >
+			USER_NAME =#{userName,jdbcType=VARCHAR },
+		</if>
+		<if test="userType != null and userType != ''  " >
+			USER_TYPE =#{userType,jdbcType=VARCHAR },
+		</if>
+		<if test="auditType != null and auditType != ''  " >
+			AUDIT_TYPE =#{auditType,jdbcType=VARCHAR },
+		</if>
+		<if test="visibleAuditBranchNo != null and visibleAuditBranchNo != ''  " >
+			VISIBLE_AUDIT_BRANCH_NO =#{visibleAuditBranchNo,jdbcType=VARCHAR },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="auditBranchNo != null and auditBranchNo != ''  " >
+			AUDIT_BRANCH_NO =#{auditBranchNo,jdbcType=VARCHAR },
+		</if>
+		<if test="createBranchNo != null and createBranchNo != ''  " >
+			CREATE_BRANCH_NO =#{createBranchNo,jdbcType=VARCHAR },
+		</if>
+		<if test="createRemark != null and createRemark != ''  " >
+			CREATE_REMARK =#{createRemark,jdbcType=VARCHAR },
+		</if>
+		<if test="checkDate != null and checkDate != ''  " >
+			CHECK_DATE =#{checkDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="checkBy != null and checkBy != ''  " >
+			CHECK_BY =#{checkBy,jdbcType=VARCHAR },
+		</if>
+		<if test="checkRemark != null and checkRemark != ''  " >
+			CHECK_REMARK =#{checkRemark,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclAuthAuditLog">
+		update TM_ACL_AUTH_AUDIT_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+			ROLE_ID =#{roleId,jdbcType=INTEGER },		
+			ROLE_NAME =#{roleName,jdbcType=VARCHAR },		
+			USER_ID =#{userId,jdbcType=INTEGER },		
+			USER_NO =#{userNo,jdbcType=VARCHAR },		
+			USER_NAME =#{userName,jdbcType=VARCHAR },		
+			USER_TYPE =#{userType,jdbcType=VARCHAR },		
+			AUDIT_TYPE =#{auditType,jdbcType=VARCHAR },		
+			VISIBLE_AUDIT_BRANCH_NO =#{visibleAuditBranchNo,jdbcType=VARCHAR },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+			AUDIT_BRANCH_NO =#{auditBranchNo,jdbcType=VARCHAR },		
+			CREATE_BRANCH_NO =#{createBranchNo,jdbcType=VARCHAR },		
+			CREATE_REMARK =#{createRemark,jdbcType=VARCHAR },		
+			CHECK_DATE =#{checkDate,jdbcType=TIMESTAMP },		
+			CHECK_BY =#{checkBy,jdbcType=VARCHAR },		
+			CHECK_REMARK =#{checkRemark,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_AUTH_AUDIT_LOG_TABLE_FIELD" />		
+		from TM_ACL_AUTH_AUDIT_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_AUTH_AUDIT_LOG_TABLE_FIELD" />		
+ 		from TM_ACL_AUTH_AUDIT_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			and ROLE_NAME = #{roleName,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="auditType != null and auditType != ''  " >
+			and AUDIT_TYPE = #{auditType,jdbcType=VARCHAR }
+		</if>
+		<if test="visibleAuditBranchNo != null and visibleAuditBranchNo != ''  " >
+			and VISIBLE_AUDIT_BRANCH_NO = #{visibleAuditBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="auditBranchNo != null and auditBranchNo != ''  " >
+			and AUDIT_BRANCH_NO = #{auditBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="createBranchNo != null and createBranchNo != ''  " >
+			and CREATE_BRANCH_NO = #{createBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="createRemark != null and createRemark != ''  " >
+			and CREATE_REMARK = #{createRemark,jdbcType=VARCHAR }
+		</if>
+		<if test="checkDate != null and checkDate != ''  " >
+			and CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="checkBy != null and checkBy != ''  " >
+			and CHECK_BY = #{checkBy,jdbcType=VARCHAR }
+		</if>
+		<if test="checkRemark != null and checkRemark != ''  " >
+			and CHECK_REMARK = #{checkRemark,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_AUTH_AUDIT_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			and ROLE_NAME = #{roleName,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="userType != null and userType != ''  " >
+			and USER_TYPE = #{userType,jdbcType=VARCHAR }
+		</if>
+		<if test="auditType != null and auditType != ''  " >
+			and AUDIT_TYPE = #{auditType,jdbcType=VARCHAR }
+		</if>
+		<if test="visibleAuditBranchNo != null and visibleAuditBranchNo != ''  " >
+			and VISIBLE_AUDIT_BRANCH_NO = #{visibleAuditBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="auditBranchNo != null and auditBranchNo != ''  " >
+			and AUDIT_BRANCH_NO = #{auditBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="createBranchNo != null and createBranchNo != ''  " >
+			and CREATE_BRANCH_NO = #{createBranchNo,jdbcType=VARCHAR }
+		</if>
+		<if test="createRemark != null and createRemark != ''  " >
+			and CREATE_REMARK = #{createRemark,jdbcType=VARCHAR }
+		</if>
+		<if test="checkDate != null and checkDate != ''  " >
+			and CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="checkBy != null and checkBy != ''  " >
+			and CHECK_BY = #{checkBy,jdbcType=VARCHAR }
+		</if>
+		<if test="checkRemark != null and checkRemark != ''  " >
+			and CHECK_REMARK = #{checkRemark,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

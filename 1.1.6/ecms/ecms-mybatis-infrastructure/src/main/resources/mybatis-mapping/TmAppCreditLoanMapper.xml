@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppCreditLoanMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppCreditLoan" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="MAIN_LOANID" property="mainLoanid" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="BUSINESS_MOLD" property="businessMold" jdbcType="VARCHAR" />
+		<result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+		<result column="MER_NO" property="merNo" jdbcType="VARCHAR" />
+		<result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+		<result column="APPLY_MONEY" property="applyMoney" jdbcType="DECIMAL" />
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="LOAN_PERCENT" property="loanPercent" jdbcType="VARCHAR" />
+		<result column="LOAN_INIT_TERM" property="loanInitTerm" jdbcType="INTEGER" />
+		<result column="LOAN_USE" property="loanUse" jdbcType="VARCHAR" />
+		<result column="GUARANTEEWAY" property="guaranteeway" jdbcType="VARCHAR" />
+		<result column="FEE_RATE" property="feeRate" jdbcType="DECIMAL" />
+		<result column="FEE_AMT" property="feeAmt" jdbcType="DECIMAL" />
+		<result column="DISTRIBUTE_METHOD" property="distributeMethod" jdbcType="VARCHAR" />
+		<result column="LOAN_FIXED_PMT_PRIN" property="loanFixedPmtPrin" jdbcType="DECIMAL" />
+		<result column="LOAN_FIRST_TERM_PRIN" property="loanFirstTermPrin" jdbcType="DECIMAL" />
+		<result column="LOAN_FINAL_TERM_PRIN" property="loanFinalTermPrin" jdbcType="DECIMAL" />
+		<result column="LOAN_INIT_FEE" property="loanInitFee" jdbcType="DECIMAL" />
+		<result column="LOAN_FIXED_FEE" property="loanFixedFee" jdbcType="DECIMAL" />
+		<result column="LOAN_FIRST_TERM_FEE" property="loanFirstTermFee" jdbcType="DECIMAL" />
+		<result column="LOAN_FINAL_TERM_FEE" property="loanFinalTermFee" jdbcType="DECIMAL" />
+		<result column="ML_SEND_MODE" property="mlSendMode" jdbcType="VARCHAR" />
+		<result column="LENDING_TIME" property="lendingTime" jdbcType="TIMESTAMP" />
+		<result column="LENDING_TIMES" property="lendingTimes" jdbcType="INTEGER" />
+		<result column="ML_BANK_NAME" property="mlBankName" jdbcType="VARCHAR" />
+		<result column="ML_BANK_BRANCH" property="mlBankBranch" jdbcType="VARCHAR" />
+		<result column="ML_BANK_ACCT_NO" property="mlBankAcctNo" jdbcType="VARCHAR" />
+		<result column="ML_BANK_ACCT_NAME" property="mlBankAcctName" jdbcType="VARCHAR" />
+		<result column="REPAYMENTWAY" property="repaymentway" jdbcType="VARCHAR" />
+		<result column="INTERVAL" property="interval" jdbcType="VARCHAR" />
+		<result column="REASON_DESC" property="reasonDesc" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="STATUS_DESC" property="statusDesc" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />
+		<result column="TERM" property="term" jdbcType="INTEGER" />
+		<result column="RATE_TYPE" property="rateType" jdbcType="VARCHAR" />
+		<result column="LOAN_RATE" property="loanRate" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="TM_APP_CREDIT_LOAN_TABLE_FIELD">ID,ORG,APP_NO,MAIN_LOANID,PRODUCT_CD,BUSINESS_MOLD,BUSINESS_TYPE,MER_NO,MER_NAME,APPLY_MONEY,ACC_LMT,LOAN_PERCENT,LOAN_INIT_TERM,LOAN_USE,GUARANTEEWAY,FEE_RATE,FEE_AMT,DISTRIBUTE_METHOD,LOAN_FIXED_PMT_PRIN,LOAN_FIRST_TERM_PRIN,LOAN_FINAL_TERM_PRIN,LOAN_INIT_FEE,LOAN_FIXED_FEE,LOAN_FIRST_TERM_FEE,LOAN_FINAL_TERM_FEE,ML_SEND_MODE,LENDING_TIME,LENDING_TIMES,ML_BANK_NAME,ML_BANK_BRANCH,ML_BANK_ACCT_NO,ML_BANK_ACCT_NAME,REPAYMENTWAY,INTERVAL,REASON_DESC,STATUS,STATUS_DESC,CREATE_DATE,UPDATE_USER,CREATE_USER,UPDATE_DATE,JPA_VERSION,URL,LOAN_TYPE,TERM,RATE_TYPE,LOAN_RATE</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_CREDIT_LOAN_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_CREDIT_LOAN
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppCreditLoan" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_CREDIT_LOAN ( <include refid="TM_APP_CREDIT_LOAN_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{mainLoanid,jdbcType=VARCHAR } , #{productCd,jdbcType=VARCHAR } , #{businessMold,jdbcType=VARCHAR } , #{businessType,jdbcType=VARCHAR } ,
+			 #{merNo,jdbcType=VARCHAR } , #{merName,jdbcType=VARCHAR } , #{applyMoney,jdbcType=DECIMAL } , #{accLmt,jdbcType=DECIMAL } ,
+			 #{loanPercent,jdbcType=VARCHAR } , #{loanInitTerm,jdbcType=INTEGER } , #{loanUse,jdbcType=VARCHAR } , #{guaranteeway,jdbcType=VARCHAR } ,
+			 #{feeRate,jdbcType=DECIMAL } , #{feeAmt,jdbcType=DECIMAL } , #{distributeMethod,jdbcType=VARCHAR } , #{loanFixedPmtPrin,jdbcType=DECIMAL } ,
+			 #{loanFirstTermPrin,jdbcType=DECIMAL } , #{loanFinalTermPrin,jdbcType=DECIMAL } , #{loanInitFee,jdbcType=DECIMAL } , #{loanFixedFee,jdbcType=DECIMAL } ,
+			 #{loanFirstTermFee,jdbcType=DECIMAL } , #{loanFinalTermFee,jdbcType=DECIMAL } , #{mlSendMode,jdbcType=VARCHAR } , #{lendingTime,jdbcType=TIMESTAMP } ,
+			 #{lendingTimes,jdbcType=INTEGER } , #{mlBankName,jdbcType=VARCHAR } , #{mlBankBranch,jdbcType=VARCHAR } , #{mlBankAcctNo,jdbcType=VARCHAR } ,
+			 #{mlBankAcctName,jdbcType=VARCHAR } , #{repaymentway,jdbcType=VARCHAR } , #{interval,jdbcType=VARCHAR } , #{reasonDesc,jdbcType=VARCHAR } ,
+			 #{status,jdbcType=VARCHAR } , #{statusDesc,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } ,
+			 #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } , #{url,jdbcType=VARCHAR } ,
+			 #{loanType,jdbcType=VARCHAR } , #{term,jdbcType=INTEGER } , #{rateType,jdbcType=VARCHAR } , #{loanRate,jdbcType=DECIMAL }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppCreditLoan">
+		update TM_APP_CREDIT_LOAN 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="mainLoanid != null and mainLoanid != ''  " >
+			MAIN_LOANID =#{mainLoanid,jdbcType=VARCHAR },
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },
+		</if>
+		<if test="businessMold != null and businessMold != ''  " >
+			BUSINESS_MOLD =#{businessMold,jdbcType=VARCHAR },
+		</if>
+		<if test="businessType != null and businessType != ''  " >
+			BUSINESS_TYPE =#{businessType,jdbcType=VARCHAR },
+		</if>
+		<if test="merNo != null and merNo != ''  " >
+			MER_NO =#{merNo,jdbcType=VARCHAR },
+		</if>
+		<if test="merName != null and merName != ''  " >
+			MER_NAME =#{merName,jdbcType=VARCHAR },
+		</if>
+		<if test="applyMoney != null and applyMoney != ''  " >
+			APPLY_MONEY =#{applyMoney,jdbcType=DECIMAL },
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			ACC_LMT =#{accLmt,jdbcType=DECIMAL },
+		</if>
+		<if test="loanPercent != null and loanPercent != ''  " >
+			LOAN_PERCENT =#{loanPercent,jdbcType=VARCHAR },
+		</if>
+		<if test="loanInitTerm != null and loanInitTerm != ''  " >
+			LOAN_INIT_TERM =#{loanInitTerm,jdbcType=INTEGER },
+		</if>
+		<if test="loanUse != null and loanUse != ''  " >
+			LOAN_USE =#{loanUse,jdbcType=VARCHAR },
+		</if>
+		<if test="guaranteeway != null and guaranteeway != ''  " >
+			GUARANTEEWAY =#{guaranteeway,jdbcType=VARCHAR },
+		</if>
+		<if test="feeRate != null and feeRate != ''  " >
+			FEE_RATE =#{feeRate,jdbcType=DECIMAL },
+		</if>
+		<if test="feeAmt != null and feeAmt != ''  " >
+			FEE_AMT =#{feeAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="distributeMethod != null and distributeMethod != ''  " >
+			DISTRIBUTE_METHOD =#{distributeMethod,jdbcType=VARCHAR },
+		</if>
+		<if test="loanFixedPmtPrin != null and loanFixedPmtPrin != ''  " >
+			LOAN_FIXED_PMT_PRIN =#{loanFixedPmtPrin,jdbcType=DECIMAL },
+		</if>
+		<if test="loanFirstTermPrin != null and loanFirstTermPrin != ''  " >
+			LOAN_FIRST_TERM_PRIN =#{loanFirstTermPrin,jdbcType=DECIMAL },
+		</if>
+		<if test="loanFinalTermPrin != null and loanFinalTermPrin != ''  " >
+			LOAN_FINAL_TERM_PRIN =#{loanFinalTermPrin,jdbcType=DECIMAL },
+		</if>
+		<if test="loanInitFee != null and loanInitFee != ''  " >
+			LOAN_INIT_FEE =#{loanInitFee,jdbcType=DECIMAL },
+		</if>
+		<if test="loanFixedFee != null and loanFixedFee != ''  " >
+			LOAN_FIXED_FEE =#{loanFixedFee,jdbcType=DECIMAL },
+		</if>
+		<if test="loanFirstTermFee != null and loanFirstTermFee != ''  " >
+			LOAN_FIRST_TERM_FEE =#{loanFirstTermFee,jdbcType=DECIMAL },
+		</if>
+		<if test="loanFinalTermFee != null and loanFinalTermFee != ''  " >
+			LOAN_FINAL_TERM_FEE =#{loanFinalTermFee,jdbcType=DECIMAL },
+		</if>
+		<if test="mlSendMode != null and mlSendMode != ''  " >
+			ML_SEND_MODE =#{mlSendMode,jdbcType=VARCHAR },
+		</if>
+		<if test="lendingTime != null and lendingTime != ''  " >
+			LENDING_TIME =#{lendingTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lendingTimes != null and lendingTimes != ''  " >
+			LENDING_TIMES =#{lendingTimes,jdbcType=INTEGER },
+		</if>
+		<if test="mlBankName != null and mlBankName != ''  " >
+			ML_BANK_NAME =#{mlBankName,jdbcType=VARCHAR },
+		</if>
+		<if test="mlBankBranch != null and mlBankBranch != ''  " >
+			ML_BANK_BRANCH =#{mlBankBranch,jdbcType=VARCHAR },
+		</if>
+		<if test="mlBankAcctNo != null and mlBankAcctNo != ''  " >
+			ML_BANK_ACCT_NO =#{mlBankAcctNo,jdbcType=VARCHAR },
+		</if>
+		<if test="mlBankAcctName != null and mlBankAcctName != ''  " >
+			ML_BANK_ACCT_NAME =#{mlBankAcctName,jdbcType=VARCHAR },
+		</if>
+		<if test="repaymentway != null and repaymentway != ''  " >
+			REPAYMENTWAY =#{repaymentway,jdbcType=VARCHAR },
+		</if>
+		<if test="interval != null and interval != ''  " >
+			INTERVAL =#{interval,jdbcType=VARCHAR },
+		</if>
+		<if test="reasonDesc != null and reasonDesc != ''  " >
+			REASON_DESC =#{reasonDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="statusDesc != null and statusDesc != ''  " >
+			STATUS_DESC =#{statusDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="url != null and url != ''  " >
+			URL =#{url,jdbcType=VARCHAR },
+		</if>
+		<if test="loanType != null and loanType != ''  " >
+			LOAN_TYPE =#{loanType,jdbcType=VARCHAR },
+		</if>
+		<if test="term != null and term != ''  " >
+			TERM =#{term,jdbcType=INTEGER },
+		</if>
+		<if test="rateType != null and rateType != ''  " >
+			RATE_TYPE =#{rateType,jdbcType=VARCHAR },
+		</if>
+		<if test="loanRate != null and loanRate != ''  " >
+			LOAN_RATE =#{loanRate,jdbcType=DECIMAL },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppCreditLoan">
+		update TM_APP_CREDIT_LOAN 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			MAIN_LOANID =#{mainLoanid,jdbcType=VARCHAR },		
+			PRODUCT_CD =#{productCd,jdbcType=VARCHAR },		
+			BUSINESS_MOLD =#{businessMold,jdbcType=VARCHAR },		
+			BUSINESS_TYPE =#{businessType,jdbcType=VARCHAR },		
+			MER_NO =#{merNo,jdbcType=VARCHAR },		
+			MER_NAME =#{merName,jdbcType=VARCHAR },		
+			APPLY_MONEY =#{applyMoney,jdbcType=DECIMAL },		
+			ACC_LMT =#{accLmt,jdbcType=DECIMAL },		
+			LOAN_PERCENT =#{loanPercent,jdbcType=VARCHAR },		
+			LOAN_INIT_TERM =#{loanInitTerm,jdbcType=INTEGER },		
+			LOAN_USE =#{loanUse,jdbcType=VARCHAR },		
+			GUARANTEEWAY =#{guaranteeway,jdbcType=VARCHAR },		
+			FEE_RATE =#{feeRate,jdbcType=DECIMAL },		
+			FEE_AMT =#{feeAmt,jdbcType=DECIMAL },		
+			DISTRIBUTE_METHOD =#{distributeMethod,jdbcType=VARCHAR },		
+			LOAN_FIXED_PMT_PRIN =#{loanFixedPmtPrin,jdbcType=DECIMAL },		
+			LOAN_FIRST_TERM_PRIN =#{loanFirstTermPrin,jdbcType=DECIMAL },		
+			LOAN_FINAL_TERM_PRIN =#{loanFinalTermPrin,jdbcType=DECIMAL },		
+			LOAN_INIT_FEE =#{loanInitFee,jdbcType=DECIMAL },		
+			LOAN_FIXED_FEE =#{loanFixedFee,jdbcType=DECIMAL },		
+			LOAN_FIRST_TERM_FEE =#{loanFirstTermFee,jdbcType=DECIMAL },		
+			LOAN_FINAL_TERM_FEE =#{loanFinalTermFee,jdbcType=DECIMAL },		
+			ML_SEND_MODE =#{mlSendMode,jdbcType=VARCHAR },		
+			LENDING_TIME =#{lendingTime,jdbcType=TIMESTAMP },		
+			LENDING_TIMES =#{lendingTimes,jdbcType=INTEGER },		
+			ML_BANK_NAME =#{mlBankName,jdbcType=VARCHAR },		
+			ML_BANK_BRANCH =#{mlBankBranch,jdbcType=VARCHAR },		
+			ML_BANK_ACCT_NO =#{mlBankAcctNo,jdbcType=VARCHAR },		
+			ML_BANK_ACCT_NAME =#{mlBankAcctName,jdbcType=VARCHAR },		
+			REPAYMENTWAY =#{repaymentway,jdbcType=VARCHAR },		
+			INTERVAL =#{interval,jdbcType=VARCHAR },		
+			REASON_DESC =#{reasonDesc,jdbcType=VARCHAR },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+			STATUS_DESC =#{statusDesc,jdbcType=VARCHAR },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			URL =#{url,jdbcType=VARCHAR },		
+			LOAN_TYPE =#{loanType,jdbcType=VARCHAR },		
+			TERM =#{term,jdbcType=INTEGER },		
+			RATE_TYPE =#{rateType,jdbcType=VARCHAR },		
+			LOAN_RATE =#{loanRate,jdbcType=DECIMAL },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_CREDIT_LOAN_TABLE_FIELD" />		
+		from TM_APP_CREDIT_LOAN
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_CREDIT_LOAN_TABLE_FIELD" />		
+ 		from TM_APP_CREDIT_LOAN
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mainLoanid != null and mainLoanid != ''  " >
+			and MAIN_LOANID = #{mainLoanid,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="businessMold != null and businessMold != ''  " >
+			and BUSINESS_MOLD = #{businessMold,jdbcType=VARCHAR }
+		</if>
+		<if test="businessType != null and businessType != ''  " >
+			and BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR }
+		</if>
+		<if test="merNo != null and merNo != ''  " >
+			and MER_NO = #{merNo,jdbcType=VARCHAR }
+		</if>
+		<if test="merName != null and merName != ''  " >
+			and MER_NAME = #{merName,jdbcType=VARCHAR }
+		</if>
+		<if test="applyMoney != null and applyMoney != ''  " >
+			and APPLY_MONEY = #{applyMoney,jdbcType=DECIMAL }
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			and ACC_LMT = #{accLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="loanPercent != null and loanPercent != ''  " >
+			and LOAN_PERCENT = #{loanPercent,jdbcType=VARCHAR }
+		</if>
+		<if test="loanInitTerm != null and loanInitTerm != ''  " >
+			and LOAN_INIT_TERM = #{loanInitTerm,jdbcType=INTEGER }
+		</if>
+		<if test="loanUse != null and loanUse != ''  " >
+			and LOAN_USE = #{loanUse,jdbcType=VARCHAR }
+		</if>
+		<if test="guaranteeway != null and guaranteeway != ''  " >
+			and GUARANTEEWAY = #{guaranteeway,jdbcType=VARCHAR }
+		</if>
+		<if test="feeRate != null and feeRate != ''  " >
+			and FEE_RATE = #{feeRate,jdbcType=DECIMAL }
+		</if>
+		<if test="feeAmt != null and feeAmt != ''  " >
+			and FEE_AMT = #{feeAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="distributeMethod != null and distributeMethod != ''  " >
+			and DISTRIBUTE_METHOD = #{distributeMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="loanFixedPmtPrin != null and loanFixedPmtPrin != ''  " >
+			and LOAN_FIXED_PMT_PRIN = #{loanFixedPmtPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFirstTermPrin != null and loanFirstTermPrin != ''  " >
+			and LOAN_FIRST_TERM_PRIN = #{loanFirstTermPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFinalTermPrin != null and loanFinalTermPrin != ''  " >
+			and LOAN_FINAL_TERM_PRIN = #{loanFinalTermPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanInitFee != null and loanInitFee != ''  " >
+			and LOAN_INIT_FEE = #{loanInitFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFixedFee != null and loanFixedFee != ''  " >
+			and LOAN_FIXED_FEE = #{loanFixedFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFirstTermFee != null and loanFirstTermFee != ''  " >
+			and LOAN_FIRST_TERM_FEE = #{loanFirstTermFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFinalTermFee != null and loanFinalTermFee != ''  " >
+			and LOAN_FINAL_TERM_FEE = #{loanFinalTermFee,jdbcType=DECIMAL }
+		</if>
+		<if test="mlSendMode != null and mlSendMode != ''  " >
+			and ML_SEND_MODE = #{mlSendMode,jdbcType=VARCHAR }
+		</if>
+		<if test="lendingTime != null and lendingTime != ''  " >
+			and LENDING_TIME = #{lendingTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lendingTimes != null and lendingTimes != ''  " >
+			and LENDING_TIMES = #{lendingTimes,jdbcType=INTEGER }
+		</if>
+		<if test="mlBankName != null and mlBankName != ''  " >
+			and ML_BANK_NAME = #{mlBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankBranch != null and mlBankBranch != ''  " >
+			and ML_BANK_BRANCH = #{mlBankBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankAcctNo != null and mlBankAcctNo != ''  " >
+			and ML_BANK_ACCT_NO = #{mlBankAcctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankAcctName != null and mlBankAcctName != ''  " >
+			and ML_BANK_ACCT_NAME = #{mlBankAcctName,jdbcType=VARCHAR }
+		</if>
+		<if test="repaymentway != null and repaymentway != ''  " >
+			and REPAYMENTWAY = #{repaymentway,jdbcType=VARCHAR }
+		</if>
+		<if test="interval != null and interval != ''  " >
+			and INTERVAL = #{interval,jdbcType=VARCHAR }
+		</if>
+		<if test="reasonDesc != null and reasonDesc != ''  " >
+			and REASON_DESC = #{reasonDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="statusDesc != null and statusDesc != ''  " >
+			and STATUS_DESC = #{statusDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="url != null and url != ''  " >
+			and URL = #{url,jdbcType=VARCHAR }
+		</if>
+		<if test="loanType != null and loanType != ''  " >
+			and LOAN_TYPE = #{loanType,jdbcType=VARCHAR }
+		</if>
+		<if test="term != null and term != ''  " >
+			and TERM = #{term,jdbcType=INTEGER }
+		</if>
+		<if test="rateType != null and rateType != ''  " >
+			and RATE_TYPE = #{rateType,jdbcType=VARCHAR }
+		</if>
+		<if test="loanRate != null and loanRate != ''  " >
+			and LOAN_RATE = #{loanRate,jdbcType=DECIMAL }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_CREDIT_LOAN
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mainLoanid != null and mainLoanid != ''  " >
+			and MAIN_LOANID = #{mainLoanid,jdbcType=VARCHAR }
+		</if>
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="businessMold != null and businessMold != ''  " >
+			and BUSINESS_MOLD = #{businessMold,jdbcType=VARCHAR }
+		</if>
+		<if test="businessType != null and businessType != ''  " >
+			and BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR }
+		</if>
+		<if test="merNo != null and merNo != ''  " >
+			and MER_NO = #{merNo,jdbcType=VARCHAR }
+		</if>
+		<if test="merName != null and merName != ''  " >
+			and MER_NAME = #{merName,jdbcType=VARCHAR }
+		</if>
+		<if test="applyMoney != null and applyMoney != ''  " >
+			and APPLY_MONEY = #{applyMoney,jdbcType=DECIMAL }
+		</if>
+		<if test="accLmt != null and accLmt != ''  " >
+			and ACC_LMT = #{accLmt,jdbcType=DECIMAL }
+		</if>
+		<if test="loanPercent != null and loanPercent != ''  " >
+			and LOAN_PERCENT = #{loanPercent,jdbcType=VARCHAR }
+		</if>
+		<if test="loanInitTerm != null and loanInitTerm != ''  " >
+			and LOAN_INIT_TERM = #{loanInitTerm,jdbcType=INTEGER }
+		</if>
+		<if test="loanUse != null and loanUse != ''  " >
+			and LOAN_USE = #{loanUse,jdbcType=VARCHAR }
+		</if>
+		<if test="guaranteeway != null and guaranteeway != ''  " >
+			and GUARANTEEWAY = #{guaranteeway,jdbcType=VARCHAR }
+		</if>
+		<if test="feeRate != null and feeRate != ''  " >
+			and FEE_RATE = #{feeRate,jdbcType=DECIMAL }
+		</if>
+		<if test="feeAmt != null and feeAmt != ''  " >
+			and FEE_AMT = #{feeAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="distributeMethod != null and distributeMethod != ''  " >
+			and DISTRIBUTE_METHOD = #{distributeMethod,jdbcType=VARCHAR }
+		</if>
+		<if test="loanFixedPmtPrin != null and loanFixedPmtPrin != ''  " >
+			and LOAN_FIXED_PMT_PRIN = #{loanFixedPmtPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFirstTermPrin != null and loanFirstTermPrin != ''  " >
+			and LOAN_FIRST_TERM_PRIN = #{loanFirstTermPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFinalTermPrin != null and loanFinalTermPrin != ''  " >
+			and LOAN_FINAL_TERM_PRIN = #{loanFinalTermPrin,jdbcType=DECIMAL }
+		</if>
+		<if test="loanInitFee != null and loanInitFee != ''  " >
+			and LOAN_INIT_FEE = #{loanInitFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFixedFee != null and loanFixedFee != ''  " >
+			and LOAN_FIXED_FEE = #{loanFixedFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFirstTermFee != null and loanFirstTermFee != ''  " >
+			and LOAN_FIRST_TERM_FEE = #{loanFirstTermFee,jdbcType=DECIMAL }
+		</if>
+		<if test="loanFinalTermFee != null and loanFinalTermFee != ''  " >
+			and LOAN_FINAL_TERM_FEE = #{loanFinalTermFee,jdbcType=DECIMAL }
+		</if>
+		<if test="mlSendMode != null and mlSendMode != ''  " >
+			and ML_SEND_MODE = #{mlSendMode,jdbcType=VARCHAR }
+		</if>
+		<if test="lendingTime != null and lendingTime != ''  " >
+			and LENDING_TIME = #{lendingTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lendingTimes != null and lendingTimes != ''  " >
+			and LENDING_TIMES = #{lendingTimes,jdbcType=INTEGER }
+		</if>
+		<if test="mlBankName != null and mlBankName != ''  " >
+			and ML_BANK_NAME = #{mlBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankBranch != null and mlBankBranch != ''  " >
+			and ML_BANK_BRANCH = #{mlBankBranch,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankAcctNo != null and mlBankAcctNo != ''  " >
+			and ML_BANK_ACCT_NO = #{mlBankAcctNo,jdbcType=VARCHAR }
+		</if>
+		<if test="mlBankAcctName != null and mlBankAcctName != ''  " >
+			and ML_BANK_ACCT_NAME = #{mlBankAcctName,jdbcType=VARCHAR }
+		</if>
+		<if test="repaymentway != null and repaymentway != ''  " >
+			and REPAYMENTWAY = #{repaymentway,jdbcType=VARCHAR }
+		</if>
+		<if test="interval != null and interval != ''  " >
+			and INTERVAL = #{interval,jdbcType=VARCHAR }
+		</if>
+		<if test="reasonDesc != null and reasonDesc != ''  " >
+			and REASON_DESC = #{reasonDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="statusDesc != null and statusDesc != ''  " >
+			and STATUS_DESC = #{statusDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="url != null and url != ''  " >
+			and URL = #{url,jdbcType=VARCHAR }
+		</if>
+		<if test="loanType != null and loanType != ''  " >
+			and LOAN_TYPE = #{loanType,jdbcType=VARCHAR }
+		</if>
+		<if test="term != null and term != ''  " >
+			and TERM = #{term,jdbcType=INTEGER }
+		</if>
+		<if test="rateType != null and rateType != ''  " >
+			and RATE_TYPE = #{rateType,jdbcType=VARCHAR }
+		</if>
+		<if test="loanRate != null and loanRate != ''  " >
+			and LOAN_RATE = #{loanRate,jdbcType=DECIMAL }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmBthJobStatusMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmBthJobStatus" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="BATCH_MID_DATE" property="batchMidDate" jdbcType="TIMESTAMP" />
+		<result column="BATCH_MID_IND" property="batchMidInd" jdbcType="VARCHAR" />
+		<result column="BATCH_BACK_DATE" property="batchBackDate" jdbcType="TIMESTAMP" />
+		<result column="BATCH_BACK_IND" property="batchBackInd" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="BATCH_TOGETHER_DATE" property="batchTogetherDate" jdbcType="TIMESTAMP" />
+		<result column="BATCH_TOGETHER_IND" property="batchTogetherInd" jdbcType="VARCHAR" />
+		<result column="LAST_MODIFIED_TIME" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_BTH_JOB_STATUS_TABLE_FIELD">ID,BATCH_MID_DATE,BATCH_MID_IND,BATCH_BACK_DATE,BATCH_BACK_IND,CREATE_TIME,BATCH_TOGETHER_DATE,BATCH_TOGETHER_IND,LAST_MODIFIED_TIME,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_BTH_JOB_STATUS_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_BTH_JOB_STATUS
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmBthJobStatus" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_BTH_JOB_STATUS ( <include refid="TM_BTH_JOB_STATUS_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{batchMidDate,jdbcType=TIMESTAMP } , #{batchMidInd,jdbcType=VARCHAR } ,
+			 #{batchBackDate,jdbcType=TIMESTAMP } , #{batchBackInd,jdbcType=VARCHAR } , #{createTime,jdbcType=TIMESTAMP } , #{batchTogetherDate,jdbcType=TIMESTAMP } ,
+			 #{batchTogetherInd,jdbcType=VARCHAR } , #{lastModifiedTime,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmBthJobStatus">
+		update TM_BTH_JOB_STATUS 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="batchMidDate != null and batchMidDate != ''  " >
+			BATCH_MID_DATE =#{batchMidDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="batchMidInd != null and batchMidInd != ''  " >
+			BATCH_MID_IND =#{batchMidInd,jdbcType=VARCHAR },
+		</if>
+		<if test="batchBackDate != null and batchBackDate != ''  " >
+			BATCH_BACK_DATE =#{batchBackDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="batchBackInd != null and batchBackInd != ''  " >
+			BATCH_BACK_IND =#{batchBackInd,jdbcType=VARCHAR },
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="batchTogetherDate != null and batchTogetherDate != ''  " >
+			BATCH_TOGETHER_DATE =#{batchTogetherDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="batchTogetherInd != null and batchTogetherInd != ''  " >
+			BATCH_TOGETHER_IND =#{batchTogetherInd,jdbcType=VARCHAR },
+		</if>
+		<if test="lastModifiedTime != null and lastModifiedTime != ''  " >
+			LAST_MODIFIED_TIME =#{lastModifiedTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmBthJobStatus">
+		update TM_BTH_JOB_STATUS 
+		<trim prefix="set" suffixOverrides=","> 
+			BATCH_MID_DATE =#{batchMidDate,jdbcType=TIMESTAMP },		
+			BATCH_MID_IND =#{batchMidInd,jdbcType=VARCHAR },		
+			BATCH_BACK_DATE =#{batchBackDate,jdbcType=TIMESTAMP },		
+			BATCH_BACK_IND =#{batchBackInd,jdbcType=VARCHAR },		
+			CREATE_TIME =#{createTime,jdbcType=TIMESTAMP },		
+			BATCH_TOGETHER_DATE =#{batchTogetherDate,jdbcType=TIMESTAMP },		
+			BATCH_TOGETHER_IND =#{batchTogetherInd,jdbcType=VARCHAR },		
+			LAST_MODIFIED_TIME =#{lastModifiedTime,jdbcType=TIMESTAMP },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_BTH_JOB_STATUS_TABLE_FIELD" />		
+		from TM_BTH_JOB_STATUS
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_BTH_JOB_STATUS_TABLE_FIELD" />		
+ 		from TM_BTH_JOB_STATUS
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="batchMidDate != null and batchMidDate != ''  " >
+			and BATCH_MID_DATE = #{batchMidDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchMidInd != null and batchMidInd != ''  " >
+			and BATCH_MID_IND = #{batchMidInd,jdbcType=VARCHAR }
+		</if>
+		<if test="batchBackDate != null and batchBackDate != ''  " >
+			and BATCH_BACK_DATE = #{batchBackDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchBackInd != null and batchBackInd != ''  " >
+			and BATCH_BACK_IND = #{batchBackInd,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchTogetherDate != null and batchTogetherDate != ''  " >
+			and BATCH_TOGETHER_DATE = #{batchTogetherDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchTogetherInd != null and batchTogetherInd != ''  " >
+			and BATCH_TOGETHER_IND = #{batchTogetherInd,jdbcType=VARCHAR }
+		</if>
+		<if test="lastModifiedTime != null and lastModifiedTime != ''  " >
+			and LAST_MODIFIED_TIME = #{lastModifiedTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_BTH_JOB_STATUS
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="batchMidDate != null and batchMidDate != ''  " >
+			and BATCH_MID_DATE = #{batchMidDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchMidInd != null and batchMidInd != ''  " >
+			and BATCH_MID_IND = #{batchMidInd,jdbcType=VARCHAR }
+		</if>
+		<if test="batchBackDate != null and batchBackDate != ''  " >
+			and BATCH_BACK_DATE = #{batchBackDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchBackInd != null and batchBackInd != ''  " >
+			and BATCH_BACK_IND = #{batchBackInd,jdbcType=VARCHAR }
+		</if>
+		<if test="createTime != null and createTime != ''  " >
+			and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchTogetherDate != null and batchTogetherDate != ''  " >
+			and BATCH_TOGETHER_DATE = #{batchTogetherDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="batchTogetherInd != null and batchTogetherInd != ''  " >
+			and BATCH_TOGETHER_IND = #{batchTogetherInd,jdbcType=VARCHAR }
+		</if>
+		<if test="lastModifiedTime != null and lastModifiedTime != ''  " >
+			and LAST_MODIFIED_TIME = #{lastModifiedTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

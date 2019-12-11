@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmOrgMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmOrg" >
+		<id column="ORG" property="org" jdbcType="VARCHAR"/>
+		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+		<result column="ORG_DESC" property="orgDesc" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ORG_TABLE_FIELD">ORG,ORG_NAME,ORG_DESC,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ORG
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmOrg" >
+		insert into TM_ORG ( <include refid="TM_ORG_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{orgName,jdbcType=VARCHAR } , #{orgDesc,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmOrg">
+		update TM_ORG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="orgName != null and orgName != ''  " >
+			ORG_NAME =#{orgName,jdbcType=VARCHAR },
+		</if>
+		<if test="orgDesc != null and orgDesc != ''  " >
+			ORG_DESC =#{orgDesc,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmOrg">
+		update TM_ORG 
+		<trim prefix="set" suffixOverrides=","> 
+			ORG_NAME =#{orgName,jdbcType=VARCHAR },		
+			ORG_DESC =#{orgDesc,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ORG_TABLE_FIELD" />		
+		from TM_ORG
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ORG_TABLE_FIELD" />		
+ 		from TM_ORG
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="orgName != null and orgName != ''  " >
+			and ORG_NAME = #{orgName,jdbcType=VARCHAR }
+		</if>
+		<if test="orgDesc != null and orgDesc != ''  " >
+			and ORG_DESC = #{orgDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ORG
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="orgName != null and orgName != ''  " >
+			and ORG_NAME = #{orgName,jdbcType=VARCHAR }
+		</if>
+		<if test="orgDesc != null and orgDesc != ''  " >
+			and ORG_DESC = #{orgDesc,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

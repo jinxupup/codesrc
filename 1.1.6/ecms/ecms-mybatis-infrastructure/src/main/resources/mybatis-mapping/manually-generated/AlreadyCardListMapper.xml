@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.AlreadyCardsCardInfoDto">
+    <resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.AlreadyCardsCardInfoDto" >
+        <id column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+        <result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+        <result column="CARD_EXPIRE_DATE" property="cardExpireDate" jdbcType="DATE" />
+        <result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL" />
+        <result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+        <result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="CARD_MAILER_IND" property="cardMailerInd" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!-- 查询已有卡信息 -->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		SELECT B.CARD_NO,
+		B.PRODUCT_CD,
+		B.BLOCK_CODE,
+		B.CARD_EXPIRE_DATE,
+		B.APP_NO,
+		B.ID_NO,
+		D.NAME
+		FROM   TM_MIR_CARD B, TM_APP_CUST_INFO D
+		WHERE D.APP_NO = B.APP_NO
+		<if test="idType != null and idType != ''  " >
+			and B.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and B.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		ORDER BY B.SETUP_DATE desc
+	</select>
+    
+    <!-- 查询已有卡信息 -->
+    <select id="selectCardInfo" resultMap="BaseResultMap" parameterType="map">
+		SELECT
+			TM_MIR_CARD.CARD_NO,TM_MIR_CARD.PRODUCT_CD,TM_MIR_CARD.BLOCK_CODE,TM_MIR_CARD.CARD_EXPIRE_DATE
+		FROM TM_MIR_CARD
+		WHERE 1=1	
+		<if test="org != null and org != ''  ">
+			AND TM_MIR_CARD.ORG = #{org,jdbcType=VARCHAR }
+		</if>
+	
+		<if test="cardNo != null and cardNo !='' ">
+			and TM_MIR_CARD.CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  ">
+			and TM_MIR_CARD.APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		
+	</select>
+    
+    
+</mapper>

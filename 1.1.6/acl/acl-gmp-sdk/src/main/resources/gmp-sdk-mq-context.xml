@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- 作为标准的GMP定义文件，这里定义了包括AMQP连接池、Template、MessageConverter和DestinationResolver在内的一组对象 -->
+	<!-- 各子系统的rpc-context.xml应该import该文件 -->
+
+	<!-- RabbitMQ连接池 -->
+	<task:executor id="amqpConnectionTaskExecutor" pool-size="#{env['mqConnRecvThreads']?:1}"/>
+	<rabbit:connection-factory id="rabbitConnectionFactory" channel-cache-size="#{env['mqChannelCacheSize']?:10}" executor="amqpConnectionTaskExecutor" addresses="#{env['mqAddresses']}" virtual-host="#{env['mqVHost']?:'/shenpi'}" username="#{env['mqUser']?:'admin'}" password="#{env['mqPassword']?:'admin'}"/>
+
+	<!-- 标准的建立Queue的参数 -->
+	<rabbit:queue-arguments id="amqpQueueArguments">
+		<!-- 暂时没有 -->
+	</rabbit:queue-arguments>
+
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="amqpTemplateReplyQueue"/>	<!-- 固定响应队列 -->
+	<rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="#{env['mqRPCTimeout']?:65000}" message-converter="gmpMessageConverter" reply-queue="amqpTemplateReplyQueue">
+		<rabbit:reply-listener concurrency="2"/>
+	</rabbit:template>
+
+	<!-- 供自动创建队列 -->
+	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
+
+	<!-- 全局管理服务 -->
+	<bean id="globalManagementService" class="com.jjb.unicorn.mq.config.AmqpInvokerClientFactoryBean">
+		<property name="amqpTemplate" ref="amqpTemplate"/>
+		<property name="serviceInterface" value="com.jjb.acl.gmp.api.GlobalManagementService"/>
+	</bean>
+	<bean id="gmpMessageConverter" class="com.jjb.acl.gmp.sdk.GMPMessageConverter"/>
+
+	<!-- 托管进程所需的组件服务 -->
+	<bean id="managedComponentService" class="com.jjb.unicorn.mq.config.AmqpInvokerClientFactoryBean">
+		<property name="amqpTemplate" ref="amqpTemplate"/>
+		<property name="serviceInterface" value="com.jjb.acl.gmp.api.ManagedComponentService"/>
+	</bean>
+
+	<!-- 心跳报文相关 -->
+	<!-- 这里不用task:annotation-driven是因为主程序里有可能使用，不能出现多次。 -->
+	<bean id="gmpHeartbeatProcessor" class="com.jjb.acl.gmp.sdk.HeartbeatProcessor" depends-on="amqpTemplate"/>
+	<task:scheduled-tasks>
+		<task:scheduled ref="gmpHeartbeatProcessor" method="beatHeart" fixed-delay="#{env['processHeartbeatInterval']?:60000}"/>
+	</task:scheduled-tasks>
+
+	<!-- 实例路由及相关缓存刷新配置 -->
+	<bean id="gmpDestinationResolver" class="com.jjb.acl.gmp.sdk.GMPDestinationResolver">
+		<property name="globalManagementService" ref="globalManagementService"/>
+	</bean>
+	<!-- 缓存定义:instanceRouteCache -->
+	<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="instanceRouteCache"/>
+	<!-- 监听缓存刷新的全局队列 -->
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="instanceRouteRefreshQueue" />
+	<rabbit:topic-exchange name="global.gmp.ex.cache">
+		<rabbit:bindings>
+			<rabbit:binding queue="instanceRouteRefreshQueue" pattern="gmp.instance-route"/>
+		</rabbit:bindings>
+	</rabbit:topic-exchange>
+	<rabbit:listener-container requeue-rejected="false" concurrency="1" message-converter="gmpMessageConverter">
+		<rabbit:listener queues="instanceRouteRefreshQueue" ref="gmpDestinationResolver" method="clearInstanceRoute"/>
+	</rabbit:listener-container>
+
+	<!-- 系统状态缓存 -->
+	<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="systemStatusCache" />
+
+
+</beans>

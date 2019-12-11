@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.dmp.infrastructure.mapping.TmDmpRuleMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.dmp.infrastructure.TmDmpRule" >
+		<id column="RULE_ID" property="ruleId" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ST_ID" property="stId" jdbcType="INTEGER" />
+		<result column="RS_ID" property="rsId" jdbcType="INTEGER" />
+		<result column="RULE_NAME" property="ruleName" jdbcType="VARCHAR" />
+		<result column="RULE_ENABLED" property="ruleEnabled" jdbcType="VARCHAR" />
+		<result column="RULE_TYPE" property="ruleType" jdbcType="VARCHAR" />
+		<result column="PRIORITY" property="priority" jdbcType="INTEGER" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="RULE_OBJECT" property="ruleObject" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_DMP_RULE_TABLE_FIELD">ORG,ST_ID,RS_ID,RULE_ID,RULE_NAME,RULE_ENABLED,RULE_TYPE,PRIORITY,REMARK,RULE_OBJECT,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<sql id="TM_DMP_RULE_TABLE_INSERT_FIELD">ORG,ST_ID,RS_ID,RULE_NAME,RULE_ENABLED,RULE_TYPE,PRIORITY,REMARK,RULE_OBJECT,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_DMP_RULE
+		where 
+		RULE_ID = #{ruleId, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.dmp.infrastructure.TmDmpRule" useGeneratedKeys="true" keyProperty="ruleId" >
+		insert into TM_DMP_RULE ( <include refid="TM_DMP_RULE_TABLE_INSERT_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{stId,jdbcType=INTEGER } , #{rsId,jdbcType=INTEGER } ,
+			 #{ruleName,jdbcType=VARCHAR } , #{ruleEnabled,jdbcType=VARCHAR } , #{ruleType,jdbcType=VARCHAR } ,
+			 #{priority,jdbcType=INTEGER } , #{remark,jdbcType=VARCHAR } , #{ruleObject,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } ,
+			 #{createBy,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpRule">
+		update TM_DMP_RULE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="stId != null and stId != ''  " >
+			ST_ID =#{stId,jdbcType=INTEGER },
+		</if>
+		<if test="rsId != null and rsId != ''  " >
+			RS_ID =#{rsId,jdbcType=INTEGER },
+		</if>
+		<if test="ruleName != null and ruleName != ''  " >
+			RULE_NAME =#{ruleName,jdbcType=VARCHAR },
+		</if>
+		<if test="ruleEnabled != null and ruleEnabled != ''  " >
+			RULE_ENABLED =#{ruleEnabled,jdbcType=VARCHAR },
+		</if>
+		<if test="ruleType != null and ruleType != ''  " >
+			RULE_TYPE =#{ruleType,jdbcType=VARCHAR },
+		</if>
+		<if test="priority != null and priority != ''  " >
+			PRIORITY =#{priority,jdbcType=INTEGER },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="ruleObject != null and ruleObject != ''  " >
+			RULE_OBJECT =#{ruleObject,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		RULE_ID = #{ruleId, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpRule">
+		update TM_DMP_RULE 
+		<trim prefix="set" suffixOverrides=","> 
+			ST_ID =#{stId,jdbcType=INTEGER },		
+			RS_ID =#{rsId,jdbcType=INTEGER },		
+			RULE_NAME =#{ruleName,jdbcType=VARCHAR },		
+			RULE_ENABLED =#{ruleEnabled,jdbcType=VARCHAR },		
+			RULE_TYPE =#{ruleType,jdbcType=VARCHAR },		
+			PRIORITY =#{priority,jdbcType=INTEGER },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			RULE_OBJECT =#{ruleObject,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		RULE_ID = #{ruleId, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_DMP_RULE_TABLE_FIELD" />		
+		from TM_DMP_RULE
+		where 
+		RULE_ID = #{ruleId, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_DMP_RULE_TABLE_FIELD" />		
+ 		from TM_DMP_RULE
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stId != null and stId != ''  " >
+			and ST_ID = #{stId,jdbcType=INTEGER }
+		</if>
+		<if test="rsId != null and rsId != ''  " >
+			and RS_ID = #{rsId,jdbcType=INTEGER }
+		</if>
+		<if test="ruleId != null and ruleId != ''  " >
+			and RULE_ID = #{ruleId,jdbcType=INTEGER }
+		</if>
+		<if test="ruleName != null and ruleName != ''  " >
+			and RULE_NAME = #{ruleName,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleEnabled != null and ruleEnabled != ''  " >
+			and RULE_ENABLED = #{ruleEnabled,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleType != null and ruleType != ''  " >
+			and RULE_TYPE = #{ruleType,jdbcType=VARCHAR }
+		</if>
+		<if test="priority != null and priority != ''  " >
+			and PRIORITY = #{priority,jdbcType=INTEGER }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleObject != null and ruleObject != ''  " >
+			and RULE_OBJECT = #{ruleObject,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_DMP_RULE
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stId != null and stId != ''  " >
+			and ST_ID = #{stId,jdbcType=INTEGER }
+		</if>
+		<if test="rsId != null and rsId != ''  " >
+			and RS_ID = #{rsId,jdbcType=INTEGER }
+		</if>
+		<if test="ruleId != null and ruleId != ''  " >
+			and RULE_ID = #{ruleId,jdbcType=INTEGER }
+		</if>
+		<if test="ruleName != null and ruleName != ''  " >
+			and RULE_NAME = #{ruleName,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleEnabled != null and ruleEnabled != ''  " >
+			and RULE_ENABLED = #{ruleEnabled,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleType != null and ruleType != ''  " >
+			and RULE_TYPE = #{ruleType,jdbcType=VARCHAR }
+		</if>
+		<if test="priority != null and priority != ''  " >
+			and PRIORITY = #{priority,jdbcType=INTEGER }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleObject != null and ruleObject != ''  " >
+			and RULE_OBJECT = #{ruleObject,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

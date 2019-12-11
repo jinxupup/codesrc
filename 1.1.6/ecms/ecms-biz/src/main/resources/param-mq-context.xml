@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="refreshParameterUtil" class="com.jjb.ecms.biz.util.ParameterRefreshUtil">
+	</bean>
+	
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="ecmsParameterRefreshListenerQueue"/>
+	<rabbit:topic-exchange name="ecms.param.ex.cache">
+		<rabbit:bindings>
+			<!-- 监听参数刷新主题 -->
+			<rabbit:binding queue="ecmsParameterRefreshListenerQueue" pattern="ecms.parameter" />
+		</rabbit:bindings>
+	</rabbit:topic-exchange>
+	
+	<rabbit:listener-container requeue-rejected="false" concurrency="1" message-converter="gmpMessageConverter">
+		<rabbit:listener queues="ecmsParameterRefreshListenerQueue" ref="refreshParameterUtil" method="refreshParameter"/>
+	</rabbit:listener-container>
+
+	
+</beans>

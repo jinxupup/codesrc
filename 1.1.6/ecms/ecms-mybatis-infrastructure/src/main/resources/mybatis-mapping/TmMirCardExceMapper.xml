@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmMirCardExceMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmMirCardExce" >
+		<id column="ID" property="id" jdbcType="BIGINT"/>
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CREAT_DATE" property="creatDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_MIR_CARD_EXCE_TABLE_FIELD">ID,APP_NO,ID_NO,NAME,CREAT_DATE,UPDATE_TIME,REMARK</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_MIR_CARD_EXCE
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmMirCardExce" >
+		insert into TM_MIR_CARD_EXCE ( <include refid="TM_MIR_CARD_EXCE_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=BIGINT } , #{appNo,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } ,
+			 #{name,jdbcType=VARCHAR } , #{creatDate,jdbcType=TIMESTAMP } , #{updateTime,jdbcType=TIMESTAMP } , #{remark,jdbcType=VARCHAR }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirCardExce">
+		update TM_MIR_CARD_EXCE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="creatDate != null and creatDate != ''  " >
+			CREAT_DATE =#{creatDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmMirCardExce">
+		update TM_MIR_CARD_EXCE 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			CREAT_DATE =#{creatDate,jdbcType=TIMESTAMP },		
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_MIR_CARD_EXCE_TABLE_FIELD" />		
+		from TM_MIR_CARD_EXCE
+		where 
+		ID = #{id, jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_MIR_CARD_EXCE_TABLE_FIELD" />		
+ 		from TM_MIR_CARD_EXCE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="creatDate != null and creatDate != ''  " >
+			and CREAT_DATE = #{creatDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_MIR_CARD_EXCE
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=BIGINT }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="creatDate != null and creatDate != ''  " >
+			and CREAT_DATE = #{creatDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateTime != null and updateTime != ''  " >
+			and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

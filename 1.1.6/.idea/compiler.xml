@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="acl-access" />
+        <module name="acl-biz" />
+        <module name="acl-facility" />
+        <module name="acl-gmp-api" />
+        <module name="acl-gmp-impl" />
+        <module name="acl-gmp-sdk" />
+        <module name="acl-infrastructure" />
+        <module name="acl-mvc" />
+        <module name="acl-web" />
+        <module name="ams-app" />
+        <module name="ams-biz" />
+        <module name="ams-service-impl" />
+        <module name="ams-web" />
+        <module name="cas-app" />
+        <module name="cas-batch" />
+        <module name="cas-biz" />
+        <module name="cas-service-impl" />
+        <module name="cas-web" />
+        <module name="cmp-app" />
+        <module name="cmp-biz" />
+        <module name="cmp-facility" />
+        <module name="cmp-fastdfs" />
+        <module name="cmp-mybatis-infrastructure" />
+        <module name="ecms-adapter" />
+        <module name="ecms-biz" />
+        <module name="ecms-facility" />
+        <module name="ecms-mybatis-infrastructure" />
+        <module name="ecms-service-api" />
+        <module name="unicorn-batch" />
+        <module name="unicorn-batch-api" />
+        <module name="unicorn-cache" />
+        <module name="unicorn-dao" />
+        <module name="unicorn-facility" />
+        <module name="unicorn-infrastructure" />
+        <module name="unicorn-maven-plugin" />
+        <module name="unicorn-mq" />
+        <module name="unicorn-socket" />
+        <module name="unicorn-web-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="acl-access" target="1.8" />
+      <module name="acl-biz" target="1.8" />
+      <module name="acl-facility" target="1.8" />
+      <module name="acl-gmp-api" target="1.8" />
+      <module name="acl-gmp-impl" target="1.8" />
+      <module name="acl-gmp-sdk" target="1.8" />
+      <module name="acl-infrastructure" target="1.8" />
+      <module name="acl-mvc" target="1.8" />
+      <module name="acl-parent" target="1.5" />
+      <module name="acl-web" target="1.8" />
+      <module name="ams-app" target="1.8" />
+      <module name="ams-biz" target="1.8" />
+      <module name="ams-parent" target="1.5" />
+      <module name="ams-service-impl" target="1.8" />
+      <module name="ams-web" target="1.8" />
+      <module name="cas-app" target="1.8" />
+      <module name="cas-batch" target="1.8" />
+      <module name="cas-biz" target="1.8" />
+      <module name="cas-parent" target="1.5" />
+      <module name="cas-service-impl" target="1.8" />
+      <module name="cas-web" target="1.8" />
+      <module name="cmp-app" target="1.8" />
+      <module name="cmp-biz" target="1.8" />
+      <module name="cmp-facility" target="1.8" />
+      <module name="cmp-fastdfs" target="1.8" />
+      <module name="cmp-mybatis-infrastructure" target="1.8" />
+      <module name="cmp-parent" target="1.5" />
+      <module name="ecms-adapter" target="1.8" />
+      <module name="ecms-biz" target="1.8" />
+      <module name="ecms-facility" target="1.8" />
+      <module name="ecms-mybatis-infrastructure" target="1.8" />
+      <module name="ecms-parent" target="1.5" />
+      <module name="ecms-service-api" target="1.8" />
+      <module name="ecmsc-app" target="1.8" />
+      <module name="ecmsc-parent" target="1.5" />
+      <module name="unicorn-batch" target="1.8" />
+      <module name="unicorn-batch-api" target="1.8" />
+      <module name="unicorn-cache" target="1.8" />
+      <module name="unicorn-dao" target="1.8" />
+      <module name="unicorn-facility" target="1.8" />
+      <module name="unicorn-infrastructure" target="1.8" />
+      <module name="unicorn-maven-plugin" target="1.8" />
+      <module name="unicorn-mq" target="1.8" />
+      <module name="unicorn-parent" target="1.5" />
+      <module name="unicorn-socket" target="1.8" />
+      <module name="unicorn-web-common" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppImageHistoryMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppImageHistory" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="IMAGE_NUM" property="imageNum" jdbcType="VARCHAR" />
+		<result column="TASK_NUM" property="taskNum" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL3" property="obDecimal3" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL4" property="obDecimal4" jdbcType="DECIMAL" />
+		<result column="OB_DATE1" property="obDate1" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE3" property="obDate3" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_IMAGE_HISTORY_TABLE_FIELD">ID,ORG,APP_NO,NAME,ID_TYPE,ID_NO,IMAGE_NUM,TASK_NUM,OPERATOR_ID,OPERATE_TIME,OB_TEXT1,OB_TEXT2,OB_TEXT3,OB_TEXT4,OB_DECIMAL1,OB_DECIMAL2,OB_DECIMAL3,OB_DECIMAL4,OB_DATE1,OB_DATE2,OB_DATE3,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_IMAGE_HISTORY_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_IMAGE_HISTORY
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppImageHistory" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_IMAGE_HISTORY ( <include refid="TM_APP_IMAGE_HISTORY_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{name,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{idNo,jdbcType=VARCHAR } , #{imageNum,jdbcType=VARCHAR } ,
+			 #{taskNum,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } , #{operateTime,jdbcType=TIMESTAMP } , #{obText1,jdbcType=VARCHAR } ,
+			 #{obText2,jdbcType=VARCHAR } , #{obText3,jdbcType=VARCHAR } , #{obText4,jdbcType=VARCHAR } , #{obDecimal1,jdbcType=DECIMAL } ,
+			 #{obDecimal2,jdbcType=DECIMAL } , #{obDecimal3,jdbcType=DECIMAL } , #{obDecimal4,jdbcType=DECIMAL } , #{obDate1,jdbcType=TIMESTAMP } ,
+			 #{obDate2,jdbcType=TIMESTAMP } , #{obDate3,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppImageHistory">
+		update TM_APP_IMAGE_HISTORY 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			TASK_NUM =#{taskNum,jdbcType=VARCHAR },
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		<if test="operateTime != null and operateTime != ''  " >
+			OPERATE_TIME =#{operateTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },
+		</if>
+		<if test="obDecimal3 != null and obDecimal3 != ''  " >
+			OB_DECIMAL3 =#{obDecimal3,jdbcType=DECIMAL },
+		</if>
+		<if test="obDecimal4 != null and obDecimal4 != ''  " >
+			OB_DECIMAL4 =#{obDecimal4,jdbcType=DECIMAL },
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			OB_DATE1 =#{obDate1,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },
+		</if>
+		<if test="obDate3 != null and obDate3 != ''  " >
+			OB_DATE3 =#{obDate3,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppImageHistory">
+		update TM_APP_IMAGE_HISTORY 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },		
+			TASK_NUM =#{taskNum,jdbcType=VARCHAR },		
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+			OPERATE_TIME =#{operateTime,jdbcType=TIMESTAMP },		
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },		
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },		
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },		
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },		
+			OB_DECIMAL1 =#{obDecimal1,jdbcType=DECIMAL },		
+			OB_DECIMAL2 =#{obDecimal2,jdbcType=DECIMAL },		
+			OB_DECIMAL3 =#{obDecimal3,jdbcType=DECIMAL },		
+			OB_DECIMAL4 =#{obDecimal4,jdbcType=DECIMAL },		
+			OB_DATE1 =#{obDate1,jdbcType=TIMESTAMP },		
+			OB_DATE2 =#{obDate2,jdbcType=TIMESTAMP },		
+			OB_DATE3 =#{obDate3,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_IMAGE_HISTORY_TABLE_FIELD" />		
+		from TM_APP_IMAGE_HISTORY
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_IMAGE_HISTORY_TABLE_FIELD" />		
+ 		from TM_APP_IMAGE_HISTORY
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			and TASK_NUM = #{taskNum,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="operateTime != null and operateTime != ''  " >
+			and OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal3 != null and obDecimal3 != ''  " >
+			and OB_DECIMAL3 = #{obDecimal3,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal4 != null and obDecimal4 != ''  " >
+			and OB_DECIMAL4 = #{obDecimal4,jdbcType=DECIMAL }
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			and OB_DATE1 = #{obDate1,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate3 != null and obDate3 != ''  " >
+			and OB_DATE3 = #{obDate3,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_IMAGE_HISTORY
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="taskNum != null and taskNum != ''  " >
+			and TASK_NUM = #{taskNum,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="operateTime != null and operateTime != ''  " >
+			and OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal3 != null and obDecimal3 != ''  " >
+			and OB_DECIMAL3 = #{obDecimal3,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal4 != null and obDecimal4 != ''  " >
+			and OB_DECIMAL4 = #{obDecimal4,jdbcType=DECIMAL }
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			and OB_DATE1 = #{obDate1,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate3 != null and obDate3 != ''  " >
+			and OB_DATE3 = #{obDate3,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

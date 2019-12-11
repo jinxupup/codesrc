@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyCardCustrInfoDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyCardCustrInfoDto" >
+		<id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="BSC_SUPP_IND" property="bscSuppInd" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="BLOCK_CODE" property="blockCode" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map">
+		select B.CARD_NO ,B.PRODUCT_CD ,B.BLOCK_CODE ,B.BSC_SUPP_IND
+		from  TM_MIR_CARD B left outer join TM_APP_CUST_INFO D
+		on B.APP_NO=D.APP_NO
+		where 1=1
+		<if test="idType != null and idType != ''  " >
+			and B.ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and B.ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cardNo != null and cardNo != ''  " >
+			and B.CARD_NO = #{cardNo,jdbcType=VARCHAR }
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyQueryRankingMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyQueryRankingDto">
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="ROWNUM" property="totalCnt" jdbcType="VARCHAR" />
+		<result column="SPREADER_NO" property="spreaderNo" jdbcType="VARCHAR" />
+		<result column="RANKING" property="ranking" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="SUCC_CNT" property="succCnt" jdbcType="VARCHAR" />
+		<result column="SPREAD_CNT" property="spreadCnt" jdbcType="VARCHAR" />
+		<result column="SUCC_APPROVAL_CNT" property="succApprovalCnt" jdbcType="VARCHAR" />
+		<result column="SUCC_EFF_CNT" property="succEffCnt" jdbcType="VARCHAR" />
+		<result column="REFUSE_CNT" property="refuseCnt" jdbcType="VARCHAR" />
+		<result column="APPROVE_CNT" property="approveCnt" jdbcType="VARCHAR" />
+		<result column="PRE_CNT" property="preCnt" jdbcType="VARCHAR" />
+		<result column="IF_NEW_USER" property="ifNewUser" jdbcType="VARCHAR" />
+		<result column="IF_SWIPED" property="ifSwiped" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 根据类型查询渠道端进件排行榜 请看清楚rownum的用法-->
+	<select id="selectRanking" resultMap="BaseResultMap" parameterType="map">
+		select rownum as RANKING,NAME,CELLPHONE,SUCC_CNT from (select * from
+		(
+			select c.SPREADER_NO,c.SPREADER_NAME AS NAME,c.SPREADER_TELEPHONE AS CELLPHONE ,count(*) as SUCC_CNT , max(c.create_date) as abc
+			from TM_APP_MAIN m ,TM_APP_PRIM_CARD_INFO c where m.APP_NO=c.APP_NO and m.RTF_STATE in ('L05','P05','N05') and c.SPREADER_NO is not null
+			<if test="appSource !=null and appSource !='' ">
+				and m.APP_SOURCE=#{appSource}
+			</if>
+			<if test='quyType !=null and quyType =="2" '>
+				and c.SPREADER_IS_EFF='Y'
+			</if>
+			<if test='startDate !=null and startDate !="" '>
+				and c.CREATE_DATE <![CDATA[ >= ]]> to_date(#{startDate},'YYYYMMDD')
+			</if>
+			<if test='endDate !=null and endDate !="" '>
+				and c.CREATE_DATE <![CDATA[ <= ]]> to_date(#{endDate},'YYYYMMDD')
+			</if>
+			
+			group by c.SPREADER_NO,c.SPREADER_NAME,c.SPREADER_TELEPHONE
+		)
+		order by SUCC_CNT desc ,abc asc)
+		where 1=1
+		<if test="totalCnt != null and totalCnt != '' ">
+			AND rownum <![CDATA[ <= ]]> #{totalCnt,jdbcType=VARCHAR }
+		</if>
+		and rownum > 0
+	</select>
+
+	<!-- 当前推广人推广总数量-->
+	<select id="selectSpreadNum" resultMap="BaseResultMap" parameterType="map">
+		 SELECT count(*) as SPREAD_CNT
+         FROM TM_APP_MAIN m ,TM_APP_PRIM_CARD_INFO c
+         WHERE 1=1
+		<if test="spreaderNo !=null and spreaderNo !='' ">
+			and c.SPREADER_NO=#{spreaderNo}
+		</if>
+         AND m.APP_NO=c.APP_NO and m.RTF_STATE IS NOT NULL
+	</select>
+	
+	<!-- 当前推广人已核卡数量-->
+	<select id="selectSuccApprovalNum" resultMap="BaseResultMap" parameterType="map">
+		SELECT count(*) as SUCC_APPROVAL_CNT
+		FROM TM_APP_MAIN m ,TM_APP_PRIM_CARD_INFO c
+		WHERE 1=1
+		<if test="spreaderNo !=null and spreaderNo !='' ">
+			and c.SPREADER_NO=#{spreaderNo}
+		</if>
+		AND m.APP_NO=c.APP_NO and m.RTF_STATE in ('L05','P05','N05')
+	</select>
+	
+	<!-- 当前推广人有效核卡数量-->
+	<select id="selectSuccEffNum" resultMap="BaseResultMap" parameterType="map">
+		SELECT count(*) as SUCC_EFF_CNT
+		FROM TM_APP_MAIN m ,TM_APP_PRIM_CARD_INFO c
+		WHERE 1=1  AND m.APP_NO=c.APP_NO 
+			and m.RTF_STATE in ('L05','P05','N05') 
+			and c.SPREADER_IS_EFF='Y' 
+		<if test="spreaderNo !=null and spreaderNo !='' ">
+			and c.SPREADER_NO=#{spreaderNo}
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+			and m.APP_SOURCE=#{appSource}
+		</if>
+		<if test="idNo !=null and idNo !='' ">
+			and m.id_no=#{idNo}
+		</if>
+		<if test="name !=null and name !='' ">
+			and m.name=#{name}
+		</if>
+		<if test="productCd !=null and productCd !='' ">
+			and m.PRODUCT_CD=#{productCd}
+		</if>
+		
+	</select>
+
+	<!-- 当前推广人各个环节数量-->
+	<select id="selectSpreSum" resultMap="BaseResultMap" parameterType="map">
+		SELECT count(*) as SPREAD_CNT,
+		sum(case when m.rtf_state in ('L05','N05','P05') then 1 end) as SUCC_APPROVAL_CNT ,
+		sum(case when m.rtf_state in ('L05','N05','P05') and c.SPREADER_IS_EFF='Y' then 1 end) as SUCC_EFF_CNT ,
+		sum(case when m.rtf_state in ('A20','M05') then 1 end) as REFUSE_CNT ,
+		sum(case when m.rtf_state not in ('L05','N05','P05','M05','A20') then 1 end) as APPROVE_CNT ,
+		sum(case when m.rtf_state in ('B16','F03') then 1 end) as PRE_CNT
+		FROM TM_APP_MAIN M,TM_APP_PRIM_CARD_INFO C
+		WHERE M.app_no=C.app_no
+		<if test="spreaderNo !=null and spreaderNo !='' ">
+			and c.SPREADER_NO=#{spreaderNo}
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+			and m.APP_SOURCE=#{appSource}
+		</if>
+		<if test="idNo !=null and idNo !='' ">
+			and m.id_no=#{idNo}
+		</if>
+		<if test="name !=null and name !='' ">
+			and m.name=#{name}
+		</if>
+		<if test="productCd !=null and productCd !='' ">
+			and m.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="startDate !=null and startDate !='' ">
+			and c.CREATE_DATE <![CDATA[ >= ]]> to_date(#{startDate},'YYYYMMDD')
+		</if>
+		<if test="endDate !=null and endDate !='' ">
+			and c.CREATE_DATE <![CDATA[ <= ]]> to_date(#{endDate},'YYYYMMDD')
+		</if>
+
+	</select>
+
+	<!-- 当前推广人各个环节数量-->
+	<select id="selectSpreSumNew" resultMap="BaseResultMap" parameterType="map">
+		SELECT count(*) as SPREAD_CNT,
+			sum(case when m.rtf_state in ('L05','N05','P05') then 1 end) as SUCC_APPROVAL_CNT ,
+			sum(case when m.rtf_state in ('L05','N05','P05') and e.IF_NEW_USER='Y' and e.IF_SWIPED='Y' then 1 end) as SUCC_EFF_CNT ,
+			sum(case when m.rtf_state in ('A20','M05') then 1 end) as REFUSE_CNT ,
+			sum(case when m.rtf_state not in ('L05','N05','P05','M05','A20') then 1 end) as APPROVE_CNT ,
+			sum(case when m.rtf_state in ('B16','F03') then 1 end) as PRE_CNT
+		FROM TM_APP_MAIN M
+		left join TM_APP_PRIM_CARD_INFO C
+		on  m.app_no = c.app_no
+		left join TM_MIR_CARD E
+		on M.app_no=E.app_no
+		WHERE
+		<if test="spreaderNo !=null and spreaderNo !='' ">
+			 c.SPREADER_NO=#{spreaderNo}
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+			and m.APP_SOURCE=#{appSource}
+		</if>
+		<if test="idNo !=null and idNo !='' ">
+			and m.id_no=#{idNo}
+		</if>
+		<if test="name !=null and name !='' ">
+			and m.name=#{name}
+		</if>
+		<if test="productCd !=null and productCd !='' ">
+			and m.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="startDate !=null and startDate !='' ">
+			and c.CREATE_DATE <![CDATA[ >= ]]> to_date(#{startDate},'YYYYMMDD')
+		</if>
+		<if test="endDate !=null and endDate !='' ">
+			and c.CREATE_DATE <![CDATA[ <= ]]> to_date(#{endDate},'YYYYMMDD')
+		</if>
+		
+	</select>
+	
+
+</mapper>

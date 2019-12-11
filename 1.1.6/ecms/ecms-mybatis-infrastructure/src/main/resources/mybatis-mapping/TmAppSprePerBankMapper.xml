@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppSprePerBankMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppSprePerBank" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="SPREADER_NUM" property="spreaderNum" jdbcType="VARCHAR" />
+		<result column="SPREADER_NAME" property="spreaderName" jdbcType="VARCHAR" />
+		<result column="SPREADER_PHONE" property="spreaderPhone" jdbcType="VARCHAR" />
+		<result column="SPREADER_PERFORMANCE" property="spreaderPerformance" jdbcType="VARCHAR" />
+		<result column="SPREADER_BANK_ID" property="spreaderBankId" jdbcType="VARCHAR" />
+		<result column="SPREADER_BANK_NAME" property="spreaderBankName" jdbcType="VARCHAR" />
+		<result column="SPREADER_ORG" property="spreaderOrg" jdbcType="VARCHAR" />
+		<result column="SPR_USER_TYPE" property="sprUserType" jdbcType="VARCHAR" />
+		<result column="SPREADER_STATUS" property="spreaderStatus" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_SPRE_PER_BANK_TABLE_FIELD">ID,ORG,SPREADER_NUM,SPREADER_NAME,SPREADER_PHONE,SPREADER_PERFORMANCE,SPREADER_BANK_ID,SPREADER_BANK_NAME,SPREADER_ORG,SPR_USER_TYPE,SPREADER_STATUS,CREATE_DATE,UPDATE_DATE,JPA_VERSION,CREATE_USER,UPDATE_USER</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_SPRE_PER_BANK_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_SPRE_PER_BANK
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppSprePerBank" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_SPRE_PER_BANK ( <include refid="TM_APP_SPRE_PER_BANK_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{spreaderNum,jdbcType=VARCHAR } ,
+			 #{spreaderName,jdbcType=VARCHAR } , #{spreaderPhone,jdbcType=VARCHAR } , #{spreaderPerformance,jdbcType=VARCHAR } , #{spreaderBankId,jdbcType=VARCHAR } ,
+			 #{spreaderBankName,jdbcType=VARCHAR } , #{spreaderOrg,jdbcType=VARCHAR } , #{sprUserType,jdbcType=VARCHAR } , #{spreaderStatus,jdbcType=VARCHAR } ,
+			 #{createDate,jdbcType=TIMESTAMP } , #{updateDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } , #{createUser,jdbcType=VARCHAR } ,
+			 #{updateUser,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppSprePerBank">
+		update TM_APP_SPRE_PER_BANK 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			SPREADER_NUM =#{spreaderNum,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderPhone != null and spreaderPhone != ''  " >
+			SPREADER_PHONE =#{spreaderPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderPerformance != null and spreaderPerformance != ''  " >
+			SPREADER_PERFORMANCE =#{spreaderPerformance,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBankId != null and spreaderBankId != ''  " >
+			SPREADER_BANK_ID =#{spreaderBankId,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderBankName != null and spreaderBankName != ''  " >
+			SPREADER_BANK_NAME =#{spreaderBankName,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderOrg != null and spreaderOrg != ''  " >
+			SPREADER_ORG =#{spreaderOrg,jdbcType=VARCHAR },
+		</if>
+		<if test="sprUserType != null and sprUserType != ''  " >
+			SPR_USER_TYPE =#{sprUserType,jdbcType=VARCHAR },
+		</if>
+		<if test="spreaderStatus != null and spreaderStatus != ''  " >
+			SPREADER_STATUS =#{spreaderStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppSprePerBank">
+		update TM_APP_SPRE_PER_BANK 
+		<trim prefix="set" suffixOverrides=","> 
+			SPREADER_NUM =#{spreaderNum,jdbcType=VARCHAR },		
+			SPREADER_NAME =#{spreaderName,jdbcType=VARCHAR },		
+			SPREADER_PHONE =#{spreaderPhone,jdbcType=VARCHAR },		
+			SPREADER_PERFORMANCE =#{spreaderPerformance,jdbcType=VARCHAR },		
+			SPREADER_BANK_ID =#{spreaderBankId,jdbcType=VARCHAR },		
+			SPREADER_BANK_NAME =#{spreaderBankName,jdbcType=VARCHAR },		
+			SPREADER_ORG =#{spreaderOrg,jdbcType=VARCHAR },		
+			SPR_USER_TYPE =#{sprUserType,jdbcType=VARCHAR },		
+			SPREADER_STATUS =#{spreaderStatus,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_SPRE_PER_BANK_TABLE_FIELD" />		
+		from TM_APP_SPRE_PER_BANK
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_SPRE_PER_BANK_TABLE_FIELD" />		
+ 		from TM_APP_SPRE_PER_BANK
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			and SPREADER_NUM = #{spreaderNum,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderPhone != null and spreaderPhone != ''  " >
+			and SPREADER_PHONE = #{spreaderPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderPerformance != null and spreaderPerformance != ''  " >
+			and SPREADER_PERFORMANCE = #{spreaderPerformance,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBankId != null and spreaderBankId != ''  " >
+			and SPREADER_BANK_ID = #{spreaderBankId,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBankName != null and spreaderBankName != ''  " >
+			and SPREADER_BANK_NAME = #{spreaderBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderOrg != null and spreaderOrg != ''  " >
+			and SPREADER_ORG = #{spreaderOrg,jdbcType=VARCHAR }
+		</if>
+		<if test="sprUserType != null and sprUserType != ''  " >
+			and SPR_USER_TYPE = #{sprUserType,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderStatus != null and spreaderStatus != ''  " >
+			and SPREADER_STATUS = #{spreaderStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_SPRE_PER_BANK
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderNum != null and spreaderNum != ''  " >
+			and SPREADER_NUM = #{spreaderNum,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderName != null and spreaderName != ''  " >
+			and SPREADER_NAME = #{spreaderName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderPhone != null and spreaderPhone != ''  " >
+			and SPREADER_PHONE = #{spreaderPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderPerformance != null and spreaderPerformance != ''  " >
+			and SPREADER_PERFORMANCE = #{spreaderPerformance,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBankId != null and spreaderBankId != ''  " >
+			and SPREADER_BANK_ID = #{spreaderBankId,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderBankName != null and spreaderBankName != ''  " >
+			and SPREADER_BANK_NAME = #{spreaderBankName,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderOrg != null and spreaderOrg != ''  " >
+			and SPREADER_ORG = #{spreaderOrg,jdbcType=VARCHAR }
+		</if>
+		<if test="sprUserType != null and sprUserType != ''  " >
+			and SPR_USER_TYPE = #{sprUserType,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderStatus != null and spreaderStatus != ''  " >
+			and SPREADER_STATUS = #{spreaderStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

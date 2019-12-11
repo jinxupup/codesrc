@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclBranchMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclBranch" >
+		<id column="ORG" property="org" jdbcType="VARCHAR"/>
+		<id column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR"/>
+		<result column="BRANCH_NAME" property="branchName" jdbcType="VARCHAR" />
+		<result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+		<result column="PARENT_PATH" property="parentPath" jdbcType="VARCHAR" />
+		<result column="BRANCH_LEVEL" property="branchLevel" jdbcType="VARCHAR" />
+		<result column="BRANCH_SEQUENCE" property="branchSequence" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="BRANCH_ISSUE_IND" property="branchIssueInd" jdbcType="VARCHAR" />
+		<result column="CARD_COLLECT_IND" property="cardCollectInd" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_BRANCH_TABLE_FIELD">ORG,BRANCH_CODE,BRANCH_NAME,PARENT_CODE,PARENT_PATH,BRANCH_LEVEL,BRANCH_SEQUENCE,STATUS,SORT,EMP_ADD,REMARK,BRANCH_ISSUE_IND,CARD_COLLECT_IND,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_BRANCH
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclBranch" >
+		insert into TM_ACL_BRANCH ( <include refid="TM_ACL_BRANCH_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{branchCode,jdbcType=VARCHAR } , #{branchName,jdbcType=VARCHAR } ,
+			 #{parentCode,jdbcType=VARCHAR } , #{parentPath,jdbcType=VARCHAR } , #{branchLevel,jdbcType=VARCHAR } , #{branchSequence,jdbcType=INTEGER } ,
+			 #{status,jdbcType=VARCHAR } , #{sort,jdbcType=INTEGER } , #{empAdd,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } ,
+			 #{branchIssueInd,jdbcType=VARCHAR } , #{cardCollectInd,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclBranch">
+		update TM_ACL_BRANCH 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="branchName != null and branchName != ''  " >
+			BRANCH_NAME =#{branchName,jdbcType=VARCHAR },
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			PARENT_CODE =#{parentCode,jdbcType=VARCHAR },
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			PARENT_PATH =#{parentPath,jdbcType=VARCHAR },
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			BRANCH_LEVEL =#{branchLevel,jdbcType=VARCHAR },
+		</if>
+		<if test="branchSequence != null and branchSequence != ''  " >
+			BRANCH_SEQUENCE =#{branchSequence,jdbcType=INTEGER },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		<if test="sort != null and sort != ''  " >
+			SORT =#{sort,jdbcType=INTEGER },
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="branchIssueInd != null and branchIssueInd != ''  " >
+			BRANCH_ISSUE_IND =#{branchIssueInd,jdbcType=VARCHAR },
+		</if>
+		<if test="cardCollectInd != null and cardCollectInd != ''  " >
+			CARD_COLLECT_IND =#{cardCollectInd,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclBranch">
+		update TM_ACL_BRANCH 
+		<trim prefix="set" suffixOverrides=","> 
+			BRANCH_NAME =#{branchName,jdbcType=VARCHAR },		
+			PARENT_CODE =#{parentCode,jdbcType=VARCHAR },		
+			PARENT_PATH =#{parentPath,jdbcType=VARCHAR },		
+			BRANCH_LEVEL =#{branchLevel,jdbcType=VARCHAR },		
+			BRANCH_SEQUENCE =#{branchSequence,jdbcType=INTEGER },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+			SORT =#{sort,jdbcType=INTEGER },		
+			EMP_ADD =#{empAdd,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			BRANCH_ISSUE_IND =#{branchIssueInd,jdbcType=VARCHAR },		
+			CARD_COLLECT_IND =#{cardCollectInd,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_BRANCH_TABLE_FIELD" />		
+		from TM_ACL_BRANCH
+		where 
+		ORG = #{org, jdbcType=VARCHAR}
+ 	and 		BRANCH_CODE = #{branchCode, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_BRANCH_TABLE_FIELD" />		
+ 		from TM_ACL_BRANCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="branchName != null and branchName != ''  " >
+			and BRANCH_NAME = #{branchName,jdbcType=VARCHAR }
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			and PARENT_CODE = #{parentCode,jdbcType=VARCHAR }
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			and PARENT_PATH = #{parentPath,jdbcType=VARCHAR }
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			and BRANCH_LEVEL = #{branchLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="branchSequence != null and branchSequence != ''  " >
+			and BRANCH_SEQUENCE = #{branchSequence,jdbcType=INTEGER }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="branchIssueInd != null and branchIssueInd != ''  " >
+			and BRANCH_ISSUE_IND = #{branchIssueInd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardCollectInd != null and cardCollectInd != ''  " >
+			and CARD_COLLECT_IND = #{cardCollectInd,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_BRANCH
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="branchCode != null and branchCode != ''  " >
+			and BRANCH_CODE = #{branchCode,jdbcType=VARCHAR }
+		</if>
+		<if test="branchName != null and branchName != ''  " >
+			and BRANCH_NAME = #{branchName,jdbcType=VARCHAR }
+		</if>
+		<if test="parentCode != null and parentCode != ''  " >
+			and PARENT_CODE = #{parentCode,jdbcType=VARCHAR }
+		</if>
+		<if test="parentPath != null and parentPath != ''  " >
+			and PARENT_PATH = #{parentPath,jdbcType=VARCHAR }
+		</if>
+		<if test="branchLevel != null and branchLevel != ''  " >
+			and BRANCH_LEVEL = #{branchLevel,jdbcType=VARCHAR }
+		</if>
+		<if test="branchSequence != null and branchSequence != ''  " >
+			and BRANCH_SEQUENCE = #{branchSequence,jdbcType=INTEGER }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null and sort != ''  " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="empAdd != null and empAdd != ''  " >
+			and EMP_ADD = #{empAdd,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="branchIssueInd != null and branchIssueInd != ''  " >
+			and BRANCH_ISSUE_IND = #{branchIssueInd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardCollectInd != null and cardCollectInd != ''  " >
+			and CARD_COLLECT_IND = #{cardCollectInd,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/1.1.6.iml" filepath="$PROJECT_DIR$/.idea/1.1.6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-access/acl-access.iml" filepath="$PROJECT_DIR$/acl/acl-access/acl-access.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-biz/acl-biz.iml" filepath="$PROJECT_DIR$/acl/acl-biz/acl-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-facility/acl-facility.iml" filepath="$PROJECT_DIR$/acl/acl-facility/acl-facility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-gmp-api/acl-gmp-api.iml" filepath="$PROJECT_DIR$/acl/acl-gmp-api/acl-gmp-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-gmp-impl/acl-gmp-impl.iml" filepath="$PROJECT_DIR$/acl/acl-gmp-impl/acl-gmp-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-gmp-sdk/acl-gmp-sdk.iml" filepath="$PROJECT_DIR$/acl/acl-gmp-sdk/acl-gmp-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-infrastructure/acl-infrastructure.iml" filepath="$PROJECT_DIR$/acl/acl-infrastructure/acl-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-mvc/acl-mvc.iml" filepath="$PROJECT_DIR$/acl/acl-mvc/acl-mvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-parent.iml" filepath="$PROJECT_DIR$/acl/acl-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/acl/acl-web/acl-web.iml" filepath="$PROJECT_DIR$/acl/acl-web/acl-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ams/ams-app/ams-app.iml" filepath="$PROJECT_DIR$/ams/ams-app/ams-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ams/ams-biz/ams-biz.iml" filepath="$PROJECT_DIR$/ams/ams-biz/ams-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ams/ams-parent.iml" filepath="$PROJECT_DIR$/ams/ams-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ams/ams-service-impl/ams-service-impl.iml" filepath="$PROJECT_DIR$/ams/ams-service-impl/ams-service-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ams/ams-web/ams-web.iml" filepath="$PROJECT_DIR$/ams/ams-web/ams-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-app/cas-app.iml" filepath="$PROJECT_DIR$/cas/cas-app/cas-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-batch/cas-batch.iml" filepath="$PROJECT_DIR$/cas/cas-batch/cas-batch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-biz/cas-biz.iml" filepath="$PROJECT_DIR$/cas/cas-biz/cas-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-parent.iml" filepath="$PROJECT_DIR$/cas/cas-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-service-impl/cas-service-impl.iml" filepath="$PROJECT_DIR$/cas/cas-service-impl/cas-service-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas/cas-web/cas-web.iml" filepath="$PROJECT_DIR$/cas/cas-web/cas-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-app/cmp-app.iml" filepath="$PROJECT_DIR$/cmp/cmp-app/cmp-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-biz/cmp-biz.iml" filepath="$PROJECT_DIR$/cmp/cmp-biz/cmp-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-facility/cmp-facility.iml" filepath="$PROJECT_DIR$/cmp/cmp-facility/cmp-facility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-fastdfs/cmp-fastdfs.iml" filepath="$PROJECT_DIR$/cmp/cmp-fastdfs/cmp-fastdfs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-mybatis-infrastructure/cmp-mybatis-infrastructure.iml" filepath="$PROJECT_DIR$/cmp/cmp-mybatis-infrastructure/cmp-mybatis-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmp/cmp-parent.iml" filepath="$PROJECT_DIR$/cmp/cmp-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-adapter/ecms-adapter.iml" filepath="$PROJECT_DIR$/ecms/ecms-adapter/ecms-adapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-biz/ecms-biz.iml" filepath="$PROJECT_DIR$/ecms/ecms-biz/ecms-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-facility/ecms-facility.iml" filepath="$PROJECT_DIR$/ecms/ecms-facility/ecms-facility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-mybatis-infrastructure/ecms-mybatis-infrastructure.iml" filepath="$PROJECT_DIR$/ecms/ecms-mybatis-infrastructure/ecms-mybatis-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-parent.iml" filepath="$PROJECT_DIR$/ecms/ecms-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecms/ecms-service-api/ecms-service-api.iml" filepath="$PROJECT_DIR$/ecms/ecms-service-api/ecms-service-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecmsc/ecmsc-parent.iml" filepath="$PROJECT_DIR$/ecmsc/ecmsc-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-batch/unicorn-batch.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-batch/unicorn-batch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-batch-api/unicorn-batch-api.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-batch-api/unicorn-batch-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-cache/unicorn-cache.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-cache/unicorn-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-dao/unicorn-dao.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-dao/unicorn-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-facility/unicorn-facility.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-facility/unicorn-facility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-infrastructure/unicorn-infrastructure.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-infrastructure/unicorn-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-maven-plugin/unicorn-maven-plugin.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-maven-plugin/unicorn-maven-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-mq/unicorn-mq.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-mq/unicorn-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-parent.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-socket/unicorn-socket.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-socket/unicorn-socket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unicorn/unicorn-web-common/unicorn-web-common.iml" filepath="$PROJECT_DIR$/unicorn/unicorn-web-common/unicorn-web-common.iml" />
+    </modules>
+  </component>
+</project>

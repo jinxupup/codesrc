@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppOrderMainMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppOrderMain" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ALL_PRODUCT_CDS" property="allProductCds" jdbcType="VARCHAR" />
+		<result column="VALID_PRODUCT_CDS" property="validProductCds" jdbcType="VARCHAR" />
+		<result column="VALID_PRODUCT_TYPE" property="validProductType" jdbcType="VARCHAR" />
+		<result column="TIMER_STATE" property="timerState" jdbcType="VARCHAR" />
+		<result column="REQ_JSON" property="reqJson" jdbcType="CLOB" />
+		<result column="EXCEPTION_MSG" property="exceptionMsg" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_ORDER_MAIN_TABLE_FIELD">ID,ORG,APP_NO,ID_NO,ALL_PRODUCT_CDS,VALID_PRODUCT_CDS,VALID_PRODUCT_TYPE,TIMER_STATE,REQ_JSON,EXCEPTION_MSG,CREATE_DATE,UPDATE_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_ORDER_MAIN_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_ORDER_MAIN
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppOrderMain" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_ORDER_MAIN ( <include refid="TM_APP_ORDER_MAIN_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{idNo,jdbcType=VARCHAR } , #{allProductCds,jdbcType=VARCHAR } , #{validProductCds,jdbcType=VARCHAR } , #{validProductType,jdbcType=VARCHAR } ,
+			 #{timerState,jdbcType=VARCHAR } , #{reqJson,jdbcType=CLOB } , #{exceptionMsg,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } ,
+			 #{updateDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppOrderMain">
+		update TM_APP_ORDER_MAIN 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="allProductCds != null and allProductCds != ''  " >
+			ALL_PRODUCT_CDS =#{allProductCds,jdbcType=VARCHAR },
+		</if>
+		<if test="validProductCds != null and validProductCds != ''  " >
+			VALID_PRODUCT_CDS =#{validProductCds,jdbcType=VARCHAR },
+		</if>
+		<if test="validProductType != null and validProductType != ''  " >
+			VALID_PRODUCT_TYPE =#{validProductType,jdbcType=VARCHAR },
+		</if>
+		<if test="timerState != null and timerState != ''  " >
+			TIMER_STATE =#{timerState,jdbcType=VARCHAR },
+		</if>
+		<if test="reqJson != null and reqJson != ''  " >
+			REQ_JSON =#{reqJson,jdbcType=CLOB },
+		</if>
+		<if test="exceptionMsg != null and exceptionMsg != ''  " >
+			EXCEPTION_MSG =#{exceptionMsg,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppOrderMain">
+		update TM_APP_ORDER_MAIN 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			ALL_PRODUCT_CDS =#{allProductCds,jdbcType=VARCHAR },		
+			VALID_PRODUCT_CDS =#{validProductCds,jdbcType=VARCHAR },		
+			VALID_PRODUCT_TYPE =#{validProductType,jdbcType=VARCHAR },		
+			TIMER_STATE =#{timerState,jdbcType=VARCHAR },		
+			REQ_JSON =#{reqJson,jdbcType=CLOB },		
+			EXCEPTION_MSG =#{exceptionMsg,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_ORDER_MAIN_TABLE_FIELD" />		
+		from TM_APP_ORDER_MAIN
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_ORDER_MAIN_TABLE_FIELD" />		
+ 		from TM_APP_ORDER_MAIN
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="allProductCds != null and allProductCds != ''  " >
+			and ALL_PRODUCT_CDS = #{allProductCds,jdbcType=VARCHAR }
+		</if>
+		<if test="validProductCds != null and validProductCds != ''  " >
+			and VALID_PRODUCT_CDS = #{validProductCds,jdbcType=VARCHAR }
+		</if>
+		<if test="validProductType != null and validProductType != ''  " >
+			and VALID_PRODUCT_TYPE = #{validProductType,jdbcType=VARCHAR }
+		</if>
+		<if test="timerState != null and timerState != ''  " >
+			and TIMER_STATE = #{timerState,jdbcType=VARCHAR }
+		</if>
+		<if test="reqJson != null and reqJson != ''  " >
+			and REQ_JSON = #{reqJson,jdbcType=CLOB }
+		</if>
+		<if test="exceptionMsg != null and exceptionMsg != ''  " >
+			and EXCEPTION_MSG = #{exceptionMsg,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_ORDER_MAIN
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="allProductCds != null and allProductCds != ''  " >
+			and ALL_PRODUCT_CDS = #{allProductCds,jdbcType=VARCHAR }
+		</if>
+		<if test="validProductCds != null and validProductCds != ''  " >
+			and VALID_PRODUCT_CDS = #{validProductCds,jdbcType=VARCHAR }
+		</if>
+		<if test="validProductType != null and validProductType != ''  " >
+			and VALID_PRODUCT_TYPE = #{validProductType,jdbcType=VARCHAR }
+		</if>
+		<if test="timerState != null and timerState != ''  " >
+			and TIMER_STATE = #{timerState,jdbcType=VARCHAR }
+		</if>
+		<if test="reqJson != null and reqJson != ''  " >
+			and REQ_JSON = #{reqJson,jdbcType=CLOB }
+		</if>
+		<if test="exceptionMsg != null and exceptionMsg != ''  " >
+			and EXCEPTION_MSG = #{exceptionMsg,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

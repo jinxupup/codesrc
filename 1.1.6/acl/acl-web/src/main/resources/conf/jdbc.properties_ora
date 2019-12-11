@@ -1,0 +1,11 @@
+#JDBC\u76f8\u5173\u53c2\u6570\uff0c\u4ee5JDBC\u4e3a\u524d\u7f00
+jdbcDriver=oracle.jdbc.driver.OracleDriver
+jdbcTestSql=select current_date FROM DUAL
+jdbcMaxActive=100
+jdbcUrl=jdbc:oracle:thin:@192.168.0.45:1521:lakaladev
+jdbcUsername=acl
+jdbcPassword=acl
+poolInitialSize=10
+poollMinIdle=5
+poolMaxActive=30
+

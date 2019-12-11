@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<description>spring mvc 配置</description>
+	
+	<import resource="classpath:spring-unicorn-mybatis.xml"/>
+
+	<context:component-scan base-package="com.jjb.acl.access"/>
+	
+	<bean id="contextHolder" class="com.jjb.acl.access.facade.ContextHolder" lazy-init="false"/>
+    
+    <!-- Shiro权限过滤过滤器定义 -->
+    <bean name="filterChainDefinitions" class="java.lang.String">
+        <constructor-arg>
+            <value>
+                /assets/** = anon    <!-- 静态资源 -->
+                /loginftl = anon     <!-- 不需登陆可访问 -->
+                /login = authc       <!-- 登录验证 -->
+                /logout = logout     <!-- 登出 -->
+                /** = user           <!-- 需要登录才能操作 -->
+            </value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 安全认证过滤器 -->
+    <bean id="unicornFilter" class="com.jjb.acl.access.shiro.ext.ShiroFilterFactoryBeanExt">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/main"/>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="aclFormAuthenticationFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <ref bean="filterChainDefinitions"/>
+        </property>
+    </bean>
+    
+    <!-- 定义安全管理配置 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="authDaoExRealm"/>                <!-- 域 -->
+        <property name="sessionManager" ref="sessionManager"/>       <!-- 会话管理 -->
+    </bean>
+    
+    <!-- 定义会话管理配置 -->
+    <bean id="sessionManager" class="com.jjb.acl.access.manager.AclServletContainerSessionManager">
+    </bean>
+    
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="unicorn.acl.session.id"/>
+    </bean>
+</beans>

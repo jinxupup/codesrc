@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.jjb.unicorn</groupId>
+		<artifactId>unicorn-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.jjb.acl</groupId>
+	<artifactId>acl-parent</artifactId>
+	<version>1.1.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>acl</name>
+
+	<modules>
+		<module>acl-infrastructure</module>
+		<module>acl-facility</module>
+		<module>acl-access</module>
+		<module>acl-biz</module>
+		<module>acl-mvc</module>
+		<!-- <module>acl-drl-mvc</module> -->
+		<module>acl-web</module>
+		<module>acl-gmp-sdk</module>
+		<module>acl-gmp-api</module>
+		<module>acl-gmp-impl</module>
+
+	</modules>
+
+	<scm>
+		<connection>scm:svn:https://10.109.2.212/svn/jjccb-xyk/code_src/acl/branches/1.1.1</connection>
+		<developerConnection>scm:svn:https://10.109.2.212/svn/jjccb-xyk/code_src/acl/branches/1.1.1</developerConnection>
+	</scm>
+
+	<properties>
+		<unicorn.version>1.1.6-SNAPSHOT</unicorn.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-facility</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-biz</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-access</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-mvc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-drl-mvc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-batch-mvc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-sdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Spring Security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- <dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-cas</artifactId>
+				<version>${spring.version}</version>
+			</dependency> -->
+			
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet-api.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- 所有的项目都要用到的依赖 -->
+	<dependencies>
+	</dependencies>
+
+</project>

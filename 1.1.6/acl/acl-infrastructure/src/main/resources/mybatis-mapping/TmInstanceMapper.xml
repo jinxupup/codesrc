@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmInstanceMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmInstance" >
+		<id column="INSTANCE_ID" property="instanceId" jdbcType="INTEGER"/>
+		<result column="SYSTEM_TYPE" property="systemType" jdbcType="VARCHAR" />
+		<result column="INSTANCE_NAME" property="instanceName" jdbcType="VARCHAR" />
+		<result column="INSTANCE_MEMO" property="instanceMemo" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_INSTANCE_TABLE_FIELD">INSTANCE_ID,SYSTEM_TYPE,INSTANCE_NAME,INSTANCE_MEMO,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_INSTANCE_INSTANCE_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_INSTANCE
+		where 
+		INSTANCE_ID = #{instanceId, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmInstance" >
+		<selectKey keyProperty="instanceId" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_INSTANCE ( <include refid="TM_INSTANCE_TABLE_FIELD" /> )
+		values (  #{instanceId,jdbcType=INTEGER } , #{systemType,jdbcType=VARCHAR } , #{instanceName,jdbcType=VARCHAR } ,
+			 #{instanceMemo,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmInstance">
+		update TM_INSTANCE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="systemType != null and systemType != ''  " >
+			SYSTEM_TYPE =#{systemType,jdbcType=VARCHAR },
+		</if>
+		<if test="instanceName != null and instanceName != ''  " >
+			INSTANCE_NAME =#{instanceName,jdbcType=VARCHAR },
+		</if>
+		<if test="instanceMemo != null and instanceMemo != ''  " >
+			INSTANCE_MEMO =#{instanceMemo,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		INSTANCE_ID = #{instanceId, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmInstance">
+		update TM_INSTANCE 
+		<trim prefix="set" suffixOverrides=","> 
+			SYSTEM_TYPE =#{systemType,jdbcType=VARCHAR },		
+			INSTANCE_NAME =#{instanceName,jdbcType=VARCHAR },		
+			INSTANCE_MEMO =#{instanceMemo,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		INSTANCE_ID = #{instanceId, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_INSTANCE_TABLE_FIELD" />		
+		from TM_INSTANCE
+		where 
+		INSTANCE_ID = #{instanceId, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_INSTANCE_TABLE_FIELD" />		
+ 		from TM_INSTANCE
+		where 1=1 
+		<if test="instanceId != null and instanceId != ''  " >
+			and INSTANCE_ID = #{instanceId,jdbcType=INTEGER }
+		</if>
+		<if test="systemType != null and systemType != ''  " >
+			and SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR }
+		</if>
+		<if test="instanceName != null and instanceName != ''  " >
+			and INSTANCE_NAME = #{instanceName,jdbcType=VARCHAR }
+		</if>
+		<if test="instanceMemo != null and instanceMemo != ''  " >
+			and INSTANCE_MEMO = #{instanceMemo,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_INSTANCE
+		where 1=1 
+		<if test="instanceId != null and instanceId != ''  " >
+			and INSTANCE_ID = #{instanceId,jdbcType=INTEGER }
+		</if>
+		<if test="systemType != null and systemType != ''  " >
+			and SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR }
+		</if>
+		<if test="instanceName != null and instanceName != ''  " >
+			and INSTANCE_NAME = #{instanceName,jdbcType=VARCHAR }
+		</if>
+		<if test="instanceMemo != null and instanceMemo != ''  " >
+			and INSTANCE_MEMO = #{instanceMemo,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

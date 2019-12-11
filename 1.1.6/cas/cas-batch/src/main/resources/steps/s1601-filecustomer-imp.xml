@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <bean id="r1601" class="com.jjb.fts.service.sdk.batch.DbFileReader" scope="step">
+		<description>RDS客户文件</description>
+		<property name="instanceName" value="#{env.instanceName}" />
+	    <property name="systemType" value="CAS" />
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.CPSExportCustomerItem"/>
+		<property name="filename" value="S920002ApsCustomer"/>
+	</bean> -->
+	
+	<bean id="r1601" class="com.jjb.unicorn.batch.YakFileItemReader" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.CPSExportCustomerItem"/>
+		<property name="resource" ref="s920002ApsCustomer"/>
+	</bean>
+
+	<bean id="p1601" class="com.jjb.ecms.batch.s1600.P1601ApsCustomerFileImp" scope="step"/>
+	
+	<bean id="w1601" class="com.jjb.unicorn.batch.NullItemWriter"/>
+	
+</beans>

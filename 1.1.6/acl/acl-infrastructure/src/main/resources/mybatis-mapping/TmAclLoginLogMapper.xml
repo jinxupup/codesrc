@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclLoginLogMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclLoginLog" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="RESULT" property="result" jdbcType="VARCHAR" />
+		<result column="RETRY" property="retry" jdbcType="INTEGER" />
+		<result column="LONGIN_TIME" property="longinTime" jdbcType="TIMESTAMP" />
+		<result column="SESSION_ID" property="sessionId" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_LOGIN_LOG_TABLE_FIELD">ORG,ID,USER_NO,TYPE,RESULT,RETRY,LONGIN_TIME,SESSION_ID,REMARK,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_ACL_LOGIN_LOG_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_LOGIN_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclLoginLog" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_ACL_LOGIN_LOG ( <include refid="TM_ACL_LOGIN_LOG_TABLE_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{id,jdbcType=INTEGER } , #{userNo,jdbcType=VARCHAR } ,
+			 #{type,jdbcType=VARCHAR } , #{result,jdbcType=VARCHAR } , #{retry,jdbcType=INTEGER } , #{longinTime,jdbcType=TIMESTAMP } ,
+			 #{sessionId,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } ,
+			 #{updateDate,jdbcType=TIMESTAMP } , #{updateBy,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclLoginLog">
+		update TM_ACL_LOGIN_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="userNo != null and userNo != ''  " >
+			USER_NO =#{userNo,jdbcType=VARCHAR },
+		</if>
+		<if test="type != null and type != ''  " >
+			TYPE =#{type,jdbcType=VARCHAR },
+		</if>
+		<if test="result != null and result != ''  " >
+			RESULT =#{result,jdbcType=VARCHAR },
+		</if>
+		<if test="retry != null and retry != ''  " >
+			RETRY =#{retry,jdbcType=INTEGER },
+		</if>
+		<if test="longinTime != null and longinTime != ''  " >
+			LONGIN_TIME =#{longinTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			SESSION_ID =#{sessionId,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclLoginLog">
+		update TM_ACL_LOGIN_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+			USER_NO =#{userNo,jdbcType=VARCHAR },		
+			TYPE =#{type,jdbcType=VARCHAR },		
+			RESULT =#{result,jdbcType=VARCHAR },		
+			RETRY =#{retry,jdbcType=INTEGER },		
+			LONGIN_TIME =#{longinTime,jdbcType=TIMESTAMP },		
+			SESSION_ID =#{sessionId,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_LOGIN_LOG_TABLE_FIELD" />		
+		from TM_ACL_LOGIN_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_LOGIN_LOG_TABLE_FIELD" />		
+ 		from TM_ACL_LOGIN_LOG
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="result != null and result != ''  " >
+			and RESULT = #{result,jdbcType=VARCHAR }
+		</if>
+		<if test="retry != null and retry != ''  " >
+			and RETRY = #{retry,jdbcType=INTEGER }
+		</if>
+		<if test="longinTime != null and longinTime != ''  " >
+			and LONGIN_TIME = #{longinTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			and SESSION_ID = #{sessionId,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_LOGIN_LOG
+		where 1=1 
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="result != null and result != ''  " >
+			and RESULT = #{result,jdbcType=VARCHAR }
+		</if>
+		<if test="retry != null and retry != ''  " >
+			and RETRY = #{retry,jdbcType=INTEGER }
+		</if>
+		<if test="longinTime != null and longinTime != ''  " >
+			and LONGIN_TIME = #{longinTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="sessionId != null and sessionId != ''  " >
+			and SESSION_ID = #{sessionId,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

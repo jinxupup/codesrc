@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.dmp.infrastructure.mapping.TmDmpStrategyMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.dmp.infrastructure.TmDmpStrategy" >
+		<id column="ST_ID" property="stId" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="ST_NAME" property="stName" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="ST_CLASS" property="stClass" jdbcType="VARCHAR" />
+		<result column="ST_KEY" property="stKey" jdbcType="VARCHAR" />
+		<result column="ST_OBJECT" property="stObject" jdbcType="CLOB" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_DMP_STRATEGY_TABLE_FIELD">ST_ID,ORG,ST_NAME,REMARK,ST_CLASS,ST_KEY,ST_OBJECT,IF_USED,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_DMP_STRATEGY
+		where 
+		ST_ID = #{stId, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategy" >
+		insert into TM_DMP_STRATEGY ( <include refid="TM_DMP_STRATEGY_TABLE_FIELD" /> )
+		values (  #{stId,jdbcType=VARCHAR } , #{org,jdbcType=VARCHAR } , #{stName,jdbcType=VARCHAR } ,
+			 #{remark,jdbcType=VARCHAR } , #{stClass,jdbcType=VARCHAR } , #{stKey,jdbcType=VARCHAR } , #{stObject,jdbcType=CLOB } ,
+			 #{ifUsed,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{createBy,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } ,
+			 #{updateBy,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategy">
+		update TM_DMP_STRATEGY 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="stName != null and stName != ''  " >
+			ST_NAME =#{stName,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="stClass != null and stClass != ''  " >
+			ST_CLASS =#{stClass,jdbcType=VARCHAR },
+		</if>
+		<if test="stKey != null and stKey != ''  " >
+			ST_KEY =#{stKey,jdbcType=VARCHAR },
+		</if>
+		<if test="stObject != null and stObject != ''  " >
+			ST_OBJECT =#{stObject,jdbcType=CLOB },
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ST_ID = #{stId, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.dmp.infrastructure.TmDmpStrategy">
+		update TM_DMP_STRATEGY 
+		<trim prefix="set" suffixOverrides=","> 
+			ST_NAME =#{stName,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			ST_CLASS =#{stClass,jdbcType=VARCHAR },		
+			ST_KEY =#{stKey,jdbcType=VARCHAR },		
+			ST_OBJECT =#{stObject,jdbcType=CLOB },		
+			IF_USED =#{ifUsed,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_BY =#{updateBy,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ST_ID = #{stId, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_DMP_STRATEGY_TABLE_FIELD" />		
+		from TM_DMP_STRATEGY
+		where 
+		ST_ID = #{stId, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_DMP_STRATEGY_TABLE_FIELD" />		
+ 		from TM_DMP_STRATEGY
+		where 1=1 
+		<if test="stId != null and stId != ''  " >
+			and ST_ID = #{stId,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stName != null and stName != ''  " >
+			and ST_NAME = #{stName,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="stClass != null and stClass != ''  " >
+			and ST_CLASS = #{stClass,jdbcType=VARCHAR }
+		</if>
+		<if test="stKey != null and stKey != ''  " >
+			and ST_KEY = #{stKey,jdbcType=VARCHAR }
+		</if>
+		<if test="stObject != null and stObject != ''  " >
+			and ST_OBJECT = #{stObject,jdbcType=CLOB }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_DMP_STRATEGY
+		where 1=1 
+		<if test="stId != null and stId != ''  " >
+			and ST_ID = #{stId,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="stName != null and stName != ''  " >
+			and ST_NAME = #{stName,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="stClass != null and stClass != ''  " >
+			and ST_CLASS = #{stClass,jdbcType=VARCHAR }
+		</if>
+		<if test="stKey != null and stKey != ''  " >
+			and ST_KEY = #{stKey,jdbcType=VARCHAR }
+		</if>
+		<if test="stObject != null and stObject != ''  " >
+			and ST_OBJECT = #{stObject,jdbcType=CLOB }
+		</if>
+		<if test="ifUsed != null and ifUsed != ''  " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null and createBy != ''  " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null and updateBy != ''  " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

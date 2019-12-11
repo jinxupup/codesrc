@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmTaskTransferMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmTaskTransfer" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="TRANSFER_TYPE" property="transferType" jdbcType="VARCHAR" />
+		<result column="TASK_KEY" property="taskKey" jdbcType="VARCHAR" />
+		<result column="TASK_NAME" property="taskName" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="OWNER" property="owner" jdbcType="VARCHAR" />
+		<result column="ASSIGNER" property="assigner" jdbcType="VARCHAR" />
+		<result column="CLAIM_TIME" property="claimTime" jdbcType="TIMESTAMP" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_TASK_TRANSFER_RECORD_TABLE_FIELD">ID,ORG,APP_NO,TRANSFER_TYPE,TASK_KEY,TASK_NAME,RTF_STATE,OWNER,ASSIGNER,CLAIM_TIME,END_TIME,STATUS,JPA_VERSION</sql>
+
+	<sql id="TM_TASK_TRANSFER_RECORD_TABLE_INSERT_FIELD">ORG,APP_NO,TRANSFER_TYPE,TASK_KEY,TASK_NAME,RTF_STATE,OWNER,ASSIGNER,CLAIM_TIME,END_TIME,STATUS,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_TASK_TRANSFER
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmTaskTransfer" useGeneratedKeys="true" keyProperty="id" >
+		insert into TM_TASK_TRANSFER ( <include refid="TM_TASK_TRANSFER_RECORD_TABLE_INSERT_FIELD" /> )
+		values (  #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{transferType,jdbcType=VARCHAR } , #{taskKey,jdbcType=VARCHAR } , #{taskName,jdbcType=VARCHAR } , #{rtfState,jdbcType=VARCHAR } ,
+			 #{owner,jdbcType=VARCHAR } , #{assigner,jdbcType=VARCHAR } , #{claimTime,jdbcType=TIMESTAMP } , #{endTime,jdbcType=TIMESTAMP } ,
+			 #{status,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmTaskTransfer">
+		update TM_TASK_TRANSFER
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="transferType != null and transferType != ''  " >
+			TRANSFER_TYPE =#{transferType,jdbcType=VARCHAR },
+		</if>
+		<if test="taskKey != null and taskKey != ''  " >
+			TASK_KEY =#{taskKey,jdbcType=VARCHAR },
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			TASK_NAME =#{taskName,jdbcType=VARCHAR },
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },
+		</if>
+		<if test="owner != null and owner != ''  " >
+			OWNER =#{owner,jdbcType=VARCHAR },
+		</if>
+		<if test="assigner != null and assigner != ''  " >
+			ASSIGNER =#{assigner,jdbcType=VARCHAR },
+		</if>
+		<if test="claimTime != null and claimTime != ''  " >
+			CLAIM_TIME =#{claimTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="status != null and status != ''  " >
+			STATUS =#{status,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmTaskTransfer">
+		update TM_TASK_TRANSFER
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			TRANSFER_TYPE =#{transferType,jdbcType=VARCHAR },		
+			TASK_KEY =#{taskKey,jdbcType=VARCHAR },		
+			TASK_NAME =#{taskName,jdbcType=VARCHAR },		
+			RTF_STATE =#{rtfState,jdbcType=VARCHAR },		
+			OWNER =#{owner,jdbcType=VARCHAR },		
+			ASSIGNER =#{assigner,jdbcType=VARCHAR },		
+			CLAIM_TIME =#{claimTime,jdbcType=TIMESTAMP },		
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },		
+			STATUS =#{status,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_TASK_TRANSFER_RECORD_TABLE_FIELD" />		
+		from TM_TASK_TRANSFER
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_TASK_TRANSFER_RECORD_TABLE_FIELD" />		
+ 		from TM_TASK_TRANSFER
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="transferType != null and transferType != ''  " >
+			and TRANSFER_TYPE = #{transferType,jdbcType=VARCHAR }
+		</if>
+		<if test="taskKey != null and taskKey != ''  " >
+			and TASK_KEY = #{taskKey,jdbcType=VARCHAR }
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			and TASK_NAME = #{taskName,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="owner != null and owner != ''  " >
+			and OWNER = #{owner,jdbcType=VARCHAR }
+		</if>
+		<if test="assigner != null and assigner != ''  " >
+			and ASSIGNER = #{assigner,jdbcType=VARCHAR }
+		</if>
+		<if test="claimTime != null and claimTime != ''  " >
+			and CLAIM_TIME = #{claimTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<!-- 根据申请件编号、审批状态查询未完成的任务转移记录 -->
+	<select id="selectUnCompleted" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_TASK_TRANSFER_RECORD_TABLE_FIELD" />		
+ 		from TM_TASK_TRANSFER
+		where 1=1 
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="taskKey != null and taskKey != ''  " >
+			and TASK_KEY = #{taskKey,jdbcType=VARCHAR }
+		</if>
+		<if test="status != null and status != ''  " >
+			and (STATUS <![CDATA[ <> ]]> #{status,jdbcType=VARCHAR }
+			OR STATUS IS NULL)
+		</if>
+			order by id desc
+	</select>	
+	
+	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_TASK_TRANSFER
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="transferType != null and transferType != ''  " >
+			and TRANSFER_TYPE = #{transferType,jdbcType=VARCHAR }
+		</if>
+		<if test="taskKey != null and taskKey != ''  " >
+			and TASK_KEY = #{taskKey,jdbcType=VARCHAR }
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			and TASK_NAME = #{taskName,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+		<if test="owner != null and owner != ''  " >
+			and OWNER = #{owner,jdbcType=VARCHAR }
+		</if>
+		<if test="assigner != null and assigner != ''  " >
+			and ASSIGNER = #{assigner,jdbcType=VARCHAR }
+		</if>
+		<if test="claimTime != null and claimTime != ''  " >
+			and CLAIM_TIME = #{claimTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="status != null and status != ''  " >
+			and STATUS = #{status,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

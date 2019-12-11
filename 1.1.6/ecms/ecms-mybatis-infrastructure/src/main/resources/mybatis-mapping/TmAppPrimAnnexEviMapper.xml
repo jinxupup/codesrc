@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppPrimAnnexEviMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppPrimAnnexEvi" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="EVI_INCOME" property="eviIncome" jdbcType="DECIMAL" />
+		<result column="IND_SIGN_FILE" property="indSignFile" jdbcType="VARCHAR" />
+		<result column="IND_ID_FILE" property="indIdFile" jdbcType="VARCHAR" />
+		<result column="IND_JOB_FILE" property="indJobFile" jdbcType="VARCHAR" />
+		<result column="IND_LIVE_FILE" property="indLiveFile" jdbcType="VARCHAR" />
+		<result column="IND_LIVE_ADDR" property="indLiveAddr" jdbcType="VARCHAR" />
+		<result column="ESTATES_NO_INSTALL_AMT" property="estatesNoInstallAmt" jdbcType="DECIMAL" />
+		<result column="ESTATES_INSTALL_AMT" property="estatesInstallAmt" jdbcType="DECIMAL" />
+		<result column="ESTATES_INSTALL_LOAN_AMT" property="estatesInstallLoanAmt" jdbcType="DECIMAL" />
+		<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+		<result column="HOUSE_MONTHY_AMT" property="houseMonthyAmt" jdbcType="DECIMAL" />
+		<result column="OTHER_CC_BANK1" property="otherCcBank1" jdbcType="VARCHAR" />
+		<result column="OTHER_CC_LMT1" property="otherCcLmt1" jdbcType="DECIMAL" />
+		<result column="OTHER_CC_BANK2" property="otherCcBank2" jdbcType="VARCHAR" />
+		<result column="OTHER_CC_LMT2" property="otherCcLmt2" jdbcType="DECIMAL" />
+		<result column="CAR_ID_NUM" property="carIdNum" jdbcType="VARCHAR" />
+		<result column="CARD_EMISSIONS" property="cardEmissions" jdbcType="VARCHAR" />
+		<result column="CAR_MODEL" property="carModel" jdbcType="VARCHAR" />
+		<result column="CARD_PRICE" property="cardPrice" jdbcType="DECIMAL" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_PRIM_ANNEX_EVI_TABLE_FIELD">ID,ORG,APP_NO,EVI_INCOME,IND_SIGN_FILE,IND_ID_FILE,IND_JOB_FILE,IND_LIVE_FILE,IND_LIVE_ADDR,ESTATES_NO_INSTALL_AMT,ESTATES_INSTALL_AMT,ESTATES_INSTALL_LOAN_AMT,BUILDING_NAME,HOUSE_MONTHY_AMT,OTHER_CC_BANK1,OTHER_CC_LMT1,OTHER_CC_BANK2,OTHER_CC_LMT2,CAR_ID_NUM,CARD_EMISSIONS,CAR_MODEL,CARD_PRICE,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_PRIM_ANNEX_EVI_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_PRIM_ANNEX_EVI
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppPrimAnnexEvi" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_PRIM_ANNEX_EVI ( <include refid="TM_APP_PRIM_ANNEX_EVI_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{eviIncome,jdbcType=DECIMAL } , #{indSignFile,jdbcType=VARCHAR } , #{indIdFile,jdbcType=VARCHAR } , #{indJobFile,jdbcType=VARCHAR } ,
+			 #{indLiveFile,jdbcType=VARCHAR } , #{indLiveAddr,jdbcType=VARCHAR } , #{estatesNoInstallAmt,jdbcType=DECIMAL } , #{estatesInstallAmt,jdbcType=DECIMAL } ,
+			 #{estatesInstallLoanAmt,jdbcType=DECIMAL } , #{buildingName,jdbcType=VARCHAR } , #{houseMonthyAmt,jdbcType=DECIMAL } , #{otherCcBank1,jdbcType=VARCHAR } ,
+			 #{otherCcLmt1,jdbcType=DECIMAL } , #{otherCcBank2,jdbcType=VARCHAR } , #{otherCcLmt2,jdbcType=DECIMAL } , #{carIdNum,jdbcType=VARCHAR } ,
+			 #{cardEmissions,jdbcType=VARCHAR } , #{carModel,jdbcType=VARCHAR } , #{cardPrice,jdbcType=DECIMAL } , #{createDate,jdbcType=TIMESTAMP } ,
+			 #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPrimAnnexEvi">
+		update TM_APP_PRIM_ANNEX_EVI 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="eviIncome != null and eviIncome != ''  " >
+			EVI_INCOME =#{eviIncome,jdbcType=DECIMAL },
+		</if>
+		<if test="indSignFile != null and indSignFile != ''  " >
+			IND_SIGN_FILE =#{indSignFile,jdbcType=VARCHAR },
+		</if>
+		<if test="indIdFile != null and indIdFile != ''  " >
+			IND_ID_FILE =#{indIdFile,jdbcType=VARCHAR },
+		</if>
+		<if test="indJobFile != null and indJobFile != ''  " >
+			IND_JOB_FILE =#{indJobFile,jdbcType=VARCHAR },
+		</if>
+		<if test="indLiveFile != null and indLiveFile != ''  " >
+			IND_LIVE_FILE =#{indLiveFile,jdbcType=VARCHAR },
+		</if>
+		<if test="indLiveAddr != null and indLiveAddr != ''  " >
+			IND_LIVE_ADDR =#{indLiveAddr,jdbcType=VARCHAR },
+		</if>
+		<if test="estatesNoInstallAmt != null and estatesNoInstallAmt != ''  " >
+			ESTATES_NO_INSTALL_AMT =#{estatesNoInstallAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="estatesInstallAmt != null and estatesInstallAmt != ''  " >
+			ESTATES_INSTALL_AMT =#{estatesInstallAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="estatesInstallLoanAmt != null and estatesInstallLoanAmt != ''  " >
+			ESTATES_INSTALL_LOAN_AMT =#{estatesInstallLoanAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="buildingName != null and buildingName != ''  " >
+			BUILDING_NAME =#{buildingName,jdbcType=VARCHAR },
+		</if>
+		<if test="houseMonthyAmt != null and houseMonthyAmt != ''  " >
+			HOUSE_MONTHY_AMT =#{houseMonthyAmt,jdbcType=DECIMAL },
+		</if>
+		<if test="otherCcBank1 != null and otherCcBank1 != ''  " >
+			OTHER_CC_BANK1 =#{otherCcBank1,jdbcType=VARCHAR },
+		</if>
+		<if test="otherCcLmt1 != null and otherCcLmt1 != ''  " >
+			OTHER_CC_LMT1 =#{otherCcLmt1,jdbcType=DECIMAL },
+		</if>
+		<if test="otherCcBank2 != null and otherCcBank2 != ''  " >
+			OTHER_CC_BANK2 =#{otherCcBank2,jdbcType=VARCHAR },
+		</if>
+		<if test="otherCcLmt2 != null and otherCcLmt2 != ''  " >
+			OTHER_CC_LMT2 =#{otherCcLmt2,jdbcType=DECIMAL },
+		</if>
+		<if test="carIdNum != null and carIdNum != ''  " >
+			CAR_ID_NUM =#{carIdNum,jdbcType=VARCHAR },
+		</if>
+		<if test="cardEmissions != null and cardEmissions != ''  " >
+			CARD_EMISSIONS =#{cardEmissions,jdbcType=VARCHAR },
+		</if>
+		<if test="carModel != null and carModel != ''  " >
+			CAR_MODEL =#{carModel,jdbcType=VARCHAR },
+		</if>
+		<if test="cardPrice != null and cardPrice != ''  " >
+			CARD_PRICE =#{cardPrice,jdbcType=DECIMAL },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppPrimAnnexEvi">
+		update TM_APP_PRIM_ANNEX_EVI 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			EVI_INCOME =#{eviIncome,jdbcType=DECIMAL },		
+			IND_SIGN_FILE =#{indSignFile,jdbcType=VARCHAR },		
+			IND_ID_FILE =#{indIdFile,jdbcType=VARCHAR },		
+			IND_JOB_FILE =#{indJobFile,jdbcType=VARCHAR },		
+			IND_LIVE_FILE =#{indLiveFile,jdbcType=VARCHAR },		
+			IND_LIVE_ADDR =#{indLiveAddr,jdbcType=VARCHAR },		
+			ESTATES_NO_INSTALL_AMT =#{estatesNoInstallAmt,jdbcType=DECIMAL },		
+			ESTATES_INSTALL_AMT =#{estatesInstallAmt,jdbcType=DECIMAL },		
+			ESTATES_INSTALL_LOAN_AMT =#{estatesInstallLoanAmt,jdbcType=DECIMAL },		
+			BUILDING_NAME =#{buildingName,jdbcType=VARCHAR },		
+			HOUSE_MONTHY_AMT =#{houseMonthyAmt,jdbcType=DECIMAL },		
+			OTHER_CC_BANK1 =#{otherCcBank1,jdbcType=VARCHAR },		
+			OTHER_CC_LMT1 =#{otherCcLmt1,jdbcType=DECIMAL },		
+			OTHER_CC_BANK2 =#{otherCcBank2,jdbcType=VARCHAR },		
+			OTHER_CC_LMT2 =#{otherCcLmt2,jdbcType=DECIMAL },		
+			CAR_ID_NUM =#{carIdNum,jdbcType=VARCHAR },		
+			CARD_EMISSIONS =#{cardEmissions,jdbcType=VARCHAR },		
+			CAR_MODEL =#{carModel,jdbcType=VARCHAR },		
+			CARD_PRICE =#{cardPrice,jdbcType=DECIMAL },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_PRIM_ANNEX_EVI_TABLE_FIELD" />		
+		from TM_APP_PRIM_ANNEX_EVI
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_PRIM_ANNEX_EVI_TABLE_FIELD" />		
+ 		from TM_APP_PRIM_ANNEX_EVI
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="eviIncome != null and eviIncome != ''  " >
+			and EVI_INCOME = #{eviIncome,jdbcType=DECIMAL }
+		</if>
+		<if test="indSignFile != null and indSignFile != ''  " >
+			and IND_SIGN_FILE = #{indSignFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indIdFile != null and indIdFile != ''  " >
+			and IND_ID_FILE = #{indIdFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indJobFile != null and indJobFile != ''  " >
+			and IND_JOB_FILE = #{indJobFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indLiveFile != null and indLiveFile != ''  " >
+			and IND_LIVE_FILE = #{indLiveFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indLiveAddr != null and indLiveAddr != ''  " >
+			and IND_LIVE_ADDR = #{indLiveAddr,jdbcType=VARCHAR }
+		</if>
+		<if test="estatesNoInstallAmt != null and estatesNoInstallAmt != ''  " >
+			and ESTATES_NO_INSTALL_AMT = #{estatesNoInstallAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="estatesInstallAmt != null and estatesInstallAmt != ''  " >
+			and ESTATES_INSTALL_AMT = #{estatesInstallAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="estatesInstallLoanAmt != null and estatesInstallLoanAmt != ''  " >
+			and ESTATES_INSTALL_LOAN_AMT = #{estatesInstallLoanAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="buildingName != null and buildingName != ''  " >
+			and BUILDING_NAME = #{buildingName,jdbcType=VARCHAR }
+		</if>
+		<if test="houseMonthyAmt != null and houseMonthyAmt != ''  " >
+			and HOUSE_MONTHY_AMT = #{houseMonthyAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="otherCcBank1 != null and otherCcBank1 != ''  " >
+			and OTHER_CC_BANK1 = #{otherCcBank1,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCcLmt1 != null and otherCcLmt1 != ''  " >
+			and OTHER_CC_LMT1 = #{otherCcLmt1,jdbcType=DECIMAL }
+		</if>
+		<if test="otherCcBank2 != null and otherCcBank2 != ''  " >
+			and OTHER_CC_BANK2 = #{otherCcBank2,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCcLmt2 != null and otherCcLmt2 != ''  " >
+			and OTHER_CC_LMT2 = #{otherCcLmt2,jdbcType=DECIMAL }
+		</if>
+		<if test="carIdNum != null and carIdNum != ''  " >
+			and CAR_ID_NUM = #{carIdNum,jdbcType=VARCHAR }
+		</if>
+		<if test="cardEmissions != null and cardEmissions != ''  " >
+			and CARD_EMISSIONS = #{cardEmissions,jdbcType=VARCHAR }
+		</if>
+		<if test="carModel != null and carModel != ''  " >
+			and CAR_MODEL = #{carModel,jdbcType=VARCHAR }
+		</if>
+		<if test="cardPrice != null and cardPrice != ''  " >
+			and CARD_PRICE = #{cardPrice,jdbcType=DECIMAL }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_PRIM_ANNEX_EVI
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="eviIncome != null and eviIncome != ''  " >
+			and EVI_INCOME = #{eviIncome,jdbcType=DECIMAL }
+		</if>
+		<if test="indSignFile != null and indSignFile != ''  " >
+			and IND_SIGN_FILE = #{indSignFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indIdFile != null and indIdFile != ''  " >
+			and IND_ID_FILE = #{indIdFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indJobFile != null and indJobFile != ''  " >
+			and IND_JOB_FILE = #{indJobFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indLiveFile != null and indLiveFile != ''  " >
+			and IND_LIVE_FILE = #{indLiveFile,jdbcType=VARCHAR }
+		</if>
+		<if test="indLiveAddr != null and indLiveAddr != ''  " >
+			and IND_LIVE_ADDR = #{indLiveAddr,jdbcType=VARCHAR }
+		</if>
+		<if test="estatesNoInstallAmt != null and estatesNoInstallAmt != ''  " >
+			and ESTATES_NO_INSTALL_AMT = #{estatesNoInstallAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="estatesInstallAmt != null and estatesInstallAmt != ''  " >
+			and ESTATES_INSTALL_AMT = #{estatesInstallAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="estatesInstallLoanAmt != null and estatesInstallLoanAmt != ''  " >
+			and ESTATES_INSTALL_LOAN_AMT = #{estatesInstallLoanAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="buildingName != null and buildingName != ''  " >
+			and BUILDING_NAME = #{buildingName,jdbcType=VARCHAR }
+		</if>
+		<if test="houseMonthyAmt != null and houseMonthyAmt != ''  " >
+			and HOUSE_MONTHY_AMT = #{houseMonthyAmt,jdbcType=DECIMAL }
+		</if>
+		<if test="otherCcBank1 != null and otherCcBank1 != ''  " >
+			and OTHER_CC_BANK1 = #{otherCcBank1,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCcLmt1 != null and otherCcLmt1 != ''  " >
+			and OTHER_CC_LMT1 = #{otherCcLmt1,jdbcType=DECIMAL }
+		</if>
+		<if test="otherCcBank2 != null and otherCcBank2 != ''  " >
+			and OTHER_CC_BANK2 = #{otherCcBank2,jdbcType=VARCHAR }
+		</if>
+		<if test="otherCcLmt2 != null and otherCcLmt2 != ''  " >
+			and OTHER_CC_LMT2 = #{otherCcLmt2,jdbcType=DECIMAL }
+		</if>
+		<if test="carIdNum != null and carIdNum != ''  " >
+			and CAR_ID_NUM = #{carIdNum,jdbcType=VARCHAR }
+		</if>
+		<if test="cardEmissions != null and cardEmissions != ''  " >
+			and CARD_EMISSIONS = #{cardEmissions,jdbcType=VARCHAR }
+		</if>
+		<if test="carModel != null and carModel != ''  " >
+			and CAR_MODEL = #{carModel,jdbcType=VARCHAR }
+		</if>
+		<if test="cardPrice != null and cardPrice != ''  " >
+			and CARD_PRICE = #{cardPrice,jdbcType=DECIMAL }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

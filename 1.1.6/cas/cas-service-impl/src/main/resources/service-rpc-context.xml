@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xsi:schemaLocation="http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- ecms-adapter作为生产方，cas-biz作为消费方 -->
+	<bean id="messageSendService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="ecms.rpc.messageSendService" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.MessageSendService"/>
+	</bean>
+	<bean id="immediatelyBuildCardService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="ecms.rpc.immediatelyBuildCardService" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.ImmediatelyBuildCardService"/>
+	</bean>
+
+	<!-- 业务组件导出及容器 -->
+	<bean id="iPadApplyService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="iPadApplyServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.IPadApplyService"/>
+	</bean>
+	<bean id="queryService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="queryServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.QueryService"/>
+	</bean>
+	<bean id="patchRespService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="patchRespServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.PatchResultService"/>
+	</bean>
+	<bean id="autoHandleTaskQuartzService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="autoHandleTaskQuartzImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.AutoHandleTaskQuartzService"/>
+	</bean>
+	<bean id="creditInfoAuxTreatService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="creditInfoAuxTreatServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.CreditInfoAuxTreatService"/>
+	</bean>
+	<rabbit:listener-container requeue-rejected="false" concurrency="#{env['mqServiceConcurrency']?:1}">
+		<rabbit:listener queues="iPadApplyServiceQueue" ref="iPadApplyService"/>
+		<rabbit:listener queues="queryServiceQueue" ref="queryService"/>
+		<rabbit:listener queues="patchRespServiceQueue" ref="patchRespService"/>
+		<rabbit:listener queues="autoHandleTaskQuartzServiceQueue" ref="autoHandleTaskQuartzService"/>
+		<rabbit:listener queues="creditInfoAuxTreatServiceQueue" ref="creditInfoAuxTreatService"/>
+
+	</rabbit:listener-container>
+	<!-- 队列列表，没有就自动创建 -->
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="iPadApplyServiceQueue" name="#{env.instanceName}.cas.rpc.ipadApply"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="queryServiceQueue" name="#{env.instanceName}.cas.rpc.query"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="patchRespServiceQueue" name="#{env.instanceName}.cas.rpc.patchResp"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="autoHandleTaskQuartzServiceQueue" name="#{env.instanceName}.cas.rpc.autoHandleTaskQuartzService"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="creditInfoAuxTreatServiceQueue" name="#{env.instanceName}.cas.rpc.creditInfoAuxTreatService"/>
+
+	<!-- 导入刷新cas参数缓存配置 -->
+	<!-- <import resource="classpath:/param-mq-context.xml"/> -->
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="s0005ResponseWait" class="com.jjb.fts.service.sdk.batch.ResourceWaitingTask" scope="step">
+		<description>核心系统回还文件</description>
+		<property name="instanceName" value="#{env.instanceName}" />
+	    <property name="systemType" value="CAS" />
+	    <property name="filenames">
+			<list>
+				<value>S000010Response</value>
+				<value>S150001Response</value>
+			</list>
+		</property>
+	</bean>
+</beans>

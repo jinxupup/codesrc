@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyRejectReportMapper">
+	<resultMap id="BaseResultMap"
+		type="com.jjb.ecms.facility.dto.ApplyRejectReportQueryDto">
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="OWNING_BRANCH" property="owningBranch" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="REFUSE_DESC" property="refuseDesc" jdbcType="VARCHAR" />
+		<result column="OPER" property="oper" jdbcType="VARCHAR" />
+		<result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="selectMainToReport" resultMap="BaseResultMap" parameterType="map">
+		select a.APP_NO,a.ID_TYPE||'-'||c.code_name ID_TYPE,a.ID_NO,a.NAME,a.APP_TYPE||'-'||d.code_name APP_TYPE,a.PRODUCT_CD||'-'||E.PRODUCT_DESC PRODUCT_CD,a.OWNING_BRANCH||'-'||F.BRANCH_NAME OWNING_BRANCH,
+		a.APP_SOURCE||'-'||G.CODE_NAME APP_SOURCE,b.REFUSE_CODE,b.RTF_STATE||'-'||H.CODE_NAME RTF_STATE,b.REFUSE_DESC,b.OPER,b.CHECK_DATE from TM_APP_MAIN a
+        inner join 
+        (select APP_NO as APP_NO,RTF_STATE || '-' || PRO_NAME as REFUSE_CODE,REFUSE_CODE as REFUSE_DESC,
+        	OPERATOR_ID as OPER,CREATE_DATE as CHECK_DATE,RTF_STATE as RTF_STATE from TM_APP_HISTORY 
+        	where RTF_STATE in ('D10','F06','F09','F16','H10','K15','G15','H17') 
+        <if test="applyRejectStartDate !=null and applyRejectStartDate!= '' and applyRejectEndDate !=null and applyRejectEndDate !='' ">
+        and  CREATE_DATE <![CDATA[>=]]>#{applyRejectStartDate} and CREATE_DATE <![CDATA[<=]]>#{applyRejectEndDate}) b on a.APP_NO=b.APP_NO
+        </if>
+        left join (select CODE,CODE_NAME from tm_acl_dict where type='IdType') c on c.CODE = a.ID_TYPE
+       left join (select CODE,CODE_NAME FROM TM_ACL_DICT WHERE TYPE='AppType') d on d.CODE = a.APP_TYPE
+       LEFT JOIN TM_PRODUCT E ON E.PRODUCT_CD=A.PRODUCT_CD 
+       LEFT JOIN TM_ACL_BRANCH F ON F.BRANCH_CODE=A.OWNING_BRANCH 
+       LEFT JOIN (SELECT CODE,CODE_NAME FROM TM_ACL_DICT WHERE TYPE='AppSource') G ON G.CODE = A.APP_SOURCE
+       LEFT JOIN (SELECT CODE,CODE_NAME FROM TM_ACL_DICT WHERE TYPE='RtfStateType') H ON H.CODE = B.RTF_STATE
+        where 1=1 
+        <if test="refuseCode != null and refuseCode != '' ">
+        and b.RTF_STATE=#{refuseCode}
+        </if>
+        <if test="branchCodes != null and branchCodes.length>0  ">
+			and a.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="branchCodes" 
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="branch != null and branch != ''  " >
+			and a.OWNING_BRANCH= #{branch}
+		</if>    
+		<if test="productCd !=null and productCd !='' ">
+        and a.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="appType !=null and appType!= '' ">
+        and a.APP_TYPE=#{appType}
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+        and a.APP_SOURCE=#{appSource}
+		</if>
+		<if test="org !=null and org!='' ">
+			and F.ORG = #{org}
+		</if>
+	</select>
+
+	<select id="selectMain" resultMap="BaseResultMap" parameterType="map">
+		select a.APP_NO,a.ID_TYPE,a.ID_NO,a.NAME,a.APP_TYPE,a.PRODUCT_CD,a.OWNING_BRANCH,
+		a.APP_SOURCE,b.REFUSE_CODE,b.RTF_STATE,b.REFUSE_DESC,b.OPER,b.CHECK_DATE from TM_APP_MAIN a
+        inner join 
+        (select APP_NO as APP_NO,RTF_STATE || '-' || PRO_NAME as REFUSE_CODE,REFUSE_CODE as REFUSE_DESC,
+        	OPERATOR_ID as OPER,CREATE_DATE as CHECK_DATE,RTF_STATE as RTF_STATE from TM_APP_HISTORY 
+        	where RTF_STATE in ('D10','F06','F09','F16','H10','K15','G15') 
+        <if test="applyRejectStartDate !=null and applyRejectStartDate!= '' and applyRejectEndDate !=null and applyRejectEndDate !='' ">
+        and  CREATE_DATE <![CDATA[>=]]>#{applyRejectStartDate} and CREATE_DATE <![CDATA[<=]]>#{applyRejectEndDate}) b on a.APP_NO=b.APP_NO
+        </if>
+        where 1=1 
+        <if test="refuseCode != null and refuseCode != '' ">
+        and b.RTF_STATE=#{refuseCode}
+        </if>
+        <if test="branchCodes != null and branchCodes.length>0  ">
+			and a.OWNING_BRANCH IN
+			<foreach item="item" index="index" collection="branchCodes" 
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="branch != null and branch != ''  " >
+			and a.OWNING_BRANCH= #{branch}
+		</if>    
+		<if test="productCd !=null and productCd !='' ">
+        and a.PRODUCT_CD=#{productCd}
+		</if>
+		<if test="appType !=null and appType!= '' ">
+        and a.APP_TYPE=#{appType}
+		</if>
+		<if test="appSource !=null and appSource !='' ">
+        and a.APP_SOURCE=#{appSource}
+		</if>
+	</select>
+</mapper>

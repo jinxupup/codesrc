@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTmAppHistory">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppHistory" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="PRO_NUM" property="proNum" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="OB_DECIMAL1" property="obDecimal1" jdbcType="DECIMAL" />
+		<result column="OB_DECIMAL2" property="obDecimal2" jdbcType="DECIMAL" />
+		<result column="OB_DATE1" property="obDate1" jdbcType="TIMESTAMP" />
+		<result column="OB_DATE2" property="obDate2" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 根据参数获取历史信息，支持rtf_state 用in 查询 -->
+	<select id="getAppHistroyByParam" resultMap="BaseResultMap" parameterType="map" >
+		select  ID  , ORG  , APP_NO  ,
+			 NAME  , ID_NO  , PRO_NUM  , PRO_NAME  ,
+			 RTF_STATE  , REFUSE_CODE  , REMARK  , OPERATOR_ID  ,
+			 CREATE_DATE  , JPA_VERSION  , ID_TYPE
+ 		from TM_APP_HISTORY
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="proNum != null and proNum != ''  " >
+			and PRO_NUM = #{proNum,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != ''  " >
+			and PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		<if test="rtfState != null and rtfState != ''  " >
+			and RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+		</if>
+	<!-- 	<if test="rtfState_in != null and rtfState_in != ''  " >
+			and RTF_STATE in (#{rtfState_in,jdbcType=VARCHAR })
+		</if>  -->
+		 <if test="rtfState_in != null and rtfState_in.length>0  ">
+				and RTF_STATE IN
+				<foreach item="item" index="index" collection="rtfState_in" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="obDecimal1 != null and obDecimal1 != ''  " >
+			and OB_DECIMAL1 = #{obDecimal1,jdbcType=DECIMAL }
+		</if>
+		<if test="obDecimal2 != null and obDecimal2 != ''  " >
+			and OB_DECIMAL2 = #{obDecimal2,jdbcType=DECIMAL }
+		</if>
+		<if test="obDate1 != null and obDate1 != ''  " >
+			and OB_DATE1 = #{obDate1,jdbcType=TIMESTAMP }
+		</if>
+		<if test="obDate2 != null and obDate2 != ''  " >
+			and OB_DATE2 = #{obDate2,jdbcType=TIMESTAMP }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

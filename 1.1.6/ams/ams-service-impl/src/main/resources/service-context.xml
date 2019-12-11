@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans default-lazy-init="false"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 占位符 -->
+	<bean id="env" class="com.jjb.unicorn.facility.config.UnicornEnvironmentFactoryBean">
+		<property name="locations" value="#{systemProperties['env.files'] ?: 'classpath:/conf/*.properties'}"/>
+	</bean>
+
+	
+	<import resource="classpath:spring-unicorn-mybatis.xml" />
+	<import resource="classpath*:spring-acl-biz.xml"/>
+	<import resource="classpath*:spring-ams-biz.xml"/>
+	<import resource="classpath*:spring-access.xml"/>
+	<import resource="classpath:service-rpc-context.xml"/>
+	
+	<!-- 所有业务组件 -->
+	<context:component-scan base-package="com.jjb.ams.service,com.jjb.unicorn.support.utils"/>
+	
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true"/>
+	<!-- 配置线程池 -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最少数量 -->
+		<property name="corePoolSize" value="5" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="15" />
+		<!-- 线程池所使用的缓冲队列 -->
+		<property name="queueCapacity" value="50" />
+	</bean>
+
+</beans>

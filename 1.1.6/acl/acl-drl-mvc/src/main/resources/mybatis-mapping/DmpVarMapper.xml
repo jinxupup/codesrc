@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.dmp.mapping.DmpVarMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.dmp.infrastructure.TmDmpVar" >
+		<id column="VAR_TYPE" property="varType" jdbcType="VARCHAR"/>
+		<id column="VAR_CD" property="varCd" jdbcType="VARCHAR"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="VAR_NAME" property="varName" jdbcType="VARCHAR" />
+		<result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+		<result column="OPTION_TYPE" property="optionType" jdbcType="VARCHAR" />
+		<result column="OPTION_PARAM" property="optionParam" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_DMP_VAR_TABLE_FIELD">ORG,VAR_TYPE,VAR_CD,VAR_NAME,DATA_TYPE,OPTION_TYPE,OPTION_PARAM,REMARK,IF_USED,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<sql id="TM_DMP_VAR_TABLE_INSERT_FIELD">ORG,VAR_TYPE,VAR_CD,VAR_NAME,DATA_TYPE,OPTION_TYPE,OPTION_PARAM,REMARK,IF_USED,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,JPA_VERSION</sql>
+
+	<select id="selectByStClass" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_DMP_VAR_TABLE_FIELD" />		
+		from TM_DMP_VAR
+		where 
+		(VAR_TYPE,VAR_CD) in 
+		(
+			select VAR_TYPE,VAR_CD from TM_DMP_STRATEGY_VAR where 
+			ST_CLASS = #{stClass, jdbcType=VARCHAR}
+			<if test="isInput != null and isInput != ''  " >
+				and IS_INPUT = #{isInput,jdbcType=VARCHAR }
+			</if>
+			<if test="isOutput != null and isOutput != ''  " >
+				and IS_OUTPUT = #{isOutput,jdbcType=VARCHAR }
+			</if> 
+		)
+	</select>
+</mapper>

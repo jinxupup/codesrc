@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmProductCardFaceMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmProductCardFace" >
+		<id column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR"/>
+		<id column="CARD_FACE_CD" property="cardFaceCd" jdbcType="VARCHAR"/>
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_PRODUCT_CARD_FACE_TABLE_FIELD">PRODUCT_CD,CARD_FACE_CD,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_PRODUCT_CARD_FACE
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		CARD_FACE_CD = #{cardFaceCd, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmProductCardFace" >
+		insert into TM_PRODUCT_CARD_FACE ( <include refid="TM_PRODUCT_CARD_FACE_TABLE_FIELD" /> )
+		values (  #{productCd,jdbcType=VARCHAR } , #{cardFaceCd,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProductCardFace">
+		update TM_PRODUCT_CARD_FACE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		CARD_FACE_CD = #{cardFaceCd, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmProductCardFace">
+		update TM_PRODUCT_CARD_FACE 
+		<trim prefix="set" suffixOverrides=","> 
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		CARD_FACE_CD = #{cardFaceCd, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_PRODUCT_CARD_FACE_TABLE_FIELD" />		
+		from TM_PRODUCT_CARD_FACE
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		CARD_FACE_CD = #{cardFaceCd, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_PRODUCT_CARD_FACE_TABLE_FIELD" />		
+ 		from TM_PRODUCT_CARD_FACE
+		where 1=1 
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardFaceCd != null and cardFaceCd != ''  " >
+			and CARD_FACE_CD = #{cardFaceCd,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_PRODUCT_CARD_FACE
+		where 1=1 
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="cardFaceCd != null and cardFaceCd != ''  " >
+			and CARD_FACE_CD = #{cardFaceCd,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

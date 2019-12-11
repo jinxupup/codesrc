@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyAbnormalProcessDtoMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyAbnormalProcessDto" >
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR"/>
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
+		<result column="TASK_ID_" property="taskId" jdbcType="VARCHAR" />
+		<result column="PROC_INST_ID_" property="procInstId" jdbcType="VARCHAR" />
+		<result column="TASK_NAME_" property="taskName" jdbcType="VARCHAR" />
+		<result column="TASK_DEF_KEY_" property="taskDefKey" jdbcType="VARCHAR" />
+		<result column="OWNER_" property="owner" jdbcType="VARCHAR" />
+		<result column="ASSIGNEE_" property="assignee" jdbcType="VARCHAR" />
+		<result column="ACT_ID_" property="actId" jdbcType="VARCHAR" />
+		<result column="Exc_Msg" property="excMsg" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="map">
+		SELECT m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, 'TM_APP_MAIN表中存在的申请件，ACT_RU_EXECUTION表中却不存在' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM TM_APP_MAIN m 
+		WHERE (m.RTF_STATE not in ('M05','L05','N05','P05','A05','A20') or m.RTF_STATE is null)
+		AND m.APP_TYPE != 'S'
+		AND not exists (SELECT a.BUSINESS_KEY_ FROM ACT_RU_EXECUTION a where a.business_key_ = m.app_no)
+		<if test="appNo != null and appNo != '' ">
+	    	AND m.APP_NO LIKE '%${appNo}%'
+	    </if>
+	    <if test="rtfState != null and rtfState != '' ">
+	    	AND m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+	    </if>
+	    <if test="idType !=null and idType !='' ">
+	    	AND m.ID_TYPE = #{idType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="idNo != null and idNo != '' ">
+	    	AND m.ID_NO = #{idNo,jdbcType=VARCHAR}
+	    </if>
+		ORDER BY m.APP_NO asc
+	</select>
+	<select id="selectTwo" resultMap="BaseResultMap" parameterType="map">
+		SELECT m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, t.ID_ as TASK_ID_, t.PROC_INST_ID_, t.NAME_ as TASK_NAME_, 
+			t.TASK_DEF_KEY_, t.OWNER_, t.ASSIGNEE_, '同一个申请件在ACT_RU_EXECUTION表中有多条记录' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM TM_APP_MAIN m,ACT_RU_EXECUTION e ,ACT_RU_TASK t
+		WHERE m.APP_NO=e.BUSINESS_KEY_ 
+		AND m.APP_TYPE != 'S'
+		AND e.ID_=t.EXECUTION_ID_
+	    AND e.ID_ in (SELECT EXECUTION_ID_ from ACT_RU_TASK group by EXECUTION_ID_ having count(*)>1) 
+	    <if test="appNo != null and appNo != '' ">
+	    	AND m.APP_NO LIKE '%${appNo}%'
+	    </if>
+	    <if test="rtfState != null and rtfState != '' ">
+	    	AND m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+	    </if>
+	    <if test="idType !=null and idType !='' ">
+	    	AND m.ID_TYPE = #{idType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="idNo != null and idNo != '' ">
+	    	AND m.ID_NO = #{idNo,jdbcType=VARCHAR}
+	    </if>
+		ORDER BY m.APP_NO asc
+	</select>
+	<select id="selectThree" resultMap="BaseResultMap" parameterType="map">
+		SELECT m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, e.PROC_INST_ID_, 'ACT_RU_EXECUTION表中存在的进件，ACT_RU_TASK表中却没有' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM ACT_RU_EXECUTION e, TM_APP_MAIN m 
+		WHERE m.APP_NO=e.BUSINESS_KEY_
+		AND e.ID_ not in (SELECT c.EXECUTION_ID_ from ACT_RU_TASK c )
+		<if test="appNo != null and appNo != '' ">
+	    	AND m.APP_NO LIKE '%${appNo}%'
+	    </if>
+	    <if test="rtfState != null and rtfState != '' ">
+	    	AND m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }  
+	    </if>
+	    <if test="idType !=null and idType !='' ">
+	    	AND m.ID_TYPE = #{idType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="idNo != null and idNo != '' ">
+	    	AND m.ID_NO = #{idNo,jdbcType=VARCHAR}
+	    </if>
+		ORDER BY m.APP_NO asc
+	</select>
+	<select id="selectFour" resultMap="BaseResultMap" parameterType="map">
+		SELECT m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, 'TM_APP_MAIN表中状态不正常的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM TM_APP_MAIN m 
+		WHERE m.RTF_STATE in ('B10','F08','F09','F29','G15','G16','H17','H18','H21','H22','K10','K15')
+		<if test="appNo != null and appNo != '' ">
+	    	AND m.APP_NO LIKE '%${appNo}%'
+	    </if>
+	    <if test="rtfState != null and rtfState != '' ">
+	    	AND m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+	    </if>
+	    <if test="idType !=null and idType !='' ">
+	    	AND m.ID_TYPE = #{idType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="idNo != null and idNo != '' ">
+	    	AND m.ID_NO = #{idNo,jdbcType=VARCHAR}
+	    </if>
+		ORDER BY m.APP_NO asc
+	</select>
+	<select id="selectFive" resultMap="BaseResultMap" parameterType="map">
+		select ORG, APP_NO, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, 
+			'申请主表与工作流表中状态不一致的申请件' as excMsg from (
+			SELECT row_number() over (partition by m.app_no order by m.org) as colum,m.APP_NO,m.ORG, m.RTF_STATE,B.CODE, m.APP_TYPE, m.UPDATE_DATE, 
+				e.PROC_INST_ID_ , e.ACT_ID_, t.ID_ as TASK_ID_,t.NAME_ as TASK_NAME_, t.TASK_DEF_KEY_, t.OWNER_, 
+				t.ASSIGNEE_, '申请主表与工作流表中状态不一致的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m, ACT_RU_EXECUTION e, ACT_RU_TASK t, TM_ACL_DICT b 
+			WHERE m.APP_NO=e.BUSINESS_KEY_ and e.PROC_INST_ID_=t.PROC_INST_ID_ and t.TASK_DEF_KEY_=b.TYPE
+			and (e.ACT_ID_ != t.TASK_DEF_KEY_ or not exists (
+			SELECT CODE FROM TM_ACL_DICT 
+	        WHERE TYPE in ('applyinfo-input-modify','applyinfo-review','applyinfo-personcheck','applyinfo-check',
+	        	'applyinfo-patchbolt','applyinfo-finalaudit','applyinfo-telephone-survey','applyinfo-51cc-risk',
+	        	'applyinfo-credit-check')
+	        and CODE = m.RTF_STATE
+	        ))
+		) m where m.colum=1 
+        <if test="appNo != null and appNo != '' ">
+	    	AND m.APP_NO LIKE '%${appNo}%'
+	    </if>
+	    <if test="rtfState != null and rtfState != '' ">
+	    	AND m.RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+	    </if>
+	    <if test="idType !=null and idType !='' ">
+	    	AND m.ID_TYPE = #{idType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="idNo != null and idNo != '' ">
+	    	AND m.ID_NO = #{idNo,jdbcType=VARCHAR}
+	    </if>
+        ORDER BY m.APP_NO asc
+	</select>
+	<select id="selectByAppNo" resultMap="BaseResultMap" parameterType="map" >
+		SELECT PROC_INST_ID_ from ACT_RU_EXECUTION
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			and BUSINESS_KEY_ = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectTaskIdByProcInstId" resultMap="BaseResultMap" parameterType="map" >
+		select ID_ as TASK_ID_ from ACT_RU_TASK t 
+		where 1=1
+		<if test="procInstId != null and procInstId != '' ">
+			and t.PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</select>
+	<delete id="deleteFromAppAdd" parameterType="map" >
+		delete from TM_APP_ADD
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromAttach" parameterType="map" >
+		delete from TM_APP_CUST_INFO
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromCardface" parameterType="map" >
+		delete from TM_APP_CARDFACE_INFO
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromHistory" parameterType="map" >
+		delete from TM_APP_HISTORY
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromMain" parameterType="map" >
+		delete from TM_APP_MAIN
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromModify" parameterType="map" >
+		delete from TM_APP_MODIFY_HISTORY
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromNode" parameterType="map" >
+		delete from TM_APP_NODE_INFORECORD
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromPrimAnnex" parameterType="map" >
+		delete from TM_APP_PRIM_ANNEX_EVI
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromPrimApp" parameterType="map" >
+		delete from TM_APP_CUST_INFO
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromPrimCard" parameterType="map" >
+		delete from TM_APP_CUST_INFO
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromPrimContact" parameterType="map" >
+		delete from TM_APP_CONTACT
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromAppRfe" parameterType="map" >
+		delete from TM_APP_RFE
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND APP_NO = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromEventSubscr" parameterType="map" >
+		delete from ACT_RU_EVENT_SUBSCR
+		where 1=1
+		<if test="procInstId != null and appNo != '' ">
+			AND PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromExecution" parameterType="map" >
+		delete from ACT_RU_EXECUTION
+		where 1=1
+		<if test="procInstId != null and appNo != '' ">
+			AND PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromIdentitylink" parameterType="map" >
+		delete from ACT_RU_IDENTITYLINK
+		where 1=1
+		<if test="procInstId != null and appNo != '' ">
+			AND PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromIdentitylinkByTaskId" parameterType="map" >
+		delete from ACT_RU_IDENTITYLINK
+		where 1=1
+		<if test="taskId != null and taskId != '' ">
+			AND TASK_ID_ = #{taskId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromRuTask" parameterType="map" >
+		delete from ACT_RU_TASK
+		where 1=1
+		<if test="procInstId != null and appNo != '' ">
+			AND PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="deleteFromVariable" parameterType="map" >
+		delete from ACT_RU_VARIABLE
+		where 1=1
+		<if test="procInstId != null and appNo != '' ">
+			AND PROC_INST_ID_ = #{procInstId, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	
+	<delete id="deleteFromHiProcinst" parameterType="map" >
+		delete from ACT_HI_PROCINST
+		where 1=1
+		<if test="appNo != null and appNo != '' ">
+			AND BUSINESS_KEY_ = #{appNo, jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<select id="selectOneToFive" resultMap="BaseResultMap" parameterType="map">
+	with s(num,num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE) as(
+	select row_number() over (partition by app_no order by id) as num,row_number() over (partition by app_no order by id) as num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from 
+	(
+    select rownumber() over() as id,ORG, APP_NO, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, '申请主表与工作流表中状态不一致的申请件' as excMsg,ID_NO,ID_TYPE from (
+		SELECT row_number() over (partition by m.app_no order by m.org) as colum,m.APP_NO,m.ORG, m.RTF_STATE,B.CODE, m.APP_TYPE, m.UPDATE_DATE, e.PROC_INST_ID_ , e.ACT_ID_, t.ID_ as TASK_ID_,t.NAME_ as TASK_NAME_, t.TASK_DEF_KEY_, t.OWNER_, t.ASSIGNEE_, '申请主表与工作流表中状态不一致的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM TM_APP_MAIN m, ACT_RU_EXECUTION e, ACT_RU_TASK t, TM_ACL_DICT b 
+		WHERE m.APP_NO=e.BUSINESS_KEY_ and e.PROC_INST_ID_=t.PROC_INST_ID_ and t.TASK_DEF_KEY_=b.TYPE
+		and (e.ACT_ID_ != t.TASK_DEF_KEY_ or not exists (
+		SELECT CODE FROM TM_ACL_DICT 
+        WHERE TYPE in ('applyinfo-input-modify','applyinfo-review','applyinfo-personcheck','applyinfo-check','applyinfo-patchbolt','applyinfo-finalaudit','applyinfo-telephone-survey','applyinfo-51cc-risk','applyinfo-credit-check')
+        and CODE = m.RTF_STATE
+        ))) m where m.colum=1 
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,null as PROC_INST_ID_ ,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'TM_APP_MAIN表中状态不正常的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m 
+			WHERE (m.RTF_STATE in ('B10','F08','F09','F29','G15','G16','H17','H18','H21','H22','K10','K15') )
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,e.PROC_INST_ID_,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'ACT_RU_EXECUTION表中存在的进件，ACT_RU_TASK表中却没有' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM ACT_RU_EXECUTION e, TM_APP_MAIN m 
+			WHERE m.APP_NO=e.BUSINESS_KEY_
+			AND e.ID_ not in (SELECT c.EXECUTION_ID_ from ACT_RU_TASK c ) and m.RTF_STATE !='G03'
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, t.ID_ as TASK_ID_,null as ACT_ID_, t.PROC_INST_ID_, t.NAME_ as TASK_NAME_, t.TASK_DEF_KEY_, t.OWNER_, t.ASSIGNEE_, '同一个申请件在ACT_RU_EXECUTION表中有多条记录' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m,ACT_RU_EXECUTION e ,ACT_RU_TASK t
+			WHERE m.APP_NO=e.BUSINESS_KEY_ 
+			AND m.APP_TYPE != 'S'
+			AND e.ID_=t.EXECUTION_ID_
+		    AND e.ID_ in (SELECT EXECUTION_ID_ from ACT_RU_TASK group by EXECUTION_ID_ having count(*)>1) 
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,null as PROC_INST_ID_ ,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'TM_APP_MAIN表中存在的申请件，ACT_RU_EXECUTION表中却不存在' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m 
+			WHERE (m.RTF_STATE not in ('M05','L05','N05','P05','A05','A20') or m.RTF_STATE is null)
+			AND m.APP_TYPE != 'S'
+			AND not exists (SELECT a.BUSINESS_KEY_ FROM ACT_RU_EXECUTION a where a.business_key_ = m.app_no)
+	)
+	) ,
+	t(num,num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE) as (
+	select num,num2,APP_NO,cast(excMsg as varchar(1000)), RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , cast(COALESCE(ACT_ID_,'') as varchar(1000)), cast(COALESCE(TASK_ID_,'') as varchar(1000)),cast(COALESCE(TASK_NAME_,'') as varchar(1000)),cast(COALESCE(TASK_DEF_KEY_,'') as varchar(1000)),OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from s where num=1 and num2 =1
+	union all
+	select t.num+1,t.num2,t.APP_NO,cast(s.excMsg||'/'||t.excMsg as varchar(1000)) excMsg, t.RTF_STATE,t. APP_TYPE, t.UPDATE_DATE, t.PROC_INST_ID_ , cast(s.ACT_ID_||''||t.ACT_ID_ AS VARCHAR(1000)), cast(S.TASK_ID_||''||T.TASK_ID_ as varchar(1000)) TASK_ID_,cast(S.TASK_NAME_||''||T.TASK_NAME_ as varchar(1000)) TASK_NAME_,cast(S.TASK_DEF_KEY_||''||T.TASK_DEF_KEY_ as varchar(1000)) TASK_DEF_KEY_,t.OWNER_,t.ASSIGNEE_,t.ID_NO,t.ID_TYPE from s,t where s.num2=t.num+1 and s.app_no=t.app_no
+	)
+	select * from (
+	select tmp_page.*,rownumber() over() as row_id from (
+	select APP_NO,excMsg , RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from t where t.num= (select max(num) from s where s.app_no = t.app_no)
+	<if test="appNo != null and appNo != '' ">
+    	AND APP_NO LIKE '%${appNo}%'
+    </if>
+    <if test="rtfState != null and rtfState != '' ">
+    	AND RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+    </if>
+    <if test="idType !=null and idType !='' ">
+    	AND ID_TYPE = #{idType,jdbcType=VARCHAR}
+    </if>
+    <if test="idNo != null and idNo != '' ">
+    	AND ID_NO = #{idNo,jdbcType=VARCHAR}
+    </if>
+	ORDER BY APP_NO asc )
+	as tmp_page) where row_id between #{pagesize}*(#{pagenumber}-1)+1 and #{pagesize}*#{pagenumber}
+	
+	</select>
+	<select id="selectOneToFiveCount" resultMap="BaseResultMap" parameterType="map">
+	with s(num,num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE) as(
+	select row_number() over (partition by app_no order by id) as num,row_number() over (partition by app_no order by id) as num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from 
+	(
+    select rownumber() over() as id,ORG, APP_NO, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, '申请主表与工作流表中状态不一致的申请件' as excMsg,ID_NO,ID_TYPE from (
+		SELECT row_number() over (partition by m.app_no order by m.org) as colum,m.APP_NO,m.ORG, m.RTF_STATE,B.CODE, m.APP_TYPE, m.UPDATE_DATE, e.PROC_INST_ID_ , e.ACT_ID_, t.ID_ as TASK_ID_,t.NAME_ as TASK_NAME_, t.TASK_DEF_KEY_, t.OWNER_, t.ASSIGNEE_, '申请主表与工作流表中状态不一致的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+		FROM TM_APP_MAIN m, ACT_RU_EXECUTION e, ACT_RU_TASK t, TM_ACL_DICT b 
+		WHERE m.APP_NO=e.BUSINESS_KEY_ and e.PROC_INST_ID_=t.PROC_INST_ID_ and t.TASK_DEF_KEY_=b.TYPE
+		and (e.ACT_ID_ != t.TASK_DEF_KEY_ or not exists (
+		SELECT CODE FROM TM_ACL_DICT 
+        WHERE TYPE in ('applyinfo-input-modify','applyinfo-review','applyinfo-personcheck','applyinfo-check','applyinfo-patchbolt','applyinfo-finalaudit','applyinfo-telephone-survey','applyinfo-51cc-risk','applyinfo-credit-check')
+        and CODE = m.RTF_STATE
+        ))) m where m.colum=1 
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,null as PROC_INST_ID_ ,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'TM_APP_MAIN表中状态不正常的申请件' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m 
+			WHERE (m.RTF_STATE in ('B10','F08','F09','F29','G15','G16','H17','H18','H21','H22','K10','K15') )
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,e.PROC_INST_ID_,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'ACT_RU_EXECUTION表中存在的进件，ACT_RU_TASK表中却没有' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM ACT_RU_EXECUTION e, TM_APP_MAIN m 
+			WHERE m.APP_NO=e.BUSINESS_KEY_
+			AND e.ID_ not in (SELECT c.EXECUTION_ID_ from ACT_RU_TASK c ) and m.RTF_STATE !='G03'
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE, t.ID_ as TASK_ID_,null as ACT_ID_, t.PROC_INST_ID_, t.NAME_ as TASK_NAME_, t.TASK_DEF_KEY_, t.OWNER_, t.ASSIGNEE_, '同一个申请件在ACT_RU_EXECUTION表中有多条记录' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m,ACT_RU_EXECUTION e ,ACT_RU_TASK t
+			WHERE m.APP_NO=e.BUSINESS_KEY_ 
+			AND m.APP_TYPE != 'S'
+			AND e.ID_=t.EXECUTION_ID_
+		    AND e.ID_ in (SELECT EXECUTION_ID_ from ACT_RU_TASK group by EXECUTION_ID_ having count(*)>1) 
+	union all
+	SELECT rownumber() over() as id,m.ORG, m.APP_NO, m.RTF_STATE, m.APP_TYPE, m.UPDATE_DATE,null as PROC_INST_ID_ ,null as ACT_ID_ ,null as TASK_ID_,null as TASK_NAME_,null as TASK_DEF_KEY_,null as OWNER_,null as ASSIGNEE_, 'TM_APP_MAIN表中存在的申请件，ACT_RU_EXECUTION表中却不存在' as excMsg,m.ID_NO,m.ID_TYPE
+			FROM TM_APP_MAIN m 
+			WHERE (m.RTF_STATE not in ('M05','L05','N05','P05','A05','A20') or m.RTF_STATE is null)
+			AND m.APP_TYPE != 'S'
+			AND not exists (SELECT a.BUSINESS_KEY_ FROM ACT_RU_EXECUTION a where a.business_key_ = m.app_no)
+	)
+	) ,
+	t(num,num2,APP_NO,excMsg, RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE) as (
+	select num,num2,APP_NO,cast(excMsg as varchar(1000)), RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , cast(COALESCE(ACT_ID_,'') as varchar(1000)), cast(COALESCE(TASK_ID_,'') as varchar(1000)),cast(COALESCE(TASK_NAME_,'') as varchar(1000)),cast(COALESCE(TASK_DEF_KEY_,'') as varchar(1000)),OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from s where num=1 and num2 =1
+	union all
+	select t.num+1,t.num2,t.APP_NO,cast(s.excMsg||'/'||t.excMsg as varchar(1000)) excMsg, t.RTF_STATE,t. APP_TYPE, t.UPDATE_DATE, t.PROC_INST_ID_ , cast(s.ACT_ID_||''||t.ACT_ID_ AS VARCHAR(1000)), cast(S.TASK_ID_||''||T.TASK_ID_ as varchar(1000)) TASK_ID_,cast(S.TASK_NAME_||''||T.TASK_NAME_ as varchar(1000)) TASK_NAME_,cast(S.TASK_DEF_KEY_||''||T.TASK_DEF_KEY_ as varchar(1000)) TASK_DEF_KEY_,t.OWNER_,t.ASSIGNEE_,t.ID_NO,t.ID_TYPE from s,t where s.num2=t.num+1 and s.app_no=t.app_no
+	)
+	select * from (
+	select tmp_page.*,rownumber() over() as row_id from (
+	select APP_NO,excMsg , RTF_STATE, APP_TYPE, UPDATE_DATE, PROC_INST_ID_ , ACT_ID_, TASK_ID_,TASK_NAME_,TASK_DEF_KEY_,OWNER_,ASSIGNEE_,ID_NO,ID_TYPE from t where t.num= (select max(num) from s where s.app_no = t.app_no)
+	<if test="appNo != null and appNo != '' ">
+    	AND APP_NO LIKE '%${appNo}%'
+    </if>
+    <if test="rtfState != null and rtfState != '' ">
+    	AND RTF_STATE = #{rtfState,jdbcType=VARCHAR }
+    </if>
+    <if test="idType !=null and idType !='' ">
+    	AND ID_TYPE = #{idType,jdbcType=VARCHAR}
+    </if>
+    <if test="idNo != null and idNo != '' ">
+    	AND ID_NO = #{idNo,jdbcType=VARCHAR}
+    </if>
+	ORDER BY APP_NO asc )
+	as tmp_page) 
+	</select>
+</mapper>

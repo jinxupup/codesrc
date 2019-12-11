@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.jjb.acl</groupId>
+    <artifactId>acl-parent</artifactId>
+    <version>1.1.6-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  
+  <artifactId>acl-access</artifactId>
+  <name>acl-access</name>
+   <packaging>jar</packaging>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+  		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-web-common</artifactId>
+		</dependency>
+  		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-infrastructure</artifactId>
+		</dependency>
+		<dependency>
+	            <groupId>com.jjb.acl</groupId>
+	            <artifactId>acl-facility</artifactId>
+	        </dependency>
+  		
+  	   <!--security deps-->
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-core</artifactId>
+           <version>${shiro.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-spring</artifactId>
+           <version>${shiro.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-web</artifactId>
+           <version>${shiro.version}</version>
+       </dependency>
+       
+       <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-beans</artifactId>
+		</dependency>
+	    <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+  </dependencies>
+</project>

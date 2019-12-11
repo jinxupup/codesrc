@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmNodeMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmNode" >
+		<id column="NODE_CODE" property="nodeCode" jdbcType="VARCHAR"/>
+		<result column="HOST" property="host" jdbcType="VARCHAR" />
+		<result column="PORT" property="port" jdbcType="INTEGER" />
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		<result column="PRIVATE_KEY" property="privateKey" jdbcType="CLOB" />
+		<result column="KEY_PASSWORD" property="keyPassword" jdbcType="VARCHAR" />
+		<result column="PROPERTIES" property="properties" jdbcType="CLOB" />
+		<result column="JSVC" property="jsvc" jdbcType="VARCHAR" />
+		<result column="APP_HOME" property="appHome" jdbcType="VARCHAR" />
+		<result column="JAVA_HOME" property="javaHome" jdbcType="VARCHAR" />
+		<result column="CATALINA_HOME" property="catalinaHome" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_NODE_TABLE_FIELD">NODE_CODE,HOST,PORT,USERNAME,PRIVATE_KEY,KEY_PASSWORD,PROPERTIES,JSVC,APP_HOME,JAVA_HOME,CATALINA_HOME,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_NODE
+		where 
+		NODE_CODE = #{nodeCode, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmNode" >
+		insert into TM_NODE ( <include refid="TM_NODE_TABLE_FIELD" /> )
+		values (  #{nodeCode,jdbcType=VARCHAR } , #{host,jdbcType=VARCHAR } , #{port,jdbcType=INTEGER } ,
+			 #{username,jdbcType=VARCHAR } , #{privateKey,jdbcType=CLOB } , #{keyPassword,jdbcType=VARCHAR } , #{properties,jdbcType=CLOB } ,
+			 #{jsvc,jdbcType=VARCHAR } , #{appHome,jdbcType=VARCHAR } , #{javaHome,jdbcType=VARCHAR } , #{catalinaHome,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmNode">
+		update TM_NODE 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="host != null and host != ''  " >
+			HOST =#{host,jdbcType=VARCHAR },
+		</if>
+		<if test="port != null and port != ''  " >
+			PORT =#{port,jdbcType=INTEGER },
+		</if>
+		<if test="username != null and username != ''  " >
+			USERNAME =#{username,jdbcType=VARCHAR },
+		</if>
+		<if test="privateKey != null and privateKey != ''  " >
+			PRIVATE_KEY =#{privateKey,jdbcType=CLOB },
+		</if>
+		<if test="keyPassword != null and keyPassword != ''  " >
+			KEY_PASSWORD =#{keyPassword,jdbcType=VARCHAR },
+		</if>
+		<if test="properties != null and properties != ''  " >
+			PROPERTIES =#{properties,jdbcType=CLOB },
+		</if>
+		<if test="jsvc != null and jsvc != ''  " >
+			JSVC =#{jsvc,jdbcType=VARCHAR },
+		</if>
+		<if test="appHome != null and appHome != ''  " >
+			APP_HOME =#{appHome,jdbcType=VARCHAR },
+		</if>
+		<if test="javaHome != null and javaHome != ''  " >
+			JAVA_HOME =#{javaHome,jdbcType=VARCHAR },
+		</if>
+		<if test="catalinaHome != null and catalinaHome != ''  " >
+			CATALINA_HOME =#{catalinaHome,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		NODE_CODE = #{nodeCode, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmNode">
+		update TM_NODE 
+		<trim prefix="set" suffixOverrides=","> 
+			HOST =#{host,jdbcType=VARCHAR },		
+			PORT =#{port,jdbcType=INTEGER },		
+			USERNAME =#{username,jdbcType=VARCHAR },		
+			PRIVATE_KEY =#{privateKey,jdbcType=CLOB },		
+			KEY_PASSWORD =#{keyPassword,jdbcType=VARCHAR },		
+			PROPERTIES =#{properties,jdbcType=CLOB },		
+			JSVC =#{jsvc,jdbcType=VARCHAR },		
+			APP_HOME =#{appHome,jdbcType=VARCHAR },		
+			JAVA_HOME =#{javaHome,jdbcType=VARCHAR },		
+			CATALINA_HOME =#{catalinaHome,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		NODE_CODE = #{nodeCode, jdbcType=VARCHAR}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_NODE_TABLE_FIELD" />		
+		from TM_NODE
+		where 
+		NODE_CODE = #{nodeCode, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_NODE_TABLE_FIELD" />		
+ 		from TM_NODE
+		where 1=1 
+		<if test="nodeCode != null and nodeCode != ''  " >
+			and NODE_CODE = #{nodeCode,jdbcType=VARCHAR }
+		</if>
+		<if test="host != null and host != ''  " >
+			and HOST = #{host,jdbcType=VARCHAR }
+		</if>
+		<if test="port != null and port != ''  " >
+			and PORT = #{port,jdbcType=INTEGER }
+		</if>
+		<if test="username != null and username != ''  " >
+			and USERNAME = #{username,jdbcType=VARCHAR }
+		</if>
+		<if test="privateKey != null and privateKey != ''  " >
+			and PRIVATE_KEY = #{privateKey,jdbcType=CLOB }
+		</if>
+		<if test="keyPassword != null and keyPassword != ''  " >
+			and KEY_PASSWORD = #{keyPassword,jdbcType=VARCHAR }
+		</if>
+		<if test="properties != null and properties != ''  " >
+			and PROPERTIES = #{properties,jdbcType=CLOB }
+		</if>
+		<if test="jsvc != null and jsvc != ''  " >
+			and JSVC = #{jsvc,jdbcType=VARCHAR }
+		</if>
+		<if test="appHome != null and appHome != ''  " >
+			and APP_HOME = #{appHome,jdbcType=VARCHAR }
+		</if>
+		<if test="javaHome != null and javaHome != ''  " >
+			and JAVA_HOME = #{javaHome,jdbcType=VARCHAR }
+		</if>
+		<if test="catalinaHome != null and catalinaHome != ''  " >
+			and CATALINA_HOME = #{catalinaHome,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_NODE
+		where 1=1 
+		<if test="nodeCode != null and nodeCode != ''  " >
+			and NODE_CODE = #{nodeCode,jdbcType=VARCHAR }
+		</if>
+		<if test="host != null and host != ''  " >
+			and HOST = #{host,jdbcType=VARCHAR }
+		</if>
+		<if test="port != null and port != ''  " >
+			and PORT = #{port,jdbcType=INTEGER }
+		</if>
+		<if test="username != null and username != ''  " >
+			and USERNAME = #{username,jdbcType=VARCHAR }
+		</if>
+		<if test="privateKey != null and privateKey != ''  " >
+			and PRIVATE_KEY = #{privateKey,jdbcType=CLOB }
+		</if>
+		<if test="keyPassword != null and keyPassword != ''  " >
+			and KEY_PASSWORD = #{keyPassword,jdbcType=VARCHAR }
+		</if>
+		<if test="properties != null and properties != ''  " >
+			and PROPERTIES = #{properties,jdbcType=CLOB }
+		</if>
+		<if test="jsvc != null and jsvc != ''  " >
+			and JSVC = #{jsvc,jdbcType=VARCHAR }
+		</if>
+		<if test="appHome != null and appHome != ''  " >
+			and APP_HOME = #{appHome,jdbcType=VARCHAR }
+		</if>
+		<if test="javaHome != null and javaHome != ''  " >
+			and JAVA_HOME = #{javaHome,jdbcType=VARCHAR }
+		</if>
+		<if test="catalinaHome != null and catalinaHome != ''  " >
+			and CATALINA_HOME = #{catalinaHome,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

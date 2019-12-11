@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="r0000CreateApply" class="com.jjb.ecms.batch.s0000.R0001CreateApply" scope="step"/>
+	
+	<bean id="p0000CreateApply" class="com.jjb.ecms.batch.s0000.P0001CreateApply"/>
+	
+	<bean id="w0000CreateApply" class="com.jjb.unicorn.batch.PropertyDelegateWriter" scope="step">
+		<property name="writers">
+			<map>
+				<entry key="applyFileItemList" value-ref="w00001"/>
+			</map>
+		</property>
+	</bean>   
+	
+	<bean id="w00001" class="com.jjb.unicorn.batch.YakFileItemWriter" scope="step">
+		<!-- <property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/> -->
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.ApplyFileItem"/>
+		<property name="resource" ref="s000000Apply"/>
+	</bean>
+	
+	<bean id="e0000Exporter" class="com.jjb.unicorn.batch.BatchResourceExporter" scope="step">
+		<property name="taskExecutor" ref="asyncTaskExecutor" />
+	    <property name="commandExecutionUtil" ref="yakCommandExecution" />	    
+		<property name="executeCommand" value="#{env.exporterCommand}" />
+		<property name="fileResource">
+			<list>
+				<ref bean="s000000Apply"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

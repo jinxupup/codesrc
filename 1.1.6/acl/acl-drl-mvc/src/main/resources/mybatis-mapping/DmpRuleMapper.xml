@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.dmp.mapping.RuleQueryBeanMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.dmp.engine.bean.RuleQueryBean" >
+	   
+	    <result column="ST_ID" property="stId" jdbcType="INTEGER"/>
+        <result column="ST_NAME" property="stName" jdbcType="VARCHAR" />
+        <result column="ST_REMARK" property="stRemark" jdbcType="VARCHAR" />
+        <result column="ST_CLASS" property="stClass" jdbcType="VARCHAR" />
+        <result column="ST_KEY" property="stKey" jdbcType="VARCHAR" />
+        <result column="ST_IF_USED" property="stIfUsed" jdbcType="VARCHAR" />
+	
+	    <result column="RS_ID" property="rsId" jdbcType="INTEGER"/>
+        <result column="RULE_SET_NAME" property="ruleSetName" jdbcType="VARCHAR" />
+        <result column="RULE_SET_TYPE" property="ruleSetType" jdbcType="VARCHAR" />
+        <result column="RULE_SET_ENABLED" property="ruleSetEnabled" jdbcType="VARCHAR" />
+        <result column="IS_EXCLUSIVE" property="isExclusive" jdbcType="VARCHAR" />
+        <result column="RS_REMARK" property="rsRemark" jdbcType="VARCHAR" />
+	
+		<result column="RULE_ID" property="ruleId" jdbcType="INTEGER"/>
+		<result column="RULE_NAME" property="ruleName" jdbcType="VARCHAR" />
+		<result column="RULE_ENABLED" property="ruleEnabled" jdbcType="VARCHAR" />
+		<result column="RULE_TYPE" property="ruleType" jdbcType="VARCHAR" />
+		<result column="PRIORITY" property="priority" jdbcType="INTEGER" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="RULE_OBJECT" property="ruleObject" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		SELECT ST.ST_ID ST_ID,ST.ST_NAME ST_NAME,ST.ST_CLASS ST_CLASS,ST.ST_KEY ST_KEY,ST.IF_USED ST_IF_USED,
+		RS.RS_ID RS_ID, RS.RULE_SET_NAME RULE_SET_NAME,RS.RULE_SET_TYPE RULE_SET_TYPE, 
+		RS.RULE_SET_ENABLED RULE_SET_ENABLED, RS.IS_EXCLUSIVE IS_EXCLUSIVE,RS.REMARK RS_REMARK,
+		R.RULE_ID RULE_ID,R.RULE_NAME RULE_NAME,R.RULE_ENABLED RULE_ENABLED,R.RULE_TYPE RULE_TYPE,
+		R.PRIORITY PRIORITY,R.REMARK REMARK,R.RULE_OBJECT RULE_OBJECT
+		FROM TM_DMP_RULE R ,TM_DMP_RULESET RS ,TM_DMP_STRATEGY ST
+		WHERE 1=1 AND R.ST_ID = RS.ST_ID AND R.RS_ID = RS.RS_ID AND RS.ST_ID=ST.ST_ID
+		<if test="stId != null and stId != ''  " >
+			and ST_ID = #{stId,jdbcType=INTEGER }
+		</if>
+		<if test="stName != null and stName != ''  " >
+            and ST_NAME = #{stName,jdbcType=INTEGER }
+        </if>
+        <if test="stClass != null and stClass != ''  " >
+            and ST_CLASS = #{stClass,jdbcType=INTEGER }
+        </if>
+        <if test="ruleSetName != null and ruleSetName != ''  " >
+            and RULE_SET_NAME = #{ruleSetName,jdbcType=INTEGER }
+        </if>
+        <if test="ruleSetEnabled != null and ruleSetEnabled != ''  " >
+            and RULE_SET_ENABLED = #{ruleSetEnabled,jdbcType=INTEGER }
+        </if>
+		<if test="isExclusive != null and isExclusive != ''  " >
+			and IS_EXCLUSIVE = #{isExclusive,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleName != null and ruleName != ''  " >
+            and RULE_NAME = #{ruleName,jdbcType=VARCHAR }
+        </if>
+        <if test="ruleEnabled != null and ruleEnabled != ''  " >
+            and RULE_ENABLED = #{ruleEnabled,jdbcType=VARCHAR }
+        </if>
+		<if test="ruleObject != null and ruleObject != ''  " >
+			and RULE_OBJECT like CONCAT(CONCAT('%', #{ruleObject,jdbcType=VARCHAR}), '%') 
+		</if>
+        
+        order by ST_CLASS asc , ST_ID asc,RS_ID asc,PRIORITY desc
+        
+	</select>	
+</mapper>

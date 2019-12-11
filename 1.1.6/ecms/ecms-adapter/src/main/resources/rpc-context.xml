@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xsi:schemaLocation="http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 导入消息队列通用配置  该配置整个项目包括依赖中只要出现一次即可，否则就会出现心跳重复发送问题-->
+	<import resource="classpath:/gmp-sdk-mq-context.xml"/>
+
+	<!-- 消费方，被别的系统调用 -->
+	<bean id="iPadApplyService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="cas.rpc.ipadApply" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.IPadApplyService"/>
+	</bean>
+	<bean id="queryService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="cas.rpc.query" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.QueryService"/>
+	</bean>
+	<bean id="patchResultService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="cas.rpc.patchResp" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.PatchResultService"/>
+	</bean>
+	<!-- 消费方，其他系统(前置)请求我方系统，查询行内征信数据(法院执行人、行内资产信息) -->
+	<bean id="creditInfoAuxTreatService" class="com.jjb.acl.gmp.sdk.ServiceProxyFactoryBean">
+		<property name="queueName" value="cas.rpc.creditInfoAuxTreatService" />
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.CreditInfoAuxTreatService"/>
+	</bean>
+
+	<!-- 生产方，提供服务给别人调用 -->
+	<!-- 推送审批结果给行里或渠道端 -->
+	<bean id="creditSysPushService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="creditSysPushServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.CreditSysPushService"/>
+	</bean>
+	<!-- 调用外部系统服务 -->
+	<bean id="extSystemService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="extSystemServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.ExtSystemService"/>
+	</bean>
+	<!-- 短信发送服务 -->
+	<bean id="messageSendService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="messageSendServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.MessageSendService"/>
+	</bean>
+	<!-- 短信发送服务 -->
+	<bean id="immediatelyBuildCardService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="immediatelyBuildCardServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.ImmediatelyBuildCardService"/>
+	</bean>
+
+	<!-- 外部系统通过MQ调用ecms-adpater服务 -->
+	<bean id="extCallEcmsAdapterService" class="com.jjb.acl.gmp.sdk.ServiceExporter">
+		<property name="service" ref="extCallEcmsAdapterServiceImpl"/>
+		<property name="serviceInterface" value="com.jjb.ecms.service.api.ExtCallEcmsAdapterService"/>
+	</bean>
+
+	<!-- 队列列表，没有就自动创建 -->
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="creditSysPushServiceQueue" name="#{env.instanceName}.ecms.rpc.creditSysPush"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="extSystemServiceQueue" name="#{env.instanceName}.ecms.rpc.extSystemService"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="messageSendServiceQueue" name="#{env.instanceName}.ecms.rpc.messageSendService"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="immediateBuildServiceQueue" name="#{env.instanceName}.ecms.rpc.immediatelyBuildCardService"/>
+	<rabbit:queue queue-arguments="amqpQueueArguments" id="extCallEcmsAdapterServiceQueue" name="#{env.instanceName}.ecms.rpc.extCallEcmsAdapterService"/>
+	<!-- 监听队列 -->
+	<rabbit:listener-container requeue-rejected="false" concurrency="#{env['mqServiceConcurrency']?:1}">
+		<rabbit:listener queues="creditSysPushServiceQueue" ref="creditSysPushService" />
+		<rabbit:listener queues="extSystemServiceQueue" ref="extSystemService" />
+		<rabbit:listener queues="messageSendServiceQueue" ref="messageSendService" />
+		<rabbit:listener queues="immediateBuildServiceQueue" ref="immediatelyBuildCardService" />
+		<rabbit:listener queues="extCallEcmsAdapterServiceQueue" ref="extCallEcmsAdapterService" />
+	</rabbit:listener-container>
+
+</beans>
+

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmLargeScaleStagingMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmLargeScaleStaging" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+		<result column="MARITAL_STATUS" property="maritalStatus" jdbcType="VARCHAR" />
+		<result column="APP_PRODUCTS" property="appProducts" jdbcType="VARCHAR" />
+		<result column="APP_AMOUNT" property="appAmount" jdbcType="DECIMAL" />
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+		<result column="FIRST_CONTACT_NAME" property="firstContactName" jdbcType="VARCHAR" />
+		<result column="FIRST_CONTACT_PHONE" property="firstContactPhone" jdbcType="VARCHAR" />
+		<result column="IMAGE_NUM" property="imageNum" jdbcType="VARCHAR" />
+		<result column="POLICY_RESULT" property="policyResult" jdbcType="VARCHAR" />
+		<result column="RULE_LIST" property="ruleList" jdbcType="VARCHAR" />
+		<result column="REFUSE_CODE" property="refuseCode" jdbcType="VARCHAR" />
+		<result column="WE_CODE" property="weCode" jdbcType="VARCHAR" />
+		<result column="PPTY_PROVINCE" property="pptyProvince" jdbcType="VARCHAR" />
+		<result column="PPTY_CITY" property="pptyCity" jdbcType="VARCHAR" />
+		<result column="PPTY_AREA" property="pptyArea" jdbcType="VARCHAR" />
+		<result column="PPTY_AREA_CODE" property="pptyAreaCode" jdbcType="VARCHAR" />
+		<result column="CHANNEL_TYPE" property="channelType" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_LARGE_SCALE_STAGING_TABLE_FIELD">ID,NAME,ID_TYPE,ID_NO,CELLPHONE,MARITAL_STATUS,APP_PRODUCTS,APP_AMOUNT,COMPANY_NAME,FIRST_CONTACT_NAME,FIRST_CONTACT_PHONE,IMAGE_NUM,POLICY_RESULT,RULE_LIST,REFUSE_CODE,WE_CODE,PPTY_PROVINCE,PPTY_CITY,PPTY_AREA,PPTY_AREA_CODE,CHANNEL_TYPE,CREATE_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_LARGE_SCALE_STAGING_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_LARGE_SCALE_STAGING
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmLargeScaleStaging" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_LARGE_SCALE_STAGING ( <include refid="TM_LARGE_SCALE_STAGING_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{name,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } ,
+			 #{idNo,jdbcType=VARCHAR } , #{cellphone,jdbcType=VARCHAR } , #{maritalStatus,jdbcType=VARCHAR } , #{appProducts,jdbcType=VARCHAR } ,
+			 #{appAmount,jdbcType=DECIMAL } , #{companyName,jdbcType=VARCHAR } , #{firstContactName,jdbcType=VARCHAR } , #{firstContactPhone,jdbcType=VARCHAR } ,
+			 #{imageNum,jdbcType=VARCHAR } , #{policyResult,jdbcType=VARCHAR } , #{ruleList,jdbcType=VARCHAR } , #{refuseCode,jdbcType=VARCHAR } ,
+			 #{weCode,jdbcType=VARCHAR } , #{pptyProvince,jdbcType=VARCHAR } , #{pptyCity,jdbcType=VARCHAR } , #{pptyArea,jdbcType=VARCHAR } ,
+			 #{pptyAreaCode,jdbcType=VARCHAR } , #{channelType,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmLargeScaleStaging">
+		update TM_LARGE_SCALE_STAGING 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="name != null and name != ''  " >
+			NAME =#{name,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			ID_NO =#{idNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			MARITAL_STATUS =#{maritalStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="appProducts != null and appProducts != ''  " >
+			APP_PRODUCTS =#{appProducts,jdbcType=VARCHAR },
+		</if>
+		<if test="appAmount != null and appAmount != ''  " >
+			APP_AMOUNT =#{appAmount,jdbcType=DECIMAL },
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },
+		</if>
+		<if test="firstContactName != null and firstContactName != ''  " >
+			FIRST_CONTACT_NAME =#{firstContactName,jdbcType=VARCHAR },
+		</if>
+		<if test="firstContactPhone != null and firstContactPhone != ''  " >
+			FIRST_CONTACT_PHONE =#{firstContactPhone,jdbcType=VARCHAR },
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },
+		</if>
+		<if test="policyResult != null and policyResult != ''  " >
+			POLICY_RESULT =#{policyResult,jdbcType=VARCHAR },
+		</if>
+		<if test="ruleList != null and ruleList != ''  " >
+			RULE_LIST =#{ruleList,jdbcType=VARCHAR },
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="weCode != null and weCode != ''  " >
+			WE_CODE =#{weCode,jdbcType=VARCHAR },
+		</if>
+		<if test="pptyProvince != null and pptyProvince != ''  " >
+			PPTY_PROVINCE =#{pptyProvince,jdbcType=VARCHAR },
+		</if>
+		<if test="pptyCity != null and pptyCity != ''  " >
+			PPTY_CITY =#{pptyCity,jdbcType=VARCHAR },
+		</if>
+		<if test="pptyArea != null and pptyArea != ''  " >
+			PPTY_AREA =#{pptyArea,jdbcType=VARCHAR },
+		</if>
+		<if test="pptyAreaCode != null and pptyAreaCode != ''  " >
+			PPTY_AREA_CODE =#{pptyAreaCode,jdbcType=VARCHAR },
+		</if>
+		<if test="channelType != null and channelType != ''  " >
+			CHANNEL_TYPE =#{channelType,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmLargeScaleStaging">
+		update TM_LARGE_SCALE_STAGING 
+		<trim prefix="set" suffixOverrides=","> 
+			NAME =#{name,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NO =#{idNo,jdbcType=VARCHAR },		
+			CELLPHONE =#{cellphone,jdbcType=VARCHAR },		
+			MARITAL_STATUS =#{maritalStatus,jdbcType=VARCHAR },		
+			APP_PRODUCTS =#{appProducts,jdbcType=VARCHAR },		
+			APP_AMOUNT =#{appAmount,jdbcType=DECIMAL },		
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },		
+			FIRST_CONTACT_NAME =#{firstContactName,jdbcType=VARCHAR },		
+			FIRST_CONTACT_PHONE =#{firstContactPhone,jdbcType=VARCHAR },		
+			IMAGE_NUM =#{imageNum,jdbcType=VARCHAR },		
+			POLICY_RESULT =#{policyResult,jdbcType=VARCHAR },		
+			RULE_LIST =#{ruleList,jdbcType=VARCHAR },		
+			REFUSE_CODE =#{refuseCode,jdbcType=VARCHAR },		
+			WE_CODE =#{weCode,jdbcType=VARCHAR },		
+			PPTY_PROVINCE =#{pptyProvince,jdbcType=VARCHAR },		
+			PPTY_CITY =#{pptyCity,jdbcType=VARCHAR },		
+			PPTY_AREA =#{pptyArea,jdbcType=VARCHAR },		
+			PPTY_AREA_CODE =#{pptyAreaCode,jdbcType=VARCHAR },		
+			CHANNEL_TYPE =#{channelType,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_LARGE_SCALE_STAGING_TABLE_FIELD" />		
+		from TM_LARGE_SCALE_STAGING
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_LARGE_SCALE_STAGING_TABLE_FIELD" />		
+ 		from TM_LARGE_SCALE_STAGING
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			and MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="appProducts != null and appProducts != ''  " >
+			and APP_PRODUCTS = #{appProducts,jdbcType=VARCHAR }
+		</if>
+		<if test="appAmount != null and appAmount != ''  " >
+			and APP_AMOUNT = #{appAmount,jdbcType=DECIMAL }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="firstContactName != null and firstContactName != ''  " >
+			and FIRST_CONTACT_NAME = #{firstContactName,jdbcType=VARCHAR }
+		</if>
+		<if test="firstContactPhone != null and firstContactPhone != ''  " >
+			and FIRST_CONTACT_PHONE = #{firstContactPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="policyResult != null and policyResult != ''  " >
+			and POLICY_RESULT = #{policyResult,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleList != null and ruleList != ''  " >
+			and RULE_LIST = #{ruleList,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="weCode != null and weCode != ''  " >
+			and WE_CODE = #{weCode,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyProvince != null and pptyProvince != ''  " >
+			and PPTY_PROVINCE = #{pptyProvince,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyCity != null and pptyCity != ''  " >
+			and PPTY_CITY = #{pptyCity,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyArea != null and pptyArea != ''  " >
+			and PPTY_AREA = #{pptyArea,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyAreaCode != null and pptyAreaCode != ''  " >
+			and PPTY_AREA_CODE = #{pptyAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="channelType != null and channelType != ''  " >
+			and CHANNEL_TYPE = #{channelType,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_LARGE_SCALE_STAGING
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="name != null and name != ''  " >
+			and NAME = #{name,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != ''  " >
+			and ID_NO = #{idNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cellphone != null and cellphone != ''  " >
+			and CELLPHONE = #{cellphone,jdbcType=VARCHAR }
+		</if>
+		<if test="maritalStatus != null and maritalStatus != ''  " >
+			and MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="appProducts != null and appProducts != ''  " >
+			and APP_PRODUCTS = #{appProducts,jdbcType=VARCHAR }
+		</if>
+		<if test="appAmount != null and appAmount != ''  " >
+			and APP_AMOUNT = #{appAmount,jdbcType=DECIMAL }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="firstContactName != null and firstContactName != ''  " >
+			and FIRST_CONTACT_NAME = #{firstContactName,jdbcType=VARCHAR }
+		</if>
+		<if test="firstContactPhone != null and firstContactPhone != ''  " >
+			and FIRST_CONTACT_PHONE = #{firstContactPhone,jdbcType=VARCHAR }
+		</if>
+		<if test="imageNum != null and imageNum != ''  " >
+			and IMAGE_NUM = #{imageNum,jdbcType=VARCHAR }
+		</if>
+		<if test="policyResult != null and policyResult != ''  " >
+			and POLICY_RESULT = #{policyResult,jdbcType=VARCHAR }
+		</if>
+		<if test="ruleList != null and ruleList != ''  " >
+			and RULE_LIST = #{ruleList,jdbcType=VARCHAR }
+		</if>
+		<if test="refuseCode != null and refuseCode != ''  " >
+			and REFUSE_CODE = #{refuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="weCode != null and weCode != ''  " >
+			and WE_CODE = #{weCode,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyProvince != null and pptyProvince != ''  " >
+			and PPTY_PROVINCE = #{pptyProvince,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyCity != null and pptyCity != ''  " >
+			and PPTY_CITY = #{pptyCity,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyArea != null and pptyArea != ''  " >
+			and PPTY_AREA = #{pptyArea,jdbcType=VARCHAR }
+		</if>
+		<if test="pptyAreaCode != null and pptyAreaCode != ''  " >
+			and PPTY_AREA_CODE = #{pptyAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="channelType != null and channelType != ''  " >
+			and CHANNEL_TYPE = #{channelType,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

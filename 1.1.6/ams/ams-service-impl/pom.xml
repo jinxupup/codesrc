@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.ams</groupId>
+		<artifactId>ams-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>ams-service-impl</artifactId>
+	<name>ams-Service-Implement-联机服务实现</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-sdk</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- AspectJ 依赖项 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		
+		<!-- <dependency>
+			<groupId>com.ibm.db2</groupId>
+			<artifactId>db2jcc</artifactId>
+			<version>3.59.81</version>$NO-MVN-MAN-VER$
+			<scope>runtime</scope>
+		</dependency> -->
+		<!-- <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/com.jslsolucoes/ojdbc6 -->
+		<dependency>
+			<groupId>com.jslsolucoes</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.1.0</version>
+		</dependency>
+		<!-- 测试相关 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-service-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.ams</groupId>
+			<artifactId>ams-biz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>dependency/</classpathPrefix>
+							<mainClass>com.jjb.unicorn.facility.service.ServiceDaemon</mainClass>
+							<!-- <useUniqueVersions>false</useUniqueVersions> -->
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

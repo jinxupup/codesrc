@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAuditLogMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAuditLog" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="OPERATION_TIME" property="operationTime" jdbcType="TIMESTAMP" />
+		<result column="OPERATION_TYPE" property="operationType" jdbcType="VARCHAR" />
+		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+		<result column="CHANGE_CONTENTS" property="changeContents" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_AUDIT_LOG_TABLE_FIELD">ID,OPERATION_TIME,OPERATION_TYPE,TABLE_NAME,CHANGE_CONTENTS,USER_ID,ORG,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_AUDIT_LOG_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_AUDIT_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAuditLog" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_AUDIT_LOG ( <include refid="TM_AUDIT_LOG_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{operationTime,jdbcType=TIMESTAMP } , #{operationType,jdbcType=VARCHAR } ,
+			 #{tableName,jdbcType=VARCHAR } , #{changeContents,jdbcType=VARCHAR } , #{userId,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAuditLog">
+		update TM_AUDIT_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="operationTime != null and operationTime != ''  " >
+			OPERATION_TIME =#{operationTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="operationType != null and operationType != ''  " >
+			OPERATION_TYPE =#{operationType,jdbcType=VARCHAR },
+		</if>
+		<if test="tableName != null and tableName != ''  " >
+			TABLE_NAME =#{tableName,jdbcType=VARCHAR },
+		</if>
+		<if test="changeContents != null and changeContents != ''  " >
+			CHANGE_CONTENTS =#{changeContents,jdbcType=VARCHAR },
+		</if>
+		<if test="userId != null and userId != ''  " >
+			USER_ID =#{userId,jdbcType=INTEGER },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAuditLog">
+		update TM_AUDIT_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+			OPERATION_TIME =#{operationTime,jdbcType=TIMESTAMP },		
+			OPERATION_TYPE =#{operationType,jdbcType=VARCHAR },		
+			TABLE_NAME =#{tableName,jdbcType=VARCHAR },		
+			CHANGE_CONTENTS =#{changeContents,jdbcType=VARCHAR },		
+			USER_ID =#{userId,jdbcType=INTEGER },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_AUDIT_LOG_TABLE_FIELD" />		
+		from TM_AUDIT_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_AUDIT_LOG_TABLE_FIELD" />		
+ 		from TM_AUDIT_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="operationTime != null and operationTime != ''  " >
+			and OPERATION_TIME = #{operationTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operationType != null and operationType != ''  " >
+			and OPERATION_TYPE = #{operationType,jdbcType=VARCHAR }
+		</if>
+		<if test="tableName != null and tableName != ''  " >
+			and TABLE_NAME = #{tableName,jdbcType=VARCHAR }
+		</if>
+		<if test="changeContents != null and changeContents != ''  " >
+			and CHANGE_CONTENTS = #{changeContents,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_AUDIT_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="operationTime != null and operationTime != ''  " >
+			and OPERATION_TIME = #{operationTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operationType != null and operationType != ''  " >
+			and OPERATION_TYPE = #{operationType,jdbcType=VARCHAR }
+		</if>
+		<if test="tableName != null and tableName != ''  " >
+			and TABLE_NAME = #{tableName,jdbcType=VARCHAR }
+		</if>
+		<if test="changeContents != null and changeContents != ''  " >
+			and CHANGE_CONTENTS = #{changeContents,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

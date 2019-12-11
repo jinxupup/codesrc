@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyInfoQuery">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyInfoQueryDto" >
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR" />
+		<result column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CELLPHONE" property="cellPhone" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="BEGIN_DATE" property="beginDate" jdbcType="TIMESTAMP" />
+		<result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="EMP_PHONE" property="empPhone" jdbcType="VARCHAR" />
+		<result column="SPREADER_NO" property="spreaderNo" jdbcType="VARCHAR" />					
+		<result column="PRE_NO" property="preNo" jdbcType="VARCHAR" />
+		<result column="INPUT_NO" property="inputNo" jdbcType="VARCHAR" />
+		<result column="REVIEW_NO" property="reviewNo" jdbcType="VARCHAR" />
+		<result column="CHECK_NO" property="checkNo" jdbcType="VARCHAR" />
+		<result column="PHONE_NO" property="phoneNo" jdbcType="VARCHAR" />
+		<result column="FINAL_NO" property="finalNo" jdbcType="VARCHAR" />
+		<result column="TASK_OWNER" property="taskOwner" jdbcType="VARCHAR" />
+		<result column="PERSON_CHECK_NO" property="personCheckNo" jdbcType="VARCHAR" />
+		<result column="PATCH_BOLT_NO" property="patchBoltNo" jdbcType="VARCHAR" />
+		<result column="INPUT_DATE" property="inputDate" jdbcType="TIMESTAMP" />
+		<result column="REVIEW_DATE" property="reviewDate" jdbcType="TIMESTAMP" />
+		<result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+		<result column="PHONE_DATE" property="phoneDate" jdbcType="TIMESTAMP" />
+		<result column="FINAL_DATE" property="finalDate" jdbcType="TIMESTAMP" />
+		<result column="PERSON_CHECK_DATE" property="personCheckDate" jdbcType="TIMESTAMP" />
+		<result column="PATCH_BOLT_DATE" property="patchBoltDate" jdbcType="TIMESTAMP" />
+		<result column="ACC_LMT" property="accLmt" jdbcType="DECIMAL" />
+		<result column="SPREADER_SUP_CODE" property="spreaderSupCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_TEAM_CODE" property="spreaderTeamCode" jdbcType="VARCHAR" />
+		<result column="SPREADER_AREA_CODE" property="spreaderAreaCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectMain" resultMap="BaseResultMap" parameterType="map">
+		select * from
+		(SELECT a1.*  from (SELECT a.acc_lmt,a.app_no, a.app_source, a.rtf_state, a.product_cd,  b.id_type, b.id_no,b.cellPhone,b.name,
+		b.cust_type,b.corp_name, b.emp_phone, c.spreader_no,c.SPREADER_SUP_CODE,c.SPREADER_TEAM_CODE,c.SPREADER_AREA_CODE,card.card_no,a.create_date,a.task_owner,
+		h1.operator_id as input_no, h2.operator_id as review_no,h3.operator_id as check_no, h4.operator_id as phone_no,
+		h5.operator_id as final_no,h6.operator_id as patch_bolt_no, h7.operator_id as person_check_no,h8.operator_id as pre_no,
+		h1.create_date as input_date, h2.create_date as review_date, h3.create_date as check_date, h4.create_date as phone_date,
+		h5.create_date as final_date, h6.create_date as patch_bolt_date, h7.create_date as person_check_date,h8.create_date as pre_date,row_number()over(partition by a.app_no order by h1.create_date desc) as aaa
+		FROM tm_app_main a
+		left join TM_APP_CUST_INFO b on a.app_no=b.app_no
+		left join Tm_App_Prim_Card_Info c on a.app_no=c.app_no
+		left join tm_mir_card card on a.app_no = card.app_no
+		left join (SELECT HH1.APP_NO,HH1.OPERATOR_ID,HH1.CREATE_DATE FROM TM_APP_HISTORY HH1 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('A05','A10','A20') GROUP BY APP_NO) HHH1 WHERE HH1.APP_NO =HHH1.APP_NO AND HH1.CREATE_DATE=HHH1.CREATE_DATE )				h1 on a.app_no=h1.app_no
+		left join (SELECT HH2.APP_NO,HH2.OPERATOR_ID,HH2.CREATE_DATE FROM TM_APP_HISTORY HH2 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('B05','B10','B15') GROUP BY APP_NO) HHH2 WHERE HH2.APP_NO =HHH2.APP_NO AND HH2.CREATE_DATE=HHH2.CREATE_DATE ) 				h2 on a.app_no=h2.app_no
+		left join (SELECT HH3.APP_NO,HH3.OPERATOR_ID,HH3.CREATE_DATE FROM TM_APP_HISTORY HH3 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('F05','F06','F07','F08','F10') GROUP BY APP_NO) HHH3 WHERE HH3.APP_NO =HHH3.APP_NO AND HH3.CREATE_DATE=HHH3.CREATE_DATE )	h3 on a.app_no=h3.app_no
+		left join (SELECT HH4.APP_NO,HH4.OPERATOR_ID,HH4.CREATE_DATE FROM TM_APP_HISTORY HH4 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('F15','F16','F18','F20','F21') GROUP BY APP_NO) HHH4 WHERE HH4.APP_NO =HHH4.APP_NO AND HH4.CREATE_DATE=HHH4.CREATE_DATE) 	h4 on a.app_no=h4.app_no
+		left join (SELECT HH5.APP_NO,HH5.OPERATOR_ID,HH5.CREATE_DATE FROM TM_APP_HISTORY HH5 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('K05','K08','K18','K10','K15') GROUP BY APP_NO) HHH5 WHERE HH5.APP_NO =HHH5.APP_NO AND HH5.CREATE_DATE=HHH5.CREATE_DATE ) 	h5 on a.app_no=h5.app_no
+		left join (SELECT HH6.APP_NO,HH6.OPERATOR_ID,HH6.CREATE_DATE FROM TM_APP_HISTORY HH6 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('G05','G10','G15') GROUP BY APP_NO) HHH6 WHERE HH6.APP_NO =HHH6.APP_NO AND HH6.CREATE_DATE=HHH6.CREATE_DATE )				h6 on a.app_no=h6.app_no
+		left join (SELECT HH7.APP_NO,HH7.OPERATOR_ID,HH7.CREATE_DATE FROM TM_APP_HISTORY HH7 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('E12','E14','E15') GROUP BY APP_NO) HHH7 WHERE HH7.APP_NO =HHH7.APP_NO AND HH7.CREATE_DATE=HHH7.CREATE_DATE)				h7 on a.app_no=h7.app_no
+		left join (SELECT HH8.APP_NO,HH8.OPERATOR_ID,HH8.CREATE_DATE FROM TM_APP_HISTORY HH8 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('B16','B20') GROUP BY APP_NO) HHH8 WHERE HH8.APP_NO =HHH8.APP_NO AND HH8.CREATE_DATE=HHH8.CREATE_DATE)						h8 on a.app_no=h8.app_no
+		WHERE a.org=b.org AND a.app_type IN('A','B') )  a1 where a1.aaa =1
+		UNION ALL
+		SELECT a1.*  from (SELECT a.acc_lmt,a.app_no, a.app_source, a.rtf_state, a.product_cd,  b.id_type, b.id_no,b.cellPhone, b.name,
+		b.cust_type,b.corp_name, b.emp_phone, c.spreader_no,c.SPREADER_SUP_CODE,c.SPREADER_TEAM_CODE,c.SPREADER_AREA_CODE,card.card_no,a.create_date,a.task_owner,
+		h1.operator_id as input_no, h2.operator_id as review_no,h3.operator_id as check_no, h4.operator_id as phone_no,
+		h5.operator_id as final_no, h6.operator_id as patch_bolt_no, h7.operator_id as person_check_no,h8.operator_id as pre_no,
+		h1.create_date as input_date, h2.create_date as review_date, h3.create_date as check_date, h4.create_date as phone_date,
+		h5.create_date as final_date, h6.create_date as patch_bolt_date, h7.create_date as person_check_date,h8.create_date as pre_date,row_number()over(partition by a.app_no order by h1.create_date desc) as aaa
+		FROM tm_app_main a
+		left join TM_APP_CUST_INFO b on a.app_no=b.app_no
+		left join Tm_App_Prim_Card_Info c on a.app_no=c.app_no
+		left join tm_mir_card card on a.app_no = card.app_no
+		left join (SELECT HH1.APP_NO,HH1.OPERATOR_ID,HH1.CREATE_DATE FROM TM_APP_HISTORY HH1 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('A05','A10','A20') GROUP BY APP_NO) HHH1 WHERE HH1.APP_NO =HHH1.APP_NO AND HH1.CREATE_DATE=HHH1.CREATE_DATE )				h1 on a.app_no=h1.app_no
+		left join (SELECT HH2.APP_NO,HH2.OPERATOR_ID,HH2.CREATE_DATE FROM TM_APP_HISTORY HH2 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('B05','B10','B15') GROUP BY APP_NO) HHH2 WHERE HH2.APP_NO =HHH2.APP_NO AND HH2.CREATE_DATE=HHH2.CREATE_DATE ) 				h2 on a.app_no=h2.app_no
+		left join (SELECT HH3.APP_NO,HH3.OPERATOR_ID,HH3.CREATE_DATE FROM TM_APP_HISTORY HH3 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('F05','F06','F07','F08','F10') GROUP BY APP_NO) HHH3 WHERE HH3.APP_NO =HHH3.APP_NO AND HH3.CREATE_DATE=HHH3.CREATE_DATE )	h3 on a.app_no=h3.app_no
+		left join (SELECT HH4.APP_NO,HH4.OPERATOR_ID,HH4.CREATE_DATE FROM TM_APP_HISTORY HH4 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('F15','F16','F18','F20','F21') GROUP BY APP_NO) HHH4 WHERE HH4.APP_NO =HHH4.APP_NO AND HH4.CREATE_DATE=HHH4.CREATE_DATE) 	h4 on a.app_no=h4.app_no
+		left join (SELECT HH5.APP_NO,HH5.OPERATOR_ID,HH5.CREATE_DATE FROM TM_APP_HISTORY HH5 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('K05','K08','K18','K10','K15') GROUP BY APP_NO) HHH5 WHERE HH5.APP_NO =HHH5.APP_NO AND HH5.CREATE_DATE=HHH5.CREATE_DATE ) 	h5 on a.app_no=h5.app_no
+		left join (SELECT HH6.APP_NO,HH6.OPERATOR_ID,HH6.CREATE_DATE FROM TM_APP_HISTORY HH6 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('G05','G10','G15') GROUP BY APP_NO) HHH6 WHERE HH6.APP_NO =HHH6.APP_NO AND HH6.CREATE_DATE=HHH6.CREATE_DATE )				h6 on a.app_no=h6.app_no
+		left join (SELECT HH7.APP_NO,HH7.OPERATOR_ID,HH7.CREATE_DATE FROM TM_APP_HISTORY HH7 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('E12','E14','E15') GROUP BY APP_NO) HHH7 WHERE HH7.APP_NO =HHH7.APP_NO AND HH7.CREATE_DATE=HHH7.CREATE_DATE)				h7 on a.app_no=h7.app_no
+		left join (SELECT HH8.APP_NO,HH8.OPERATOR_ID,HH8.CREATE_DATE FROM TM_APP_HISTORY HH8 ,
+		(SELECT APP_NO,MAX(CREATE_DATE) CREATE_DATE FROM TM_APP_HISTORY WHERE RTF_STATE IN ('B16','B20') GROUP BY APP_NO) HHH8 WHERE HH8.APP_NO =HHH8.APP_NO AND HH8.CREATE_DATE=HHH8.CREATE_DATE)						h8 on a.app_no=h8.app_no
+		WHERE a.org=b.org AND a.app_type IN('A','S'))  a1 where a1.aaa =1
+		) t where 1=1
+		<if test="appNo != null and appNo != '' " >
+			AND t.APP_NO LIKE CONCAT(CONCAT('%',#{appNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="appSource != null and appSource != '' " >
+			AND t.APP_SOURCE= #{appSource,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderSupCode != null and spreaderSupCode != '' " >
+			AND t.SPREADER_SUP_CODE= #{spreaderSupCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderTeamCode != null and spreaderTeamCode != '' " >
+			AND t.SPREADER_TEAM_CODE= #{spreaderTeamCode,jdbcType=VARCHAR }
+		</if>
+		<if test="spreaderAreaCode != null and spreaderAreaCode != '' " >
+			AND t.SPREADER_AREA_CODE= #{spreaderAreaCode,jdbcType=VARCHAR }
+		</if>
+		<if test="custType != null and custType != '' " >
+			AND t.CUST_TYPE= #{custType,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != '' " >
+			AND t.ID_TYPE= #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNo != null and idNo != '' " >
+			AND t.ID_NO LIKE CONCAT(CONCAT('%',#{idNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="cellPhone != null and cellPhone != '' " >
+			AND t.CELLPHONE LIKE CONCAT(CONCAT('%',#{cellPhone,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="name != null and name != '' " >
+			AND t.NAME LIKE CONCAT(CONCAT('%',#{name,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="rtfState != null and rtfState != '' " >
+			AND t.RTF_STATE IN
+			<foreach item="item" index="index" collection="rtfState"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productCd != null and productCd  != '' " >
+			AND t.PRODUCT_CD= #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="corpName != null and corpName != '' " >
+			AND t.CORP_NAME LIKE CONCAT(CONCAT('%',#{corpName,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="empPhone != null and empPhone  != '' " >
+			AND t.EMP_PHONE  LIKE CONCAT(CONCAT('%',#{empPhone,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="spreaderNo != null and spreaderNo  != '' " >
+			AND t.SPREADER_NO LIKE CONCAT(CONCAT('%',#{spreaderNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="preNo != null and preNo  != '' " >
+            AND t.PRE_NO LIKE CONCAT(CONCAT('%',#{preNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="inputNo != null and inputNo  != '' " >
+			AND t.INPUT_NO LIKE CONCAT(CONCAT('%',#{inputNo,jdbcType=VARCHAR }),'%')
+		</if>
+
+		<if test="reviewNo != null and reviewNo  != '' " >
+			AND t.REVIEW_NO LIKE CONCAT(CONCAT('%',#{reviewNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="checkNo != null and checkNo  != '' " >
+			AND t.CHECK_NO LIKE CONCAT(CONCAT('%',#{checkNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="phoneNo != null and phoneNo  != '' " >
+			AND t.PHONE_NO LIKE CONCAT(CONCAT('%',#{phoneNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="finalNo != null and finalNo  != '' " >
+			AND t.FINAL_NO LIKE CONCAT(CONCAT('%',#{finalNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="patchBoltNo != null and patchBoltNo  != '' " >
+			AND t.PATCH_BOLT_NO LIKE CONCAT(CONCAT('%',#{patchBoltNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="personCheckNo != null and personCheckNo  != '' " >
+			AND t.PERSON_CHECK_NO LIKE CONCAT(CONCAT('%',#{personCheckNo,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="taskOwner != null and taskOwner  != '' " >
+			AND t.TASK_OWNER LIKE CONCAT(CONCAT('%',#{taskOwner,jdbcType=VARCHAR }),'%')
+		</if>
+		<if test="beginDate != null and beginDate != '' ">
+			AND t.create_date <![CDATA[ >= ]]> #{beginDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			AND t.create_date <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="_SORT_ORDER != null and _SORT_ORDER != ''  and  _SORT_NAME !=null  and  _SORT_NAME !=''" >
+			<if  test="_SORT_NAME='CREATE_DATE'">
+				ORDER BY  t.CREATE_DATE  ${_SORT_ORDER}
+			</if>
+			<if test="_SORT_NAME !='CREATE_DATE'">
+				ORDER BY  ${_SORT_NAME} ${_SORT_ORDER}
+			</if>
+		</if>
+		<if test="_SORT_ORDER == null or _SORT_ORDER  == ''  or  _SORT_NAME ==null  or  _SORT_NAME ==''" >
+			ORDER BY    t.APP_NO   desc
+		</if>
+	</select>
+
+</mapper>

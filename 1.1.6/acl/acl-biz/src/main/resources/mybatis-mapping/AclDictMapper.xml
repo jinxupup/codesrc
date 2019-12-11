@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.biz.TmAclDict" >
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclDict" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+		<result column="VALUE" property="value" jdbcType="VARCHAR" />
+		<result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+		<result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+		<result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="IF_CAN_DEL" property="ifCanDel" jdbcType="VARCHAR" />
+		<result column="CATAGORY" property="catagory" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+
+	  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+			select  ID  , ORG  , TYPE  ,
+				 TYPE_NAME  , CODE  , CODE_NAME  , VALUE  ,
+				 VALUE2  , VALUE3  , VALUE4  , REMARK  ,
+				 SORT  , IF_USED  , IF_CAN_DEL  , CATAGORY  ,
+				 CREATE_DATE  , CREATE_BY  , UPDATE_DATE  , UPDATE_BY  ,
+				 JPA_VERSION 		
+	 		from TM_ACL_DICT
+			where 1=1 
+			<if test="id != null " >
+				and ID = #{id,jdbcType=INTEGER }
+			</if>
+			<if test="org != null " >
+				and ORG = #{org,jdbcType=VARCHAR }
+			</if>
+			<if test="type != null and type !=''" >
+				and TYPE = #{type,jdbcType=VARCHAR }
+			</if>
+			<if test="notinType != null ">
+				AND TYPE NOT IN 
+		        <foreach item="item" index="index" collection="notinType"  open="(" separator="," close=")"> 
+		             #{item}
+		        </foreach>
+			</if>
+			<if test="typeName != null and typeName !='' " >
+				and TYPE_NAME like '%${typeName}%'
+			</if>
+			<if test="code != null and code !='' " >
+				and CODE like '%${code}%'
+			</if>
+			<if test="codeName != null and  codeName!='' " >
+				and CODE_NAME like '%${codeName}%' 
+			</if>
+			<if test="value != null " >
+				and VALUE = #{value,jdbcType=VARCHAR }
+			</if>
+			<if test="value2 != null " >
+				and VALUE2 = #{value2,jdbcType=VARCHAR }
+			</if>
+			<if test="value3 != null " >
+				and VALUE3 = #{value3,jdbcType=VARCHAR }
+			</if>
+			<if test="value4 != null " >
+				and VALUE4 = #{value4,jdbcType=VARCHAR }
+			</if>
+			<if test="remark != null " >
+				and REMARK = #{remark,jdbcType=VARCHAR }
+			</if>
+			<if test="sort != null " >
+				and SORT = #{sort,jdbcType=INTEGER }
+			</if>
+			<if test="ifUsed != null " >
+				and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+			</if>
+			<if test="ifCanDel != null " >
+				and IF_CAN_DEL = #{ifCanDel,jdbcType=VARCHAR }
+			</if>
+			<if test="catagory != null " >
+				and CATAGORY = #{catagory,jdbcType=VARCHAR }
+			</if>
+			<if test="createDate != null " >
+				and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+			</if>
+			<if test="createBy != null " >
+				and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+			</if>
+			<if test="updateDate != null " >
+				and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+			</if>
+			<if test="updateBy != null " >
+				and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+			</if>
+			<if test="version != null " >
+				and JPA_VERSION = #{version,jdbcType=INTEGER }
+			</if>
+			<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+				<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+					order by ${_SORT_NAME} ${_SORT_ORDER} 
+				</if>
+			</if>
+		</select>
+		<select id="selectGroupType" resultMap="BaseResultMap" parameterType="map" >
+			select  TYPE , TYPE_NAME  	
+	 		from TM_ACL_DICT
+			where 1=1 
+			<if test="org != null " >
+				and ORG = #{org,jdbcType=VARCHAR }
+			</if>
+			group by TYPE,TYPE_NAME
+			order by TYPE ASC,TYPE_NAME ASC
+		</select>
+
+	<select id="selectOrderDictByValueAndSort" resultMap="BaseResultMap" parameterType="map" >
+		select  ID  , ORG  , TYPE  ,
+		TYPE_NAME  , CODE  , CODE_NAME  , VALUE  ,
+		VALUE2  , VALUE3  , VALUE4  , REMARK  ,
+		SORT  , IF_USED  , IF_CAN_DEL  , CATAGORY  ,
+		CREATE_DATE  , CREATE_BY  , UPDATE_DATE  , UPDATE_BY  ,
+		JPA_VERSION
+		from TM_ACL_DICT
+		where 1=1
+		<if test="id != null " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="type != null and type !=''" >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="typeName != null and typeName !='' " >
+			and TYPE_NAME like '%${typeName}%'
+		</if>
+		<if test="code != null and code !='' " >
+			and CODE like '%${code}%'
+		</if>
+		<if test="codeName != null and  codeName!='' " >
+			and CODE_NAME like '%${codeName}%'
+		</if>
+		<if test="value != null " >
+			and VALUE = #{value,jdbcType=VARCHAR }
+		</if>
+		<if test="value2 != null " >
+			and VALUE2 = #{value2,jdbcType=VARCHAR }
+		</if>
+		<if test="value3 != null " >
+			and VALUE3 = #{value3,jdbcType=VARCHAR }
+		</if>
+		<if test="value4 != null " >
+			and VALUE4 = #{value4,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="sort != null " >
+			and SORT = #{sort,jdbcType=INTEGER }
+		</if>
+		<if test="ifUsed != null " >
+			and IF_USED = #{ifUsed,jdbcType=VARCHAR }
+		</if>
+		<if test="ifCanDel != null " >
+			and IF_CAN_DEL = #{ifCanDel,jdbcType=VARCHAR }
+		</if>
+		<if test="catagory != null " >
+			and CATAGORY = #{catagory,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createBy != null " >
+			and CREATE_BY = #{createBy,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateBy != null " >
+			and UPDATE_BY = #{updateBy,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+				order by VALUE2,SORT
+	</select>
+
+</mapper>

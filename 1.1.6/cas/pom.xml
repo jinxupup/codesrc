@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.unicorn</groupId>
+		<artifactId>unicorn-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.jjb.cas</groupId>
+	<artifactId>cas-parent</artifactId>
+	<version>1.1.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>cas - 申请处理系统</name>
+
+
+	<modules>
+		<!-- <module>cas-mybatis-infrastructure</module>
+		<module>ecms-facility</module> -->
+		<module>cas-biz</module>
+		<module>cas-app</module>
+		<module>cas-batch</module>
+		<!-- <module>cas-service-api</module> -->
+		<module>cas-service-impl</module>
+		<module>cas-web</module>
+	</modules>
+
+	<scm>
+		<connection>scm:svn:https://10.109.2.212/svn/jjb-xyk/code_src/cas/1.0.2</connection>
+		<developerConnection>scm:svn:https://10.109.2.212/svn/jjb-xyk/code_src/cas/1.0.2</developerConnection>
+	</scm>
+
+	<properties>
+	    <java.version>1.8</java.version>
+		<jyd.version>1.1.6-SNAPSHOT</jyd.version>
+		<ecms.version>1.1.6-SNAPSHOT</ecms.version>
+		<unicorn.version>1.1.6-SNAPSHOT</unicorn.version>
+		<acl.version>1.1.6-SNAPSHOT</acl.version>
+		<activiti-version>5.14</activiti-version>
+		<activiti-engine.version>5.14</activiti-engine.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- cas依赖 -->
+			<dependency>
+				<groupId>com.jjb.cas</groupId>
+				<artifactId>cas-biz</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.cas</groupId>
+				<artifactId>cas-app</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.cas</groupId>
+				<artifactId>cas-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.jjb.cas</groupId>
+				<artifactId>cas-service-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- 电子信贷基础服务 -->
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-mybatis-infrastructure</artifactId>
+				<version>${ecms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-facility</artifactId>
+				<version>${ecms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-service-api</artifactId>
+				<version>${ecms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.ecms</groupId>
+				<artifactId>ecms-biz</artifactId>
+				<version>${ecms.version}</version>
+			</dependency>
+
+			<!-- 工作流依赖 -->
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-engine</artifactId>
+				<version>${activiti-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-spring</artifactId>
+				<version>${activiti-version}</version>
+			</dependency>
+			<!-- acl- gmp依赖 -->
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-api</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-gmp-sdk</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<!-- unicorn 基础架构依赖 -->
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-facility</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-infrastructure</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-dao</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-service-impl</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-web-common</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<!-- <dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-dubbo-ext</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-cache</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency> -->
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-batch</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.unicorn</groupId>
+				<artifactId>unicorn-batch-api</artifactId>
+				<version>${unicorn.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-access</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jjb.acl</groupId>
+				<artifactId>acl-biz</artifactId>
+				<version>${acl.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- 所有的项目都要用到的依赖项 -->
+	<dependencies>
+	</dependencies>
+
+</project>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.TmDitDicMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmDitDic" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="DIC_TYPE" property="dicType" jdbcType="VARCHAR" />
+		<result column="TAB_NAME" property="tabName" jdbcType="VARCHAR" />
+		<result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+		<result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+		<result column="IF_USED" property="ifUsed" jdbcType="VARCHAR" />
+		<result column="IF_CAN_DEL" property="ifCanDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_DIT_DIC_TABLE_FIELD">ID,ORG,DIC_TYPE,TAB_NAME,FORM_NAME,ITEM_NAME,REMARK,JPA_VERSION,TYPE_NAME,IF_USED,IF_CAN_DEL</sql>
+
+	<select id="selectGroupType" resultMap="BaseResultMap" parameterType="map" >
+		SELECT
+			DIC_TYPE,
+			TYPE_NAME 
+		FROM
+			TM_DIT_DIC 
+		WHERE 1=1 
+		<if test="org != null " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		GROUP BY DIC_TYPE,TYPE_NAME 
+		ORDER BY DIC_TYPE,TYPE_NAME ASC
+	</select>
+	<select id="selectListPage" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_DIT_DIC_TABLE_FIELD" />
+		from TM_DIT_DIC
+		where DIC_TYPE='autoTransfer'
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER}
+			</if>
+		</if>
+
+	</select>
+
+</mapper>

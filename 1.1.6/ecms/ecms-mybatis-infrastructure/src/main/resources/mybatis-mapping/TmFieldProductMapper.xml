@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmFieldProductMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmFieldProduct" >
+		<id column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR"/>
+		<id column="FIELD_EN" property="fieldEn" jdbcType="VARCHAR"/>
+		<result column="FIELD_REGION" property="fieldRegion" jdbcType="VARCHAR" />
+		<result column="FIELD_SORT" property="fieldSort" jdbcType="INTEGER" />
+		<result column="IF_REQUIRED_ITEM" property="ifRequiredItem" jdbcType="VARCHAR" />
+		<result column="IF_REVIEW_ITEM" property="ifReviewItem" jdbcType="VARCHAR" />
+		<result column="REVIEW_SORT" property="reviewSort" jdbcType="INTEGER" />
+		<result column="IS_INPUT" property="isInput" jdbcType="VARCHAR" />
+		<result column="IS_REVIEW" property="isReview" jdbcType="VARCHAR" />
+		<result column="VALUE1" property="value1" jdbcType="VARCHAR" />
+		<result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+		<result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+		<result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+		<result column="VALUE5" property="value5" jdbcType="VARCHAR" />
+		<result column="OB_TEXT1" property="obText1" jdbcType="VARCHAR" />
+		<result column="OB_TEXT2" property="obText2" jdbcType="VARCHAR" />
+		<result column="OB_TEXT3" property="obText3" jdbcType="VARCHAR" />
+		<result column="OB_TEXT4" property="obText4" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_FIELD_PRODUCT_TABLE_FIELD">PRODUCT_CD,FIELD_EN,FIELD_REGION,FIELD_SORT,IF_REQUIRED_ITEM,IF_REVIEW_ITEM,REVIEW_SORT,IS_INPUT,IS_REVIEW,VALUE1,VALUE2,VALUE3,VALUE4,VALUE5,OB_TEXT1,OB_TEXT2,OB_TEXT3,OB_TEXT4,REMARK,CREATE_USER,CREATE_DATE,JPA_VERSION</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_FIELD_PRODUCT
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		FIELD_EN = #{fieldEn, jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmFieldProduct" >
+		insert into TM_FIELD_PRODUCT ( <include refid="TM_FIELD_PRODUCT_TABLE_FIELD" /> )
+		values (  #{productCd,jdbcType=VARCHAR } , #{fieldEn,jdbcType=VARCHAR } , #{fieldRegion,jdbcType=VARCHAR } ,
+			 #{fieldSort,jdbcType=INTEGER } , #{ifRequiredItem,jdbcType=VARCHAR } , #{ifReviewItem,jdbcType=VARCHAR } , #{reviewSort,jdbcType=INTEGER } ,
+			 #{isInput,jdbcType=VARCHAR } , #{isReview,jdbcType=VARCHAR } , #{value1,jdbcType=VARCHAR } , #{value2,jdbcType=VARCHAR } ,
+			 #{value3,jdbcType=VARCHAR } , #{value4,jdbcType=VARCHAR } , #{value5,jdbcType=VARCHAR } , #{obText1,jdbcType=VARCHAR } ,
+			 #{obText2,jdbcType=VARCHAR } , #{obText3,jdbcType=VARCHAR } , #{obText4,jdbcType=VARCHAR } , #{remark,jdbcType=VARCHAR } ,
+			 #{createUser,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmFieldProduct">
+		update TM_FIELD_PRODUCT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="fieldRegion != null and fieldRegion != ''  " >
+			FIELD_REGION =#{fieldRegion,jdbcType=VARCHAR },
+		</if>
+		<if test="fieldSort != null and fieldSort != ''  " >
+			FIELD_SORT =#{fieldSort,jdbcType=INTEGER },
+		</if>
+		<if test="ifRequiredItem != null and ifRequiredItem != ''  " >
+			IF_REQUIRED_ITEM =#{ifRequiredItem,jdbcType=VARCHAR },
+		</if>
+		<if test="ifReviewItem != null and ifReviewItem != ''  " >
+			IF_REVIEW_ITEM =#{ifReviewItem,jdbcType=VARCHAR },
+		</if>
+		<if test="reviewSort != null and reviewSort != ''  " >
+			REVIEW_SORT =#{reviewSort,jdbcType=INTEGER },
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			IS_INPUT =#{isInput,jdbcType=VARCHAR },
+		</if>
+		<if test="isReview != null and isReview != ''  " >
+			IS_REVIEW =#{isReview,jdbcType=VARCHAR },
+		</if>
+		<if test="value1 != null and value1 != ''  " >
+			VALUE1 =#{value1,jdbcType=VARCHAR },
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			VALUE2 =#{value2,jdbcType=VARCHAR },
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			VALUE3 =#{value3,jdbcType=VARCHAR },
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			VALUE4 =#{value4,jdbcType=VARCHAR },
+		</if>
+		<if test="value5 != null and value5 != ''  " >
+			VALUE5 =#{value5,jdbcType=VARCHAR },
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },
+		</if>
+		<if test="remark != null and remark != ''  " >
+			REMARK =#{remark,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		FIELD_EN = #{fieldEn, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmFieldProduct">
+		update TM_FIELD_PRODUCT 
+		<trim prefix="set" suffixOverrides=","> 
+			FIELD_REGION =#{fieldRegion,jdbcType=VARCHAR },		
+			FIELD_SORT =#{fieldSort,jdbcType=INTEGER },		
+			IF_REQUIRED_ITEM =#{ifRequiredItem,jdbcType=VARCHAR },		
+			IF_REVIEW_ITEM =#{ifReviewItem,jdbcType=VARCHAR },		
+			REVIEW_SORT =#{reviewSort,jdbcType=INTEGER },		
+			IS_INPUT =#{isInput,jdbcType=VARCHAR },		
+			IS_REVIEW =#{isReview,jdbcType=VARCHAR },		
+			VALUE1 =#{value1,jdbcType=VARCHAR },		
+			VALUE2 =#{value2,jdbcType=VARCHAR },		
+			VALUE3 =#{value3,jdbcType=VARCHAR },		
+			VALUE4 =#{value4,jdbcType=VARCHAR },		
+			VALUE5 =#{value5,jdbcType=VARCHAR },		
+			OB_TEXT1 =#{obText1,jdbcType=VARCHAR },		
+			OB_TEXT2 =#{obText2,jdbcType=VARCHAR },		
+			OB_TEXT3 =#{obText3,jdbcType=VARCHAR },		
+			OB_TEXT4 =#{obText4,jdbcType=VARCHAR },		
+			REMARK =#{remark,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		FIELD_EN = #{fieldEn, jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_FIELD_PRODUCT_TABLE_FIELD" />		
+		from TM_FIELD_PRODUCT
+		where 
+		PRODUCT_CD = #{productCd, jdbcType=VARCHAR}
+ 	and 		FIELD_EN = #{fieldEn, jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_FIELD_PRODUCT_TABLE_FIELD" />		
+ 		from TM_FIELD_PRODUCT
+		where 1=1 
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldEn != null and fieldEn != ''  " >
+			and FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldRegion != null and fieldRegion != ''  " >
+			and FIELD_REGION = #{fieldRegion,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldSort != null and fieldSort != ''  " >
+			and FIELD_SORT = #{fieldSort,jdbcType=INTEGER }
+		</if>
+		<if test="ifRequiredItem != null and ifRequiredItem != ''  " >
+			and IF_REQUIRED_ITEM = #{ifRequiredItem,jdbcType=VARCHAR }
+		</if>
+		<if test="ifReviewItem != null and ifReviewItem != ''  " >
+			and IF_REVIEW_ITEM = #{ifReviewItem,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewSort != null and reviewSort != ''  " >
+			and REVIEW_SORT = #{reviewSort,jdbcType=INTEGER }
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			and IS_INPUT = #{isInput,jdbcType=VARCHAR }
+		</if>
+		<if test="isReview != null and isReview != ''  " >
+			and IS_REVIEW = #{isReview,jdbcType=VARCHAR }
+		</if>
+		<if test="value1 != null and value1 != ''  " >
+			and VALUE1 = #{value1,jdbcType=VARCHAR }
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			and VALUE2 = #{value2,jdbcType=VARCHAR }
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			and VALUE3 = #{value3,jdbcType=VARCHAR }
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			and VALUE4 = #{value4,jdbcType=VARCHAR }
+		</if>
+		<if test="value5 != null and value5 != ''  " >
+			and VALUE5 = #{value5,jdbcType=VARCHAR }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_FIELD_PRODUCT
+		where 1=1 
+		<if test="productCd != null and productCd != ''  " >
+			and PRODUCT_CD = #{productCd,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldEn != null and fieldEn != ''  " >
+			and FIELD_EN = #{fieldEn,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldRegion != null and fieldRegion != ''  " >
+			and FIELD_REGION = #{fieldRegion,jdbcType=VARCHAR }
+		</if>
+		<if test="fieldSort != null and fieldSort != ''  " >
+			and FIELD_SORT = #{fieldSort,jdbcType=INTEGER }
+		</if>
+		<if test="ifRequiredItem != null and ifRequiredItem != ''  " >
+			and IF_REQUIRED_ITEM = #{ifRequiredItem,jdbcType=VARCHAR }
+		</if>
+		<if test="ifReviewItem != null and ifReviewItem != ''  " >
+			and IF_REVIEW_ITEM = #{ifReviewItem,jdbcType=VARCHAR }
+		</if>
+		<if test="reviewSort != null and reviewSort != ''  " >
+			and REVIEW_SORT = #{reviewSort,jdbcType=INTEGER }
+		</if>
+		<if test="isInput != null and isInput != ''  " >
+			and IS_INPUT = #{isInput,jdbcType=VARCHAR }
+		</if>
+		<if test="isReview != null and isReview != ''  " >
+			and IS_REVIEW = #{isReview,jdbcType=VARCHAR }
+		</if>
+		<if test="value1 != null and value1 != ''  " >
+			and VALUE1 = #{value1,jdbcType=VARCHAR }
+		</if>
+		<if test="value2 != null and value2 != ''  " >
+			and VALUE2 = #{value2,jdbcType=VARCHAR }
+		</if>
+		<if test="value3 != null and value3 != ''  " >
+			and VALUE3 = #{value3,jdbcType=VARCHAR }
+		</if>
+		<if test="value4 != null and value4 != ''  " >
+			and VALUE4 = #{value4,jdbcType=VARCHAR }
+		</if>
+		<if test="value5 != null and value5 != ''  " >
+			and VALUE5 = #{value5,jdbcType=VARCHAR }
+		</if>
+		<if test="obText1 != null and obText1 != ''  " >
+			and OB_TEXT1 = #{obText1,jdbcType=VARCHAR }
+		</if>
+		<if test="obText2 != null and obText2 != ''  " >
+			and OB_TEXT2 = #{obText2,jdbcType=VARCHAR }
+		</if>
+		<if test="obText3 != null and obText3 != ''  " >
+			and OB_TEXT3 = #{obText3,jdbcType=VARCHAR }
+		</if>
+		<if test="obText4 != null and obText4 != ''  " >
+			and OB_TEXT4 = #{obText4,jdbcType=VARCHAR }
+		</if>
+		<if test="remark != null and remark != ''  " >
+			and REMARK = #{remark,jdbcType=VARCHAR }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

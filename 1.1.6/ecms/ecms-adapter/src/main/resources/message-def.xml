@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<message>
+	<encoding>UTF-8</encoding>
+	<separator>|</separator>
+	<head>
+		<entry>
+			<index>1</index>
+			<field>
+				<name>Message Type ID</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+	</head>
+	<body>
+		<entry>
+			<index>0</index>
+			<field>
+				<name>Primary Bitmap</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>1</index>
+			<field>
+				<name>Secondary Bitmap</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>2</index>
+			<field>
+				<name>Primary Account Number</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>19</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>3</index>
+			<field>
+				<name>Processing Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>4</index>
+			<field>
+				<name>Amount, Transaction</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>5</index>
+			<field>
+				<name>Amount, Settlement</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>6</index>
+			<field>
+				<name>Amount, Cardholder billing</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>7</index>
+			<field>
+				<name>Transmission Date/Time</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>9</index>
+			<field>
+				<name>Conversion Rate, Settlement</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>10</index>
+			<field>
+				<name>Conversion Rate, Cardholder Billing</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>11</index>
+			<field>
+				<name>System Trace Audit Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>12</index>
+			<field>
+				<name>Time, Local Transaction</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>13</index>
+			<field>
+				<name>Date, Local Transaction</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>14</index>
+			<field>
+				<name>Date, Expiration</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>15</index>
+			<field>
+				<name>Date, Settlement</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>16</index>
+			<field>
+				<name>Date, Conversion</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>18</index>
+			<field>
+				<name>Merchant's Type</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>19</index>
+			<field>
+				<name>Acquiring Institution Country Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>22</index>
+			<field>
+				<name>Point Of Service Entry Mode Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>23</index>
+			<field>
+				<name>Card Sequence Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>25</index>
+			<field>
+				<name>Point Of Service Condition Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>2</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>26</index>
+			<field>
+				<name>Point Of Service PIN Capture Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>2</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>28</index>
+			<field>
+				<name>Amount, Transaction Fee</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>9</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>32</index>
+			<field>
+				<name>Acquiring Institution Identification Code</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>11</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>33</index>
+			<field>
+				<name>Forwarding Institution Identification Code</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>11</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>35</index>
+			<field>
+				<name>Trace 2 data</name>
+				<type>s</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>37</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>36</index>
+			<field>
+				<name>Trace 3 data</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>104</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>37</index>
+			<field>
+				<name>Retrieval Reference Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>38</index>
+			<field>
+				<name>Authorization Identification Response</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>39</index>
+			<field>
+				<name>Response Code</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>2</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>41</index>
+			<field>
+				<name>Card Acceptor Terminal Identification</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>42</index>
+			<field>
+				<name>Card Acceptor Identification Code</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>15</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>43</index>
+			<field>
+				<name>Card Acceptor Name/Location</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>40</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>44</index>
+			<field>
+				<name>Additional Response Data</name>
+				<type>s</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>25</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>45</index>
+			<field>
+				<name>Trace 1 data</name>
+				<type>s</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>79</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>48</index>
+			<field>
+				<name>Additional Data Private</name>
+				<type>b</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>512</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>49</index>
+			<field>
+				<name>Currency Code, Transaction</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>50</index>
+			<field>
+				<name>Currency Code, Settlement</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>51</index>
+			<field>
+				<name>Currency Code, Cardholder Billing</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>52</index>
+			<field>
+				<name>Pin Data</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>53</index>
+			<field>
+				<name>Security Related Control Infomation</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>16</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>54</index>
+			<field>
+				<name>Additional Amounts</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>40</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>55</index>
+			<field>
+				<name>Integrated Circuit Card (ICC) System Related Data</name>
+				<type>b</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>255</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>57</index>
+			<field>
+				<name>Additional Data Private</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>58</index>
+			<field>
+				<name>IC(PBOC) Data Reserved</name>
+				<type>b</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>59</index>
+			<field>
+				<name>Detail Inquiring</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>600</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>60</index>
+			<field>
+				<name>Reserved</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>30</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>61</index>
+			<field>
+				<name>Cardholder Authentication Information</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>200</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>62</index>
+			<field>
+				<name>Switching Data</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>200</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>63</index>
+			<field>
+				<name>Finacial Network Data</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>200</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>66</index>
+			<field>
+				<name>Settlement Code</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>70</index>
+			<field>
+				<name>Network Management Information Code</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>3</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>74</index>
+			<field>
+				<name>Credits, Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>75</index>
+			<field>
+				<name>Credits, Reversal Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>76</index>
+			<field>
+				<name>Debits Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>77</index>
+			<field>
+				<name>Debits, Reversal Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>78</index>
+			<field>
+				<name>Transfer Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>79</index>
+			<field>
+				<name>Transfer, Reversal Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>80</index>
+			<field>
+				<name>Inquiries Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>81</index>
+			<field>
+				<name>Authorization Number</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>82</index>
+			<field>
+				<name>Processing Fee Amount Of Credits</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>84</index>
+			<field>
+				<name>Processing Fee Amount of Debits</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>86</index>
+			<field>
+				<name>Credits, Amount</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>16</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>87</index>
+			<field>
+				<name>Credits, Reversal Amount</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>16</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>88</index>
+			<field>
+				<name>Debits, Amount</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>16</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>89</index>
+			<field>
+				<name>Debits, Reversal Amount</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>16</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>90</index>
+			<field>
+				<name>Original Data Elements</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>42</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>95</index>
+			<field>
+				<name>Replacement Amounts</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>42</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>96</index>
+			<field>
+				<name>Message Security Code</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>97</index>
+			<field>
+				<name>Amount, Net Settlement</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>17</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>99</index>
+			<field>
+				<name>Settlement Institution Identification Code</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>11</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>100</index>
+			<field>
+				<name>Receiving Institution Identification Code</name>
+				<type>n</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>11</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>102</index>
+			<field>
+				<name>Account Identification 1</name>
+				<type>s</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>28</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>103</index>
+			<field>
+				<name>Account Identification 2</name>
+				<type>s</type>
+				<lengthSize>2</lengthSize>
+				<contentMaxSize>28</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>104</index>
+			<field>
+				<name>Transaction Description</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>121</index>
+			<field>
+				<name>CUPS Reserved</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>122</index>
+			<field>
+				<name>Acquiring Institution Reserved</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>123</index>
+			<field>
+				<name>Issuer Institution Reserved</name>
+				<type>s</type>
+				<lengthSize>3</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>128</index>
+			<field>
+				<name>Message Authentication Code</name>
+				<type>b</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+	</body>
+</message>

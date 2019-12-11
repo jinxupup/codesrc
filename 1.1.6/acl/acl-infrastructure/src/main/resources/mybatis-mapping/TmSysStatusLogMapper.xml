@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmSysStatusLogMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmSysStatusLog" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="BUSINESS_DATE" property="businessDate" jdbcType="TIMESTAMP" />
+		<result column="PROCESS_DATE" property="processDate" jdbcType="TIMESTAMP" />
+		<result column="LAST_PROCESS_DATE" property="lastProcessDate" jdbcType="TIMESTAMP" />
+		<result column="GRACE_TIME" property="graceTime" jdbcType="TIMESTAMP" />
+		<result column="DATE_SWITCH_TIME" property="dateSwitchTime" jdbcType="TIMESTAMP" />
+		<result column="LAST_DATE_SWITCH_TIME" property="lastDateSwitchTime" jdbcType="TIMESTAMP" />
+		<result column="OPER_ID" property="operId" jdbcType="VARCHAR" />
+		<result column="OPER_ORG" property="operOrg" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_SYS_STATUS_LOG_TABLE_FIELD">ID,BUSINESS_DATE,PROCESS_DATE,LAST_PROCESS_DATE,GRACE_TIME,DATE_SWITCH_TIME,LAST_DATE_SWITCH_TIME,OPER_ID,OPER_ORG,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_SYS_STATUS_LOG_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_SYS_STATUS_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmSysStatusLog" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_SYS_STATUS_LOG ( <include refid="TM_SYS_STATUS_LOG_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{businessDate,jdbcType=TIMESTAMP } , #{processDate,jdbcType=TIMESTAMP } ,
+			 #{lastProcessDate,jdbcType=TIMESTAMP } , #{graceTime,jdbcType=TIMESTAMP } , #{dateSwitchTime,jdbcType=TIMESTAMP } , #{lastDateSwitchTime,jdbcType=TIMESTAMP } ,
+			 #{operId,jdbcType=VARCHAR } , #{operOrg,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmSysStatusLog">
+		update TM_SYS_STATUS_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="businessDate != null and businessDate != ''  " >
+			BUSINESS_DATE =#{businessDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			PROCESS_DATE =#{processDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastProcessDate != null and lastProcessDate != ''  " >
+			LAST_PROCESS_DATE =#{lastProcessDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="graceTime != null and graceTime != ''  " >
+			GRACE_TIME =#{graceTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="dateSwitchTime != null and dateSwitchTime != ''  " >
+			DATE_SWITCH_TIME =#{dateSwitchTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="lastDateSwitchTime != null and lastDateSwitchTime != ''  " >
+			LAST_DATE_SWITCH_TIME =#{lastDateSwitchTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="operId != null and operId != ''  " >
+			OPER_ID =#{operId,jdbcType=VARCHAR },
+		</if>
+		<if test="operOrg != null and operOrg != ''  " >
+			OPER_ORG =#{operOrg,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmSysStatusLog">
+		update TM_SYS_STATUS_LOG 
+		<trim prefix="set" suffixOverrides=","> 
+			BUSINESS_DATE =#{businessDate,jdbcType=TIMESTAMP },		
+			PROCESS_DATE =#{processDate,jdbcType=TIMESTAMP },		
+			LAST_PROCESS_DATE =#{lastProcessDate,jdbcType=TIMESTAMP },		
+			GRACE_TIME =#{graceTime,jdbcType=TIMESTAMP },		
+			DATE_SWITCH_TIME =#{dateSwitchTime,jdbcType=TIMESTAMP },		
+			LAST_DATE_SWITCH_TIME =#{lastDateSwitchTime,jdbcType=TIMESTAMP },		
+			OPER_ID =#{operId,jdbcType=VARCHAR },		
+			OPER_ORG =#{operOrg,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_SYS_STATUS_LOG_TABLE_FIELD" />		
+		from TM_SYS_STATUS_LOG
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_SYS_STATUS_LOG_TABLE_FIELD" />		
+ 		from TM_SYS_STATUS_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="businessDate != null and businessDate != ''  " >
+			and BUSINESS_DATE = #{businessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			and PROCESS_DATE = #{processDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastProcessDate != null and lastProcessDate != ''  " >
+			and LAST_PROCESS_DATE = #{lastProcessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="graceTime != null and graceTime != ''  " >
+			and GRACE_TIME = #{graceTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="dateSwitchTime != null and dateSwitchTime != ''  " >
+			and DATE_SWITCH_TIME = #{dateSwitchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastDateSwitchTime != null and lastDateSwitchTime != ''  " >
+			and LAST_DATE_SWITCH_TIME = #{lastDateSwitchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operId != null and operId != ''  " >
+			and OPER_ID = #{operId,jdbcType=VARCHAR }
+		</if>
+		<if test="operOrg != null and operOrg != ''  " >
+			and OPER_ORG = #{operOrg,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_SYS_STATUS_LOG
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="businessDate != null and businessDate != ''  " >
+			and BUSINESS_DATE = #{businessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			and PROCESS_DATE = #{processDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastProcessDate != null and lastProcessDate != ''  " >
+			and LAST_PROCESS_DATE = #{lastProcessDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="graceTime != null and graceTime != ''  " >
+			and GRACE_TIME = #{graceTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="dateSwitchTime != null and dateSwitchTime != ''  " >
+			and DATE_SWITCH_TIME = #{dateSwitchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="lastDateSwitchTime != null and lastDateSwitchTime != ''  " >
+			and LAST_DATE_SWITCH_TIME = #{lastDateSwitchTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operId != null and operId != ''  " >
+			and OPER_ID = #{operId,jdbcType=VARCHAR }
+		</if>
+		<if test="operOrg != null and operOrg != ''  " >
+			and OPER_ORG = #{operOrg,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

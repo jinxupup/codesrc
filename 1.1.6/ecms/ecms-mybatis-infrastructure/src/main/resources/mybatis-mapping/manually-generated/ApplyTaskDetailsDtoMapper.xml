@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTaskDetails">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyTaskDetailsDto" >
+
+		<result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+		<result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+		<result column="PRODUCT_CD" property="productCd" jdbcType="VARCHAR" />
+		<result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+		<result column="RTF_STATE" property="rtfState" jdbcType="VARCHAR" />
+		<result column="PROC_INST_ID_" property="procInstId" jdbcType="VARCHAR" />
+		<result column="TASK_ID_" property="taskId" jdbcType="VARCHAR" />
+		<result column="TASK_DEF_KEY_" property="taskDefKey" jdbcType="VARCHAR" />
+		<result column="OWNER_" property="owner" jdbcType="VARCHAR" />
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<!-- 以下是20190424,新增 ，需求：新工作量明细报表 -->
+		<result column="CURR_RTF_STATE" property="currRtfState" jdbcType="VARCHAR" />
+		<result column="TASK_PROC_DATE" property="taskProcDate" jdbcType="TIMESTAMP" />
+		<result column="INPUT_DATE" property="inputDate" jdbcType="TIMESTAMP" />
+		<result column="APP_LMT" property="appLmt" jdbcType="DECIMAL" />
+		<result column="CHK_LMT" property="basicLmt" jdbcType="DECIMAL" />
+		<result column="ACC_LMT" property="finalLmt" jdbcType="DECIMAL" />
+		<result column="INPUT_REMARK" property="inputRemark" jdbcType="VARCHAR" />
+		<result column="REVIEW_REMARK" property="reviewRemark" jdbcType="VARCHAR" />
+		<result column="PRE_REMARK" property="preRemark" jdbcType="VARCHAR" />
+		<result column="BASIC_REMARK" property="basicRemark" jdbcType="VARCHAR" />
+		<result column="TEL_REMARK" property="telRemark" jdbcType="VARCHAR" />
+		<result column="FINAL_REMARK" property="finalRemark" jdbcType="VARCHAR" />
+		<result column="PATCH_REMARK" property="patchRemark" jdbcType="VARCHAR" />
+		<result column="TASK_CNT" property="taskCnt" jdbcType="INTEGER" />
+
+	</resultMap>
+	<!-- 新工作量详情明细 -->
+	<select id="selectWorkDetails" resultMap="BaseResultMap" parameterType="map" >
+		select A.APP_NO,A.CREATE_DATE TASK_PROC_DATE ,A.PRO_NAME,A.OPERATOR_ID,A.RTF_STATE ,
+		m.PRODUCT_CD, m.name,m.ID_NO,m.APP_LMT,m.CHK_LMT,m.ACC_LMT,m.CORP_NAME,
+		m.RTF_STATE as CURR_RTF_STATE,m.CREATE_DATE INPUT_DATE ,
+		(CASE WHEN A.PRO_NAME IN ('申请录入','申请录入修改') THEN A.REMARK END) AS INPUT_REMARK ,
+		(CASE WHEN A.PRO_NAME ='录入复核' THEN A.REMARK END) AS REVIEW_REMARK,
+		(CASE WHEN A.PRO_NAME ='线上进件' THEN A.REMARK END) AS PRE_REMARK,
+		(CASE WHEN A.PRO_NAME ='初审调查' THEN A.REMARK END) AS BASIC_REMARK,
+		(CASE WHEN A.PRO_NAME ='电话调查' THEN A.REMARK END) AS TEL_REMARK,
+		(CASE WHEN A.PRO_NAME ='终审' THEN A.REMARK END) AS FINAL_REMARK,
+		(CASE WHEN A.PRO_NAME ='补件' THEN A.REMARK END) AS PATCH_REMARK
+		from tm_app_history a inner join TM_APP_MAIN m on a.APP_NO=m.APP_NO ,  (
+		select max(h.ID) as id, h.APP_NO,h.PRO_NAME
+		from tm_app_history h
+		where h.OPERATOR_ID <![CDATA[ <> ]]> 'sysauto'
+		<if test="startDate != null and startDate != '' ">
+			and h.CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and h.CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operatorId != null and operator != '' ">
+			AND h.OPERATOR_ID= #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != '' ">
+			and h.PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		group by  h.APP_NO,h.PRO_NAME
+		) b
+		where 1=1 and a.id=b.ID
+	</select>
+	<select id="selectDetails" resultMap="BaseResultMap" parameterType="map" >
+		SELECT a1.APP_NO, a1.NAME, a1.ID_NO, c1.PRODUCT_CD, c1.APP_TYPE, c1.RTF_STATE
+		from TM_APP_CUST_INFO a1, TM_APP_MAIN c1 , (
+		SELECT a.app_no, a.OPERATOR_ID, a.PRO_NAME, COUNT(*) AS nums
+		FROM TM_APP_HISTORY a, (
+		SELECT APP_NO, PRO_NAME, MIN(create_date) AS cd
+		FROM TM_APP_HISTORY H
+		WHERE 1=1
+		AND LOWER(OPERATOR_ID) <![CDATA[ <> ]]> 'sysauto'
+		AND PRO_NAME IS NOT NULL
+		<if test="org != null and org != '' ">
+			AND ORG= #{org,jdbcType=VARCHAR }
+		</if>
+		<!-- AND RTF_STATE IN ( 'A05','A10', 'A20', 'A30', 'B10','E14','F06','F08','F10','G10','K10','K15') -->
+		GROUP BY APP_NO, PRO_NAME ) b
+		WHERE a.APP_NO=b.APP_NO AND a.CREATE_DATE=b.cd AND a.OPERATOR_ID <![CDATA[ <> ]]> 'sysauto'
+		<if test="startDate != null and startDate != '' ">
+			AND b.cd <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			AND b.cd <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="operatorId != null and operator != '' ">
+			AND a.OPERATOR_ID= #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="proName != null and proName != '' ">
+			and a.PRO_NAME = #{proName,jdbcType=VARCHAR }
+		</if>
+		GROUP BY a.app_no,a.OPERATOR_ID, a.PRO_NAME) b1
+		WHERE a1.APP_NO=b1.APP_NO AND a1.APP_NO=c1.APP_NO
+
+	</select>
+
+	<!-- 获取非初审未分配任务清单 -->
+	<select id="getTaskUndistributedList" resultMap="BaseResultMap" parameterType="map" >
+		select * from  (
+		select e.PROC_INST_ID_, t.ID_ as TASK_ID_, t.TASK_DEF_KEY_ , m.app_no, t.OWNER_, m.ORG
+		from TM_APP_MAIN m, ACT_RU_EXECUTION e,ACT_RU_TASK t
+		where m.APP_NO=e.BUSINESS_KEY_
+		AND e.PROC_INST_ID_=t.PROC_INST_ID_
+		AND t.OWNER_ is null
+		<if test="taskDefKey != null and taskDefKey != '' ">
+			AND t.TASK_DEF_KEY_ = #{taskDefKey,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != '' ">
+			AND m.ORG= #{org,jdbcType=VARCHAR }
+		</if>
+		order by
+		<if test="priorit != null and priorit != '' ">
+			${priorit}
+		</if>
+		m.CREATE_DATE asc
+		)  where rownum <![CDATA[<=]]> 800
+	</select>
+
+	<!-- 获取未分配任务清单 -->
+	<select id="getTaskUndistributedLists" resultMap="BaseResultMap" parameterType="map" >
+		select * from  (
+		select e.PROC_INST_ID_, t.ID_ as TASK_ID_, t.TASK_DEF_KEY_ , m.app_no, t.OWNER_, m.ORG,m.ID_NO,m.CORP_NAME,s.SPREADER_NO ,m.CREATE_DATE
+		from TM_APP_MAIN m, ACT_RU_EXECUTION e,ACT_RU_TASK t,TM_APP_PRIM_CARD_INFO s
+		where m.APP_NO=e.BUSINESS_KEY_
+		AND e.PROC_INST_ID_=t.PROC_INST_ID_
+		AND t.OWNER_ is null
+		<if test="taskDefKey != null and taskDefKey != '' ">
+			AND t.TASK_DEF_KEY_ = #{taskDefKey,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != '' ">
+			AND m.ORG= #{org,jdbcType=VARCHAR }
+		</if>
+		order by
+		m.CORP_NAME,s.SPREADER_NO,m.CREATE_DATE asc
+		)a  where rownum <![CDATA[<=]]> 6
+	</select>
+
+	<!-- 获取已分配任务数量 -->
+	<select id="getTaskCntBytaskKey" resultMap="BaseResultMap" parameterType="map" >
+		SELECT COUNT(t.TASK_DEF_KEY_) TASK_CNT, t.TASK_DEF_KEY_ ,t.OWNER_
+		FROM ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_MAIN m
+		WHERE t.OWNER_ IS NOT NULL
+		AND e.BUSINESS_KEY_=m.APP_NO
+		AND e.PROC_INST_ID_=t.PROC_INST_ID_
+		AND e.ID_=t.EXECUTION_ID_
+		<if test="taskDefKey != null and taskDefKey != '' ">
+			AND t.TASK_DEF_KEY_ = #{taskDefKey,jdbcType=VARCHAR }
+		</if>
+		<if test="org != null and org != '' ">
+			AND m.ORG= #{org,jdbcType=VARCHAR }
+		</if>
+		GROUP BY
+		t.TASK_DEF_KEY_ ,t.OWNER_
+		ORDER BY
+		COUNT(t.TASK_DEF_KEY_) ASC
+	</select>
+</mapper>

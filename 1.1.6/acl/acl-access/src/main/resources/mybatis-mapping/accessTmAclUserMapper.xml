@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="acl.access.TmAclUser" >
+  <resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclUser" >
+		<id column="USER_ID" property="userId" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+		<result column="SALT" property="salt" jdbcType="VARCHAR" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR" />
+		<result column="STATE_UPDATE" property="stateUpdate" jdbcType="TIMESTAMP" />
+		<result column="WORK_STATUS" property="workStatus" jdbcType="VARCHAR" />
+		<result column="WORK_STATUS_UPDATE" property="workStatusUpdate" jdbcType="TIMESTAMP" />
+		<result column="WORK_STATUS_UPDATE_END" property="workStatusUpdateEnd" jdbcType="TIMESTAMP" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="LOGIN_STATE" property="loginState" jdbcType="VARCHAR" />
+		<result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+		<result column="LOGOUT_TIME" property="logoutTime" jdbcType="TIMESTAMP" />
+		<result column="LOGOUT_TYPE" property="logoutType" jdbcType="VARCHAR" />
+		<result column="LOGIN_IP" property="loginIp" jdbcType="VARCHAR" />
+		<result column="SESSION_ID" property="sessionId" jdbcType="VARCHAR" />
+		<result column="RETRY" property="retry" jdbcType="INTEGER" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CTRY_CD" property="ctryCd" jdbcType="VARCHAR" />
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+		<result column="CITY" property="city" jdbcType="VARCHAR" />
+		<result column="ZONE" property="zone" jdbcType="VARCHAR" />
+		<result column="EMP_ADD" property="empAdd" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="DEPAPMENT" property="depapment" jdbcType="VARCHAR" />
+		<result column="POST" property="post" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="CELLPHOME" property="cellphome" jdbcType="VARCHAR" />
+		<result column="PASSWORD_UPDATE" property="passwordUpdate" jdbcType="TIMESTAMP" />
+		<result column="PASSWORD_EXPIRE_DATE" property="passwordExpireDate" jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT1" property="textObject1" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT2" property="textObject2" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT3" property="textObject3" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT4" property="textObject4" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT5" property="textObject5" jdbcType="VARCHAR" />
+		<result column="TEXT_OBJECT6" property="textObject6" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+  
+  <select id="selectByOrgAndUserNo" resultMap="BaseResultMap" parameterType="com.jjb.acl.infrastructure.TmAclUser" >
+    select  ORG  , USER_ID  , PASSWORD  ,
+			 SALT  , USER_NO  , STATUS  , USER_NAME  ,
+			 BRANCH_CODE  , STATE_UPDATE  , WORK_STATUS  , WORK_STATUS_UPDATE  ,
+			 WORK_STATUS_UPDATE_END  , USER_TYPE  , LOGIN_STATE  , LOGIN_TIME  ,
+			 LOGOUT_TIME  , LOGOUT_TYPE  , LOGIN_IP  , SESSION_ID  ,
+			 RETRY  , ID_NO  , CTRY_CD  , PROVINCE  ,
+			 CITY  , ZONE  , EMP_ADD  , PHONE  ,
+			 DEPAPMENT  , POST  , EMAIL  , CELLPHOME  ,
+			 PASSWORD_UPDATE  , PASSWORD_EXPIRE_DATE  , REMARK  , TEXT_OBJECT1  ,
+			 TEXT_OBJECT2  , TEXT_OBJECT3  , TEXT_OBJECT4  , TEXT_OBJECT5  ,
+			 TEXT_OBJECT6  , CREATE_DATE  , CREATE_BY  , UPDATE_DATE  ,
+			 UPDATE_BY  , JPA_VERSION 		
+ 		from TM_ACL_USER
+    where ORG = #{org,jdbcType=VARCHAR} AND USER_NO = #{userNo,jdbcType=VARCHAR}
+  </select>
+  <!-- 获取权限下的用户信息 -->
+   <select id="selectByResourceCode" resultMap="BaseResultMap" parameterType="com.jjb.acl.infrastructure.TmAclUser" >
+    SELECT 
+			 A.ORG  , A.USER_ID  ,
+			 A.USER_NO  , A.STATUS  , A.USER_NAME  ,
+			 A.BRANCH_CODE  , A.STATE_UPDATE  , A.WORK_STATUS  , A.WORK_STATUS_UPDATE  ,
+			 A.WORK_STATUS_UPDATE_END  , A.USER_TYPE  , A.LOGIN_STATE  , A.LOGIN_TIME  ,
+			 A.LOGOUT_TIME  , A.LOGOUT_TYPE  , A.LOGIN_IP  , A.SESSION_ID  ,
+			 A.RETRY  , A.ID_NO  , A.CTRY_CD  , A.PROVINCE  ,
+			 A.CITY  , A.ZONE  , A.EMP_ADD  , A.PHONE  ,
+			 A.DEPAPMENT  , A.POST  , A.EMAIL  , A.CELLPHOME  ,
+			 A.PASSWORD_UPDATE  , A.PASSWORD_EXPIRE_DATE  , A.REMARK  , A.TEXT_OBJECT1  ,
+			 A.TEXT_OBJECT2  , A.TEXT_OBJECT3  , A.TEXT_OBJECT4  , A.TEXT_OBJECT5  ,
+			 A.TEXT_OBJECT6  , A.JPA_VERSION 
+		FROM
+            TM_ACL_USER A,TM_ACL_ROLE_RESOURCE B,TM_ACL_USER_ROLE C
+		WHERE 1=1  AND A.USER_ID = C.USER_ID AND C.ROLE_ID=B.ROLE_ID 
+		AND A.ORG=B.ORG AND A.ORG = C.ORG  
+		
+		<if test="resourceCodes != null " >
+			AND B.RESOURCE_CODE IN
+	        <foreach item="item" index="index" collection="resourceCodes"  open="(" separator="," close=")"> 
+	             #{item}
+	        </foreach>
+        </if>
+		AND A.ORG = #{org,jdbcType=VARCHAR } 
+  </select>
+  
+  
+</mapper>

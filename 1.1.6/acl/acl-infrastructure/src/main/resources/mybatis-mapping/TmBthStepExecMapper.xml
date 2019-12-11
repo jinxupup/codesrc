@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmBthStepExecMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmBthStepExec" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="BTH_INST_ID" property="bthInstId" jdbcType="INTEGER" />
+		<result column="PROCESS_DATE" property="processDate" jdbcType="TIMESTAMP" />
+		<result column="STEP_NAME" property="stepName" jdbcType="VARCHAR" />
+		<result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="HINT_MESSAGE" property="hintMessage" jdbcType="VARCHAR" />
+		<result column="STEP_STATUS" property="stepStatus" jdbcType="VARCHAR" />
+		<result column="EXIT_MESSAGE" property="exitMessage" jdbcType="CLOB" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_BTH_STEP_EXEC_TABLE_FIELD">ID,BTH_INST_ID,PROCESS_DATE,STEP_NAME,START_TIME,END_TIME,HINT_MESSAGE,STEP_STATUS,EXIT_MESSAGE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_BTH_STEP_EXEC_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_BTH_STEP_EXEC
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmBthStepExec" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_BTH_STEP_EXEC ( <include refid="TM_BTH_STEP_EXEC_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{bthInstId,jdbcType=INTEGER } , #{processDate,jdbcType=TIMESTAMP } ,
+			 #{stepName,jdbcType=VARCHAR } , #{startTime,jdbcType=TIMESTAMP } , #{endTime,jdbcType=TIMESTAMP } , #{hintMessage,jdbcType=VARCHAR } ,
+			 #{stepStatus,jdbcType=VARCHAR } , #{exitMessage,jdbcType=CLOB } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmBthStepExec">
+		update TM_BTH_STEP_EXEC 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="bthInstId != null and bthInstId != ''  " >
+			BTH_INST_ID =#{bthInstId,jdbcType=INTEGER },
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			PROCESS_DATE =#{processDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="stepName != null and stepName != ''  " >
+			STEP_NAME =#{stepName,jdbcType=VARCHAR },
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },
+		</if>
+		<if test="hintMessage != null and hintMessage != ''  " >
+			HINT_MESSAGE =#{hintMessage,jdbcType=VARCHAR },
+		</if>
+		<if test="stepStatus != null and stepStatus != ''  " >
+			STEP_STATUS =#{stepStatus,jdbcType=VARCHAR },
+		</if>
+		<if test="exitMessage != null and exitMessage != ''  " >
+			EXIT_MESSAGE =#{exitMessage,jdbcType=CLOB },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmBthStepExec">
+		update TM_BTH_STEP_EXEC 
+		<trim prefix="set" suffixOverrides=","> 
+			BTH_INST_ID =#{bthInstId,jdbcType=INTEGER },		
+			PROCESS_DATE =#{processDate,jdbcType=TIMESTAMP },		
+			STEP_NAME =#{stepName,jdbcType=VARCHAR },		
+			START_TIME =#{startTime,jdbcType=TIMESTAMP },		
+			END_TIME =#{endTime,jdbcType=TIMESTAMP },		
+			HINT_MESSAGE =#{hintMessage,jdbcType=VARCHAR },		
+			STEP_STATUS =#{stepStatus,jdbcType=VARCHAR },		
+			EXIT_MESSAGE =#{exitMessage,jdbcType=CLOB },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_BTH_STEP_EXEC_TABLE_FIELD" />		
+		from TM_BTH_STEP_EXEC
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_BTH_STEP_EXEC_TABLE_FIELD" />		
+ 		from TM_BTH_STEP_EXEC
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="bthInstId != null and bthInstId != ''  " >
+			and BTH_INST_ID = #{bthInstId,jdbcType=INTEGER }
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			and PROCESS_DATE = #{processDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="stepName != null and stepName != ''  " >
+			and STEP_NAME = #{stepName,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="hintMessage != null and hintMessage != ''  " >
+			and HINT_MESSAGE = #{hintMessage,jdbcType=VARCHAR }
+		</if>
+		<if test="stepStatus != null and stepStatus != ''  " >
+			and STEP_STATUS = #{stepStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="exitMessage != null and exitMessage != ''  " >
+			and EXIT_MESSAGE = #{exitMessage,jdbcType=CLOB }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_BTH_STEP_EXEC
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="bthInstId != null and bthInstId != ''  " >
+			and BTH_INST_ID = #{bthInstId,jdbcType=INTEGER }
+		</if>
+		<if test="processDate != null and processDate != ''  " >
+			and PROCESS_DATE = #{processDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="stepName != null and stepName != ''  " >
+			and STEP_NAME = #{stepName,jdbcType=VARCHAR }
+		</if>
+		<if test="startTime != null and startTime != ''  " >
+			and START_TIME = #{startTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="endTime != null and endTime != ''  " >
+			and END_TIME = #{endTime,jdbcType=TIMESTAMP }
+		</if>
+		<if test="hintMessage != null and hintMessage != ''  " >
+			and HINT_MESSAGE = #{hintMessage,jdbcType=VARCHAR }
+		</if>
+		<if test="stepStatus != null and stepStatus != ''  " >
+			and STEP_STATUS = #{stepStatus,jdbcType=VARCHAR }
+		</if>
+		<if test="exitMessage != null and exitMessage != ''  " >
+			and EXIT_MESSAGE = #{exitMessage,jdbcType=CLOB }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

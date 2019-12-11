@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="r5000" class="com.jjb.unicorn.batch.YakFileItemReader" scope="step">
+		<property name="fileHeaderClass" value="com.jjb.unicorn.batch.FileHeader"/>
+		<property name="fileDetailClass" value="com.jjb.jyd.dictionary.exchange.BMPExportBranchItem"/>
+		<property name="resource" ref="resS010000Branch"/>
+	</bean>
+
+	<bean id="p5000" class="org.springframework.batch.item.support.CompositeItemProcessor" scope="step">
+		<property name="delegates">
+			<list>
+				<bean class="com.jjb.unicorn.batch.SimpleExtractorProcessor"/>
+				<bean class="com.jjb.ecms.batch.s5000.P5001InitBranch"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="w5000" class="com.jjb.unicorn.batch.NullItemWriter"/>
+</beans>

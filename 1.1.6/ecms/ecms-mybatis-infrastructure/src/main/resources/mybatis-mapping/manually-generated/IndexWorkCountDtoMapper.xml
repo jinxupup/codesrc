@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.IndexWorkCountDto">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.IndexWorkCountDto" >
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />		
+		<result column="NUMS" property="nums" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		SELECT COUNT(*) AS nums, OPERATOR_ID, PRO_NAME
+		FROM TM_APP_HISTORY 
+		WHERE PRO_NAME is not null 
+		and RTF_STATE in ('K15','K10','K18','K08','G15','G10','F21','F20','F19','F18','F16','F11','F10','F09','F08','F07','F06','E15','E14','B15','B10','A40','A30','A10','A20')
+		<if test="operatorId != null and operatorId != '' ">
+			AND OPERATOR_ID= #{operatorId,jdbcType=VARCHAR }
+		</if>
+		GROUP BY OPERATOR_ID, PRO_NAME ORDER BY OPERATOR_ID, PRO_NAME ASC	
+	</select>
+	<!--  未处理工作量统计 -->
+	<select id="selectWorkUntreatedCount" resultMap="BaseResultMap" parameterType="map" >
+		select count(1) AS nums,to_char(t.OWNER_) as OPERATOR_ID, to_char(t.NAME_) as PRO_NAME from ACT_RU_TASK t,ACT_RU_EXECUTION e,TM_APP_MAIN m  
+			where t.PROC_INST_ID_=e.PROC_INST_ID_ and e.BUSINESS_KEY_=m.APP_NO 
+			and m.RTF_STATE not in ('P05','N05','M05','L05','K15','K10','R05','R10','R15','A20') 
+		
+			<if test="operatorId != null and operatorId != '' ">
+				and t.OWNER_= #{operatorId,jdbcType=VARCHAR }
+			</if>
+			group by t.NAME_,t.OWNER_ 
+	union all
+   		select count(1) as nums,m2.CREATE_USER as OPERATOR_ID,'申请录入' as PRO_NAME  from TM_APP_MAIN m2 
+    		where m2.RTF_STATE='A05'
+    		<if test="operatorId != null and operatorId != '' "> 
+    			and m2.CREATE_USER=#{operatorId,jdbcType=VARCHAR } 
+    		</if>
+    		group by m2.CREATE_USER
+		
+	</select>
+</mapper>

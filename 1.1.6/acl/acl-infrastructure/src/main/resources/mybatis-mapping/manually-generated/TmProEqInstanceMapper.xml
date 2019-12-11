@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.gmp.biz.TmProEqInstanceMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.dto.TmProInstance" >
+		<result column="PROCESS_ID" property="processId" jdbcType="VARCHAR" />
+		<result column="SYSTEM_TYPE" property="systemType" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectProEqInstance" resultMap="BaseResultMap" parameterType="com.jjb.acl.infrastructure.dto.TmProInstance" >
+		select B.SYSTEM_TYPE, A.PROCESS_ID
+		from TM_PROCESS A,TM_INSTANCE B
+		where ((TM_INSTANCE.INSTANCE_ID=TM_PROCESS.INSTANCE_ID)AND(TM_INSTANCE.SYSTEM_TYPE.in(systems)))
+	</select>
+</mapper>

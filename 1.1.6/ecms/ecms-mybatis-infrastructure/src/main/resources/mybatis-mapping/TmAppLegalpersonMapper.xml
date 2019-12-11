@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppLegalpersonMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppLegalperson" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+		<result column="ENTERPRISE_NATURE" property="enterpriseNature" jdbcType="VARCHAR" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+		<result column="SETUP_TIME" property="setupTime" jdbcType="VARCHAR" />
+		<result column="REPRESE_NTATIVE" property="represeNtative" jdbcType="VARCHAR" />
+		<result column="REPRESE_NTATIVEPHONE" property="represeNtativephone" jdbcType="VARCHAR" />
+		<result column="REGISTERED_CAPITAL" property="registeredCapital" jdbcType="DECIMAL" />
+		<result column="REALIZED_CAPITAL" property="realizedCapital" jdbcType="DECIMAL" />
+		<result column="ANNUAL_TURNOVER" property="annualTurnover" jdbcType="DECIMAL" />
+		<result column="PROFIT" property="profit" jdbcType="DECIMAL" />
+		<result column="OPERATE_ADDRESS" property="operateAddress" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_LEGALPERSON_TABLE_FIELD">ID,APP_NO,COMPANY_NAME,ENTERPRISE_NATURE,ID_TYPE,ID_NUMBER,SETUP_TIME,REPRESE_NTATIVE,REPRESE_NTATIVEPHONE,REGISTERED_CAPITAL,REALIZED_CAPITAL,ANNUAL_TURNOVER,PROFIT,OPERATE_ADDRESS,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_LEGALPERSON_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_LEGALPERSON
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppLegalperson" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_LEGALPERSON ( <include refid="TM_APP_LEGALPERSON_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{appNo,jdbcType=VARCHAR } , #{companyName,jdbcType=VARCHAR } ,
+			 #{enterpriseNature,jdbcType=VARCHAR } , #{idType,jdbcType=VARCHAR } , #{idNumber,jdbcType=VARCHAR } , #{setupTime,jdbcType=VARCHAR } ,
+			 #{represeNtative,jdbcType=VARCHAR } , #{represeNtativephone,jdbcType=VARCHAR } , #{registeredCapital,jdbcType=DECIMAL } , #{realizedCapital,jdbcType=DECIMAL } ,
+			 #{annualTurnover,jdbcType=DECIMAL } , #{profit,jdbcType=DECIMAL } , #{operateAddress,jdbcType=VARCHAR } , #{createDate,jdbcType=TIMESTAMP } ,
+			 #{createUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER }
+			 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppLegalperson">
+		update TM_APP_LEGALPERSON 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },
+		</if>
+		<if test="enterpriseNature != null and enterpriseNature != ''  " >
+			ENTERPRISE_NATURE =#{enterpriseNature,jdbcType=VARCHAR },
+		</if>
+		<if test="idType != null and idType != ''  " >
+			ID_TYPE =#{idType,jdbcType=VARCHAR },
+		</if>
+		<if test="idNumber != null and idNumber != ''  " >
+			ID_NUMBER =#{idNumber,jdbcType=VARCHAR },
+		</if>
+		<if test="setupTime != null and setupTime != ''  " >
+			SETUP_TIME =#{setupTime,jdbcType=VARCHAR },
+		</if>
+		<if test="represeNtative != null and represeNtative != ''  " >
+			REPRESE_NTATIVE =#{represeNtative,jdbcType=VARCHAR },
+		</if>
+		<if test="represeNtativephone != null and represeNtativephone != ''  " >
+			REPRESE_NTATIVEPHONE =#{represeNtativephone,jdbcType=VARCHAR },
+		</if>
+		<if test="registeredCapital != null and registeredCapital != ''  " >
+			REGISTERED_CAPITAL =#{registeredCapital,jdbcType=DECIMAL },
+		</if>
+		<if test="realizedCapital != null and realizedCapital != ''  " >
+			REALIZED_CAPITAL =#{realizedCapital,jdbcType=DECIMAL },
+		</if>
+		<if test="annualTurnover != null and annualTurnover != ''  " >
+			ANNUAL_TURNOVER =#{annualTurnover,jdbcType=DECIMAL },
+		</if>
+		<if test="profit != null and profit != ''  " >
+			PROFIT =#{profit,jdbcType=DECIMAL },
+		</if>
+		<if test="operateAddress != null and operateAddress != ''  " >
+			OPERATE_ADDRESS =#{operateAddress,jdbcType=VARCHAR },
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppLegalperson">
+		update TM_APP_LEGALPERSON 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			COMPANY_NAME =#{companyName,jdbcType=VARCHAR },		
+			ENTERPRISE_NATURE =#{enterpriseNature,jdbcType=VARCHAR },		
+			ID_TYPE =#{idType,jdbcType=VARCHAR },		
+			ID_NUMBER =#{idNumber,jdbcType=VARCHAR },		
+			SETUP_TIME =#{setupTime,jdbcType=VARCHAR },		
+			REPRESE_NTATIVE =#{represeNtative,jdbcType=VARCHAR },		
+			REPRESE_NTATIVEPHONE =#{represeNtativephone,jdbcType=VARCHAR },		
+			REGISTERED_CAPITAL =#{registeredCapital,jdbcType=DECIMAL },		
+			REALIZED_CAPITAL =#{realizedCapital,jdbcType=DECIMAL },		
+			ANNUAL_TURNOVER =#{annualTurnover,jdbcType=DECIMAL },		
+			PROFIT =#{profit,jdbcType=DECIMAL },		
+			OPERATE_ADDRESS =#{operateAddress,jdbcType=VARCHAR },		
+			CREATE_USER =#{createUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_LEGALPERSON_TABLE_FIELD" />		
+		from TM_APP_LEGALPERSON
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_LEGALPERSON_TABLE_FIELD" />		
+ 		from TM_APP_LEGALPERSON
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="enterpriseNature != null and enterpriseNature != ''  " >
+			and ENTERPRISE_NATURE = #{enterpriseNature,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNumber != null and idNumber != ''  " >
+			and ID_NUMBER = #{idNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="setupTime != null and setupTime != ''  " >
+			and SETUP_TIME = #{setupTime,jdbcType=VARCHAR }
+		</if>
+		<if test="represeNtative != null and represeNtative != ''  " >
+			and REPRESE_NTATIVE = #{represeNtative,jdbcType=VARCHAR }
+		</if>
+		<if test="represeNtativephone != null and represeNtativephone != ''  " >
+			and REPRESE_NTATIVEPHONE = #{represeNtativephone,jdbcType=VARCHAR }
+		</if>
+		<if test="registeredCapital != null and registeredCapital != ''  " >
+			and REGISTERED_CAPITAL = #{registeredCapital,jdbcType=DECIMAL }
+		</if>
+		<if test="realizedCapital != null and realizedCapital != ''  " >
+			and REALIZED_CAPITAL = #{realizedCapital,jdbcType=DECIMAL }
+		</if>
+		<if test="annualTurnover != null and annualTurnover != ''  " >
+			and ANNUAL_TURNOVER = #{annualTurnover,jdbcType=DECIMAL }
+		</if>
+		<if test="profit != null and profit != ''  " >
+			and PROFIT = #{profit,jdbcType=DECIMAL }
+		</if>
+		<if test="operateAddress != null and operateAddress != ''  " >
+			and OPERATE_ADDRESS = #{operateAddress,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_LEGALPERSON
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="companyName != null and companyName != ''  " >
+			and COMPANY_NAME = #{companyName,jdbcType=VARCHAR }
+		</if>
+		<if test="enterpriseNature != null and enterpriseNature != ''  " >
+			and ENTERPRISE_NATURE = #{enterpriseNature,jdbcType=VARCHAR }
+		</if>
+		<if test="idType != null and idType != ''  " >
+			and ID_TYPE = #{idType,jdbcType=VARCHAR }
+		</if>
+		<if test="idNumber != null and idNumber != ''  " >
+			and ID_NUMBER = #{idNumber,jdbcType=VARCHAR }
+		</if>
+		<if test="setupTime != null and setupTime != ''  " >
+			and SETUP_TIME = #{setupTime,jdbcType=VARCHAR }
+		</if>
+		<if test="represeNtative != null and represeNtative != ''  " >
+			and REPRESE_NTATIVE = #{represeNtative,jdbcType=VARCHAR }
+		</if>
+		<if test="represeNtativephone != null and represeNtativephone != ''  " >
+			and REPRESE_NTATIVEPHONE = #{represeNtativephone,jdbcType=VARCHAR }
+		</if>
+		<if test="registeredCapital != null and registeredCapital != ''  " >
+			and REGISTERED_CAPITAL = #{registeredCapital,jdbcType=DECIMAL }
+		</if>
+		<if test="realizedCapital != null and realizedCapital != ''  " >
+			and REALIZED_CAPITAL = #{realizedCapital,jdbcType=DECIMAL }
+		</if>
+		<if test="annualTurnover != null and annualTurnover != ''  " >
+			and ANNUAL_TURNOVER = #{annualTurnover,jdbcType=DECIMAL }
+		</if>
+		<if test="profit != null and profit != ''  " >
+			and PROFIT = #{profit,jdbcType=DECIMAL }
+		</if>
+		<if test="operateAddress != null and operateAddress != ''  " >
+			and OPERATE_ADDRESS = #{operateAddress,jdbcType=VARCHAR }
+		</if>
+		<if test="createDate != null and createDate != ''  " >
+			and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="createUser != null and createUser != ''  " >
+			and CREATE_USER = #{createUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<message>
+	<encoding>UTF-8</encoding>
+	<head>
+		<entry>
+			<index>1</index>
+			<field>
+				<name>Organization Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>2</index>
+			<field>
+				<name>Version Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>3</index>
+			<field>
+				<name>Transaction Type</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>4</index>
+			<field>
+				<name>Packet Type</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>5</index>
+			<field>
+				<name>Packet Direction</name>
+				<type>n</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>1</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>6</index>
+			<field>
+				<name>Transaction Code</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>6</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>7</index>
+			<field>
+				<name>Request Channel Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>10</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>8</index>
+			<field>
+				<name>The Requesting Party Business date</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>9</index>
+			<field>
+				<name>The Requesting Party System Time</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>14</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>10</index>
+			<field>
+				<name>Request System Serial Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>20</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>11</index>
+			<field>
+				<name>jjb System Time</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>14</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>12</index>
+			<field>
+				<name>jjb Business Date</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>8</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>13</index>
+			<field>
+				<name>jjb System Serial Number</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>20</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>14</index>
+			<field>
+				<name>Number of Bank Branch</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>15</index>
+			<field>
+				<name>Bank Teller No</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>12</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>16</index>
+			<field>
+				<name>Response Code</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>4</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>17</index>
+			<field>
+				<name>Response Message</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>100</contentMaxSize>
+			</field>
+		</entry>
+		<entry>
+			<index>18</index>
+			<field>
+				<name>Reserved Message</name>
+				<type>s</type>
+				<lengthSize>0</lengthSize>
+				<contentMaxSize>59</contentMaxSize>
+			</field>
+		</entry>
+	</head>
+</message>

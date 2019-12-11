@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jjb.ecms</groupId>
+		<artifactId>ecms-parent</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+	</parent>
+	<artifactId>ecms-adapter</artifactId>
+	<name>ecms-adapter-电子征信系统-链路适配器</name>
+	<dependencies>
+
+		<dependency>
+			<groupId>com.jjb.ecms</groupId>
+			<artifactId>ecms-service-api</artifactId>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>yak-support</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-socket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-mq</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+
+<!--		<dependency>
+			<groupId>com.jjccb</groupId>
+			<artifactId>utils</artifactId>
+            <version>1.0.2</version>
+		</dependency>-->
+<!--
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-parent</artifactId>
+			<version>19.0</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+		</dependency>
+		<dependency>  
+            <groupId>commons-beanutils</groupId>  
+           	<artifactId>commons-beanutils</artifactId>  
+        </dependency>  
+		<dependency>
+			<groupId>com.jjb.acl</groupId>
+			<artifactId>acl-gmp-sdk</artifactId>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<!-- mina -->
+		<dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-socket</artifactId>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.jjb.unicorn</groupId>
+			<artifactId>unicorn-facility</artifactId>
+		</dependency> -->
+		<!-- dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>dependency/</classpathPrefix>
+							<mainClass>com.jjb.unicorn.facility.service.ServiceDaemon</mainClass>
+							 <useUniqueVersions>false</useUniqueVersions>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+	

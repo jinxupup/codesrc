@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppAuditQuotaMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppAuditQuota" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="TASK_NAME" property="taskName" jdbcType="VARCHAR" />
+		<result column="VISIBLE_MINIMUM" property="visibleMinimum" jdbcType="DECIMAL" />
+		<result column="VISIBLE_MAXIMUM" property="visibleMaximum" jdbcType="DECIMAL" />
+		<result column="APPROVAL_MAXIMUM" property="approvalMaximum" jdbcType="DECIMAL" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_APP_AUDIT_QUOTA_TABLE_FIELD">ID,ORG,OPERATOR_ID,TASK_NAME,VISIBLE_MINIMUM,VISIBLE_MAXIMUM,APPROVAL_MAXIMUM,UPDATE_USER,UPDATE_DATE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_AUDIT_QUOTA_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_AUDIT_QUOTA
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppAuditQuota" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_AUDIT_QUOTA ( <include refid="TM_APP_AUDIT_QUOTA_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{operatorId,jdbcType=VARCHAR } ,
+			 #{taskName,jdbcType=VARCHAR } , #{visibleMinimum,jdbcType=DECIMAL } , #{visibleMaximum,jdbcType=DECIMAL } , #{approvalMaximum,jdbcType=DECIMAL } ,
+			 #{updateUser,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppAuditQuota">
+		update TM_APP_AUDIT_QUOTA 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="operatorId != null and operatorId != ''  " >
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			TASK_NAME =#{taskName,jdbcType=VARCHAR },
+		</if>
+		<if test="visibleMinimum != null and visibleMinimum != ''  " >
+			VISIBLE_MINIMUM =#{visibleMinimum,jdbcType=DECIMAL },
+		</if>
+		<if test="visibleMaximum != null and visibleMaximum != ''  " >
+			VISIBLE_MAXIMUM =#{visibleMaximum,jdbcType=DECIMAL },
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			APPROVAL_MAXIMUM =#{approvalMaximum,jdbcType=DECIMAL },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppAuditQuota">
+		update TM_APP_AUDIT_QUOTA 
+		<trim prefix="set" suffixOverrides=","> 
+			OPERATOR_ID =#{operatorId,jdbcType=VARCHAR },		
+			TASK_NAME =#{taskName,jdbcType=VARCHAR },		
+			VISIBLE_MINIMUM =#{visibleMinimum,jdbcType=DECIMAL },		
+			VISIBLE_MAXIMUM =#{visibleMaximum,jdbcType=DECIMAL },		
+			APPROVAL_MAXIMUM =#{approvalMaximum,jdbcType=DECIMAL },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_AUDIT_QUOTA_TABLE_FIELD" />		
+		from TM_APP_AUDIT_QUOTA
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_AUDIT_QUOTA_TABLE_FIELD" />		
+ 		from TM_APP_AUDIT_QUOTA
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			and TASK_NAME = #{taskName,jdbcType=VARCHAR }
+		</if>
+		<if test="visibleMinimum != null and visibleMinimum != ''  " >
+			and VISIBLE_MINIMUM = #{visibleMinimum,jdbcType=DECIMAL }
+		</if>
+		<if test="visibleMaximum != null and visibleMaximum != ''  " >
+			and VISIBLE_MAXIMUM = #{visibleMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			and APPROVAL_MAXIMUM = #{approvalMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_AUDIT_QUOTA
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="operatorId != null and operatorId != ''  " >
+			and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR }
+		</if>
+		<if test="taskName != null and taskName != ''  " >
+			and TASK_NAME = #{taskName,jdbcType=VARCHAR }
+		</if>
+		<if test="visibleMinimum != null and visibleMinimum != ''  " >
+			and VISIBLE_MINIMUM = #{visibleMinimum,jdbcType=DECIMAL }
+		</if>
+		<if test="visibleMaximum != null and visibleMaximum != ''  " >
+			and VISIBLE_MAXIMUM = #{visibleMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="approvalMaximum != null and approvalMaximum != ''  " >
+			and APPROVAL_MAXIMUM = #{approvalMaximum,jdbcType=DECIMAL }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.infrastructure.mapping.TmAppAuditMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.infrastructure.TmAppAudit" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="APP_NO" property="appNo" jdbcType="VARCHAR" />
+		<result column="CF_RISK_CLASSIC" property="cfRiskClassic" jdbcType="VARCHAR" />
+		<result column="IS_INSTALMENT" property="isInstalment" jdbcType="VARCHAR" />
+		<result column="IS_REALTIME_ISSUING" property="isRealtimeIssuing" jdbcType="VARCHAR" />
+		<result column="IS_OLD_CUST" property="isOldCust" jdbcType="VARCHAR" />
+		<result column="IS_FREE_TEL_CHECK" property="isFreeTelCheck" jdbcType="VARCHAR" />
+		<result column="IS_SEND_SMS_REFUSED" property="isSendSmsRefused" jdbcType="VARCHAR" />
+		<result column="IS_SEND_SMS_PATCH" property="isSendSmsPatch" jdbcType="VARCHAR" />
+		<result column="IS_RETURNED" property="isReturned" jdbcType="VARCHAR" />
+		<result column="IS_HAVE_RETRIAL" property="isHaveRetrial" jdbcType="VARCHAR" />
+		<result column="APP_NO_HIS" property="appNoHis" jdbcType="VARCHAR" />
+		<result column="PC_RESULT" property="pcResult" jdbcType="VARCHAR" />
+		<result column="BASIC_RESULT" property="basicResult" jdbcType="VARCHAR" />
+		<result column="BASIC_REFUSE_CODE" property="basicRefuseCode" jdbcType="VARCHAR" />
+		<result column="TEL_RESULT" property="telResult" jdbcType="VARCHAR" />
+		<result column="TEL_REFUSE_CODE" property="telRefuseCode" jdbcType="VARCHAR" />
+		<result column="PATCH_RESULT" property="patchResult" jdbcType="VARCHAR" />
+		<result column="FINAL_RESULT" property="finalResult" jdbcType="VARCHAR" />
+		<result column="FINAL_REFUSE_CODE" property="finalRefuseCode" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+		<result column="IS_RETRIAL_APP" property="isRetrialApp" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TM_APP_AUDIT_TABLE_FIELD">ID,ORG,APP_NO,CF_RISK_CLASSIC,IS_INSTALMENT,IS_REALTIME_ISSUING,IS_OLD_CUST,IS_FREE_TEL_CHECK,IS_SEND_SMS_REFUSED,IS_SEND_SMS_PATCH,IS_RETURNED,IS_HAVE_RETRIAL,APP_NO_HIS,PC_RESULT,BASIC_RESULT,BASIC_REFUSE_CODE,TEL_RESULT,TEL_REFUSE_CODE,PATCH_RESULT,FINAL_RESULT,FINAL_REFUSE_CODE,UPDATE_DATE,UPDATE_USER,JPA_VERSION,IS_RETRIAL_APP</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_APP_AUDIT_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_APP_AUDIT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.ecms.infrastructure.TmAppAudit" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_APP_AUDIT ( <include refid="TM_APP_AUDIT_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{appNo,jdbcType=VARCHAR } ,
+			 #{cfRiskClassic,jdbcType=VARCHAR } , #{isInstalment,jdbcType=VARCHAR } , #{isRealtimeIssuing,jdbcType=VARCHAR } , #{isOldCust,jdbcType=VARCHAR } ,
+			 #{isFreeTelCheck,jdbcType=VARCHAR } , #{isSendSmsRefused,jdbcType=VARCHAR } , #{isSendSmsPatch,jdbcType=VARCHAR } , #{isReturned,jdbcType=VARCHAR } ,
+			 #{isHaveRetrial,jdbcType=VARCHAR } , #{appNoHis,jdbcType=VARCHAR } , #{pcResult,jdbcType=VARCHAR } , #{basicResult,jdbcType=VARCHAR } ,
+			 #{basicRefuseCode,jdbcType=VARCHAR } , #{telResult,jdbcType=VARCHAR } , #{telRefuseCode,jdbcType=VARCHAR } , #{patchResult,jdbcType=VARCHAR } ,
+			 #{finalResult,jdbcType=VARCHAR } , #{finalRefuseCode,jdbcType=VARCHAR } , #{updateDate,jdbcType=TIMESTAMP } , #{updateUser,jdbcType=VARCHAR } ,
+			 #{jpaVersion,jdbcType=INTEGER } , #{isRetrialApp,jdbcType=VARCHAR } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppAudit">
+		update TM_APP_AUDIT 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="appNo != null and appNo != ''  " >
+			APP_NO =#{appNo,jdbcType=VARCHAR },
+		</if>
+		<if test="cfRiskClassic != null and cfRiskClassic != ''  " >
+			CF_RISK_CLASSIC =#{cfRiskClassic,jdbcType=VARCHAR },
+		</if>
+		<if test="isInstalment != null and isInstalment != ''  " >
+			IS_INSTALMENT =#{isInstalment,jdbcType=VARCHAR },
+		</if>
+		<if test="isRealtimeIssuing != null and isRealtimeIssuing != ''  " >
+			IS_REALTIME_ISSUING =#{isRealtimeIssuing,jdbcType=VARCHAR },
+		</if>
+		<if test="isOldCust != null and isOldCust != ''  " >
+			IS_OLD_CUST =#{isOldCust,jdbcType=VARCHAR },
+		</if>
+		<if test="isFreeTelCheck != null and isFreeTelCheck != ''  " >
+			IS_FREE_TEL_CHECK =#{isFreeTelCheck,jdbcType=VARCHAR },
+		</if>
+		<if test="isSendSmsRefused != null and isSendSmsRefused != ''  " >
+			IS_SEND_SMS_REFUSED =#{isSendSmsRefused,jdbcType=VARCHAR },
+		</if>
+		<if test="isSendSmsPatch != null and isSendSmsPatch != ''  " >
+			IS_SEND_SMS_PATCH =#{isSendSmsPatch,jdbcType=VARCHAR },
+		</if>
+		<if test="isReturned != null and isReturned != ''  " >
+			IS_RETURNED =#{isReturned,jdbcType=VARCHAR },
+		</if>
+		<if test="isHaveRetrial != null and isHaveRetrial != ''  " >
+			IS_HAVE_RETRIAL =#{isHaveRetrial,jdbcType=VARCHAR },
+		</if>
+		<if test="appNoHis != null and appNoHis != ''  " >
+			APP_NO_HIS =#{appNoHis,jdbcType=VARCHAR },
+		</if>
+		<if test="pcResult != null and pcResult != ''  " >
+			PC_RESULT =#{pcResult,jdbcType=VARCHAR },
+		</if>
+		<if test="basicResult != null and basicResult != ''  " >
+			BASIC_RESULT =#{basicResult,jdbcType=VARCHAR },
+		</if>
+		<if test="basicRefuseCode != null and basicRefuseCode != ''  " >
+			BASIC_REFUSE_CODE =#{basicRefuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="telResult != null and telResult != ''  " >
+			TEL_RESULT =#{telResult,jdbcType=VARCHAR },
+		</if>
+		<if test="telRefuseCode != null and telRefuseCode != ''  " >
+			TEL_REFUSE_CODE =#{telRefuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="patchResult != null and patchResult != ''  " >
+			PATCH_RESULT =#{patchResult,jdbcType=VARCHAR },
+		</if>
+		<if test="finalResult != null and finalResult != ''  " >
+			FINAL_RESULT =#{finalResult,jdbcType=VARCHAR },
+		</if>
+		<if test="finalRefuseCode != null and finalRefuseCode != ''  " >
+			FINAL_REFUSE_CODE =#{finalRefuseCode,jdbcType=VARCHAR },
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		<if test="isRetrialApp != null and isRetrialApp != ''  " >
+			IS_RETRIAL_APP =#{isRetrialApp,jdbcType=VARCHAR },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.ecms.infrastructure.TmAppAudit">
+		update TM_APP_AUDIT 
+		<trim prefix="set" suffixOverrides=","> 
+			APP_NO =#{appNo,jdbcType=VARCHAR },		
+			CF_RISK_CLASSIC =#{cfRiskClassic,jdbcType=VARCHAR },		
+			IS_INSTALMENT =#{isInstalment,jdbcType=VARCHAR },		
+			IS_REALTIME_ISSUING =#{isRealtimeIssuing,jdbcType=VARCHAR },		
+			IS_OLD_CUST =#{isOldCust,jdbcType=VARCHAR },		
+			IS_FREE_TEL_CHECK =#{isFreeTelCheck,jdbcType=VARCHAR },		
+			IS_SEND_SMS_REFUSED =#{isSendSmsRefused,jdbcType=VARCHAR },		
+			IS_SEND_SMS_PATCH =#{isSendSmsPatch,jdbcType=VARCHAR },		
+			IS_RETURNED =#{isReturned,jdbcType=VARCHAR },		
+			IS_HAVE_RETRIAL =#{isHaveRetrial,jdbcType=VARCHAR },		
+			APP_NO_HIS =#{appNoHis,jdbcType=VARCHAR },		
+			PC_RESULT =#{pcResult,jdbcType=VARCHAR },		
+			BASIC_RESULT =#{basicResult,jdbcType=VARCHAR },		
+			BASIC_REFUSE_CODE =#{basicRefuseCode,jdbcType=VARCHAR },		
+			TEL_RESULT =#{telResult,jdbcType=VARCHAR },		
+			TEL_REFUSE_CODE =#{telRefuseCode,jdbcType=VARCHAR },		
+			PATCH_RESULT =#{patchResult,jdbcType=VARCHAR },		
+			FINAL_RESULT =#{finalResult,jdbcType=VARCHAR },		
+			FINAL_REFUSE_CODE =#{finalRefuseCode,jdbcType=VARCHAR },		
+			UPDATE_DATE =#{updateDate,jdbcType=TIMESTAMP },		
+			UPDATE_USER =#{updateUser,jdbcType=VARCHAR },		
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },		
+			IS_RETRIAL_APP =#{isRetrialApp,jdbcType=VARCHAR },		
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_APP_AUDIT_TABLE_FIELD" />		
+		from TM_APP_AUDIT
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_APP_AUDIT_TABLE_FIELD" />		
+ 		from TM_APP_AUDIT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cfRiskClassic != null and cfRiskClassic != ''  " >
+			and CF_RISK_CLASSIC = #{cfRiskClassic,jdbcType=VARCHAR }
+		</if>
+		<if test="isInstalment != null and isInstalment != ''  " >
+			and IS_INSTALMENT = #{isInstalment,jdbcType=VARCHAR }
+		</if>
+		<if test="isRealtimeIssuing != null and isRealtimeIssuing != ''  " >
+			and IS_REALTIME_ISSUING = #{isRealtimeIssuing,jdbcType=VARCHAR }
+		</if>
+		<if test="isOldCust != null and isOldCust != ''  " >
+			and IS_OLD_CUST = #{isOldCust,jdbcType=VARCHAR }
+		</if>
+		<if test="isFreeTelCheck != null and isFreeTelCheck != ''  " >
+			and IS_FREE_TEL_CHECK = #{isFreeTelCheck,jdbcType=VARCHAR }
+		</if>
+		<if test="isSendSmsRefused != null and isSendSmsRefused != ''  " >
+			and IS_SEND_SMS_REFUSED = #{isSendSmsRefused,jdbcType=VARCHAR }
+		</if>
+		<if test="isSendSmsPatch != null and isSendSmsPatch != ''  " >
+			and IS_SEND_SMS_PATCH = #{isSendSmsPatch,jdbcType=VARCHAR }
+		</if>
+		<if test="isReturned != null and isReturned != ''  " >
+			and IS_RETURNED = #{isReturned,jdbcType=VARCHAR }
+		</if>
+		<if test="isHaveRetrial != null and isHaveRetrial != ''  " >
+			and IS_HAVE_RETRIAL = #{isHaveRetrial,jdbcType=VARCHAR }
+		</if>
+		<if test="appNoHis != null and appNoHis != ''  " >
+			and APP_NO_HIS = #{appNoHis,jdbcType=VARCHAR }
+		</if>
+		<if test="pcResult != null and pcResult != ''  " >
+			and PC_RESULT = #{pcResult,jdbcType=VARCHAR }
+		</if>
+		<if test="basicResult != null and basicResult != ''  " >
+			and BASIC_RESULT = #{basicResult,jdbcType=VARCHAR }
+		</if>
+		<if test="basicRefuseCode != null and basicRefuseCode != ''  " >
+			and BASIC_REFUSE_CODE = #{basicRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="telResult != null and telResult != ''  " >
+			and TEL_RESULT = #{telResult,jdbcType=VARCHAR }
+		</if>
+		<if test="telRefuseCode != null and telRefuseCode != ''  " >
+			and TEL_REFUSE_CODE = #{telRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="patchResult != null and patchResult != ''  " >
+			and PATCH_RESULT = #{patchResult,jdbcType=VARCHAR }
+		</if>
+		<if test="finalResult != null and finalResult != ''  " >
+			and FINAL_RESULT = #{finalResult,jdbcType=VARCHAR }
+		</if>
+		<if test="finalRefuseCode != null and finalRefuseCode != ''  " >
+			and FINAL_REFUSE_CODE = #{finalRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="isRetrialApp != null and isRetrialApp != ''  " >
+			and IS_RETRIAL_APP = #{isRetrialApp,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_APP_AUDIT
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="appNo != null and appNo != ''  " >
+			and APP_NO = #{appNo,jdbcType=VARCHAR }
+		</if>
+		<if test="cfRiskClassic != null and cfRiskClassic != ''  " >
+			and CF_RISK_CLASSIC = #{cfRiskClassic,jdbcType=VARCHAR }
+		</if>
+		<if test="isInstalment != null and isInstalment != ''  " >
+			and IS_INSTALMENT = #{isInstalment,jdbcType=VARCHAR }
+		</if>
+		<if test="isRealtimeIssuing != null and isRealtimeIssuing != ''  " >
+			and IS_REALTIME_ISSUING = #{isRealtimeIssuing,jdbcType=VARCHAR }
+		</if>
+		<if test="isOldCust != null and isOldCust != ''  " >
+			and IS_OLD_CUST = #{isOldCust,jdbcType=VARCHAR }
+		</if>
+		<if test="isFreeTelCheck != null and isFreeTelCheck != ''  " >
+			and IS_FREE_TEL_CHECK = #{isFreeTelCheck,jdbcType=VARCHAR }
+		</if>
+		<if test="isSendSmsRefused != null and isSendSmsRefused != ''  " >
+			and IS_SEND_SMS_REFUSED = #{isSendSmsRefused,jdbcType=VARCHAR }
+		</if>
+		<if test="isSendSmsPatch != null and isSendSmsPatch != ''  " >
+			and IS_SEND_SMS_PATCH = #{isSendSmsPatch,jdbcType=VARCHAR }
+		</if>
+		<if test="isReturned != null and isReturned != ''  " >
+			and IS_RETURNED = #{isReturned,jdbcType=VARCHAR }
+		</if>
+		<if test="isHaveRetrial != null and isHaveRetrial != ''  " >
+			and IS_HAVE_RETRIAL = #{isHaveRetrial,jdbcType=VARCHAR }
+		</if>
+		<if test="appNoHis != null and appNoHis != ''  " >
+			and APP_NO_HIS = #{appNoHis,jdbcType=VARCHAR }
+		</if>
+		<if test="pcResult != null and pcResult != ''  " >
+			and PC_RESULT = #{pcResult,jdbcType=VARCHAR }
+		</if>
+		<if test="basicResult != null and basicResult != ''  " >
+			and BASIC_RESULT = #{basicResult,jdbcType=VARCHAR }
+		</if>
+		<if test="basicRefuseCode != null and basicRefuseCode != ''  " >
+			and BASIC_REFUSE_CODE = #{basicRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="telResult != null and telResult != ''  " >
+			and TEL_RESULT = #{telResult,jdbcType=VARCHAR }
+		</if>
+		<if test="telRefuseCode != null and telRefuseCode != ''  " >
+			and TEL_REFUSE_CODE = #{telRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="patchResult != null and patchResult != ''  " >
+			and PATCH_RESULT = #{patchResult,jdbcType=VARCHAR }
+		</if>
+		<if test="finalResult != null and finalResult != ''  " >
+			and FINAL_RESULT = #{finalResult,jdbcType=VARCHAR }
+		</if>
+		<if test="finalRefuseCode != null and finalRefuseCode != ''  " >
+			and FINAL_REFUSE_CODE = #{finalRefuseCode,jdbcType=VARCHAR }
+		</if>
+		<if test="updateDate != null and updateDate != ''  " >
+			and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP }
+		</if>
+		<if test="updateUser != null and updateUser != ''  " >
+			and UPDATE_USER = #{updateUser,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+		<if test="isRetrialApp != null and isRetrialApp != ''  " >
+			and IS_RETRIAL_APP = #{isRetrialApp,jdbcType=VARCHAR }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>

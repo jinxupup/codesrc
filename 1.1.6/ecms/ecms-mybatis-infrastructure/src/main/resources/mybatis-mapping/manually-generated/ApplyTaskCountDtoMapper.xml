@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.ecms.biz.ApplyTaskCount">
+	<resultMap id="BaseResultMap" type="com.jjb.ecms.facility.dto.ApplyTaskCountDto" >
+		
+		<result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+		<result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />		
+		<result column="NUMS" property="nums" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectByConditions" resultMap="BaseResultMap" parameterType="map" >
+		SELECT A.OPERATOR_ID, A.PRO_NAME, COUNT(*) AS NUMS 
+		FROM TM_APP_HISTORY A, (
+		    SELECT max(ID) as ID,APP_NO, PRO_NAME --, max(CREATE_DATE) AS CD ,count(*) AS NUMS 
+		    FROM TM_APP_HISTORY H 
+		    WHERE 1 = 1 AND OPERATOR_ID <![CDATA[ <> ]]> 'sysauto'
+	    	<if test="startDate != null and startDate != '' " >
+				AND H.CREATE_DATE <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP }
+			</if>
+			<if test="endDate != null and endDate != '' " >
+				AND H.CREATE_DATE <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP }
+			</if>
+			<if test="operatorId != null and operatorId != '' " >
+				AND H.OPERATOR_ID= #{operatorId,jdbcType=VARCHAR }
+			</if>
+			<if test="proName != null and proName != '' ">
+				AND H.PRO_NAME= #{proName,jdbcType=VARCHAR }
+			</if> 
+		    GROUP BY APP_NO, PRO_NAME 
+		) B 
+		WHERE A.ID=B.ID 
+		GROUP BY A.OPERATOR_ID, A.PRO_NAME 
+		ORDER BY OPERATOR_ID, PRO_NAME ASC 
+	</select>
+</mapper>

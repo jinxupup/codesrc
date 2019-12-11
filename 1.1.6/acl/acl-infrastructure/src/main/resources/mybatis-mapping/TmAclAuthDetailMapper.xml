@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjb.acl.infrastructure.mapping.TmAclAuthDetailMapper">
+	<resultMap id="BaseResultMap" type="com.jjb.acl.infrastructure.TmAclAuthDetail" >
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ORG" property="org" jdbcType="VARCHAR" />
+		<result column="LOG_ID" property="logId" jdbcType="INTEGER" />
+		<result column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+		<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="SYS_TYPE" property="sysType" jdbcType="VARCHAR" />
+		<result column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR" />
+		<result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="JPA_VERSION" property="jpaVersion" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="TM_ACL_AUTH_DETAIL_TABLE_FIELD">ID,ORG,LOG_ID,ROLE_ID,ROLE_NAME,USER_ID,USER_NO,USER_NAME,SYS_TYPE,RESOURCE_CODE,RESOURCE_NAME,TYPE,JPA_VERSION</sql>
+
+	<sql id="TABLE_SEQUENCE">SEQ_TM_ACL_AUTH_DETAIL_ID.nextval</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="map" >
+		delete from TM_ACL_AUTH_DETAIL
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jjb.acl.infrastructure.TmAclAuthDetail" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select <include refid="TABLE_SEQUENCE" /> from dual
+		</selectKey>
+		insert into TM_ACL_AUTH_DETAIL ( <include refid="TM_ACL_AUTH_DETAIL_TABLE_FIELD" /> )
+		values (  #{id,jdbcType=INTEGER } , #{org,jdbcType=VARCHAR } , #{logId,jdbcType=INTEGER } ,
+			 #{roleId,jdbcType=INTEGER } , #{roleName,jdbcType=VARCHAR } , #{userId,jdbcType=INTEGER } , #{userNo,jdbcType=VARCHAR } ,
+			 #{userName,jdbcType=VARCHAR } , #{sysType,jdbcType=VARCHAR } , #{resourceCode,jdbcType=VARCHAR } , #{resourceName,jdbcType=VARCHAR } ,
+			 #{type,jdbcType=VARCHAR } , #{jpaVersion,jdbcType=INTEGER } 
+	)
+	</insert>
+	<update id="updateNotNullByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclAuthDetail">
+		update TM_ACL_AUTH_DETAIL 
+		<trim prefix="set" suffixOverrides=","> 
+		<if test="logId != null and logId != ''  " >
+			LOG_ID =#{logId,jdbcType=INTEGER },
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			ROLE_ID =#{roleId,jdbcType=INTEGER },
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			ROLE_NAME =#{roleName,jdbcType=VARCHAR },
+		</if>
+		<if test="userId != null and userId != ''  " >
+			USER_ID =#{userId,jdbcType=INTEGER },
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			USER_NO =#{userNo,jdbcType=VARCHAR },
+		</if>
+		<if test="userName != null and userName != ''  " >
+			USER_NAME =#{userName,jdbcType=VARCHAR },
+		</if>
+		<if test="sysType != null and sysType != ''  " >
+			SYS_TYPE =#{sysType,jdbcType=VARCHAR },
+		</if>
+		<if test="resourceCode != null and resourceCode != ''  " >
+			RESOURCE_CODE =#{resourceCode,jdbcType=VARCHAR },
+		</if>
+		<if test="resourceName != null and resourceName != ''  " >
+			RESOURCE_NAME =#{resourceName,jdbcType=VARCHAR },
+		</if>
+		<if test="type != null and type != ''  " >
+			TYPE =#{type,jdbcType=VARCHAR },
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			JPA_VERSION =#{jpaVersion,jdbcType=INTEGER },
+		</if>
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jjb.acl.infrastructure.TmAclAuthDetail">
+		update TM_ACL_AUTH_DETAIL 
+		<trim prefix="set" suffixOverrides=","> 
+			LOG_ID =#{logId,jdbcType=INTEGER },		
+			ROLE_ID =#{roleId,jdbcType=INTEGER },		
+			ROLE_NAME =#{roleName,jdbcType=VARCHAR },		
+			USER_ID =#{userId,jdbcType=INTEGER },		
+			USER_NO =#{userNo,jdbcType=VARCHAR },		
+			USER_NAME =#{userName,jdbcType=VARCHAR },		
+			SYS_TYPE =#{sysType,jdbcType=VARCHAR },		
+			RESOURCE_CODE =#{resourceCode,jdbcType=VARCHAR },		
+			RESOURCE_NAME =#{resourceName,jdbcType=VARCHAR },		
+			TYPE =#{type,jdbcType=VARCHAR },		
+			JPA_VERSION=JPA_VERSION+1
+			
+		</trim>
+		where 
+		ID = #{id, jdbcType=INTEGER}
+		and JPA_VERSION = #{jpaVersion, jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+		select	<include refid="TM_ACL_AUTH_DETAIL_TABLE_FIELD" />		
+		from TM_ACL_AUTH_DETAIL
+		where 
+		ID = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+		select <include refid="TM_ACL_AUTH_DETAIL_TABLE_FIELD" />		
+ 		from TM_ACL_AUTH_DETAIL
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="logId != null and logId != ''  " >
+			and LOG_ID = #{logId,jdbcType=INTEGER }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			and ROLE_NAME = #{roleName,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="sysType != null and sysType != ''  " >
+			and SYS_TYPE = #{sysType,jdbcType=VARCHAR }
+		</if>
+		<if test="resourceCode != null and resourceCode != ''  " >
+			and RESOURCE_CODE = #{resourceCode,jdbcType=VARCHAR }
+		</if>
+		<if test="resourceName != null and resourceName != ''  " >
+			and RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>	
+	<select id="loadKeyList" resultType="int" parameterType="map" >
+		select  ID 		
+ 		from TM_ACL_AUTH_DETAIL
+		where 1=1 
+		<if test="id != null and id != ''  " >
+			and ID = #{id,jdbcType=INTEGER }
+		</if>
+		<if test="org != null and org != ''  " >
+			and ORG = #{org,jdbcType=VARCHAR }
+		</if>
+		<if test="logId != null and logId != ''  " >
+			and LOG_ID = #{logId,jdbcType=INTEGER }
+		</if>
+		<if test="roleId != null and roleId != ''  " >
+			and ROLE_ID = #{roleId,jdbcType=INTEGER }
+		</if>
+		<if test="roleName != null and roleName != ''  " >
+			and ROLE_NAME = #{roleName,jdbcType=VARCHAR }
+		</if>
+		<if test="userId != null and userId != ''  " >
+			and USER_ID = #{userId,jdbcType=INTEGER }
+		</if>
+		<if test="userNo != null and userNo != ''  " >
+			and USER_NO = #{userNo,jdbcType=VARCHAR }
+		</if>
+		<if test="userName != null and userName != ''  " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR }
+		</if>
+		<if test="sysType != null and sysType != ''  " >
+			and SYS_TYPE = #{sysType,jdbcType=VARCHAR }
+		</if>
+		<if test="resourceCode != null and resourceCode != ''  " >
+			and RESOURCE_CODE = #{resourceCode,jdbcType=VARCHAR }
+		</if>
+		<if test="resourceName != null and resourceName != ''  " >
+			and RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR }
+		</if>
+		<if test="type != null and type != ''  " >
+			and TYPE = #{type,jdbcType=VARCHAR }
+		</if>
+		<if test="jpaVersion != null and jpaVersion != ''  " >
+			and JPA_VERSION = #{jpaVersion,jdbcType=INTEGER }
+		</if>
+
+		<if test="_SORT_NAME != null and _SORT_NAME != ''  " >
+			<if test="_SORT_ORDER != null and _SORT_ORDER != ''  " >
+				order by ${_SORT_NAME} ${_SORT_ORDER} 
+			</if>
+		</if>
+
+	</select>
+</mapper>
