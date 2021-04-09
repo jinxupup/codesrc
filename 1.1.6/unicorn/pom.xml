@@ -60,7 +60,7 @@
 		<curator.version>2.11.0</curator.version>
 		<commons-pool.version>1.6</commons-pool.version>
 		<commons-lang.version>2.6</commons-lang.version>
-		<spring.batch.version>2.1.9.RELEASE</spring.batch.version>
+		<spring.batch.version>4.2.1.RELEASE</spring.batch.version>
 		<commons-beanutils.version>1.8.3</commons-beanutils.version>
 		<jline.version>1.0</jline.version>
 		<commons-cli.version>1.2</commons-cli.version>
